@@ -1,0 +1,117 @@
+.btn {
+  display: inline-block;
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  padding: 16px 31px;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  .transition;
+  &:focus,
+  &:link,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.btn-with-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:12px 13px 11px 14px;
+
+    .icon{
+      margin-right:8px;
+    }
+  }
+
+  &.btn-purple{
+    color: #ffffff;
+    border: none;
+    background-color: #4359F5;
+
+    &:hover {
+      background-color: darken(#4359F5, 5%);
+    }
+  }
+&.btn-black{
+  color: #ffffff;
+  border: none;
+  background-color: #000;
+  transition: all 0.25s ease-in-out;
+  &:hover {
+    // background-color: darken(#000, 5%);
+    background-color: rgba(#000, .8);
+  }
+}
+  &.btn-outline-danger{
+    color: #D11F3D;
+    border: none;
+    background: none;
+
+    &:hover {
+      color:darken(#D11F3D, 5%);
+    }
+  }
+
+  &.btn-all{
+    color:#000000;
+    font-weight: bold;
+    border:2px solid #000000;
+    background: none;
+    padding:11px 40px;
+
+    &:hover {
+      border:2px solid #000000;
+    }
+  }
+  &.btn-mask{
+    color:#000000;
+    font-weight: bold;
+    border:2px solid #000000;
+    background: none;
+    padding:11px 25px;
+    min-width: 141px;
+    &:hover {
+      border:2px solid #000000;
+    }
+  }
+  &.btn-sent{
+    opacity: .2;
+    color:#000000;
+    font-weight: bold;
+    border:2px solid #000000;
+    background: none;
+    padding:11px 25px;
+    min-width: 141px;
+    &:hover {
+      border:2px solid #000000;
+    }
+    
+  }
+  &.btn-user{
+    min-width:174px;
+  }
+  &.btn-outline-gray{
+    font-weight: 700;
+    color:#000000;
+    border:1px solid #EDE8E9;
+    background: none;
+    &:hover {
+      border:1px solid darken(#EDE8E9, 5%);
+    }
+  }
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: none;
+  outline-offset: 0;
+}
+
+
+.btn-loading{
+  background-color: #A0ABFD !important;
+}

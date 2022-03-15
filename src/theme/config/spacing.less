@@ -1,0 +1,138 @@
+//====================================
+//              FOR LOOP             =
+//====================================
+.for(@i, @n) {
+  .-each(@i)
+}
+
+.for(@n) when (isnumber(@n)) {
+  .for(1, @n)
+}
+
+.for(@i, @n) when not (@i =@n) {
+  .for((@i + (@n - @i) / abs(@n - @i)), @n);
+}
+
+//--------  End of for loop  ---------//
+
+
+
+//=========================================
+//              FOR EACH LOOP             =
+//=========================================
+.for(@array) when (default()) {
+  .for-impl_(length(@array))
+}
+
+.for-impl_(@i) when (@i > 1) {
+  .for-impl_((@i - 1))
+}
+
+.for-impl_(@i) when (@i > 0) {
+  .-each(extract(@array, @i))
+}
+
+//--------  End of for each loop  ---------//
+
+
+
+
+@values-array: 0, 3, 4, 5, 6, 7, 8, 9, 10,11, 12, 13, 14, 15, 16, 18, 20, 21, 25, 23, 24, 26, 28, 29, 30, 32, 35, 40, 44, 45, 48, 50, 55, 56, 60, 65, 64, 70, 72, 80, 88, 112;
+
+
+
+//global
+@media (min-width: 0) {
+  .make-space(@prefix: xs);
+}
+
+// .make-space(@prefix: xs);
+.xs-mt-auto {
+  margin-top: auto;
+}
+
+.xs-mb-auto {
+  margin-bottom: auto;
+}
+
+.xs-ml-auto {
+  margin-left: auto;
+}
+
+.xs-mr-auto {
+  margin-right: auto;
+}
+
+
+
+// init functions
+.make-space(@prefix) {
+  .for(@values-array);
+
+  .-each(@value) {
+    .@{prefix}-p-@{value} {
+      padding:~"@{value}px" !important;
+    }
+
+    .@{prefix}-pt-@{value} {
+      padding-top:~"@{value}px" !important;
+    }
+
+    .@{prefix}-pl-@{value} {
+      padding-left:~"@{value}px" !important;
+    }
+
+    .@{prefix}-pr-@{value} {
+      padding-right:~"@{value}px" !important;
+    }
+
+    .@{prefix}-pb-@{value} {
+      padding-bottom:~"@{value}px" !important;
+    }
+
+    .@{prefix}-px-@{value} {
+      padding-left:~"@{value}px" !important;
+      padding-right:~"@{value}px" !important;
+    }
+
+    .@{prefix}-py-@{value} {
+      padding-top:~"@{value}px" !important;
+      padding-bottom:~"@{value}px";
+    }
+
+    .@{prefix}-m-@{value} {
+      margin:~"@{value}px" !important;
+    }
+
+    .@{prefix}-mt-@{value} {
+      margin-top:~"@{value}px" !important;
+    }
+
+    .@{prefix}-ml-@{value} {
+      margin-left:~"@{value}px" !important;
+    }
+
+    .@{prefix}-mr-@{value} {
+      margin-right:~"@{value}px" !important;
+    }
+
+    .@{prefix}-mb-@{value} {
+      margin-bottom:~"@{value}px" !important;
+    }
+
+    .@{prefix}-mx-@{value} {
+      margin-left:~"@{value}px" !important;
+      margin-right:~"@{value}px" !important;
+    }
+
+    .@{prefix}-my-@{value} {
+      margin-top:~"@{value}px" !important;
+      margin-bottom:~"@{value}px" !important;
+    }
+
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}

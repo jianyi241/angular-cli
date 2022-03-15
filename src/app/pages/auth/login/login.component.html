@@ -1,0 +1,29 @@
+<div class="admin-wrapper">
+    <div class="admin">
+        <div class="sign-logo"><img src="../../../../assets/img/arcade-logo.png"/></div>
+        <div class="form">
+            <h2 class="title">Sign in</h2>
+            <div class="form-control-group">
+                <span class="icon icon-18 icon-email"></span>
+                <app-float-input [(ngModel)]="loginUser.account" labelText="Email" type="email"></app-float-input>
+            </div>
+
+            <div class="form-control-group">
+                <app-float-input [(ngModel)]="loginUser.password" labelText="Your password"
+                                 type="password"></app-float-input>
+            </div>
+
+            <div class="form-bottom">
+                <!--暂时去除记住密码功能-->
+                <!--<div class="check-box">
+                  <input type="checkbox" id="rememberMe" />
+                  <label for="rememberMe"> Remember me</label>
+                </div>-->
+
+                <a [routerLink]="['/forgot']" class="link-text">Forgot password?</a>
+            </div>
+            <button class="btn btn-black btn-block" [ngClass]="{'btn-active': isLogin}"
+                    (click)="loginWithEmail()">{{isLogin ? 'Loading...' : 'Sign In'}}</button>
+        </div>
+    </div>
+</div>

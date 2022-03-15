@@ -1,0 +1,29 @@
+.dropdown {
+  cursor: pointer;
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    border: 1px solid rgba(21, 34, 50, 0.02);
+    border-radius: 4px;
+    padding: 0;
+    box-shadow: 0 1px 4px rgba(21, 34, 50, 0.08);
+
+    .dropdown-item {
+      color: #5A607F;
+      font-family: "SFProDisplay";
+      font-weight: 400;
+      font-size: 14px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      line-height: 22px;
+
+      &:hover {
+        background-color: #F5F6FA;
+      }
+
+    }
+  }
+}

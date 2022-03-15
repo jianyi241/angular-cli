@@ -1,0 +1,34 @@
+<div class="head">
+
+    <a [routerLink]="['/Home']" class="logo"><img src="../../../../assets/img/logo.png"/></a>
+
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="menu">
+        <ul>
+            <li routerLinkActive="active">
+                <a [routerLink]="['./Project']">Projects</a>
+                <a [routerLink]="['./Project']" style="display: none;">Kitchens</a>
+            </li>
+            <li routerLinkActive="active"><a [routerLink]="['./Tips']">Tipping Sites</a></li>
+            <li routerLinkActive="active"><a [routerLink]="['./Vehicles']">Vehicles</a></li>
+            <li routerLinkActive="active">
+                <a [routerLink]="['./JobReport']">Job Reports</a>
+                <a [routerLink]="['./JobReport']" style="display: none;">Job Reports</a>
+            </li>
+            <li routerLinkActive="active"><a [routerLink]="['./Users']">Users</a></li>
+        </ul>
+    </nav>
+
+    <div class="head-profile">
+        <span class="icon icon-profile icon-45" *ngIf="!currentUser.avatar?.visitUrl"></span>
+        <span class="admin-img" *ngIf="currentUser.avatar?.visitUrl"><img [src]="currentUser.avatar?.visitUrl"/></span>
+        <div class="profile-info">
+            <span class="name">{{currentUser.firstName}} {{currentUser.lastName}}</span>
+        </div>
+    </div>
+</div>

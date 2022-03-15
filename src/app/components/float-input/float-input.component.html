@@ -1,0 +1,10 @@
+<div (click)="selectMe()">
+    <!--    label-fixed-->
+    <div class="input-custom" [ngClass]="{'label-fixed': (hasFocus || hasValue)}">
+        <label class="control-label" [innerText]="labelText"></label>
+        <input #inputElement [attr.type]="type" (blur)="inputBlur()" (focus)="inputFocus()"
+               class="form-control-reset .background-transparent" [ngClass]="{'visually-hidden': !hasFocus}"/>
+        <div class="form-control-reset" [ngClass]="{'visually-hidden': hasFocus}" style="margin-top: 14px">
+            <span>{{valueFormatted}}</span></div>
+    </div>
+</div>

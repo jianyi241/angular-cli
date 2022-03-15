@@ -1,0 +1,30 @@
+.icon {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+@iconSize: 10,13,16,17,18,20,22,23,24,28,30,32,33,34,38,39,40,45;
+
+each(@iconSize, {
+  .icon-@{value} {
+    width: ~'@{value}px';
+    height: ~'@{value}px';
+  }
+}
+);
+
+.icon-50-45{
+  width: 50px;
+  height: 45px;
+}
+
+.icon-cicle-close{
+  background-image: url("../../assets/img/icon/icon-cicle-close.svg");
+}
+
+.icon-email{
+  background-image: url("../../assets/img/icon/icon-email.svg");
+}

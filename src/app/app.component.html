@@ -1,0 +1,15 @@
+<div class="toast-wrapper">
+  <ngb-toast *ngFor="let toast of toastRepository.toasts" [class]="toast.classname" [autohide]="true" header=" "
+    [delay]="toast.delay || 5000" (hide)="toastRepository.remove(toast)">
+    <ng-template [ngIf]="toastRepository.isTemplate(toast)" [ngIfElse]="text">
+      <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+    </ng-template>
+
+    <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+  </ngb-toast>
+
+</div>
+
+<ngx-loading-spinner [threshold]="0" [zIndex]="1000"></ngx-loading-spinner>
+<router-outlet>
+</router-outlet>

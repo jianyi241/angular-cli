@@ -1,0 +1,61 @@
+.toast-wrapper{
+  .toast{
+    position: fixed;
+    top:71px;
+    left:0;
+    z-index: 1080;
+    width: 100% !important;
+    height: 66px;
+    background-color: #2AC084;
+
+    &.toastTop{
+      top:0;
+    }
+
+    &.bg-success{
+      background-color: #2AC084;
+    }
+    &.bg-danger{
+      background-color: #EE0001;
+    }
+
+    .toast-header{
+      .close{
+        width: 38px;
+        height: 38px;
+        position: absolute;
+        top:50%;
+        margin-top:-19px;
+        right:18px;
+        opacity: 1;
+        margin-bottom: 0;
+
+        span{
+          vertical-align: middle;
+          font-size:0;
+          display: inline-block;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          flex-shrink: 0;
+          width: 38px;
+          height: 38px;
+          background-image: url("../../assets/img/icon/icon-cicle-close.svg");
+        }
+      }
+    }
+
+    .toast-body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:#ffffff;
+      font-family: Inter;
+      font-weight: 700;
+      font-size:14px;
+      line-height: 21px;
+      letter-spacing: -.1px;
+      height: 66px;
+    }
+  }
+}

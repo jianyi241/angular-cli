@@ -1,0 +1,73 @@
+.transition {
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html{
+  height: 100%;
+}
+
+body{
+  padding:0;
+  margin:0;
+  height: 100%;
+  background-color: #FCFCFC;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-demi-bold {
+  font-weight: 600;
+}
+
+.text-ellipsis{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+
+.booking-list{
+  .ng-select.ng-select-single .ng-select-container {
+    height: 48px !important;
+  }
+}
+
+.text-danger{
+  color:#EE7C75 !important;
+}
+
+.empty-text{
+  margin: 31px 0;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -.1px;
+  color:#808080;
+  text-align: center;
+
+  @media screen and(max-width: 768px){
+    font-size: 14px;
+    margin: 20px 0;
+  }
+}
+.overlay{
+  z-index: 2000 !important;
+}

@@ -1,0 +1,29 @@
+<div class="admin-wrapper">
+    <div class="admin">
+        <div class="logo">
+            <img src="../../../../assets/img/arcade-logo.png"/>
+        </div>
+        <div class="form">
+            <h2 class="title">Reset your Password</h2>
+            <div class="sub-title">Enter your email address below. We’ll send an email to you now so you can reset your
+                password.
+            </div>
+
+            <div class="form-control-group">
+                <!--邮箱默认图标展示-->
+                <span class="icon icon-18 icon-email"></span>
+                <!--邮箱验证失败图标展示-->
+                <!--                <span class="icon icon-18 icon-verify-fail"></span>-->
+                <!--邮箱验证成功图标展示-->
+                <!--                <span class="icon icon-18 icon-verify-success"></span>-->
+
+                <app-float-input [(ngModel)]="account" labelText="email"></app-float-input>
+            </div>
+
+            <button class="btn btn-black btn-block" (click)="sendForgotEmail()">Send reset password email</button>
+
+            <div class="bottom-link">Nevermind, go back to <a [routerLink]="['/login']">Sign In</a></div>
+
+        </div>
+    </div>
+</div>
