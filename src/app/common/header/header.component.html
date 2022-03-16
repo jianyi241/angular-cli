@@ -1,34 +1,41 @@
-<div class="head">
+<div class="head-layout">
+    <div class="head-left">
+        <a href="#" class="logo">
+            <img src="../../../assets/img/logo_white.svg"/>
+        </a>
 
-    <a [routerLink]="['/Home']" class="logo"><img src="../../../../assets/img/logo.png"/></a>
+        <div class="menu">
+            <a href="#">News & Updates</a>
+            <a [routerLink]="['/supplier']" routerLinkActive="active">Suppliers</a>
+            <a href="#">Platforms</a>
+            <a href="#">Advice practices</a>
+        </div>
 
-    <div class="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
+        <div class="phone-menu">
+            <div ngbDropdown placement="bottom-end">
+                <div class="icon-menu" ngbDropdownToggle id="dropdownPhoneMenu" ngbDropdownToggle>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+                <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
+                    <a href="#">News & Updates</a>
+                    <a [routerLink]="['/supplier']" routerLinkActive="active">Suppliers</a>
+                    <a href="#">Platforms</a>
+                    <a href="#">Advice practices</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <nav class="menu">
-        <ul>
-            <li routerLinkActive="active">
-                <a [routerLink]="['./Project']">Projects</a>
-                <a [routerLink]="['./Project']" style="display: none;">Kitchens</a>
-            </li>
-            <li routerLinkActive="active"><a [routerLink]="['./Tips']">Tipping Sites</a></li>
-            <li routerLinkActive="active"><a [routerLink]="['./Vehicles']">Vehicles</a></li>
-            <li routerLinkActive="active">
-                <a [routerLink]="['./JobReport']">Job Reports</a>
-                <a [routerLink]="['./JobReport']" style="display: none;">Job Reports</a>
-            </li>
-            <li routerLinkActive="active"><a [routerLink]="['./Users']">Users</a></li>
-        </ul>
-    </nav>
+    <div class="head-right">
+        <div class="text">Manage BT</div>
 
-    <div class="head-profile">
-        <span class="icon icon-profile icon-45" *ngIf="!currentUser.avatar?.visitUrl"></span>
-        <span class="admin-img" *ngIf="currentUser.avatar?.visitUrl"><img [src]="currentUser.avatar?.visitUrl"/></span>
-        <div class="profile-info">
-            <span class="name">{{currentUser.firstName}} {{currentUser.lastName}}</span>
+        <div ngbDropdown placement="bottom-end">
+            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>
+            <div ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button ngbDropdownItem>Log out</button>
+            </div>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {CommonModule} from '@angular/common';
 import {UserRepository} from './repository/user-repository';
-import {FloatInputComponent} from "./components/float-input/float-input.component";
+import { SystemModule } from './pages/system/system.module';
 
 
 @NgModule({
@@ -39,7 +39,6 @@ import {FloatInputComponent} from "./components/float-input/float-input.componen
     ],
     imports: [
         CommonModule,
-        AppRoutingModule,
         BrowserModule,
         AppRoutingModule,
         AuthModule,
@@ -55,7 +54,8 @@ import {FloatInputComponent} from "./components/float-input/float-input.componen
         NgSelectModule,
         NgxLoadingSpinnerModule.forRoot(),
         ModalModule.forRoot(),
-        NgxFileDropModule
+        NgxFileDropModule,
+        SystemModule
     ],
     providers: [
 

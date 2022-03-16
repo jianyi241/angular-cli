@@ -13,17 +13,41 @@
 
     .dropdown-item {
       color: #5A607F;
-      font-family: "SFProDisplay";
       font-weight: 400;
       font-size: 14px;
-      padding-top: 6px;
-      padding-bottom: 6px;
+      padding:8px 12px;
       line-height: 22px;
 
       &:hover {
         background-color: #F5F6FA;
       }
+    }
+  }
+}
 
+.phone-menu{
+  .dropdown {
+    cursor: pointer;
+
+    .dropdown-menu {
+      border: 1px solid rgba(21, 34, 50, 0.02);
+      border-radius: 4px;
+      padding:10px;
+      box-shadow: 0 1px 4px rgba(21, 34, 50, 0.08);
+
+      a{
+        display: block;
+        color:#4640DE;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 20.8px;
+        padding:6px 0;
+        text-decoration: none;
+
+        &.active{
+          border-bottom:2px solid #4640DE;
+        }
+      }
     }
   }
 }

@@ -20,7 +20,7 @@
                   <label for="rememberMe"> Remember me</label>
                 </div>-->
 
-                <a [routerLink]="['/forgot']" class="link-text">Forgot password?</a>
+                <a [routerLink]="['/system/tool']" class="link-text">Forgot password?</a>
             </div>
             <button class="btn btn-black btn-block" [ngClass]="{'btn-active': isLogin}"
                     (click)="loginWithEmail()">{{isLogin ? 'Loading...' : 'Sign In'}}</button>
