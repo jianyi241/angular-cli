@@ -21,7 +21,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let headers = request.headers.set('Client-Id', environment.arcadeAuth.clientId);
+        /*let headers = request.headers.set('Client-Id', environment.arcadeAuth.clientId);
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             headers = headers.set('Authorization', `Bearer ${accessToken}`);
@@ -38,14 +38,14 @@ export class HttpResultInterceptor implements HttpInterceptor {
                         this.storage.removeItem('UserInfo');
                         return;
                     }
-                    console.log(event);
                     return event;
                 }
                 return event;
 
             }),
             catchError(this.handleError)
-        );
+        );*/
+        return next.handle(request);
     }
 
     handleError(errorResponse: any): OperatorFunction<HttpEvent<any>, any> {

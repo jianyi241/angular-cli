@@ -43,28 +43,28 @@ export class AppComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.router.navigate(['/supplier']);
-    this.localStorageService.getItem('UserInfo').subscribe((val) => {
-      let currentUrl = window.location.href;
-      currentUrl = currentUrl.split('/#')[1];
-      if (!val) {
-        // this.userRepository.getAccessToken().subscribe((user) => {
-        //   if (user.statusCode === 200) {
-        //     this.localStorageService.setItem("accessToken", user.data.accessToken);
-        //   }
-        // });
-        if (this.excludes.find(e => currentUrl.indexOf(e) != -1)) {
-          return;
-        }
-        // this.router.navigate(['/login']);
-      } else {
-        // this.router.navigate(["/Web/Location"]);
-        if (currentUrl && currentUrl !== '/') {
-          return;
-        }
-        // this.router.navigate(['/Home']);
-      }
-    });
+    // this.router.navigate(['/supplier']);
+    // this.localStorageService.getItem('UserInfo').subscribe((val) => {
+    //   let currentUrl = window.location.href;
+    //   currentUrl = currentUrl.split('/#')[1];
+    //   if (!val) {
+    //     // this.userRepository.getAccessToken().subscribe((user) => {
+    //     //   if (user.statusCode === 200) {
+    //     //     this.localStorageService.setItem("accessToken", user.data.accessToken);
+    //     //   }
+    //     // });
+    //     if (this.excludes.find(e => currentUrl.indexOf(e) != -1)) {
+    //       return;
+    //     }
+    //     // this.router.navigate(['/login']);
+    //   } else {
+    //     // this.router.navigate(["/Web/Location"]);
+    //     if (currentUrl && currentUrl !== '/') {
+    //       return;
+    //     }
+    //     // this.router.navigate(['/Home']);
+    //   }
+    // });
   }
 
 }
