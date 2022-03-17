@@ -7,6 +7,7 @@ import {EditSubGroupComponent} from "./suppliers/edit-sub-group/edit-sub-group.c
 import {EditPropComponent} from "./suppliers/edit-prop/edit-prop.component";
 import {EditDetailComponent} from "./suppliers/edit-detail/edit-detail.component";
 import {FeatureFormComponent} from "./suppliers/feature-form/feature-form.component";
+import { ProductsComponent } from './platforms/products/products.component';
 
 const routes: Routes = [
     {
@@ -36,7 +37,17 @@ const routes: Routes = [
             {
                 path:'feature-form',
                 component:FeatureFormComponent
-            }
+            },
+        ]
+    },
+    {
+        path: 'platform',
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'product',
+                component: ProductsComponent,
+            },
         ]
     },
 ];

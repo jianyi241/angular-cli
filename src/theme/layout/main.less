@@ -39,25 +39,28 @@
     .tab-menu {
       position: fixed;
       top:162px;
-      left:0;
-      width: 100%;
-      padding:0 168px;
+      left:168px;
+      width: calc(100% - 336px);
       background-color: #FCFCFC;
       z-index: 99;
       margin-top:0;
 
       @media screen and (max-width: 1400px){
-        padding:0 100px;
+        left:110px;
+        width: calc(100% - 200px);
       }
 
       @media screen and (max-width: 1240px){
-        padding:0 40px;
+        left:40px;
+        width: calc(100% - 80px);
       }
 
       @media screen and (max-width: 940px){
         top:142px;
-        padding:10px 20px;
+        padding:10px 0;
         height: auto;
+        left:2px;
+        width: calc(100% - 40px);
       }
     }
   }
