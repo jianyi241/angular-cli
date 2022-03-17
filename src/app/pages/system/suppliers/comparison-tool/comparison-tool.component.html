@@ -1,89 +1,91 @@
-<div class="sub-head">
-    <h2 class="title">Comparison tool</h2>
-    <div class="btn-control-group">
-        <button class="btn btn-outline-blue-light xs-ml-24">Discard draft</button>
-        <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>
-        <button class="btn btn-purple xs-ml-24">Publish</button>
-    </div>
-</div>
-
-<div class="tab-menu">
-    <div class="tab-text"
-         [ngClass]="{'active': currentTabType == tabType.value}"
-         (click)="chooseTabType(tabType.value)"
-         *ngFor="let tabType of configService.tabTypeList()">
-        {{tabType.name}} <span class="line"></span>
-    </div>
-</div>
-
-<div class="table-layout">
-    <div class="col-content col-content-1">
-        <div class="col-head">
-            <div class="title">Group</div>
-            <div class="col-head-right">
-                <span class="link-show">Show archived</span>
-                <span class="link-new" (click)="saveGroup()">+ New</span>
-            </div>
-        </div>
-
-        <div class="col-body">
-            <div class="list-cell" [ngClass]="{'active': reminder.groupId == group.id}"
-                 (click)="chooseGroup(group)"
-                 *ngFor="let group of groups">
-                <span class="icon-block icon-line icon-24"></span>
-                <div class="title" [title]="group.name">{{group.name}}</div>
-                <span class="icon-block icon-edit icon-20" (click)="saveGroup(group)"></span>
-            </div>
+<div class="main">
+    <div class="sub-head">
+        <h2 class="title">Comparison tool</h2>
+        <div class="btn-control-group">
+            <button class="btn btn-outline-blue-light xs-ml-24">Discard draft</button>
+            <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>
+            <button class="btn btn-purple xs-ml-24">Publish</button>
         </div>
     </div>
 
-    <div class="col-content col-content-2">
-        <div class="col-head xs-pl-16">
-            <div class="title">Sub-group</div>
-            <div class="col-head-right">
-                <span class="link-show">Show archived</span>
-                <span class="link-new" (click)="saveSubGroup()">+ New</span>
-            </div>
-        </div>
-
-        <div class="col-body">
-            <div class="list-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
-                 (click)="chooseSubGroup(subGroup)"
-                 *ngFor="let subGroup of subGroups">
-                <span class="icon-block icon-line icon-24"></span>
-                <div class="title" [title]="subGroup.name">{{subGroup.name}}</div>
-                <span class="icon-block icon-edit icon-20" (click)="saveSubGroup(subGroup)"></span>
-            </div>
+    <div class="tab-menu">
+        <div class="tab-text"
+             [ngClass]="{'active': currentTabType == tabType.value}"
+             (click)="chooseTabType(tabType.value)"
+             *ngFor="let tabType of configService.tabTypeList()">
+            {{tabType.name}} <span class="line"></span>
         </div>
     </div>
 
-    <div class="col-content col-content-3">
-        <div class="col-head xs-pl-16 no-border-bottom">
-            <div class="search-content">
-                <input type="text" placeholder="Search a keyword" class="form-control"/>
-                <span class="icon icon-search icon-16"></span>
-            </div>
-            <div class="col-head-right">
-                <span class="link-show xs-mr-21">Show archived</span>
-                <button class="btn btn-outline-purple-light tx-13 tx-semi" (click)="saveProp()">+ New</button>
-            </div>
-        </div>
-
-        <div class="col-body xs-pl-16">
-            <div class="list-cell-large"
-                 *ngFor="let prop of properties">
-                <span class="icon-block icon-line icon-32"></span>
-                <div class="list-content">
-                    <div class="info">
-                        <div class="title">{{prop.name}}</div>
-                        <div class="text">Boolean field</div>
-                    </div>
-<!--                    <span class="label label-red">Archived</span>-->
+    <div class="table-layout">
+        <div class="col-content col-content-1">
+            <div class="col-head">
+                <div class="title">Group</div>
+                <div class="col-head-right">
+                    <span class="link-show">Show archived</span>
+                    <span class="link-new" (click)="saveGroup()">+ New</span>
                 </div>
-                <button class="btn btn-outline-purple-light btn-edit tx-12"
-                    (click)="saveProp(prop)">
-                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                </button>
+            </div>
+
+            <div class="col-body">
+                <div class="list-cell" [ngClass]="{'active': reminder.groupId == group.id}"
+                     (click)="chooseGroup(group)"
+                     *ngFor="let group of groups">
+                    <span class="icon-block icon-line icon-24"></span>
+                    <div class="title" [title]="group.name">{{group.name}}</div>
+                    <span class="icon-block icon-edit icon-20" (click)="saveGroup(group)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-content col-content-2">
+            <div class="col-head xs-pl-16">
+                <div class="title">Sub-group</div>
+                <div class="col-head-right">
+                    <span class="link-show">Show archived</span>
+                    <span class="link-new" (click)="saveSubGroup()">+ New</span>
+                </div>
+            </div>
+
+            <div class="col-body">
+                <div class="list-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+                     (click)="chooseSubGroup(subGroup)"
+                     *ngFor="let subGroup of subGroups">
+                    <span class="icon-block icon-line icon-24"></span>
+                    <div class="title" [title]="subGroup.name">{{subGroup.name}}</div>
+                    <span class="icon-block icon-edit icon-20" (click)="saveSubGroup(subGroup)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-content col-content-3">
+            <div class="col-head xs-pl-16 no-border-bottom">
+                <div class="search-content">
+                    <input type="text" placeholder="Search a keyword" class="form-control"/>
+                    <span class="icon icon-search icon-16"></span>
+                </div>
+                <div class="col-head-right">
+                    <span class="link-show xs-mr-21">Show archived</span>
+                    <button class="btn btn-outline-purple-light tx-13 tx-semi" (click)="saveProp()">+ New</button>
+                </div>
+            </div>
+
+            <div class="col-body xs-pl-16">
+                <div class="list-cell-large"
+                     *ngFor="let prop of properties">
+                    <span class="icon-block icon-line icon-32"></span>
+                    <div class="list-content">
+                        <div class="info">
+                            <div class="title">{{prop.name}}</div>
+                            <div class="text">Boolean field</div>
+                        </div>
+    <!--                    <span class="label label-red">Archived</span>-->
+                    </div>
+                    <button class="btn btn-outline-purple-light btn-edit tx-12"
+                        (click)="saveProp(prop)">
+                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                    </button>
+                </div>
             </div>
         </div>
     </div>

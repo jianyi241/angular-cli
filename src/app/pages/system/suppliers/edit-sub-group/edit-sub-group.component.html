@@ -1,3 +1,4 @@
+<div class="main main-form">
 <div class="sub-head sub-head-form">
     <div class="sub-title" (click)="goBack()">
         <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
@@ -27,20 +28,24 @@
         </div>
 
         <div class="form-group-right">
-            <input type="text" placeholder="Name" class="form-control"/>
+            <ckeditor [editor]="Editor" [config]="config" data="<p>Hello, world!</p>"></ckeditor>
+
             <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>
         </div>
     </div>
 
     <div class="form-group-custom">
         <div class="form-group-left">
-            <label class="control-label">Icon</label>
-            <p class="info">Upload an Icon</p>
+            <label class="control-label">Feature group</label>
+            <p class="info">Which feature group does this feature belong to?</p>
         </div>
 
         <div class="form-group-right">
-            <input type="text" placeholder="Name" class="form-control"/>
-            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>
+            <div class="form-group">
+                <label class="control-label control-label-custom">Feature group</label>
+                <input type="text" placeholder="Feature group" class="form-control"/>
+            </div>
         </div>
     </div>
+</div>
 </div>

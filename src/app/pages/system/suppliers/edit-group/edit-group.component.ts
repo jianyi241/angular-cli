@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {GroupInfo} from "../../../../model/po/groupInfo";
-import {ConfigService} from "../../../../service/config.service";
+import { Component, OnInit } from '@angular/core';
+import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {Router} from '@angular/router';
+
 
 @Component({
     selector: 'app-edit-group',
@@ -9,22 +10,55 @@ import {ConfigService} from "../../../../service/config.service";
     styleUrls: ['./edit-group.component.less']
 })
 export class EditGroupComponent implements OnInit {
-    group: GroupInfo;
-    reminder: any;
-    type: string;
-    constructor(private route: Router, public configService: ConfigService) {
-        let state = this.route.getCurrentNavigation().extras.state;
-        this.group = state.group;
-        this.reminder = state.reminder;
-    }
+
+    public files: NgxFileDropEntry[] = [];
+    public Editor = ClassicEditor;
+    public config = {
+        placeholder: 'Description',
+    };
+    constructor(  private router: Router) { }
 
     ngOnInit(): void {
     }
 
-    goBack(): void {
-        this.route.navigate(['/supplier/comparison/4'], {
-            state: this.reminder
-        })
+    public goBack(): void{
+        this.router.navigate(['/']);
+    }
+
+    public onReady( editor ): void {
+        editor.ui.getEditableElement().parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.getEditableElement()
+        );
+    }
+
+    public dropped(files: NgxFileDropEntry[]): void {
+        this.files = files;
+        for (const droppedFile of files) {
+
+            // Is it a file?
+            if (droppedFile.fileEntry.isFile) {
+                const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+                fileEntry.file((file: File) => {
+
+                    // Here you can access the real file
+                    console.log(droppedFile.relativePath, file);
+
+                });
+            } else {
+                // It was a directory (empty directories are added, otherwise only files)
+                const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+                console.log(droppedFile.relativePath, fileEntry);
+            }
+        }
+    }
+
+    public fileOver(event): void{
+        console.log(event);
+    }
+
+    public fileLeave(event): void {
+        console.log(event);
     }
 
 }

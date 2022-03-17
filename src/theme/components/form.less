@@ -5,8 +5,17 @@
   padding:24px 0;
   border-bottom:1px solid #D6DDEB ;
 
+  @media screen and (max-width: 890px){
+    flex-direction: column;
+  }
+
   .form-group-left{
     width: 259px;
+
+    @media screen and (max-width: 890px){
+      width: 100%;
+      margin-bottom: 10px;
+    }
 
     .info{
       font-weight: 400;
@@ -22,10 +31,20 @@
     font-size: 14px;
     line-height: 160%;
     color: #25324B;
+    margin-bottom: 0;
+
+    &.control-label-custom{
+      color:#515B6F;
+      margin-bottom: 4px;
+    }
   }
 
   .form-group-right{
     width: 579px;
+
+    @media screen and (max-width: 890px){
+      width: 100%;
+    }
 
     .tip-info{
       display: flex;
@@ -39,6 +58,11 @@
     }
   }
 
+  .form-upload-file{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 
 .form-control {
@@ -77,4 +101,109 @@
   &::-webkit-input-placeholder {
     color: #A8ADB7;
   }
+
+  &:disabled, &[readonly] {
+    background: #FFFFFF;
+    opacity: 0.3;
+    border: 1px solid #D6DDEB;
+    cursor: not-allowed;
+  }
+}
+
+
+.form-group{
+  margin-bottom: 24px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+
+
+.ng-select {
+  &.select-single {
+    font-size: 13px;
+    font-weight: 400;
+    color: #515B6F;
+
+    .ng-input{
+
+      margin-top:5px;
+
+      input{
+        font-size: 13px;
+        font-weight: 400;
+        color: darken(#515B6F,5%);
+        padding:0 6px !important;
+      }
+    }
+
+    .ng-select-container {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 160%;
+      width: 100%;
+      height: 43px;
+      border:1px solid #D6DDEB;
+      padding:0 16px ;
+      border-radius: 0;
+      box-shadow: none !important;
+
+      .ng-value-container{
+        padding:0;
+      }
+
+      .ng-placeholder{
+        color:#A8ADB7;
+      }
+
+      .ng-arrow-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 0;
+        .ng-arrow{
+          background-image: url("../../assets/img/icon/icon-arr-down-black.svg");
+          width: 20px !important;
+          height: 20px !important;
+          border:none;
+        }
+      }
+
+      .ng-value-label {
+        color: #515B6F;
+      }
+    }
+
+    &.ng-select-focused {
+      .ng-select-container {
+        border: 1px solid darken(#D6DDEB,10%);
+      }
+    }
+  }
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+  font-weight: 400;
+  color: #515B6F !important;
+  padding:8px 16px;
+
+
+  &.ng-option-selected,
+  &.ng-option-selected.ng-option-marked,
+  &.ng-option-marked,
+  &:hover {
+
+
+    .ng-option-label{
+      font-weight: 400;
+    }
+  }
+
+}
+
+
+.ck-editor__editable_inline {
+  min-height: 223px;
 }
