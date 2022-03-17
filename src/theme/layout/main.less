@@ -28,8 +28,40 @@
     padding-top:174px;
     overflow: hidden;
   }
-}
 
+  &.main-form-with-tab{
+    padding-top:228px;
+
+    @media screen and (max-width: 940px){
+      padding-top:208px;
+    }
+
+    .tab-menu {
+      position: fixed;
+      top:162px;
+      left:0;
+      width: 100%;
+      padding:0 168px;
+      background-color: #FCFCFC;
+      z-index: 99;
+      margin-top:0;
+
+      @media screen and (max-width: 1400px){
+        padding:0 100px;
+      }
+
+      @media screen and (max-width: 1240px){
+        padding:0 40px;
+      }
+
+      @media screen and (max-width: 940px){
+        top:142px;
+        padding:10px 20px;
+        height: auto;
+      }
+    }
+  }
+}
 
 .form-content{
   .form-group-custom{

@@ -1,11 +1,12 @@
 .form-content-column{
-  display: flex;
-  justify-content: space-between;
+  position: relative;
   border-bottom:1px solid #D6DDEB !important;
 }
 
 .form-column-left{
+ ;
   width: 306px;
+  min-width: 240px;
   max-width: 100%;
   .title{
     font-weight: 700;
@@ -35,8 +36,12 @@
 }
 
 .form-column-right{
-  flex:1;
+  width: 100%;
   padding-left:32px;
+
+  @media screen and (max-width: 890px){
+    padding: 0;
+  }
 }
 
 .form-column-title{
@@ -65,11 +70,21 @@
   align-items: flex-start;
   margin-bottom: 24px;
 
+  @media screen and (max-width: 890px){
+    flex-direction: column;
+  }
+
   .form-sub-left{
-    width: 40%;
+    width: calc(40% - 40px);
     min-width: 259px;
     max-width: 100%;
     padding-right: 40px;
+
+    @media screen and (max-width: 890px){
+      width: 100%;
+      padding-right: 0;
+    }
+
     .title,.text{
       font-weight: 700;
       color:#25324B;
@@ -84,8 +99,12 @@
   }
 
   .form-sub-right{
-    flex:1;
+    width: 60%;
     max-width: 100%;
+
+    @media screen and (max-width: 890px){
+      width: 100%;
+    }
 
     .form-three-group{
       margin-bottom: 24px;
