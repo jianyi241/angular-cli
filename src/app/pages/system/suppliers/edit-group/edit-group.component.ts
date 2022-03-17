@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 import {Router} from '@angular/router';
 
 
@@ -15,7 +16,12 @@ export class EditGroupComponent implements OnInit {
     public Editor = ClassicEditor;
     public config = {
         placeholder: 'Description',
-    };
+        wordCount: {
+            displayWords: true,
+            displayCharacters: true,
+        }};
+
+
     constructor(  private router: Router) { }
 
     ngOnInit(): void {
