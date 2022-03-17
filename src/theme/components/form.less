@@ -11,6 +11,7 @@
 
   .form-group-left{
     width: 259px;
+    max-width: 100%;
 
     @media screen and (max-width: 890px){
       width: 100%;
@@ -37,24 +38,20 @@
       color:#515B6F;
       margin-bottom: 4px;
     }
+
+    &.control-label-custom-large{
+      color:#515B6F;
+      font-size: 16px;
+      line-height: 25.6px;
+    }
   }
 
   .form-group-right{
     width: 579px;
+    max-width: 100%;
 
     @media screen and (max-width: 890px){
       width: 100%;
-    }
-
-    .tip-info{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 160%;
-      color: #7C8493;
-      margin: 4px 0px;
     }
   }
 
@@ -110,6 +107,16 @@
   }
 }
 
+.tip-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 160%;
+  color: #7C8493;
+  margin: 4px 0px;
+}
 
 .form-group{
   margin-bottom: 24px;

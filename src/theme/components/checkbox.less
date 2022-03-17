@@ -1,10 +1,11 @@
 //
 // Checkboxes  Radioboxs
 // --------------------------------------------------
-@checkedColor: #4359F5;
+@checkedColor: #4640DE;
 @uncheckColor: #ffffff;
-@borderColor: #C6D8D3;
-@labelColor: #3A3335;
+@borderColor: #4640DE;
+@uncheckBorderColor: #D6DDEB;
+@labelColor: #333333;
 
 
 //check-box
@@ -36,20 +37,21 @@
       top: 50%;
       margin-top: -10px;
       left: 0;
-      background-color: @borderColor;
+      border:2px solid @uncheckBorderColor;
+      background-color: @white;
     }
 
     &::after {
       content: "";
       display: block;
       position: absolute;
-      height: 8px;
-      width: 8px;
+      height: 12px;
+      width: 12px;
       top: 50%;
       left: 6px;
-      margin-top: -4px;
+      margin-top: -6px;
       border-radius: 100%;
-      background-color: #ffffff;
+      background-color: @white;
     }
   }
 
@@ -67,7 +69,7 @@
 
     &:checked {
       +label::before {
-        background-color: @checkedColor;
+        border:1px solid @borderColor;
       }
     }
 
@@ -77,15 +79,6 @@
       +label::before {
         opacity: 0.4;
       }
-    }
-  }
-
-  &.check-box-td {
-    margin: 0;
-
-    label {
-      padding-left: 0;
-      width: 18px;
     }
   }
 }
@@ -98,11 +91,12 @@
   margin: 10px 0;
 
   label {
+    font-weight: 700;
+    color:#333333;
     width: auto;
     height: 100%;
-    padding-left: 36px;
-    font-size: 14px;
-    line-height: 19px;
+    padding-left: 38px;
+    font-size: 16px;
     cursor: pointer;
 
 
@@ -117,19 +111,19 @@
     }
 
     &::before {
-      height: 19px;
-      width: 19px;
+      height: 20px;
+      width: 20px;
       margin-top: -10px;
       line-height: 20px;
-      border: 2px solid @borderColor;
+      border: 2px solid @uncheckBorderColor;
       background-color: @uncheckColor;
     }
 
     &::after {
-      width: 9px;
-      height: 9px;
-      margin-top: -5px;
-      left: 5px;
+      width: 12px;
+      height: 12px;
+      margin-top: -6px;
+      left: 4px;
       background-color: transparent;
     }
   }
@@ -147,9 +141,8 @@
     appearance: none;
 
     &:checked {
-
       +label::before {
-        border: 2px solid @checkedColor;
+        border: 1px solid @checkedColor;
       }
 
       +label::after {

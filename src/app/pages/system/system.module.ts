@@ -9,15 +9,19 @@ import { EditPropComponent } from './suppliers/edit-prop/edit-prop.component';
 import { EditDetailComponent } from './suppliers/edit-detail/edit-detail.component';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { ProductsComponent } from './platforms/products/products.component';
+import { FeatureFormComponent } from './suppliers/feature-form/feature-form.component';
+import {NgxFileDropModule} from "ngx-file-drop";
 
 
 @NgModule({
-  declarations: [ComparisonToolComponent, EditGroupComponent, EditSubGroupComponent, EditPropComponent, EditDetailComponent],
+  declarations: [ComparisonToolComponent, EditGroupComponent, EditSubGroupComponent, EditPropComponent, EditDetailComponent, ProductsComponent, FeatureFormComponent],
     imports: [
         CommonModule,
         SystemRoutingModule,
         NgSelectModule,
-        CKEditorModule
+        CKEditorModule,
+        NgxFileDropModule
     ]
 })
 export class SystemModule { }
