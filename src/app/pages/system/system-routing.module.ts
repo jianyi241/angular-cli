@@ -5,6 +5,7 @@ import {ComparisonToolComponent} from './suppliers/comparison-tool/comparison-to
 import {EditGroupComponent} from './suppliers/edit-group/edit-group.component';
 import {EditSubGroupComponent} from "./suppliers/edit-sub-group/edit-sub-group.component";
 import {EditPropComponent} from "./suppliers/edit-prop/edit-prop.component";
+import {EditDetailComponent} from "./suppliers/edit-detail/edit-detail.component";
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
             {
                 path: 'edit-prop/:id',
                 component: EditPropComponent,
+            },
+            {
+                path: 'edit-detail',
+                component: EditDetailComponent,
             }
         ]
     },
