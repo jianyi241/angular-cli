@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from '../../common/layout/layout.component';
 import {ComparisonToolComponent} from './suppliers/comparison-tool/comparison-tool.component';
 import {EditGroupComponent} from './suppliers/edit-group/edit-group.component';
@@ -7,7 +7,7 @@ import {EditSubGroupComponent} from "./suppliers/edit-sub-group/edit-sub-group.c
 import {EditPropComponent} from "./suppliers/edit-prop/edit-prop.component";
 import {EditDetailComponent} from "./suppliers/edit-detail/edit-detail.component";
 import {FeatureFormComponent} from "./suppliers/feature-form/feature-form.component";
-import { ProductsComponent } from './platforms/products/products.component';
+import {ProductsComponent} from './platforms/products/products.component';
 
 const routes: Routes = [
     {
@@ -23,7 +23,7 @@ const routes: Routes = [
                 component: EditGroupComponent,
             },
             {
-                path: 'edit-sub-group/:id',
+                path: 'edit-sub-group/:id/:parentId',
                 component: EditSubGroupComponent,
             },
             {

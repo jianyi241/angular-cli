@@ -22,6 +22,7 @@ export class GroupInfo {
     description?: string;
     id?: string;
     name?: string;
+    parentName?: string;
     parentId?: string;
     sort?: number;
     subList?: Array<GroupInfo> = new Array<GroupInfo>();

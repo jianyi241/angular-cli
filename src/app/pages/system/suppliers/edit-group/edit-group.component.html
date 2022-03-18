@@ -6,7 +6,6 @@
         </div>
 
         <div class="btn-control-group">
-            <button class="btn btn-clear btn-text-danger">Archive</button>
             <button class="btn btn-purple" (click)="saveGroup()">{{group.id ? 'Update' : 'Save'}}</button>
         </div>
     </div>
@@ -27,8 +26,8 @@
 
             <div class="form-group-right">
                 <input type="text" placeholder="Name"
-                       [(ngModel)]="group.name" [maxlength]="40" class="form-control"/>
-                <p class="tip-info">Maximum 40 characters</p>
+                       [(ngModel)]="group.name" [maxlength]="100" class="form-control"/>
+                <p class="tip-info">Maximum 100 characters</p>
             </div>
         </div>
 
@@ -44,26 +43,33 @@
             </div>
         </div>
 
-        <div class="form-upload-file">
-            <div class="upload-file-show">
-                <img [src]="group.visitUrl || './assets/img/icon/image.png'"/>
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Icon</label>
+                <p class="info">Upload an Icon</p>
             </div>
-            <div class="form-group-right">
-                <div class="upload-file">
-                    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-                                   [multiple]="false" [directory]="false"
-                                   [accept]="'.png,.svg,.gif,.jpg'">
-                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-<!--                            <span class="icon-block icon-loading icon-32 upload-loading"></span>-->
-                            <div class="upload-content" (click)="openFileSelector()">
-                                <span class="icon-block icon-photo icon-32"></span>
-                                <div class="file-intro"><span>Click to replace</span> or drag and drop </div>
-                                <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
-                            </div>
-                        </ng-template>
-                    </ngx-file-drop>
+            <div class="form-upload-file">
+                <div class="upload-file-show">
+                    <img [src]="group.visitUrl"/>
+                </div>
+                <div class="form-group-right">
+                    <div class="upload-file">
+                        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+                                       [multiple]="false" [directory]="false"
+                                       [accept]="'.png,.svg,.gif,.jpg'">
+                            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                <!--                            <span class="icon-block icon-loading icon-32 upload-loading"></span>-->
+                                <div class="upload-content" (click)="openFileSelector()">
+                                    <span class="icon-block icon-photo icon-32"></span>
+                                    <div class="file-intro"><span>Click to replace</span> or drag and drop </div>
+                                    <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                                </div>
+                            </ng-template>
+                        </ngx-file-drop>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

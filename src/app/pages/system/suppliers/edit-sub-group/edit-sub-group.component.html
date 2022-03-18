@@ -2,12 +2,12 @@
 <div class="sub-head sub-head-form">
     <div class="sub-title" (click)="goBack()">
         <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-        {{subGroup?.name}}
+        {{subGroup.name}}
     </div>
 
     <div class="btn-control-group">
-        <button class="btn btn-clear btn-text-danger">Archive</button>
-        <button class="btn btn-purple">Update</button>
+<!--        <button class="btn btn-clear btn-text-danger">Archive</button>-->
+        <button class="btn btn-purple" (click)="saveSubGroup()">{{subGroup.id ? 'Update' : 'Save'}}</button>
     </div>
 </div>
 
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group-right">
-            <input type="text" placeholder="Name" class="form-control"/>
+            <input type="text" placeholder="Name" [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
             <p class="tip-info">Maximum 100 characters</p>
         </div>
     </div>
@@ -46,12 +46,12 @@
         <div class="form-group-right">
             <div class="form-group">
                 <label class="control-label control-label-custom">Feature group</label>
-                <input type="text" placeholder="Feature group" class="form-control"/>
+                <input type="text" readonly [ngModel]="subGroup.parentName" placeholder="Feature group" class="form-control"/>
             </div>
         </div>
     </div>
 
-    <div class="form-group-custom">
+    <!--<div class="form-group-custom">
         <div class="form-group-left">
             <label class="control-label">Feature group</label>
             <p class="info">Which feature group does this feature belong to?</p>
@@ -72,8 +72,8 @@
                 </ng-select>
             </div>
         </div>
-    </div>
-
+    </div>-->
+<!--
     <div class="form-group-custom">
         <div class="form-group-left">
             <label class="control-label">Field type</label>
@@ -86,6 +86,6 @@
                 <input type="text" placeholder="Field type" value="Y/N" disabled class="form-control"/>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 </div>

@@ -9,6 +9,8 @@ import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {FileRepository} from "../../../../repository/file-repository";
+import {TabType} from "../../../../model/enums/tab-type";
+import {Constants} from "../../../../model/constants";
 
 
 @Component({
@@ -35,6 +37,7 @@ export class EditGroupComponent implements OnInit {
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
+        this.group.tabType = TabType.features.value;
     }
 
     ngOnInit(): void {
@@ -43,13 +46,15 @@ export class EditGroupComponent implements OnInit {
 
     init(): void {
         this.parseRouteParam();
-        this.detail();
         this.initEditConfig();
     }
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.id = params['id'];
+            if (params['id'] != Constants.NON_ID) {
+                this.id = params['id'];
+                this.detail();
+            }
         })
     }
 
@@ -101,6 +106,7 @@ export class EditGroupComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg)
                 return;
             }
+            this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
         });
     }
 }
