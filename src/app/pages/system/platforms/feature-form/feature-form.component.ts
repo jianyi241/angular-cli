@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgxFileDropEntry} from "ngx-file-drop";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 

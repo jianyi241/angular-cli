@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FeatureFormComponent } from './feature-form.component';
+import {FeatureFormComponent} from './feature-form.component';
 
 describe('FeatureFormComponent', () => {
   let component: FeatureFormComponent;
