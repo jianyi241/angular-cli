@@ -21,8 +21,7 @@ import {Constants} from "../../../../model/constants";
 export class EditGroupComponent implements OnInit {
     id: string;
     group: GroupInfo = new GroupInfo();
-    reminder: any;
-    type: string;
+    uploading = false;
     Editor = ClassicEditor;
     config: {
         placeholder: 'Description',
@@ -76,24 +75,23 @@ export class EditGroupComponent implements OnInit {
     }
 
     dropped(files: NgxFileDropEntry[]): void {
-        for (const droppedFile of files) {
-            if (droppedFile.fileEntry.isFile) {
-                const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-                fileEntry.file((file: File) => {
-                    if (!file.type.includes('image')) {
-                        this.toastRepository.showDanger('Unsupported file types');
-                        return;
+        if (files[0].fileEntry.isFile) {
+            const fileEntry = files[0].fileEntry as FileSystemFileEntry;
+            fileEntry.file((file: File) => {
+                if (!file.type.includes('image')) {
+                    this.toastRepository.showDanger('Unsupported file types');
+                    return;
+                }
+                this.uploading = true;
+                this.fileRepository.uploadFile('img', file).then(res => {
+                    this.uploading = false;
+                    if (res.statusCode == 200) {
+                        this.group.attachmentVo = res.data[0];
                     }
-                    let fileReader = new FileReader();
-                    fileReader.readAsDataURL(file);
-                    fileReader.onload = () =>  {
-                        this.group.visitUrl = fileReader.result?.toString();
-                    }
-                    this.fileRepository.uploadFile('img', file);
                 });
-            } else {
-                this.toastRepository.showDanger('Unsupported file types');
-            }
+            });
+        } else {
+            this.toastRepository.showDanger('Unsupported file types');
         }
     }
 

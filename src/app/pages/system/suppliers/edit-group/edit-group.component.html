@@ -1,7 +1,7 @@
 <div class="main main-form">
     <div class="sub-head sub-head-form">
         <div class="sub-title" (click)="goBack()">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" ></span>
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
             {{group.name}}
         </div>
 
@@ -27,11 +27,12 @@
         <div class="form-group-custom">
             <div class="form-group-left">
                 <label class="control-label">Description</label>
-                <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers. This will appear as a tool tip</p>
+                <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers.
+                    This will appear as a tool tip</p>
             </div>
 
             <div class="form-group-right">
-<!--                <ckeditor #editor [editor]="Editor" [config]="config" [maxlength]="500" [(ngModel)]="group.description"></ckeditor>-->
+                <!--                <ckeditor #editor [editor]="Editor" [config]="config" [maxlength]="500" [(ngModel)]="group.description"></ckeditor>-->
                 <p class="tip-info">Maximum 500 characters </p>
             </div>
         </div>
@@ -43,7 +44,7 @@
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
-                    <img [src]="group.visitUrl"/>
+                    <img [src]="group.attachmentVo.visitUrl"/>
                 </div>
                 <div class="form-group-right">
                     <div class="upload-file">
@@ -51,10 +52,10 @@
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                                <!--                            <span class="icon-block icon-loading icon-32 upload-loading"></span>-->
+                                <span class="icon-block icon-loading icon-32 upload-loading" [hidden]="!uploading"></span>
                                 <div class="upload-content" (click)="openFileSelector()">
                                     <span class="icon-block icon-photo icon-32"></span>
-                                    <div class="file-intro"><span>Click to replace</span> or drag and drop </div>
+                                    <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
                                     <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
                                 </div>
                             </ng-template>
