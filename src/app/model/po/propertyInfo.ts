@@ -21,6 +21,8 @@ export class PropertyInfo {
     description?: string;
     id?: string;
     name?: string;
+    subGroupName?: string;
+    topGroupName?: string;
     shGroupId?: string;
     sort?: number;
     /**

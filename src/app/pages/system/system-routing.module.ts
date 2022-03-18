@@ -27,7 +27,7 @@ const routes: Routes = [
                 component: EditSubGroupComponent,
             },
             {
-                path: 'edit-prop/:id',
+                path: 'edit-prop/:id/:subGroupId',
                 component: EditPropComponent,
             },
             {

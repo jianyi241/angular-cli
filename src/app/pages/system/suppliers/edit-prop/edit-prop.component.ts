@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {GroupInfo} from "../../../../model/po/groupInfo";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
-import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
+import {Constants} from "../../../../model/constants";
+import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
+import {ToastRepository} from "../../../../repository/toast-repository";
+import {FileRepository} from "../../../../repository/file-repository";
+import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {TabType} from "../../../../model/enums/tab-type";
 
 @Component({
     selector: 'app-edit-prop',
@@ -11,53 +15,65 @@ import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from "n
     styleUrls: ['./edit-prop.component.less']
 })
 export class EditPropComponent implements OnInit {
-    prop: PropertyInfo;
-    type: string;
-    reminder: any;
-    files;
-    constructor(private route: Router, public configService: ConfigService) {
-        let state = this.route.getCurrentNavigation().extras.state;
-        this.prop = state.prop;
-        this.reminder = state.reminder;
+    id: string;
+    prop: PropertyInfo = new PropertyInfo();
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
+                private storage: LocalStorageObServable,
+                public configService: ConfigService,
+                private toastRepository: ToastRepository,
+                private fileRepository: FileRepository,
+                private supplierRepository: SupplierRepository) {
+        this.prop.tabType = TabType.features.value;
+        this.prop.type = 3;
+        this.prop.status = 1;
     }
 
     ngOnInit(): void {
+        this.init();
+    }
+
+    init(): void {
+        this.parseRouteParam();
     }
 
     goBack(): void {
-        this.route.navigate(['/supplier/comparison/4'], {
-            state: this.reminder
+        this.route.navigate(['/supplier/comparison/4']);
+    }
+
+    parseRouteParam(): void {
+        this.activatedRoute.params.subscribe(params => {
+            let subGroupId = params['subGroupId'];
+            if (params['id'] != Constants.NON_ID) {
+                this.id = params['id'];
+                this.detail();
+            } else {
+                this.prop.shGroupId = subGroupId;
+                this.subGroup();
+            }
         })
     }
 
-    public dropped(files: NgxFileDropEntry[]): void {
+    detail(): void {
+        this.supplierRepository.propDetail(this.id).subscribe(res => {
+            this.prop = Object.assign(this.prop, res.data);
+        })
+    }
 
-        this.files = files;
-        for (const droppedFile of files) {
+    subGroup(): void {
+        this.supplierRepository.subGroupDetail(this.prop.shGroupId).subscribe(res => {
+            this.prop.topGroupName = res.data.parentName;
+            this.prop.subGroupName = res.data.name;
+        })
+    }
 
-            // Is it a file?
-            if (droppedFile.fileEntry.isFile) {
-                const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-                fileEntry.file((file: File) => {
-
-                    // Here you can access the real file
-                    console.log(droppedFile.relativePath, file);
-
-                });
-            } else {
-                // It was a directory (empty directories are added, otherwise only files)
-                const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-                console.log(droppedFile.relativePath, fileEntry);
+    saveProp() {
+        this.supplierRepository.saveProp(this.prop).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
             }
-        }
+            this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
+        });
     }
-
-    public fileOver(event): void{
-        console.log(event);
-    }
-
-    public fileLeave(event): void {
-        console.log(event);
-    }
-
 }

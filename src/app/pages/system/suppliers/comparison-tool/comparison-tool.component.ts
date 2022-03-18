@@ -91,7 +91,7 @@ export class ComparisonToolComponent implements OnInit {
     saveProp(prop?: PropertyInfo) {
         this.reminder.propId = prop?.id;
         this.storage.setItem<Reminder>('reminder', this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-prop/${(prop?.id) || 0}`)
+        this.route.navigateByUrl(`/supplier/edit-prop/${(prop?.id) || 0}/${this.reminder.subGroupId}`)
     }
 
     chooseGroup(group: GroupInfo) {
