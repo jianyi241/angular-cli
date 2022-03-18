@@ -6,6 +6,7 @@ import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {Reminder} from "../../../../model/vo/reminder";
+import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -19,12 +20,12 @@ export class ComparisonToolComponent implements OnInit {
     properties: Array<PropertyInfo> = new Array<PropertyInfo>();
     reminder: Reminder = new Reminder();
 
-    constructor(private route: Router, private activatedRoute: ActivatedRoute, private supplierRepository: SupplierRepository, public configService: ConfigService) {
-        let state = this.route.getCurrentNavigation().extras?.state;
-        if (state) {
-            this.reminder = state;
-        }
-
+    constructor(private route: Router, private activatedRoute: ActivatedRoute, private storage: LocalStorageObServable, private supplierRepository: SupplierRepository, public configService: ConfigService) {
+        this.storage.getItem<Reminder>('reminder').subscribe(data => {
+            if (data != 'undefined') {
+                this.reminder = data;
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -77,23 +78,20 @@ export class ComparisonToolComponent implements OnInit {
 
     saveGroup(group?: GroupInfo): void {
         this.reminder.groupId = group?.id;
-        this.route.navigateByUrl(`/supplier/edit-group/${(group?.id) || 0}`, {
-            state: {group: group, reminder: this.reminder}
-        })
+        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.route.navigateByUrl(`/supplier/edit-group/${(group?.id) || 0}`)
     }
 
     saveSubGroup(subGroup?: GroupInfo) {
         this.reminder.subGroupId = subGroup?.id;
-        this.route.navigateByUrl(`/supplier/edit-sub-group/${(subGroup?.id) || 0}`, {
-            state: {subGroup: subGroup, reminder: this.reminder}
-        })
+        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.route.navigateByUrl(`/supplier/edit-sub-group/${(subGroup?.id) || 0}`)
     }
 
     saveProp(prop?: PropertyInfo) {
         this.reminder.propId = prop?.id;
-        this.route.navigateByUrl(`/supplier/edit-prop/${(prop?.id) || 0}`, {
-            state: {prop: prop, reminder: this.reminder}
-        })
+        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.route.navigateByUrl(`/supplier/edit-prop/${(prop?.id) || 0}`)
     }
 
     chooseGroup(group: GroupInfo) {

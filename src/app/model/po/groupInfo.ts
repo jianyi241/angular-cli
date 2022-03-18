@@ -29,6 +29,7 @@ export class GroupInfo {
      * 1:overview 2:information 3:esg 4:features 5:fees&rates 6:find a Bdm 7:change History
      */
     tabType?: number;
+    visitUrl?: string;
     updateTime?: string;
     updateUser?: string;
 }

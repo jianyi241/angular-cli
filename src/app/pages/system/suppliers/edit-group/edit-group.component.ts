@@ -1,11 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
+import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from "../../../../service/config.service";
 import {GroupInfo} from "../../../../model/po/groupInfo";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
+import {ToastRepository} from "../../../../repository/toast-repository";
+import {FileRepository} from "../../../../repository/file-repository";
 
 
 @Component({
@@ -18,7 +21,6 @@ export class EditGroupComponent implements OnInit {
     group: GroupInfo = new GroupInfo();
     reminder: any;
     type: string;
-    files: NgxFileDropEntry[] = [];
     Editor = ClassicEditor;
     config: {
         placeholder: 'Description',
@@ -26,13 +28,17 @@ export class EditGroupComponent implements OnInit {
     @ViewChild('editor')
     editorComponent: CKEditorComponent;
 
-    constructor(private route: Router, private activatedRoute: ActivatedRoute, public configService: ConfigService, private supplierRepository: SupplierRepository) {
-        let state = this.route.getCurrentNavigation()?.extras?.state;
-        this.reminder = state?.reminder;
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
+                private storage: LocalStorageObServable,
+                public configService: ConfigService,
+                private toastRepository: ToastRepository,
+                private fileRepository: FileRepository,
+                private supplierRepository: SupplierRepository) {
     }
 
     ngOnInit(): void {
-        // this.editorComponent.
+        this.init();
     }
 
     init(): void {
@@ -49,14 +55,12 @@ export class EditGroupComponent implements OnInit {
 
     detail(): void {
         this.supplierRepository.groupDetail(this.id).subscribe(res => {
-
+            this.group = Object.assign(this.group, res.data);
         })
     }
 
     goBack(): void {
-        this.route.navigateByUrl('/supplier/comparison/4', {
-            state: this.reminder
-        });
+        this.route.navigateByUrl('/supplier/comparison/4');
     }
 
     onReady(editor): void {
@@ -67,34 +71,36 @@ export class EditGroupComponent implements OnInit {
     }
 
     dropped(files: NgxFileDropEntry[]): void {
-        this.files = files;
         for (const droppedFile of files) {
-
-            // Is it a file?
             if (droppedFile.fileEntry.isFile) {
                 const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
                 fileEntry.file((file: File) => {
-
-                    // Here you can access the real file
-                    console.log(droppedFile.relativePath, file);
-
+                    if (!file.type.includes('image')) {
+                        this.toastRepository.showDanger('Unsupported file types');
+                        return;
+                    }
+                    let fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = () =>  {
+                        this.group.visitUrl = fileReader.result?.toString();
+                    }
+                    this.fileRepository.uploadFile('img', file);
                 });
             } else {
-                // It was a directory (empty directories are added, otherwise only files)
-                const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-                console.log(droppedFile.relativePath, fileEntry);
+                this.toastRepository.showDanger('Unsupported file types');
             }
         }
     }
 
-    fileOver(event): void {
-        console.log(event);
-    }
-
-    fileLeave(event): void {
-        console.log(event);
-    }
-
     initEditConfig() {
+    }
+
+    saveGroup() {
+        this.supplierRepository.saveGroup(this.group).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg)
+                return;
+            }
+        });
     }
 }

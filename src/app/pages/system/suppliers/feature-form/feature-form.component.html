@@ -84,7 +84,7 @@
                              <label class="control-label control-label-custom-large">Upload a screenshot of this feature if applicable</label>
                              <div class="upload-file">
                                  <ngx-file-drop dropZoneLabel="Drop files here"
-                                                accept="ACCEPT_FILE_TYPES">
+                                                [accept]="'.png,.svg,.gif,.jpg'">
                                      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                                          <span class="icon-block icon-loading icon-32 upload-loading"></span>
 
