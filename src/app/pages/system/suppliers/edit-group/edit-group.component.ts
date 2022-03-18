@@ -1,10 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from "../../../../service/config.service";
 import {GroupInfo} from "../../../../model/po/groupInfo";
-import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../repository/toast-repository";
@@ -23,12 +21,18 @@ export class EditGroupComponent implements OnInit {
     id: string;
     group: GroupInfo = new GroupInfo();
     uploading = false;
-    Editor = ClassicEditor;
-    config: {
-        placeholder: 'Description',
-    };
-    @ViewChild('editor')
-    editorComponent: CKEditorComponent;
+    config = {
+        toolbarLocation: 'bottom',
+        removeButtons: 'Underline,Subscript,Superscript,Strike,Image,Table,HorizontalRule,SpecialChar,PageBreak,Iframe,Outdent,Indent,Blockquote,CreateDiv,JustifyLeft,JustifyCenter,BidiLtr,BidiRtl,Language,JustifyRight,JustifyBlock,Anchor,Unlink,Styles,About,Maximize,TextColor,Format,Font,FontSize,ShowBlocks,BGColor,CopyFormatting,RemoveFormat,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt,SelectAll,Find,Undo,Cut,Templates,Save,Source,NewPage,ExportPdf,Preview,Print,PasteFromWord,Paste,Copy,PasteText,Redo,Replace,Smiley',
+        removePlugins: 'elementspath,resize',
+        extraPlugins: 'emoji',
+        toolbarGroups: [
+            { name: 'insert', groups: [ 'insert' ] },
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent'] },
+            { name: 'links', groups: [ 'links' ] },
+        ],
+    }
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,

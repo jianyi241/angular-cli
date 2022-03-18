@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {GroupInfo} from "../../../../model/po/groupInfo";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {FileRepository} from "../../../../repository/file-repository";
@@ -22,8 +21,6 @@ export class EditSubGroupComponent implements OnInit {
     public config = {
         placeholder: 'Description',
     };
-    public Editor = ClassicEditor;
-
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,

@@ -32,7 +32,9 @@
             </div>
 
             <div class="form-group-right">
-                <!--                <ckeditor #editor [editor]="Editor" [config]="config" [maxlength]="500" [(ngModel)]="group.description"></ckeditor>-->
+<!--                <ckeditor #editor [editor]="Editor" [(ngModel)]="group.description"></ckeditor>-->
+<!--                <div appCustomizedCkeditor></div>-->
+                <ckeditor [(ngModel)]="group.description" [config]="config"></ckeditor>
                 <p class="tip-info">Maximum 500 characters </p>
             </div>
         </div>
@@ -52,7 +54,8 @@
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                                <span class="icon-block icon-loading icon-32 upload-loading" [hidden]="!uploading"></span>
+                                <span class="icon-block icon-loading icon-32 upload-loading"
+                                      [hidden]="!uploading"></span>
                                 <div class="upload-content" (click)="openFileSelector()">
                                     <span class="icon-block icon-photo icon-32"></span>
                                     <div class="file-intro"><span>Click to replace</span> or drag and drop</div>

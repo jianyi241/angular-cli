@@ -9,9 +9,9 @@ import {EditPropComponent} from './suppliers/edit-prop/edit-prop.component';
 import {FeatureFormComponent} from "./platforms/feature-form/feature-form.component";
 import {ProductsComponent} from "./platforms/products/products.component";
 import {NgSelectModule} from "@ng-select/ng-select";
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {FormsModule} from "@angular/forms";
 import {NgxFileDropModule} from "ngx-file-drop";
+import {CKEditorModule} from "ckeditor4-angular";
 
 
 @NgModule({
@@ -20,10 +20,9 @@ import {NgxFileDropModule} from "ngx-file-drop";
         CommonModule,
         SystemRoutingModule,
         NgSelectModule,
-        CKEditorModule,
         FormsModule,
+        NgxFileDropModule,
         CKEditorModule,
-        NgxFileDropModule
     ]
 })
 export class SystemModule {

@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {AuthModule} from './pages/auth/auth.module';
 
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 import {OWL_DATE_TIME_LOCALE, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {ToastRepository} from './repository/toast-repository';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -24,9 +24,10 @@ import {HeaderComponent} from './common/header/header.component';
 import {FooterComponent} from './common/footer/footer.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {NgxFileDropModule} from 'ngx-file-drop';
-import {CommonModule} from '@angular/common';
 import {UserRepository} from './repository/user-repository';
-import { SystemModule } from './pages/system/system.module';
+import {CustomizedCkeditorDirective} from './directive/customized-ckeditor.directive';
+import {CKEditorModule} from 'ckeditor4-angular';
+import {SystemModule} from "./pages/system/system.module";
 
 
 @NgModule({
@@ -35,13 +36,15 @@ import { SystemModule } from './pages/system/system.module';
         TimePipe,
         LayoutComponent,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        CustomizedCkeditorDirective
     ],
     imports: [
         CommonModule,
         BrowserModule,
         AppRoutingModule,
         AuthModule,
+        SystemModule,
         HttpClientModule,
         NgbModule,
         NgbPaginationModule,
@@ -55,7 +58,7 @@ import { SystemModule } from './pages/system/system.module';
         NgxLoadingSpinnerModule.forRoot(),
         ModalModule.forRoot(),
         NgxFileDropModule,
-        SystemModule
+        CKEditorModule,
     ],
     providers: [
 
@@ -77,6 +80,7 @@ import { SystemModule } from './pages/system/system.module';
     bootstrap: [AppComponent],
     exports: [
         FooterComponent,
+        CustomizedCkeditorDirective,
     ]
 })
 export class AppModule {
