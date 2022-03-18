@@ -22,4 +22,9 @@ export class HeaderComponent implements OnInit {
     }
 
 
+    activeMatch(routerUrl: string): string {
+        return this.router.url.includes(routerUrl) ? 'active' : '';
+    }
+
+
 }
