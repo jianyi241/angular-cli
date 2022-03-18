@@ -71,6 +71,10 @@ export class EditSubGroupComponent implements OnInit {
     }
 
     saveSubGroup() {
+        if (!this.subGroup.name) {
+            this.toastRepository.showDanger('Name is required.')
+            return;
+        }
         this.supplierRepository.saveGroup(this.subGroup).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

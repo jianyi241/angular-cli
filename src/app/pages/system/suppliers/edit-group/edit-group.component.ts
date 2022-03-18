@@ -101,6 +101,10 @@ export class EditGroupComponent implements OnInit {
     }
 
     saveGroup() {
+        if (!this.group.name) {
+            this.toastRepository.showDanger('Name is required.')
+            return;
+        }
         this.supplierRepository.saveGroup(this.group).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)

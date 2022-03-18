@@ -68,6 +68,10 @@ export class EditPropComponent implements OnInit {
     }
 
     saveProp() {
+        if (!this.prop.name) {
+            this.toastRepository.showDanger('Name is required.')
+            return;
+        }
         this.supplierRepository.saveProp(this.prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

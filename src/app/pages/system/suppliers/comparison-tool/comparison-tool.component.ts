@@ -56,8 +56,11 @@ export class ComparisonToolComponent implements OnInit {
             } else {
                 groupInfo = this.groups.find(group => group.id == this.reminder.groupId);
             }
-            this.subGroups = groupInfo.subList;
-            if (this.subGroups.length == 0) return;
+            this.subGroups = groupInfo.subList || [];
+            if (this.subGroups.length == 0) {
+                this.properties = new Array<PropertyInfo>();
+                return;
+            }
             if (!this.reminder.subGroupId || !this.subGroups.some(subGroup => subGroup.id == this.reminder.subGroupId)) {
                 this.chooseSubGroup(this.subGroups[0]);
             } else {
@@ -96,8 +99,9 @@ export class ComparisonToolComponent implements OnInit {
 
     chooseGroup(group: GroupInfo) {
         this.reminder.groupId = group.id;
-        this.subGroups = group.subList;
+        this.subGroups = group.subList || [];
         if (this.subGroups.length == 0) {
+            this.properties = new Array<PropertyInfo>();
             return;
         }
         this.chooseSubGroup(this.subGroups[0]);
