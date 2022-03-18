@@ -5,6 +5,7 @@ import {ProductInfo} from "../../../../model/po/productInfo";
 import {GroupInfo} from "../../../../model/po/groupInfo";
 import {TabType} from "../../../../model/enums/tab-type";
 import {ProductPropInfo} from "../../../../model/po/productPropInfo";
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
     selector: 'app-feature-form',
@@ -15,6 +16,7 @@ export class FeatureFormComponent implements OnInit {
     product: ProductInfo = new ProductInfo();
     groups: Array<GroupInfo> = new Array<GroupInfo>();
     productProps: Array<ProductPropInfo> = new Array<ProductPropInfo>();
+    public Editor = ClassicEditor;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private platformRepository: PlatformRepository) {
@@ -22,7 +24,7 @@ export class FeatureFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.parseRouteParam();
+        // this.parseRouteParam();
     }
 
     parseRouteParam(): void {

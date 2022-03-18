@@ -28,6 +28,9 @@ import {UserRepository} from './repository/user-repository';
 import {CustomizedCkeditorDirective} from './directive/customized-ckeditor.directive';
 import {CKEditorModule} from 'ckeditor4-angular';
 import {SystemModule} from "./pages/system/system.module";
+import {ReviewsModule} from "./pages/reviews/reviews.module";
+import { ReviewLayoutComponent } from './common/review-layout/review-layout.component';
+import { ReviewHeaderComponent } from './common/review-header/review-header.component';
 
 
 @NgModule({
@@ -37,6 +40,8 @@ import {SystemModule} from "./pages/system/system.module";
         LayoutComponent,
         HeaderComponent,
         FooterComponent,
+        ReviewLayoutComponent,
+        ReviewHeaderComponent,
         CustomizedCkeditorDirective
     ],
     imports: [
@@ -59,6 +64,8 @@ import {SystemModule} from "./pages/system/system.module";
         ModalModule.forRoot(),
         NgxFileDropModule,
         CKEditorModule,
+        SystemModule,
+        ReviewsModule
     ],
     providers: [
 
