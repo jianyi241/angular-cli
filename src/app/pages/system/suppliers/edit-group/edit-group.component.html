@@ -32,8 +32,6 @@
             </div>
 
             <div class="form-group-right">
-<!--                <ckeditor #editor [editor]="Editor" [(ngModel)]="group.description"></ckeditor>-->
-<!--                <div appCustomizedCkeditor></div>-->
                 <ckeditor [(ngModel)]="group.description" [config]="config"></ckeditor>
                 <p class="tip-info">Maximum 500 characters </p>
             </div>

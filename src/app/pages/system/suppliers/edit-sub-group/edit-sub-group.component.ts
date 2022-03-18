@@ -18,9 +18,7 @@ import {Reminder} from "../../../../model/vo/reminder";
 export class EditSubGroupComponent implements OnInit {
     id: string;
     subGroup: GroupInfo = new GroupInfo();
-    public config = {
-        placeholder: 'Description',
-    };
+    config = {...Constants.EDITOR_CONFIG};
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,

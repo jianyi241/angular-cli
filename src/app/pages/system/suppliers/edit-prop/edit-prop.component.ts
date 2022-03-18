@@ -17,6 +17,7 @@ import {TabType} from "../../../../model/enums/tab-type";
 export class EditPropComponent implements OnInit {
     id: string;
     prop: PropertyInfo = new PropertyInfo();
+    config = {...Constants.EDITOR_CONFIG};
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
