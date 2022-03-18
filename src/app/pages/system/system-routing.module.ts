@@ -5,7 +5,7 @@ import {ComparisonToolComponent} from './suppliers/comparison-tool/comparison-to
 import {EditGroupComponent} from './suppliers/edit-group/edit-group.component';
 import {EditSubGroupComponent} from "./suppliers/edit-sub-group/edit-sub-group.component";
 import {EditPropComponent} from "./suppliers/edit-prop/edit-prop.component";
-import {FeatureFormComponent} from "./suppliers/feature-form/feature-form.component";
+import {FeatureFormComponent} from "./platforms/feature-form/feature-form.component";
 import {ProductsComponent} from './platforms/products/products.component';
 
 const routes: Routes = [
@@ -29,10 +29,7 @@ const routes: Routes = [
                 path: 'edit-prop/:id/:subGroupId',
                 component: EditPropComponent,
             },
-            {
-                path:'feature-form',
-                component:FeatureFormComponent
-            },
+
         ]
     },
     {
@@ -42,6 +39,10 @@ const routes: Routes = [
             {
                 path: 'product',
                 component: ProductsComponent,
+            },
+            {
+                path:'feature-form',
+                component:FeatureFormComponent
             },
         ]
     },

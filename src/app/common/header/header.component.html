@@ -7,7 +7,7 @@
         <div class="menu">
             <a >News & Updates</a>
             <a [routerLink]="['/supplier/comparison/4']" [ngClass]="{'active': activeMatch('/supplier')}">Suppliers</a>
-            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platforms</a>
+            <a [routerLink]="['/platform/product']" [ngClass]="{'active': activeMatch('/platform')}">Platforms</a>
             <a >Advice practices</a>
         </div>
 
