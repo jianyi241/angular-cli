@@ -12,6 +12,7 @@
 
 
 import {Attachment} from "../attachment";
+import {PropertyInfo} from "./propertyInfo";
 
 /**
  * sh_group表
@@ -28,6 +29,7 @@ export class GroupInfo {
     parentId?: string;
     sort?: number;
     subList?: Array<GroupInfo> = new Array<GroupInfo>();
+    propertyVoList?: Array<PropertyInfo> = new Array<PropertyInfo>();
     /**
      * 1:overview 2:information 3:esg 4:features 5:fees&rates 6:find a Bdm 7:change History
      */

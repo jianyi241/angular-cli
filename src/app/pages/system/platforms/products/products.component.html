@@ -25,10 +25,10 @@
 
 
     <div class="table-list-content">
-        <div class="list-content">
+        <div class="list-content" *ngFor="let product of products">
             <div class="list-left">
-                <div class="pic"><img src="../../../../../assets/img/logo-bt.png"/></div>
-                <div class="title">BT Panorama</div>
+                <div class="pic"><img src="{{product.attachmentVo?.visitUrl}}"/></div>
+                <div class="title">{{product.name}}</div>
             </div>
 
             <div class="list-right">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-outline-purple-light btn-edit xs-ml-16" (click)="goEdit()">
+                <button class="btn btn-outline-purple-light btn-edit xs-ml-16" (click)="editProduct(product.id)">
                     <span class="icon-block icon-pen icon-20 xs-mr-10"></span>Edit
                 </button>
             </div>

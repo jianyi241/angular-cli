@@ -11,11 +11,14 @@
  */
 
 
+import {Attachment} from "../attachment";
+
 /**
  * sh_product表
  */
 export class ProductInfo {
     attachmentId?: string;
+    attachmentVo: Attachment = new Attachment();
     createTime?: string;
     createUser?: string;
     deleteFlag?: boolean;

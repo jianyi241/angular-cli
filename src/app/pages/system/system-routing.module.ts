@@ -41,7 +41,7 @@ const routes: Routes = [
                 component: ProductsComponent,
             },
             {
-                path:'feature-form',
+                path:'feature-form/:productId',
                 component:FeatureFormComponent
             },
         ]
