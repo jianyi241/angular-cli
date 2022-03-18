@@ -11,6 +11,7 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import {FileRepository} from "../../../../repository/file-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
+import {Reminder} from "../../../../model/vo/reminder";
 
 
 @Component({
@@ -107,6 +108,12 @@ export class EditGroupComponent implements OnInit {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)
                 return;
+            }
+            if (this.id) {
+                this.storage.getItem<Reminder>('reminder').subscribe(data => {
+                    data.groupId = res.data.id;
+                    this.storage.setItem<Reminder>('reminder', data);
+                });
             }
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
         });

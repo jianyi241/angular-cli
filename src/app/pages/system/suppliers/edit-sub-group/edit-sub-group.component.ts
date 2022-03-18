@@ -9,6 +9,7 @@ import {FileRepository} from "../../../../repository/file-repository";
 import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
+import {Reminder} from "../../../../model/vo/reminder";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -79,6 +80,12 @@ export class EditSubGroupComponent implements OnInit {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
+            }
+            if (!this.id) {
+                this.storage.getItem<Reminder>('reminder').subscribe(data => {
+                    data.subGroupId = res.data.id;
+                    this.storage.setItem<Reminder>('reminder', data);
+                });
             }
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
         });

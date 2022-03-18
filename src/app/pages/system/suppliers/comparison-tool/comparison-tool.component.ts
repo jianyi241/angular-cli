@@ -76,6 +76,9 @@ export class ComparisonToolComponent implements OnInit {
     }
 
     chooseTabType(tabType: number) {
+        if (tabType != TabType.features.value) {
+            return;
+        }
         this.currentTabType = tabType;
     }
 
