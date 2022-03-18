@@ -27,6 +27,9 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 import {CommonModule} from '@angular/common';
 import {UserRepository} from './repository/user-repository';
 import { SystemModule } from './pages/system/system.module';
+import {ReviewsModule} from "./pages/reviews/reviews.module";
+import { ReviewLayoutComponent } from './common/review-layout/review-layout.component';
+import { ReviewHeaderComponent } from './common/review-header/review-header.component';
 
 
 @NgModule({
@@ -35,7 +38,9 @@ import { SystemModule } from './pages/system/system.module';
         TimePipe,
         LayoutComponent,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        ReviewLayoutComponent,
+        ReviewHeaderComponent
     ],
     imports: [
         CommonModule,
@@ -55,7 +60,8 @@ import { SystemModule } from './pages/system/system.module';
         NgxLoadingSpinnerModule.forRoot(),
         ModalModule.forRoot(),
         NgxFileDropModule,
-        SystemModule
+        SystemModule,
+        ReviewsModule
     ],
     providers: [
 

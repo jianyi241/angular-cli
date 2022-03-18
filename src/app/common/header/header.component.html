@@ -8,7 +8,7 @@
             <a >News & Updates</a>
             <a [routerLink]="['/supplier/comparison/4']" [ngClass]="{'active': activeMatch('/supplier')}">Suppliers</a>
             <a [routerLink]="['/platform/product']" [ngClass]="{'active': activeMatch('/platform')}">Platforms</a>
-            <a >Advice practices</a>
+            <a [routerLink]="['/review/feature-comparison']" routerLinkActive="active">Advice practices</a>
         </div>
 
         <div class="phone-menu">
@@ -20,7 +20,7 @@
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
                     <a href="#">News & Updates</a>
-                    <a [routerLink]="['/supplier']" routerLinkActive="active">Suppliers</a>
+                    <a [routerLink]="['/supplier/comparison/4']" routerLinkActive="active">Suppliers</a>
                     <a [routerLink]="['/platform/product']" routerLinkActive="active">Platforms</a>
                     <a href="#">Advice practices</a>
                 </div>
