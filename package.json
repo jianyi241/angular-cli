@@ -23,6 +23,7 @@
     "@angular/router": "10.1.2",
     "@ckeditor/ckeditor5-angular": "^3.0.0",
     "@ckeditor/ckeditor5-build-classic": "^33.0.0",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^33.0.0",
     "@ckeditor/ckeditor5-word-count": "^33.0.0",
     "@k-adam/ngx-loading-spinner": "^1.10.2",
     "@ng-bootstrap/ng-bootstrap": "^8.0.2",

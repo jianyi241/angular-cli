@@ -1,13 +1,13 @@
 <div class="main main-form">
     <div class="sub-head sub-head-form">
-        <div class="sub-title">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" (click)="goBack()"></span>
-            Online identity verification for AML/CTF purposes
+        <div class="sub-title" (click)="goBack()">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" ></span>
+            {{group.name}}
         </div>
 
         <div class="btn-control-group">
             <button class="btn btn-clear btn-text-danger">Archive</button>
-            <button class="btn btn-purple">Update</button>
+            <button class="btn btn-purple">{{group.id ? 'Update' : 'Save'}}</button>
         </div>
     </div>
 
@@ -26,7 +26,8 @@
             </div>
 
             <div class="form-group-right">
-                <input type="text" placeholder="Name" class="form-control"/>
+                <input type="text" placeholder="Name"
+                       [(ngModel)]="group.name" [maxlength]="40" class="form-control"/>
                 <p class="tip-info">Maximum 40 characters</p>
             </div>
         </div>
@@ -38,9 +39,8 @@
             </div>
 
             <div class="form-group-right">
-                <ckeditor [editor]="Editor" [config]="config" data=""></ckeditor>
-
-                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>
+<!--                <ckeditor #editor [editor]="Editor" [config]="config" [maxlength]="500" [(ngModel)]="group.description"></ckeditor>-->
+                <p class="tip-info">Maximum 500 characters </p>
             </div>
         </div>
 

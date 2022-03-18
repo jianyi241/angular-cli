@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import * as WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfigService} from "../../../../service/config.service";
+import {GroupInfo} from "../../../../model/po/groupInfo";
+import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
+import {SupplierRepository} from "../../../../repository/supplier-repository";
 
 
 @Component({
@@ -11,34 +14,59 @@ import {Router} from '@angular/router';
     styleUrls: ['./edit-group.component.less']
 })
 export class EditGroupComponent implements OnInit {
-
-    public files: NgxFileDropEntry[] = [];
-    public Editor = ClassicEditor;
-    public config = {
+    id: string;
+    group: GroupInfo = new GroupInfo();
+    reminder: any;
+    type: string;
+    files: NgxFileDropEntry[] = [];
+    Editor = ClassicEditor;
+    config: {
         placeholder: 'Description',
-        wordCount: {
-            displayWords: true,
-            displayCharacters: true,
-        }};
+    };
+    @ViewChild('editor')
+    editorComponent: CKEditorComponent;
 
-
-    constructor(  private router: Router) { }
+    constructor(private route: Router, private activatedRoute: ActivatedRoute, public configService: ConfigService, private supplierRepository: SupplierRepository) {
+        let state = this.route.getCurrentNavigation()?.extras?.state;
+        this.reminder = state?.reminder;
+    }
 
     ngOnInit(): void {
+        // this.editorComponent.
     }
 
-    public goBack(): void{
-        this.router.navigate(['/']);
+    init(): void {
+        this.parseRouteParam();
+        this.detail();
+        this.initEditConfig();
     }
 
-    public onReady( editor ): void {
+    parseRouteParam(): void {
+        this.activatedRoute.params.subscribe(params => {
+            this.id = params['id'];
+        })
+    }
+
+    detail(): void {
+        this.supplierRepository.groupDetail(this.id).subscribe(res => {
+
+        })
+    }
+
+    goBack(): void {
+        this.route.navigateByUrl('/supplier/comparison/4', {
+            state: this.reminder
+        });
+    }
+
+    onReady(editor): void {
         editor.ui.getEditableElement().parentElement.insertBefore(
             editor.ui.view.toolbar.element,
             editor.ui.getEditableElement()
         );
     }
 
-    public dropped(files: NgxFileDropEntry[]): void {
+    dropped(files: NgxFileDropEntry[]): void {
         this.files = files;
         for (const droppedFile of files) {
 
@@ -59,12 +87,14 @@ export class EditGroupComponent implements OnInit {
         }
     }
 
-    public fileOver(event): void{
+    fileOver(event): void {
         console.log(event);
     }
 
-    public fileLeave(event): void {
+    fileLeave(event): void {
         console.log(event);
     }
 
+    initEditConfig() {
+    }
 }

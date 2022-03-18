@@ -1,6 +1,6 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import {Injectable, TemplateRef} from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
 export interface Toast {
     classname: string;
@@ -27,7 +27,6 @@ export class ToastRepository {
             return;
         }
         this.loading = loading;
-        console.log(this.loading);
     }
 
     isTemplate(toast): any {

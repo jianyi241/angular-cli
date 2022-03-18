@@ -15,20 +15,32 @@ export class SupplierRepository {
 
     }
 
-    public groupList(tabType: number): Observable<HttpResult<Array<GroupInfo>>> {
+    groupList(tabType: number): Observable<HttpResult<Array<GroupInfo>>> {
         return this.http.get<HttpResult<Array<GroupInfo>>>(environment.baseURL + `/supplier/groupList/${tabType}`);
     }
 
-    public propList(groupId: string): Observable<HttpResult<Array<PropertyInfo>>> {
+    propList(groupId: string): Observable<HttpResult<Array<PropertyInfo>>> {
         return this.http.get<HttpResult<Array<PropertyInfo>>>(environment.baseURL + `/supplier/propList/${groupId}`);
     }
 
-    public saveGroup(group: GroupInfo): Observable<HttpResult<any>> {
+    saveGroup(group: GroupInfo): Observable<HttpResult<any>> {
         return this.http.post<HttpResult<any>>(environment.baseURL + `/supplier/saveOrUpdateGroup`, group);
     }
 
-    public saveProp(prop: PropertyInfo): Observable<HttpResult<any>> {
+    saveProp(prop: PropertyInfo): Observable<HttpResult<any>> {
         return this.http.post<HttpResult<any>>(environment.baseURL + `/supplier/saveOrUpdateProperty`, prop);
+    }
+
+    groupDetail(id: string): Observable<HttpResult<GroupInfo>> {
+        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/groupConfig/${id}`);
+    }
+
+    subGroupDetail(id: string): Observable<HttpResult<GroupInfo>> {
+        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/subGroupConfig/${id}`);
+    }
+
+    propDetail(id: string): Observable<HttpResult<PropertyInfo>> {
+        return this.http.get<HttpResult<PropertyInfo>>(environment.baseURL + `/supplier/propConfig/${id}`);
     }
 
 }
