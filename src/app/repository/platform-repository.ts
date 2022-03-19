@@ -29,8 +29,8 @@ export class PlatformRepository {
         return this.http.get<HttpResult<Array<ProductPropInfo>>>(environment.baseURL + url);
     }
 
-    saveGroup(productProp: ProductPropInfo): Observable<HttpResult<any>> {
-        return this.http.post<HttpResult<any>>(environment.baseURL + `/product/saveOrUpdateProp`, productProp);
+    saveProductProp(productProps: Array<ProductPropInfo>): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + `/product/saveOrUpdateProp`, productProps);
     }
 
     productDetail(id: string): Observable<HttpResult<ProductInfo>> {

@@ -8,7 +8,7 @@
         <div class="btn-control-group">
             <!--            <button class="btn btn-clear text-danger">Archive</button>-->
             <!--            <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>-->
-            <button class="btn btn-purple xs-ml-24">Submit for review</button>
+            <button class="btn btn-purple xs-ml-24" (click)="saveProductProp()">Submit for review</button>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
                     <label class="control-label">{{subGroup.name}}</label>
                     <p class="info" [innerHTML]="subGroup.description"></p>
                 </div>
-                <div class="form-sub-group" *ngFor="let prop of props">
+                <div class="form-sub-group" *ngFor="let prop of props; let propIndex = index">
                     <div class="form-sub-left">
                         <div class="title">{{prop.name}}</div>
                         <div class="text" [innerHTML]="prop.description"></div>
@@ -54,52 +54,58 @@
                             <label class="control-label control-label-custom-large">Does this feature exist on this
                                 platform?</label>
                             <div class="radio-box">
-                                <input type="radio" name="platform" id="yes1"/>
-                                <label for="yes1">Yes</label>
+                                <input type="radio" [(ngModel)]="prop.propValue"
+                                       value="yes"
+                                       [name]="'platform'+propIndex"
+                                       [id]="'yes'+propIndex"/>
+                                <label for="{{'yes' + propIndex}}">Yes</label>
                             </div>
 
                             <div class="radio-box">
-                                <input type="radio" name="platform" id="no1"/>
-                                <label for="no1">No</label>
+                                <input type="radio" [(ngModel)]="prop.propValue"
+                                       value="no"
+                                       [name]="'platform'+propIndex"
+                                       [id]="'no'+propIndex"/>
+                                <label for="{{'no' + propIndex}}">No</label>
                             </div>
                         </div>
+                        <ng-container *ngIf="prop.propValue == 'yes'">
+                            <div class="form-three-group">
+                                <label class="control-label control-label-custom-large">Enter your description of this
+                                    feature</label>
+                                <ckeditor [(ngModel)]="prop.productDesc" [config]="config"></ckeditor>
+<!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
+                            </div>
 
-                        <div class="form-three-group">
-                            <label class="control-label control-label-custom-large">Enter your description of this
-                                feature</label>
-                            <!--                             <ckeditor [editor]="Editor" [config]="{placeholder: 'What security measures are in place, e.g. ISO 27001 certification'}" data=""></ckeditor>-->
-                            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>
-                        </div>
-
-                        <div class="form-three-group">
-                            <label class="control-label control-label-custom-large">Upload a screenshot of this feature
-                                if applicable</label>
-                            <div class="form-upload-file">
-                                <div class="upload-file-show">
-                                    <img src="../../../../../assets/img/logo-bt.png"/>
-                                </div>
-                                <div class="form-group-right">
-                                    <div class="upload-file">
-                                        <ngx-file-drop dropZoneLabel="Drop files here" accept="ACCEPT_FILE_TYPES">
-                                            <ng-template ngx-file-drop-content-tmp
-                                                         let-openFileSelector="openFileSelector">
-                                                <span class="icon-block icon-loading icon-32 upload-loading"></span>
-
-                                                <div class="upload-content">
-                                                    <input type="file" class="form-file"/>
-                                                    <span class="icon-block icon-photo icon-32"></span>
-                                                    <div class="file-intro"><span>Click to replace</span> or drag and
-                                                        drop
+                            <div class="form-three-group">
+                                <label class="control-label control-label-custom-large">Upload a screenshot of this
+                                    feature
+                                    if applicable</label>
+                                <div class="form-upload-file">
+                                    <div class="upload-file-show">
+                                        <img [src]="prop.attachmentVo?.visitUrl"/>
+                                    </div>
+                                    <div class="form-group-right">
+                                        <div class="upload-file">
+                                            <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event, prop)"
+                                                           [multiple]="false" [directory]="false"
+                                                           [accept]="'.png,.svg,.gif,.jpg'">
+                                                <ng-template ngx-file-drop-content-tmp
+                                                             let-openFileSelector="openFileSelector">
+                                                    <span [hidden]="!prop.uploading" class="icon-block icon-loading icon-32 upload-loading"></span>
+                                                    <div class="upload-content" (click)="openFileSelector()">
+                                                        <span class="icon-block icon-photo icon-32"></span>
+                                                        <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                                        <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
                                                     </div>
-                                                    <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
-                                                </div>
-                                            </ng-template>
-                                        </ngx-file-drop>
+                                                </ng-template>
+                                            </ngx-file-drop>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </ng-container>
 
-                        </div>
 
                     </div>
                 </div>
