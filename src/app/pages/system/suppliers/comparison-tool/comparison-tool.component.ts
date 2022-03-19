@@ -22,7 +22,7 @@ export class ComparisonToolComponent implements OnInit {
 
     constructor(private route: Router, private activatedRoute: ActivatedRoute, private storage: LocalStorageObServable, private supplierRepository: SupplierRepository, public configService: ConfigService) {
         this.storage.getItem<Reminder>('reminder').subscribe(data => {
-            if (data != 'undefined') {
+            if (data != 'undefined' && data) {
                 this.reminder = data;
             }
         });
