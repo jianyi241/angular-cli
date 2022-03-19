@@ -111,4 +111,8 @@ export class EditGroupComponent implements OnInit {
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
         });
     }
+
+    /*editorDataChange($event: CKEditor4.EventInfo) {
+        console.log($event);
+    }*/
 }

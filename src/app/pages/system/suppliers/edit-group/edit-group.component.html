@@ -33,7 +33,7 @@
 
             <div class="form-group-right">
                 <ckeditor [(ngModel)]="group.description" [config]="config"></ckeditor>
-                <p class="tip-info">Maximum 500 characters </p>
+<!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
             </div>
         </div>
 
