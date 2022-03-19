@@ -12,10 +12,19 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {CKEditorModule} from "ckeditor4-angular";
+import {ToggleClassDirective} from "../../directive/toggle-class.directive";
 
 
 @NgModule({
-    declarations: [ComparisonToolComponent, EditGroupComponent, EditSubGroupComponent, EditPropComponent, FeatureFormComponent, ProductsComponent],
+    declarations: [
+        ComparisonToolComponent,
+        EditGroupComponent,
+        EditSubGroupComponent,
+        EditPropComponent,
+        FeatureFormComponent,
+        ProductsComponent,
+        ToggleClassDirective
+    ],
     imports: [
         CommonModule,
         SystemRoutingModule,
@@ -23,6 +32,8 @@ import {CKEditorModule} from "ckeditor4-angular";
         FormsModule,
         NgxFileDropModule,
         CKEditorModule,
+    ], exports: [
+        ToggleClassDirective
     ]
 })
 export class SystemModule {

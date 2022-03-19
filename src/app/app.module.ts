@@ -25,13 +25,11 @@ import {FooterComponent} from './common/footer/footer.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {UserRepository} from './repository/user-repository';
-import {CustomizedCkeditorDirective} from './directive/customized-ckeditor.directive';
 import {CKEditorModule} from 'ckeditor4-angular';
 import {SystemModule} from "./pages/system/system.module";
 import {ReviewsModule} from "./pages/reviews/reviews.module";
-import { ReviewLayoutComponent } from './common/review-layout/review-layout.component';
-import { ReviewHeaderComponent } from './common/review-header/review-header.component';
-
+import {ReviewLayoutComponent} from './common/review-layout/review-layout.component';
+import {ReviewHeaderComponent} from './common/review-header/review-header.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +40,6 @@ import { ReviewHeaderComponent } from './common/review-header/review-header.comp
         FooterComponent,
         ReviewLayoutComponent,
         ReviewHeaderComponent,
-        CustomizedCkeditorDirective
     ],
     imports: [
         CommonModule,
@@ -87,7 +84,6 @@ import { ReviewHeaderComponent } from './common/review-header/review-header.comp
     bootstrap: [AppComponent],
     exports: [
         FooterComponent,
-        CustomizedCkeditorDirective,
     ]
 })
 export class AppModule {
