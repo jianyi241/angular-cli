@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feature-comparison.component.less']
 })
 export class FeatureComparisonComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit(): void {

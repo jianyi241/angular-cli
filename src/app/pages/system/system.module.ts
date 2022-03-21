@@ -13,7 +13,7 @@ import {FormsModule} from "@angular/forms";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {CKEditorModule} from "ckeditor4-angular";
 import {ToggleClassDirective} from "../../directive/toggle-class.directive";
-import {NgbAlertModule, NgbModule, NgbPaginationModule,NgbAccordionModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({

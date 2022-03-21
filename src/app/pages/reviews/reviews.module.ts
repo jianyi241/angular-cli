@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReviewsRoutingModule } from './reviews-routing.module';
 import { FeatureComparisonComponent } from './feature-comparison/feature-comparison.component';
 
@@ -9,7 +9,8 @@ import { FeatureComparisonComponent } from './feature-comparison/feature-compari
   declarations: [FeatureComparisonComponent],
   imports: [
     CommonModule,
-    ReviewsRoutingModule
+    ReviewsRoutingModule,
+    NgbModule
   ]
 })
 export class ReviewsModule { }
