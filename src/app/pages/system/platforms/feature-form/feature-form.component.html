@@ -105,7 +105,7 @@
                                     feature
                                     if applicable</label>
                                 <div class="form-upload-file">
-                                    <div class="upload-file-show">
+                                    <div class="upload-file-show" *ngIf="prop.attachmentVo?.visitUrl">
                                         <img [src]="prop.attachmentVo?.visitUrl"/>
                                     </div>
                                     <div class="form-group-right">
