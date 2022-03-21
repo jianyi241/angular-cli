@@ -1,5 +1,6 @@
 .form-content-column{
   position: relative;
+  padding-bottom: 0;
 }
 
 .form-column-left{
@@ -8,74 +9,6 @@
   max-width: 100%;
   border-right:1px solid #D6DDEB;
   overflow: auto;
-
-  .main-menu{
-    .title{
-      position: relative;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      font-weight: 700;
-      font-size: 16px;
-      color:#25324B;
-      height: 74px;
-      padding-right:36px;
-      border-bottom: 1px solid #D6DDEB;
-
-      .icon-block{
-        position: absolute;
-        top:50%;
-        right:16px;
-        margin-top:-8px;
-        z-index: 2;
-        transform: rotateZ(180deg);
-        cursor: pointer;
-      }
-
-      &.open{
-        .icon-block{
-          transform: rotateZ(0);
-        }
-
-      }
-    }
-
-    .main-sub-menu{
-      display: none;
-
-      .sub-title{
-        position: relative;
-        color:#515B6F;
-        font-size: 13px;
-        font-weight: 500;
-        width: 100%;
-        height: 64px;
-        line-height: 48px;
-        padding:8px 42px 8px 8px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        cursor: pointer;
-
-
-        .badge{
-          position: absolute;
-          top:50%;
-          right:16px;
-          margin-top:-10px;
-          z-index: 2;
-        }
-
-        &:hover,&.active{
-          background-color: #F8F8FD;
-        }
-      }
-
-      &.open{
-        display: block;
-      }
-    }
-  }
 }
 
 .form-column-right{
@@ -138,6 +71,8 @@
       color:#25324B;
       font-size: 14px;
       line-height: 22.4px;
+      width: 100%;
+      word-break: break-word;
     }
 
     .text{

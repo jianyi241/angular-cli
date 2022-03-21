@@ -1,8 +1,8 @@
 <div class="main main-form">
     <div class="sub-head sub-head-form">
-        <div class="sub-title" (click)="goBack()">
+        <div class="sub-title" [title]="group.name" (click)="goBack()">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{group.name}}
+            <div class="text-ellipsis">{{group.name}}</div>
         </div>
 
         <div class="btn-control-group">

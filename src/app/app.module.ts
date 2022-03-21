@@ -12,7 +12,7 @@ import {HttpResultInterceptor} from './interceptor/http-result.interceptor';
 import {LayoutObservable} from './observable/layout-observable';
 import {LocalStorageObServable} from './observable/local-storage-observable';
 import {NgxLoadingSpinnerModule} from '@k-adam/ngx-loading-spinner';
-import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbAlertModule, NgbModule, NgbPaginationModule,NgbAccordionModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './config/app-routing-module';
@@ -62,7 +62,8 @@ import {ReviewHeaderComponent} from './common/review-header/review-header.compon
         NgxFileDropModule,
         CKEditorModule,
         SystemModule,
-        ReviewsModule
+        ReviewsModule,
+        NgbAccordionModule,
     ],
     providers: [
 

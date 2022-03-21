@@ -1,8 +1,8 @@
 <div class="main main-form">
     <div class="sub-head sub-head-form">
-        <div class="sub-title" (click)="goBack()">
+        <div class="sub-title" [title]="prop?.name" (click)="goBack()">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{prop?.name}}
+            <div class="text-ellipsis">{{prop?.name}}</div>
         </div>
 
         <button class="btn btn-purple" (click)="saveProp()">{{prop.id ? 'Update' : 'Save'}}</button>

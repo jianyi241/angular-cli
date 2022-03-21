@@ -24,18 +24,41 @@
     <div class="form-content">
         <div class="form-group-custom form-content-column">
             <div class="form-column-left">
-                <div class="main-menu" *ngFor="let group of groups">
-                    <div class="title" [toggleClass]="'open'" (click)="chooseGroup(group)">{{group.name}}
-                        <!--<span class="label-number xs-ml-6">7 new</span>--> <span
-                                class="icon-block icon-arr-up-purple icon-15"></span></div>
-                    <div class="main-sub-menu open" *ngFor="let subGroupItem of group.subList">
-                        <div class="sub-title"
-                             (click)="chooseSubGroup(subGroupItem)"
-                             [ngClass]="{'active': subGroup.id == subGroupItem.id}"
-                             [title]="subGroupItem.name">{{subGroupItem.name}}
-                            <!--<span class="badge badge-theme xs-ml-6">2</span>--></div>
-                    </div>
+                <div class="main-menu">
+                <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+                    <ngb-panel *ngFor="let group of groups,let i =index ">
+                        <ng-template ngbPanelHeader let-opened="opened">
+                            <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened" [title]="group.name"><div class="text">{{group.name}}</div>
+                                <!--<span class="label-number xs-ml-6">7 new</span>-->
+                                <span class="icon-block icon-arr-up-purple icon-15"></span>
+                            </button>
+                        </ng-template>
+
+                        <ng-template ngbPanelContent>
+                            <div class="main-sub-menu"  *ngFor="let subGroupItem of group.subList">
+                                <div class="sub-title"
+                                     (click)="chooseSubGroup(subGroupItem)"
+                                     [ngClass]="{'active': subGroup.id == subGroupItem.id}"
+                                     [title]="subGroupItem.name"><div class="text">{{subGroupItem.name}}</div>
+                                    <!--<span class="badge badge-theme xs-ml-6">2</span>--></div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
                 </div>
+
+<!--                <div class="main-menu" *ngFor="let group of groups">-->
+<!--                    <div class="title" [toggleClass]="'open'" (click)="chooseGroup(group)" [title]="group.name"><div class="text">{{group.name}}</div>-->
+<!--                        &lt;!&ndash;<span class="label-number xs-ml-6">7 new</span>&ndash;&gt; <span-->
+<!--                                class="icon-block icon-arr-up-purple icon-15"></span></div>-->
+<!--                    <div class="main-sub-menu"  *ngFor="let subGroupItem of group.subList">-->
+<!--                        <div class="sub-title"-->
+<!--                             (click)="chooseSubGroup(subGroupItem)"-->
+<!--                             [ngClass]="{'active': subGroup.id == subGroupItem.id}"-->
+<!--                             [title]="subGroupItem.name"><div class="text">{{subGroupItem.name}}</div>-->
+<!--                            &lt;!&ndash;<span class="badge badge-theme xs-ml-6">2</span>&ndash;&gt;</div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
 
