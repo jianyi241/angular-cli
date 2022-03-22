@@ -11,6 +11,7 @@ import {Constants} from "../../../../model/constants";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {FileRepository} from "../../../../repository/file-repository";
+import {ConfigService} from "../../../../service/config.service";
 
 @Component({
     selector: 'app-feature-form',
@@ -26,6 +27,7 @@ export class FeatureFormComponent implements OnInit {
     productProps: Array<ProductPropInfo> = new Array<ProductPropInfo>();
     config = {...Constants.EDITOR_CONFIG};
     constructor(private activatedRoute: ActivatedRoute,
+                public configService: ConfigService,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
                 private platformRepository: PlatformRepository,

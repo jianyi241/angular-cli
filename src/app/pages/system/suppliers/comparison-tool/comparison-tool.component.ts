@@ -14,13 +14,16 @@ import {LocalStorageObServable} from "../../../../observable/local-storage-obser
     styleUrls: ['./comparison-tool.component.less']
 })
 export class ComparisonToolComponent implements OnInit {
-    currentTabType: number;
     groups: Array<GroupInfo> = new Array<GroupInfo>();
     subGroups: Array<GroupInfo> = new Array<GroupInfo>();
     properties: Array<PropertyInfo> = new Array<PropertyInfo>();
     reminder: Reminder = new Reminder();
 
-    constructor(private route: Router, private activatedRoute: ActivatedRoute, private storage: LocalStorageObServable, private supplierRepository: SupplierRepository, public configService: ConfigService) {
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
+                private storage: LocalStorageObServable,
+                private supplierRepository: SupplierRepository,
+                public configService: ConfigService) {
         this.storage.getItem<Reminder>('reminder').subscribe(data => {
             if (data != 'undefined' && data) {
                 this.reminder = data;
@@ -29,13 +32,12 @@ export class ComparisonToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentTabType = TabType.features.value;
         this.init();
     }
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.currentTabType = TabType.parseEnum(params['type']).value;
+            this.configService.currentTabType = TabType.parseEnum(params['type']).value;
             console.log(`supplier params ==>`, params);
         })
     }
@@ -73,13 +75,6 @@ export class ComparisonToolComponent implements OnInit {
         this.supplierRepository.propList(this.reminder.subGroupId).subscribe(res => {
             this.properties = res.data;
         });
-    }
-
-    chooseTabType(tabType: number) {
-        if (tabType != TabType.features.value) {
-            return;
-        }
-        this.currentTabType = tabType;
     }
 
     saveGroup(group?: GroupInfo): void {

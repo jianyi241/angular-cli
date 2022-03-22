@@ -10,8 +10,8 @@
 
 <div class="tab-menu">
     <div class="tab-text"
-         [ngClass]="{'active': currentTabType == tabType.value}"
-         (click)="chooseTabType(tabType.value)"
+         [ngClass]="{'active': configService.currentTabType == tabType.value}"
+         (click)="configService.chooseTabType(tabType.value)"
          *ngFor="let tabType of configService.tabTypeList()">
         {{tabType.name}} <span class="line"></span>
     </div>
