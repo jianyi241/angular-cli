@@ -266,7 +266,6 @@
     }
   }
 
-
   .icon-block-right {
     position: absolute;
     top: 50%;
@@ -310,6 +309,54 @@
       top: 50%;
       margin-top: -12px;
       left: 8px;
+    }
+  }
+  .review-content-close {
+    .icon-block-right {
+      animation: turn-up 0.25s linear 1;
+      animation-fill-mode:forwards;
+    }
+  }
+  .review-content-open {
+    .icon-block-right {
+      animation: turn-down 0.25s linear 1;
+      animation-fill-mode:forwards;
+    }
+  }
+
+  @keyframes turn-up {
+    0% {
+      -webkit-transform: rotate(180deg);
+    }
+    25% {
+      -webkit-transform: rotate(135deg);
+    }
+    50% {
+      -webkit-transform: rotate(90deg);
+    }
+    75% {
+      -webkit-transform: rotate(45deg);
+    }
+    100% {
+      -webkit-transform: rotate(00deg);
+    }
+  }
+
+  @keyframes turn-down {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    25% {
+      -webkit-transform: rotate(45deg);
+    }
+    50% {
+      -webkit-transform: rotate(90deg);
+    }
+    75% {
+      -webkit-transform: rotate(135deg);
+    }
+    100% {
+      -webkit-transform: rotate(180deg);
     }
   }
 

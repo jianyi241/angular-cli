@@ -58,7 +58,7 @@
                 <tbody>
                 <tr class="main-group">
                     <td>
-                        <div class="main-group-title" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                        <div class="main-group-title review-content-open" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
                              [content-prefix]="'panel-content-'+groupIndex">
                             <span class="icon-block icon-block-left icon-search-file icon-24"></span>
                             {{group.name}}
@@ -76,10 +76,10 @@
                 </tbody>
 
                 <ng-container *ngFor="let subGroup of group.subList; let subIndex = index">
-                    <tbody class="panel-content-{{groupIndex}}" [ngClass]="{'hide': groupIndex != 0}">
+                    <tbody class="panel-content-{{groupIndex}}">
                     <tr class="sub-group">
                         <td>
-                            <div class="sub-group-title" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                            <div class="sub-group-title review-content-open" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
                                  [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
                                 {{subGroup.name}}
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
@@ -90,7 +90,7 @@
                     </tr>
                     </tbody>
                     <ng-container>
-                        <tbody class="panel-content-{{groupIndex}}-{{subIndex}}" [ngClass]="{'hide': subIndex != 0 || groupIndex != 0}">
+                        <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
                         <tr *ngFor="let prop of subGroup.propertyVoList">
                             <td>
                                 <div class="content-title">
