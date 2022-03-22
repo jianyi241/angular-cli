@@ -1,3 +1,10 @@
+.tx-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
 .sub-head-review {
   display: flex;
   justify-content: space-between;
@@ -152,6 +159,8 @@
         font-size: 18px;
         line-height: 150%;
         color: #25324B;
+        max-width: 150px;
+        .tx-ellipsis;
       }
 
       .btn-hide {
@@ -163,6 +172,7 @@
         text-align: center;
         color: #515B6F;
         padding: 5px 10px !important;
+
       }
     }
   }
@@ -197,6 +207,8 @@
       line-height: 24px;
       color: #25324B;
       margin: 8px 0;
+      max-width: 198px;
+      .tx-ellipsis;
     }
 
     .text {
@@ -299,10 +311,8 @@
     font-size: 16px;
     line-height: 24px;
     padding: 16px 46px 16px 40px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
+    max-width: 305px;
+    .tx-ellipsis;
 
     .icon-block-left {
       position: absolute;
@@ -389,6 +399,8 @@
     font-size: 13px;
     line-height: 19.5px;
     padding: 26px 46px 26px 8px;
+    max-width: 305px;
+    .tx-ellipsis;
   }
 
   .content-title {
@@ -398,6 +410,8 @@
     line-height: 15.6px;
     color: #515B6F;
     padding: 16px 64px 16px 8px;
+    max-width: 305px;
+    .tx-ellipsis;
 
     .icon-star {
       position: absolute;

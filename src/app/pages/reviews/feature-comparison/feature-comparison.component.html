@@ -1,3 +1,5 @@
+<div class="loading-bar" [ngClass]="compareData.productVos.length == 0 || compareData.groupVoList.length ==0 ? 'is-loading':'has-load'"></div>
+
 <div class="sub-head-review">
     <div class="title">Step 2 - Feature matric</div>
     <div class="filter-content">
@@ -26,7 +28,7 @@
             <th class="th-head">
                 <div class="th-first">
                     <div class="th-bottom">
-                        <div class="title">Features</div>
+                        <div class="title" title="Features">Features</div>
                         <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span
                                 class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>
                     </div>
@@ -38,7 +40,7 @@
                     <div class="brand-pic">
                         <img [src]="product.attachmentVo?.visitUrl"/>
                     </div>
-                    <div class="title">{{product.name}}</div>
+                    <div class="title" [title]="product.name">{{product.name}}</div>
                     <!--<div class="text">Overall</div>
                     <div class="num">98%</div>
 
@@ -58,7 +60,7 @@
                 <tbody>
                 <tr class="main-group">
                     <td>
-                        <div class="main-group-title review-content-open" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                        <div class="main-group-title review-content-open" [title]="group.name" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
                              [content-prefix]="'panel-content-'+groupIndex">
                             <span class="icon-block icon-block-left icon-search-file icon-24"></span>
                             {{group.name}}
@@ -79,7 +81,7 @@
                     <tbody class="panel-content-{{groupIndex}}">
                     <tr class="sub-group">
                         <td>
-                            <div class="sub-group-title review-content-open" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                            <div class="sub-group-title review-content-open" [title]="subGroup.name" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
                                  [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
                                 {{subGroup.name}}
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
@@ -93,7 +95,7 @@
                         <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
                         <tr *ngFor="let prop of subGroup.propertyVoList">
                             <td>
-                                <div class="content-title">
+                                <div class="content-title" [title]="prop.name">
                                     {{prop.name}}
                                     <span class="icon-block icon-star icon-12"></span>
                                     <span class="icon-block icon-block-right icon-info-circle-purple icon-20"></span>
