@@ -18,7 +18,7 @@ import {Attachment} from "../attachment";
  */
 export class ProductInfo {
     attachmentId?: string;
-    attachmentVo: Attachment = new Attachment();
+    attachmentVo?: Attachment = new Attachment();
     createTime?: string;
     createUser?: string;
     deleteFlag?: boolean;
