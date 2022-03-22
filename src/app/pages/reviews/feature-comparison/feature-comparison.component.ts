@@ -26,7 +26,7 @@ export class FeatureComparisonComponent implements OnInit {
         let some = prodProps.some(p => p.shPropertyId == id && p.propValue == 'yes');
         return some ? 'icon-checked-green' : 'icon-close-red';
     }
-    private productList() {
+    productList() {
         this.platformRepository.productList().subscribe(res => {
             if (!res.data || res.data.length == 0 ) return;
             this.compareList(res.data.map(p => p.id))

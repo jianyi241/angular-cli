@@ -20,73 +20,77 @@
 
 <div class="review-content">
     <div class="table-container">
-        <table class="table table-review">
+        <table class="table table-review" #panelContent>
             <thead>
             <!--bg-green-light-01, bg-red-light-->
-                <th class="th-head">
-                    <div class="th-first">
-                        <div class="th-bottom">
-                            <div class="title">Features</div>
-                            <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>
-                        </div>
+            <th class="th-head">
+                <div class="th-first">
+                    <div class="th-bottom">
+                        <div class="title">Features</div>
+                        <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span
+                                class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>
                     </div>
-                </th>
+                </div>
+            </th>
 
-                <th class="th-brand" *ngFor="let product of compareData.productVos">
-                    <div class="th-brand-box">
-                        <div class="brand-pic">
-                            <img [src]="product.attachmentVo?.visitUrl" />
-                        </div>
-                        <div class="title">{{product.name}}</div>
-                        <div class="text">Overall</div>
-                        <div class="num">98%</div>
-
-                        <div class="btn-control-box">
-                            <button class="btn btn-outline-purple-light btn-edit">Edit comment</button>
-                            <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
-                        </div>
-
-                        <div class="tip-message tip-success">
-                           <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist
-                        </div>
+            <th class="th-brand" *ngFor="let product of compareData.productVos">
+                <div class="th-brand-box">
+                    <div class="brand-pic">
+                        <img [src]="product.attachmentVo?.visitUrl"/>
                     </div>
-                </th>
+                    <div class="title">{{product.name}}</div>
+                    <!--<div class="text">Overall</div>
+                    <div class="num">98%</div>
+
+                    <div class="btn-control-box">
+                        <button class="btn btn-outline-purple-light btn-edit">Edit comment</button>
+                        <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
+                    </div>
+
+                    <div class="tip-message tip-success">
+                       <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist
+                    </div>-->
+                </div>
+            </th>
             </thead>
 
-            <ng-container *ngFor="let group of compareData.groupVoList">
+            <ng-container *ngFor="let group of compareData.groupVoList; let groupIndex = index">
                 <tbody>
-                    <tr class="main-group">
+                <tr class="main-group">
+                    <td>
+                        <div class="main-group-title" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                             [content-prefix]="'panel-content-'+groupIndex">
+                            <span class="icon-block icon-block-left icon-search-file icon-24"></span>
+                            {{group.name}}
+                            <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
+                        </div>
+                    </td>
+
+                    <td *ngFor="let product of compareData.productVos">
+                        <div class="main-group-text">
+                            <div class="text">Group match</div>
+                            <div class="num">100%</div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+
+                <ng-container *ngFor="let subGroup of group.subList; let subIndex = index">
+                    <tbody class="panel-content-{{groupIndex}}" [ngClass]="{'hide': groupIndex != 0}">
+                    <tr class="sub-group">
                         <td>
-                            <div class="main-group-title" >
-                                <span class="icon-block icon-block-left icon-search-file icon-24"></span>
-                                {{group.name}}
+                            <div class="sub-group-title" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
+                                 [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
+                                {{subGroup.name}}
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                             </div>
                         </td>
 
-                        <td *ngFor="let product of compareData.productVos">
-                            <div class="main-group-text">
-                                <div class="text">Group match</div>
-                                <div class="num">100%</div>
-                            </div>
-                        </td>
+                        <td *ngFor="let product of compareData.productVos"></td>
                     </tr>
-                </tbody>
-
-                <ng-container *ngFor="let subGroup of group.subList">
-                    <tbody>
-                        <tr class="sub-group">
-                            <td>
-                                <div class="sub-group-title">
-                                    {{subGroup.name}}
-                                    <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
-                                </div>
-                            </td>
-
-                            <td *ngFor="let product of compareData.productVos"></td>
-                        </tr>
                     </tbody>
-                    <tbody>
+                    <ng-container>
+                        <tbody class="panel-content-{{groupIndex}}-{{subIndex}}" [ngClass]="{'hide': subIndex != 0 || groupIndex != 0}">
                         <tr *ngFor="let prop of subGroup.propertyVoList">
                             <td>
                                 <div class="content-title">
@@ -101,8 +105,8 @@
                                 <span class="icon-block icon-info-circle-purple icon-15"></span>
                             </td>
                         </tr>
-
-                    </tbody>
+                        </tbody>
+                    </ng-container>
                 </ng-container>
             </ng-container>
         </table>
