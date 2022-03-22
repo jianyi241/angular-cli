@@ -48,7 +48,7 @@
         </div>
 
         <div class="col-body">
-            <div class="list-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+            <div class="list-cell list-sub-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
                  (click)="chooseSubGroup(subGroup)"
                  *ngFor="let subGroup of subGroups">
                 <span class="icon-block icon-line icon-24"></span>
