@@ -26,7 +26,7 @@
             <div class="form-column-left">
                 <div class="main-menu">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
-                    <ngb-panel *ngFor="let group of groups,let i =index ">
+                    <ngb-panel *ngFor="let group of groups,let i =index " id="ngb-panel-{{i}}">
                         <ng-template ngbPanelHeader let-opened="opened">
                             <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened" [title]="group.name"><div class="text">{{group.name}}</div>
                                 <!--<span class="label-number xs-ml-6">7 new</span>-->
