@@ -1,23 +1,18 @@
 import {Injectable} from '@angular/core';
-import {
-    HttpRequest,
-    HttpHandler,
-    HttpEvent,
-    HttpInterceptor,
-    HttpResponse,
-    HttpErrorResponse
-} from '@angular/common/http';
-import {Observable, ObservableInput, OperatorFunction, throwError} from 'rxjs';
-import {map, catchError, retry} from 'rxjs/operators';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, OperatorFunction} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 import {LocalStorageObServable} from '../observable/local-storage-observable';
 import {Router} from '@angular/router';
-import {environment} from '../../environments/environment';
+import {ToastRepository} from "../repository/toast-repository";
 
 
 @Injectable()
 export class HttpResultInterceptor implements HttpInterceptor {
 
-    constructor(private storage: LocalStorageObServable, private router: Router) {
+    constructor(private storage: LocalStorageObServable,
+                private toastRepository: ToastRepository,
+                private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -45,7 +40,12 @@ export class HttpResultInterceptor implements HttpInterceptor {
             }),
             catchError(this.handleError)
         );*/
-        return next.handle(request);
+        return next.handle(request).pipe(
+            catchError((error: HttpErrorResponse) => {
+                this.toastRepository.showDanger(error.statusText);
+                throw error;
+            })
+        );
     }
 
     handleError(errorResponse: any): OperatorFunction<HttpEvent<any>, any> {
