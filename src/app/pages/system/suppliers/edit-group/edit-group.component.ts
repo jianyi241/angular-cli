@@ -102,13 +102,13 @@ export class EditGroupComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg)
                 return;
             }
-            if (this.id) {
-                this.storage.getItem<Reminder>('reminder').subscribe(data => {
-                    data.groupId = res.data.id;
-                    this.storage.setItem<Reminder>('reminder', data);
-                });
-            }
+            this.storage.getItem<Reminder>('reminder').subscribe(data => {
+                data.groupId = res.data.id;
+                this.storage.setItem<Reminder>('reminder', data);
+            });
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
+            this.id = res.data.id;
+            this.group.id = this.id;
         });
     }
 

@@ -79,6 +79,8 @@ export class EditPropComponent implements OnInit {
                 return;
             }
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
+            this.id = res.data.id;
+            this.prop.id = this.id;
         });
     }
 }

@@ -26,6 +26,7 @@ export class FeatureFormComponent implements OnInit {
     props: Array<PropertyVo> = new Array<PropertyVo>();
     productProps: Array<ProductPropInfo> = new Array<ProductPropInfo>();
     config = {...Constants.EDITOR_CONFIG};
+
     constructor(private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
                 private toastRepository: ToastRepository,
@@ -43,7 +44,9 @@ export class FeatureFormComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             this.productId = params['productId'];
             this.productDetail();
-            this.productPropList();
+            this.productPropList(() => {
+                this.groupList();
+            });
         })
     }
 
@@ -78,10 +81,10 @@ export class FeatureFormComponent implements OnInit {
         });
     }
 
-    productPropList(): void {
+    productPropList(callback?: any): void {
         this.platformRepository.productPropList(TabType.features.value, this.productId).subscribe(res => {
             this.productProps = res.data;
-            this.groupList();
+            callback && callback();
         })
     }
 
@@ -149,7 +152,10 @@ export class FeatureFormComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.toastRepository.showSuccess('Submit Successfully.');
+            this.productPropList(() => {
+                this.dealEditProductProps(this.props);
+                this.toastRepository.showSuccess('Submit Successfully.');
+            });
         })
     }
 }

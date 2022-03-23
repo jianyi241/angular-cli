@@ -76,13 +76,13 @@ export class EditSubGroupComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            if (!this.id) {
-                this.storage.getItem<Reminder>('reminder').subscribe(data => {
-                    data.subGroupId = res.data.id;
-                    this.storage.setItem<Reminder>('reminder', data);
-                });
-            }
+            this.storage.getItem<Reminder>('reminder').subscribe(data => {
+                data.subGroupId = res.data.id;
+                this.storage.setItem<Reminder>('reminder', data);
+            });
             this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
+            this.id = res.data.id;
+            this.subGroup.id = this.id;
         });
     }
 }
