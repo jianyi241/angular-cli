@@ -100,11 +100,15 @@
     color: #A8ADB7;
   }
 
-  &:disabled, &[readonly] {
+  &:disabled {
     background: #FFFFFF;
     opacity: 0.3;
     border: 1px solid #D6DDEB;
     cursor: not-allowed;
+  }
+  &[readonly] {
+    background: #FFFFFF;
+    cursor: auto;
   }
 }
 

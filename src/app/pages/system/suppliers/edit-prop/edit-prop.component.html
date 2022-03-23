@@ -50,12 +50,16 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature group</label>
-                    <input type="text" placeholder="Name" readonly [(ngModel)]="prop.topGroupName" class="form-control"/>
+                    <ng-select disabled class="select-single" placeholder="Feature group" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
+                        <ng-option [value]="prop.topGroupName">{{prop.topGroupName}}</ng-option>
+                    </ng-select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature sub-group</label>
-                    <input type="text" placeholder="Name" readonly [(ngModel)]="prop.subGroupName" class="form-control"/>
+                    <ng-select disabled class="select-single" placeholder="Feature sub-group" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
+                        <ng-option [value]="prop.subGroupName">{{prop.subGroupName}}</ng-option>
+                    </ng-select>
                 </div>
             </div>
         </div>
