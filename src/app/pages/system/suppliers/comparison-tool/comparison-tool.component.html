@@ -27,8 +27,9 @@
             </div>
         </div>
 
-        <div class="col-body">
+        <div class="col-body" cdkDropList (cdkDropListDropped)="dropGroup($event)">
             <div class="list-cell" [ngClass]="{'active': reminder.groupId == group.id}"
+                 cdkDrag
                  (click)="chooseGroup(group)"
                  *ngFor="let group of groups">
                 <span class="icon-block icon-line icon-24"></span>
@@ -47,8 +48,9 @@
             </div>
         </div>
 
-        <div class="col-body">
+        <div class="col-body" cdkDropList (cdkDropListDropped)="dropSubGroup($event)">
             <div class="list-cell list-sub-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+                 cdkDrag
                  (click)="chooseSubGroup(subGroup)"
                  *ngFor="let subGroup of subGroups">
                 <span class="icon-block icon-line icon-24"></span>
@@ -70,9 +72,10 @@
             </div>
         </div>
 
-        <div class="col-body xs-pl-16">
-            <div class="list-cell-large"
+        <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
+            <div class="list-cell-large" cdkDrag
                  *ngFor="let prop of properties">
+                <div></div>
                 <span class="icon-block icon-line icon-32"></span>
                 <div class="list-content">
                     <div class="info">

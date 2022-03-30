@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {Reminder} from "../../../../model/vo/reminder";
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-comparison-tool',
@@ -111,4 +112,15 @@ export class ComparisonToolComponent implements OnInit {
     }
 
 
+    dropProps($event: CdkDragDrop<PropertyInfo, any>) {
+        moveItemInArray(this.properties, $event.previousIndex, $event.currentIndex);
+    }
+
+    dropSubGroup($event: CdkDragDrop<GroupInfo, any>) {
+        moveItemInArray(this.subGroups, $event.previousIndex, $event.currentIndex);
+    }
+
+    dropGroup($event: CdkDragDrop<GroupInfo, any>) {
+        moveItemInArray(this.groups, $event.previousIndex, $event.currentIndex);
+    }
 }

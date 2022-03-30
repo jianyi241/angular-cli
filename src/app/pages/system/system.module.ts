@@ -14,6 +14,7 @@ import {NgxFileDropModule} from "ngx-file-drop";
 import {CKEditorModule} from "ckeditor4-angular";
 import {ToggleClassDirective} from "../../directive/toggle-class.directive";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         FormsModule,
         NgxFileDropModule,
         CKEditorModule,
-        NgbModule
+        NgbModule,
+        DragDropModule
     ], exports: [
         ToggleClassDirective
     ]
