@@ -9,71 +9,167 @@
 
     <div class="form-group-custom">
         <div class="form-group-left">
-            <label class="control-label">Feature name</label>
-            <p class="info">Names must be descriptive of one feature</p>
+            <label class="control-label">Platform logo</label>
+            <p class="info">This image will be shown publicly as company logo.</p>
         </div>
-
-        <div class="form-group-right">
-            <input type="text" placeholder="Feature name" [maxLength]="100" class="form-control"/>
-            <p class="tip-info">Maximum 100 characters</p>
+        <div class="form-upload-file">
+            <div class="upload-file-show">
+                <img src="../assets/img/logo-hub.png"/>
+            </div>
+            <div class="form-group-right">
+                <div class="upload-file">
+                    <ngx-file-drop dropZoneLabel="Drop files here"
+                                   [multiple]="false" [directory]="false"
+                                   [accept]="'.png,.svg,.gif,.jpg'">
+                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <div class="upload-content" (click)="openFileSelector()">
+                                <span class="icon-block icon-photo icon-32"></span>
+                                <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                            </div>
+                        </ng-template>
+                    </ngx-file-drop>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="form-group-custom">
         <div class="form-group-left">
-            <label class="control-label">Description</label>
-            <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers. This will appear as a tool tip</p>
+            <label class="control-label">Platform banner image</label>
+            <p class="info">This image will be shown at the top of your platform profile page</p>
         </div>
-
-        <div class="form-group-right">
-            <ckeditor [config]="config"></ckeditor>
-            <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+        <div class="form-upload-file">
+            <div class="upload-file-show">
+                <img src="../assets/img/logo-alex.png"/>
+            </div>
+            <div class="form-group-right">
+                <div class="upload-file">
+                    <ngx-file-drop dropZoneLabel="Drop files here"
+                                   [multiple]="false" [directory]="false"
+                                   [accept]="'.png,.svg,.gif,.jpg'">
+                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                            <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <div class="upload-content" (click)="openFileSelector()">
+                                <span class="icon-block icon-photo icon-32"></span>
+                                <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                            </div>
+                        </ng-template>
+                    </ngx-file-drop>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="form-group-custom">
         <div class="form-group-left">
-            <label class="control-label">Field type</label>
-            <p class="info">What type of a field is this?</p>
+            <label class="control-label">Platform details</label>
+            <p class="info">Introduce your company core info quickly to users by fill up company details</p>
         </div>
 
         <div class="form-group-right">
             <div class="form-group">
-                <label class="control-label control-label-custom">Field type</label>
-                <ng-select disabled class="select-single" placeholder="Field type" dropdownPosition="bottom">
-                    <ng-option>Text field</ng-option>
-                    <ng-option>Boolean field</ng-option>
-                </ng-select>
+                <label class="control-label control-label-custom">Platform name<span class="label-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Platform name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Platform website<span class="label-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Platform website"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Description<span class="label-required">*</span></label>
+                <ckeditor [config]="config"></ckeditor>
+                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Target market</label>
+                <input type="text" class="form-control" placeholder="Target market"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Platform differentiators</label>
+                <ckeditor [config]="config"></ckeditor>
+                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Date of launch</label>
+                <input type="text" class="form-control" placeholder="Date of launch"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">History</label>
+                <ckeditor [config]="config"></ckeditor>
+                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom control-label-between">Ownership structure <label class="label label-green">Business Metric</label></label>
+                <ckeditor [config]="config"></ckeditor>
+                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom control-label-between">Netflows in last 12 months <label class="label label-green">Business Metric</label></label>
+                <input type="text" class="form-control" placeholder="Netflows in last 12 months"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom control-label-between">Funds under administration (FUA) <label class="label label-green">Business Metric</label></label>
+                <input type="text" class="form-control" placeholder="Total platform funds under administration (FUA)"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom control-label-between">Market share by FUA <label class="label label-green">Business Metric</label></label>
+                <input type="text" class="form-control" placeholder="Market share by FUA"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Number of clients/members on platform</label>
+                <input type="text" class="form-control" placeholder="Number of unique platform clients"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Number of authorised representative users</label>
+                <input type="text" class="form-control" placeholder="Number of authorised representative users"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Parent company profitable in most recent financial year?</label>
+
+                <div class="radio-box-group">
+                    <div class="radio-box">
+                        <input type="radio" value="yes" checked  name="ParentCompany" id="ParentCompany01"/>
+                        <label for="ParentCompany01">Yes</label>
+                    </div>
+
+                    <div class="radio-box">
+                        <input type="radio" value="No"  name="ParentCompany" id="ParentCompany02"/>
+                        <label for="ParentCompany02">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Platform operations profitable in most recent financial year</label>
+
+                <div class="radio-box-group">
+                    <div class="radio-box">
+                        <input type="radio" value="yes" checked  name="ParentOperations" id="ParentOperations01"/>
+                        <label for="ParentOperations01">Yes</label>
+                    </div>
+
+                    <div class="radio-box">
+                        <input type="radio" value="No"  name="ParentOperations" id="ParentOperations02"/>
+                        <label for="ParentOperations02">No</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Visual assets</label>
-            <p class="info">Can this feature include a screenshot and/or photo?</p>
-        </div>
-
-        <div class="form-group-right">
-            <div class="check-box">
-                <input type="checkbox" checked name="visualAssets" id="visualAssets"/>
-                <label for="visualAssets">Products can include a photo of this feature</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Business metrics</label>
-            <p class="info">Can this feature include a screenshot and/or photo?</p>
-        </div>
-
-        <div class="form-group-right">
-            <div class="check-box">
-                <input type="checkbox" checked name="businessMetrics" id="businessMetrics"/>
-                <label for="businessMetrics">Make as business metrics</label>
-            </div>
-        </div>
-    </div>
-
 </div>
