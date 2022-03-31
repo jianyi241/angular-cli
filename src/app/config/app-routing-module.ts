@@ -5,7 +5,7 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/supplier/comparison/4'
+        redirectTo: '/supplier/supplier-tab/comparison/4'
     },
 ];
 

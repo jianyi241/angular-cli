@@ -1,0 +1,37 @@
+<div class="main has-tip">
+    <div class="head-tip">
+        <div class="head-tip-content">
+            <span class="icon-block icon-arr-left-blue icon-33"></span>
+            <div class="tip-content">
+                <div class="title" title="Release 12 Sep ‘21">Release 12 Sep ‘21</div>
+                <div class="text" title="Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`">Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sub-head">
+        <div class="title">
+<!--            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>-->
+            Comparison tool
+        </div>
+
+        <div class="btn-control-group">
+            <button class="btn btn-purple xs-ml-24">Push to suppliers</button>
+        </div>
+    </div>
+
+    <div class="tab-menu">
+        <div class="tab-text" [routerLink]="['/supplier/supplier-tab/overview']" routerLinkActive="active">Overview <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/supplier/supplier-tab/information']" routerLinkActive="active">Information <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/supplier/supplier-tab/esg']" routerLinkActive="active">ESG <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/supplier/supplier-tab/comparison/4']" routerLinkActive="active">Features <span class="line"></span></div>
+        <div class="tab-text">Fees & rates <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/supplier/supplier-tab/change-history']" routerLinkActive="active">Change history <span class="line"></span></div>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>
+
+<div class="back-top-button" appBackTop>
+    <span class="icon-block icon-arr-up icon-24"></span>
+</div>

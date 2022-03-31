@@ -1,21 +1,21 @@
-<div class="main">
-<div class="sub-head">
-    <h2 class="title">Comparison tool</h2>
-    <div class="btn-control-group">
-<!--        <button class="btn btn-outline-blue-light xs-ml-24">Discard draft</button>-->
-<!--        <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>-->
-<!--        <button class="btn btn-purple xs-ml-24">Publish</button>-->
-    </div>
-</div>
+<!--<div class="main">-->
+<!--<div class="sub-head">-->
+<!--    <h2 class="title">Comparison tool</h2>-->
+<!--    <div class="btn-control-group">-->
+<!--&lt;!&ndash;        <button class="btn btn-outline-blue-light xs-ml-24">Discard draft</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button class="btn btn-purple xs-ml-24">Publish</button>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
 
-<div class="tab-menu">
-    <div class="tab-text"
-         [ngClass]="{'active': configService.currentTabType == tabType.value}"
-         (click)="configService.chooseTabType(tabType.value)"
-         *ngFor="let tabType of configService.tabTypeList()">
-        {{tabType.name}} <span class="line"></span>
-    </div>
-</div>
+<!--<div class="tab-menu">-->
+<!--    <div class="tab-text"-->
+<!--         [ngClass]="{'active': configService.currentTabType == tabType.value}"-->
+<!--         (click)="configService.chooseTabType(tabType.value)"-->
+<!--         *ngFor="let tabType of configService.tabTypeList()">-->
+<!--        {{tabType.name}} <span class="line"></span>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="table-layout">
     <div class="col-content col-content-1">
@@ -73,7 +73,7 @@
         </div>
 
         <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
-            <div class="list-cell-large" cdkDrag
+            <div class="list-cell-large list-cell-sort" cdkDrag
                  *ngFor="let prop of properties">
                 <div></div>
                 <span class="icon-block icon-line icon-32"></span>
@@ -84,7 +84,7 @@
                     </div>
 <!--                    <span class="label label-red">Archived</span>-->
                 </div>
-                <button class="btn btn-outline-purple-light btn-edit tx-12"
+                <button class="btn btn-outline-purple-light btn-small"
                     (click)="saveProp(prop)">
                     <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                 </button>
@@ -92,4 +92,4 @@
         </div>
     </div>
 </div>
-</div>
+<!--</div>-->

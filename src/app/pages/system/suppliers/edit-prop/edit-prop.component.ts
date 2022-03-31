@@ -39,7 +39,7 @@ export class EditPropComponent implements OnInit {
     }
 
     goBack(): void {
-        this.route.navigate(['/supplier/comparison/4']);
+        this.route.navigate(['/supplier/supplier-tab/comparison/4']);
     }
 
     parseRouteParam(): void {

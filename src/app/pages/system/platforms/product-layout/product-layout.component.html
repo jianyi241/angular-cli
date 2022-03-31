@@ -1,0 +1,29 @@
+<div class="main main-form main-form-with-tab">
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" [routerLink]="['/platform/product']">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            BT Asgard
+        </div>
+
+        <div class="btn-control-group">
+            <button class="btn text-danger">Archive</button>
+            <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>
+            <button class="btn btn-purple xs-ml-24" >Submit for review</button>
+        </div>
+    </div>
+
+    <div class="tab-menu">
+        <div class="tab-text" [routerLink]="['/platform/product-tab/overview']" routerLinkActive="active">Overview <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/platform/product-tab/information']" routerLinkActive="active">Information <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/platform/product-tab/esg']" routerLinkActive="active">ESG <span class="line"></span></div>
+        <div class="tab-text" >Features <span class="line"></span></div>
+        <div class="tab-text">Fees & rates <span class="line"></span></div>
+        <div class="tab-text">Find a BDM <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/platform/product-tab/change-history']" routerLinkActive="active">Change history <span class="line"></span></div>
+    </div>
+
+    <div style="padding-top:24px;">
+
+        <router-outlet></router-outlet>
+    </div>
+</div>

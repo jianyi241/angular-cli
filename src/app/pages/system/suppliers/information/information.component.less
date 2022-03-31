@@ -1,0 +1,33 @@
+.table-layout {
+  .col-content {
+    &.col-content-1 {
+      width: 28%;
+
+      @media screen and (max-width: 1100px) {
+        min-width: 306px;
+      }
+    }
+
+    &.col-content-2 {
+      width: 72%;
+      border-left: 1px solid #D6DDEB;
+      padding-left:40px;
+
+      .col-head{
+        display: block;
+        height: auto;
+        border-bottom: none;
+        margin-top:24px;
+      }
+
+      .col-body{
+        height: calc(100% - 140px);
+      }
+    }
+
+    .col-body {
+      height: calc(100% - 66px);
+      overflow: auto;
+    }
+  }
+}

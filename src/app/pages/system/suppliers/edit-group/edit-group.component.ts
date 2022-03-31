@@ -58,7 +58,7 @@ export class EditGroupComponent implements OnInit {
     }
 
     goBack(): void {
-        this.route.navigateByUrl('/supplier/comparison/4');
+        this.route.navigateByUrl('/supplier/supplier-tab/comparison/4');
     }
 
     onReady(editor): void {

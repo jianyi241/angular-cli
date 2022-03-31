@@ -25,13 +25,22 @@
 
 
     <div class="table-list-content">
+
+
+
+        <div class="list-content list-head">
+            <div class="list-left">Products</div>
+            <div class="list-center">BDMs</div>
+            <div class="list-right">Actions</div>
+        </div>
+
         <div class="list-content" *ngFor="let product of products">
             <div class="list-left">
                 <div class="pic"><img src="{{product.attachmentVo?.visitUrl}}"/></div>
                 <div class="title">{{product.name}}</div>
             </div>
 
-            <div class="list-right">
+            <div class="list-center">
                 <div class="progress-content">
                     <div class="progress-line">
                         <div class="bar-percent bg-green" style="width: 30%;"></div>
@@ -43,8 +52,15 @@
                         <span class="tx-semi">3</span> out of 4 <span class="tx-semi">BDMs</span>
                     </div>
                 </div>
+            </div>
 
-                <button class="btn btn-outline-purple-light btn-edit xs-ml-16" (click)="editProduct(product.id)">
+            <div class="list-right">
+<!--                <div class="tip-message">-->
+<!--                    <span class="icon-block icon-warning-blue icon-25 xs-mr-4"></span>-->
+<!--                    Missing data-->
+<!--                </div>-->
+
+                <button class="btn btn-outline-purple-light btn-small" (click)="editProduct(product.id)">
                     <span class="icon-block icon-pen icon-20 xs-mr-10"></span>Edit
                 </button>
             </div>
