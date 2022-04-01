@@ -10,6 +10,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Version} from "../../../../model/po/version";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {TabType} from "../../../../model/enums/tab-type";
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -103,17 +104,17 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     saveGroup(group?: GroupInfo): void {
         this.storage.setItem<Reminder>('reminder', this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-group/${(group?.id) || 0}`)
+        this.route.navigateByUrl(`/supplier/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}`)
     }
 
     saveSubGroup(subGroup?: GroupInfo) {
         this.storage.setItem<Reminder>('reminder', this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-sub-group/${(subGroup?.id) || 0}/${this.reminder.groupId}`)
+        this.route.navigateByUrl(`/supplier/edit-sub-group/${TabType.features.value}/${(subGroup?.id) || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`)
     }
 
     saveProp(prop?: PropertyInfo) {
         this.storage.setItem<Reminder>('reminder', this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-prop/${(prop?.id) || 0}/${this.reminder.subGroupId}`)
+        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.features.value}/${(prop?.id) || Constants.NON_ID}/${this.reminder.subGroupId}/${this.version.id}`)
     }
 
     chooseGroup(group: GroupInfo) {

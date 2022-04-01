@@ -40,8 +40,8 @@ export class SupplierRepository {
         return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/groupConfig/${id}/${versionId}`);
     }
 
-    subGroupDetail(id: string): Observable<HttpResult<GroupInfo>> {
-        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/subGroupConfig/${id}`);
+    subGroupDetail(id: string, versionId: string): Observable<HttpResult<GroupInfo>> {
+        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/subGroupConfig/${id}/${versionId}`);
     }
 
     propDetail(id: string, versionId: string): Observable<HttpResult<PropertyInfo>> {

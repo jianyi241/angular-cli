@@ -99,7 +99,7 @@ export class EditPropComponent implements OnInit {
         if (!this.prop.shGroupId) {
             return;
         }
-        this.supplierRepository.subGroupDetail(this.prop.shGroupId).subscribe(res => {
+        this.supplierRepository.subGroupDetail(this.prop.shGroupId, this.version.id).subscribe(res => {
             this.prop.topGroupName = res.data.parentName;
             this.prop.subGroupName = res.data.name;
         });

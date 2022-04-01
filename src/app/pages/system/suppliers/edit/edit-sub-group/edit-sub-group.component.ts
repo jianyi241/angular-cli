@@ -9,6 +9,8 @@ import {SupplierRepository} from "../../../../../repository/supplier-repository"
 import {TabType} from "../../../../../model/enums/tab-type";
 import {Constants} from "../../../../../model/constants";
 import {Reminder} from "../../../../../model/vo/reminder";
+import {Version} from "../../../../../model/po/version";
+import {VersionRepository} from "../../../../../repository/version-repository";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -16,14 +18,17 @@ import {Reminder} from "../../../../../model/vo/reminder";
     styleUrls: ['./edit-sub-group.component.less']
 })
 export class EditSubGroupComponent implements OnInit {
-    id: string;
+    version: Version = new Version();
     subGroup: GroupInfo = new GroupInfo();
     config = {...Constants.EDITOR_CONFIG};
+    currentTab: number;
+
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
                 public configService: ConfigService,
                 private toastRepository: ToastRepository,
+                private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
         this.subGroup.tabType = TabType.features.value;
@@ -35,33 +40,62 @@ export class EditSubGroupComponent implements OnInit {
 
     init(): void {
         this.parseRouteParam();
+        this.versionDetail();
+        this.initByCurrentTab();
+        this.detail();
+        this.parent();
     }
 
     goBack(): void {
-        this.route.navigate(['/supplier/supplier-tab/comparison/4']);
+        let tabType = TabType.parseEnum(this.currentTab);
+        let tab = tabType.name.toLowerCase().replace(' ', '-');
+        this.route.navigateByUrl(`/supplier/supplier-tab/${tab}/${this.version.id}`);
     }
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            let parentId = params['parentId'];
-            if (params['id'] != Constants.NON_ID) {
-                this.id = params['id'];
-                this.detail();
-            } else {
-                this.subGroup.parentId = parentId;
-                this.parent();
-            }
+            this.version.id = params['version'];
+            this.currentTab = params['tab'];
+            this.subGroup.parentId = params['parentId'] == Constants.NON_ID ? '' : params['parentId'];
+            this.subGroup.id = params['id'] == Constants.NON_ID ? '' : params['id'];
         })
+    }
+
+    versionDetail(): void {
+        this.versionRepository.versionById(this.version.id).subscribe(res => {
+            this.version = res.data;
+        })
+    }
+
+    initByCurrentTab(): void {
+        this.subGroup.tabType = this.currentTab;
+        switch (this.currentTab) {
+            case TabType.overview.value:
+                break;
+            case TabType.information.value:
+                break;
+            case TabType.esg.value:
+                break;
+            case TabType.features.value:
+                break;
+            case TabType.feesAndRates.value:
+                break;
+            case TabType.changeHistory.value:
+                break;
+        }
     }
 
     detail(): void {
-        this.supplierRepository.subGroupDetail(this.id).subscribe(res => {
+        if (!this.subGroup.id) {
+            return;
+        }
+        this.supplierRepository.subGroupDetail(this.subGroup.id, this.version.id).subscribe(res => {
             this.subGroup = Object.assign(this.subGroup, res.data);
-        })
+        });
     }
 
     parent(): void {
-        this.supplierRepository.groupDetail(this.subGroup.parentId, '').subscribe(res => {
+        this.supplierRepository.groupDetail(this.subGroup.parentId, this.version.id).subscribe(res => {
             this.subGroup.parentName = res.data.name;
         })
     }
@@ -80,9 +114,8 @@ export class EditSubGroupComponent implements OnInit {
                 data.subGroupId = res.data.id;
                 this.storage.setItem<Reminder>('reminder', data);
             });
-            this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
-            this.id = res.data.id;
-            this.subGroup.id = this.id;
+            this.toastRepository.showSuccess(`${this.subGroup.id ? 'Update' : 'Save'} Successfully.`);
+            this.subGroup.id = res.data.id;
         });
     }
 }

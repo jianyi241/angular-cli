@@ -53,14 +53,14 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature group</label>
-                    <ng-select disabled class="select-single" placeholder="Feature group" [disabled]="!configService.isEditable(version.type)" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
+                    <ng-select disabled class="select-single" placeholder="Feature group" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.topGroupName">{{prop.topGroupName}}</ng-option>
                     </ng-select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature sub-group</label>
-                    <ng-select disabled class="select-single" placeholder="Feature sub-group" [disabled]="!configService.isEditable(version.type)" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
+                    <ng-select disabled class="select-single" placeholder="Feature sub-group" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.subGroupName">{{prop.subGroupName}}</ng-option>
                     </ng-select>
                 </div>
@@ -82,34 +82,34 @@
                 </div>
             </div>
         </div>
+        <ng-container *ngIf="currentTab != configService.tabType.features">
+            <div class="form-group-custom">
+                <div class="form-group-left">
+                    <label class="control-label">Visual assets</label>
+                    <p class="info">Can this feature include a screenshot and/or photo?</p>
+                </div>
 
-        <div class="form-group-custom">
-            <div class="form-group-left">
-                <label class="control-label">Visual assets</label>
-                <p class="info">Can this feature include a screenshot and/or photo?</p>
-            </div>
-
-            <div class="form-group-right">
-                <div class="check-box">
-                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.vsFlag" name="visualAssets" id="visualAssets"/>
-                    <label for="visualAssets">Products can include a photo of this feature</label>
+                <div class="form-group-right">
+                    <div class="check-box">
+                        <input type="checkbox" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.vsFlag" name="visualAssets" id="visualAssets"/>
+                        <label for="visualAssets">Products can include a photo of this feature</label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group-custom">
-            <div class="form-group-left">
-                <label class="control-label">Business metrics</label>
-                <p class="info">Can this feature include a screenshot and/or photo?</p>
-            </div>
+            <div class="form-group-custom">
+                <div class="form-group-left">
+                    <label class="control-label">Business metrics</label>
+                    <p class="info">Can this feature include a screenshot and/or photo?</p>
+                </div>
 
-            <div class="form-group-right">
-                <div class="check-box">
-                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" checked [(ngModel)]="prop.bmFlag" name="businessMetrics" id="businessMetrics"/>
-                    <label for="businessMetrics">Make as business metrics</label>
+                <div class="form-group-right">
+                    <div class="check-box">
+                        <input type="checkbox" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.bmFlag" name="businessMetrics" id="businessMetrics"/>
+                        <label for="businessMetrics">Make as business metrics</label>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </ng-container>
     </div>
 </div>
