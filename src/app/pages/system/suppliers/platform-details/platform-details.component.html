@@ -43,8 +43,11 @@
                 </div>
             </ng-container>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large list-cell-sort" cdkDrag *ngFor="let prop of canMoveProps">
-                    <span class="icon-block icon-line icon-32"></span>
+                <div class="list-cell-large"
+                     [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
+                     [cdkDragDisabled]="!configService.isEditable(version.type)"
+                     cdkDrag *ngFor="let prop of canMoveProps">
+                    <span class="icon-block icon-line icon-32" [hidden]="!configService.isEditable(version.type)"></span>
                     <div class="list-content">
                         <div class="info">
                             <div class="title">{{prop.name}}</div>

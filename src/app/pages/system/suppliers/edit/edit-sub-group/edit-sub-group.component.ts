@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {GroupInfo} from "../../../../model/po/groupInfo";
+import {GroupInfo} from "../../../../../model/po/groupInfo";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ConfigService} from "../../../../service/config.service";
-import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
-import {ToastRepository} from "../../../../repository/toast-repository";
-import {FileRepository} from "../../../../repository/file-repository";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
-import {TabType} from "../../../../model/enums/tab-type";
-import {Constants} from "../../../../model/constants";
-import {Reminder} from "../../../../model/vo/reminder";
+import {ConfigService} from "../../../../../service/config.service";
+import {LocalStorageObServable} from "../../../../../observable/local-storage-observable";
+import {ToastRepository} from "../../../../../repository/toast-repository";
+import {FileRepository} from "../../../../../repository/file-repository";
+import {SupplierRepository} from "../../../../../repository/supplier-repository";
+import {TabType} from "../../../../../model/enums/tab-type";
+import {Constants} from "../../../../../model/constants";
+import {Reminder} from "../../../../../model/vo/reminder";
 
 @Component({
     selector: 'app-edit-sub-group',

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EditSubGroupComponent } from './edit-sub-group.component';
+import {EditSubGroupComponent} from './edit-sub-group.component';
 
 describe('EditSubGroupComponent', () => {
   let component: EditSubGroupComponent;

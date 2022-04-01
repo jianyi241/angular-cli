@@ -5,7 +5,10 @@
             <div class="text-ellipsis">{{prop?.name}}</div>
         </div>
 
-        <button class="btn btn-purple" (click)="saveProp()">{{prop.id ? 'Update' : 'Save'}}</button>
+        <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
+            <button class="btn btn-text-danger" (click)="archive()" *ngIf="prop.id">Archive</button>
+            <button class="btn btn-purple" (click)="saveProp()">{{prop.id ? 'Update' : 'Save'}}</button>
+        </div>
     </div>
 
     <div class="form-content">
@@ -22,7 +25,7 @@
             </div>
 
             <div class="form-group-right">
-                <input type="text" placeholder="Name" [maxLength]="100" [(ngModel)]="prop.name" class="form-control"/>
+                <input type="text" placeholder="Name" [maxLength]="100" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.name" class="form-control"/>
                 <p class="tip-info">Maximum 100 characters</p>
             </div>
         </div>
@@ -36,12 +39,12 @@
             </div>
 
             <div class="form-group-right">
-                <ckeditor [(ngModel)]="prop.description" [config]="config"></ckeditor>
+                <ckeditor [(ngModel)]="prop.description" [readOnly]="!configService.isEditable(version.type)" [config]="config"></ckeditor>
 <!--                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
             </div>
         </div>
 
-        <div class="form-group-custom">
+        <div class="form-group-custom" *ngIf="currentTab == configService.tabType.features">
             <div class="form-group-left">
                 <label class="control-label">Feature group</label>
                 <p class="info">Which feature group does this feature belong to?</p>
@@ -50,14 +53,14 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature group</label>
-                    <ng-select disabled class="select-single" placeholder="Feature group" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
+                    <ng-select disabled class="select-single" placeholder="Feature group" [disabled]="!configService.isEditable(version.type)" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.topGroupName">{{prop.topGroupName}}</ng-option>
                     </ng-select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">Feature sub-group</label>
-                    <ng-select disabled class="select-single" placeholder="Feature sub-group" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
+                    <ng-select disabled class="select-single" placeholder="Feature sub-group" [disabled]="!configService.isEditable(version.type)" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.subGroupName">{{prop.subGroupName}}</ng-option>
                     </ng-select>
                 </div>
@@ -72,7 +75,38 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Field type</label>
-                    <input type="text" placeholder="Field type" value="Boolean field" disabled class="form-control"/>
+                    <ng-select [disabled]="!configService.isEditable(version.type)" class="select-single" placeholder="Field type" dropdownPosition="bottom" [(ngModel)]="prop.type">
+                        <ng-option *ngFor="let type of configService.propTypeList()"
+                                   [value]="type.value">{{type.name}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Visual assets</label>
+                <p class="info">Can this feature include a screenshot and/or photo?</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="check-box">
+                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.vsFlag" name="visualAssets" id="visualAssets"/>
+                    <label for="visualAssets">Products can include a photo of this feature</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Business metrics</label>
+                <p class="info">Can this feature include a screenshot and/or photo?</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="check-box">
+                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" checked [(ngModel)]="prop.bmFlag" name="businessMetrics" id="businessMetrics"/>
+                    <label for="businessMetrics">Make as business metrics</label>
                 </div>
             </div>
         </div>

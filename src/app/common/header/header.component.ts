@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     }
 
     chooseType(type: string) {
-        if (type.includes('/supplier')) {
+        if (type.includes('/supplier') && !this.router.url.includes('/supplier/supplier-tab')) {
             this.router.navigateByUrl('/supplier/supplier-tab');
 
         } else if (type.includes('/platform')) {

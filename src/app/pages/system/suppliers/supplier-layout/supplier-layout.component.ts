@@ -34,10 +34,12 @@ export class SupplierLayoutComponent implements OnInit {
 
     getVersion(): void {
         let versionId = this.activeRouter.firstChild?.snapshot?.params['version'];
-        if (versionId) {
+        if (versionId && versionId != 'version') {
             this.versionRepository.versionById(versionId).subscribe(res => {
                 this.version = res.data || this.version;
-                this.chooseTab(TabType.overview.name);
+                if (this.router.url == '/supplier/supplier-tab') {
+                    this.chooseTab(TabType.overview.name);
+                }
             });
         } else {
             this.versionRepository.supplierVersion().subscribe(res => {
@@ -65,9 +67,25 @@ export class SupplierLayoutComponent implements OnInit {
                 return;
             }
             this.version = res.data || this.version;
-            this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`)
+            let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
+            this.router.navigateByUrl(`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`)
         })
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     pushConfig(): void {
 

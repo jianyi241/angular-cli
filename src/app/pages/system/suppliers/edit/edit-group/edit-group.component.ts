@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ConfigService} from "../../../../service/config.service";
-import {GroupInfo} from "../../../../model/po/groupInfo";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
-import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
-import {ToastRepository} from "../../../../repository/toast-repository";
-import {FileRepository} from "../../../../repository/file-repository";
-import {TabType} from "../../../../model/enums/tab-type";
-import {Constants} from "../../../../model/constants";
-import {Reminder} from "../../../../model/vo/reminder";
+import {ConfigService} from "../../../../../service/config.service";
+import {GroupInfo} from "../../../../../model/po/groupInfo";
+import {SupplierRepository} from "../../../../../repository/supplier-repository";
+import {LocalStorageObServable} from "../../../../../observable/local-storage-observable";
+import {ToastRepository} from "../../../../../repository/toast-repository";
+import {FileRepository} from "../../../../../repository/file-repository";
+import {TabType} from "../../../../../model/enums/tab-type";
+import {Constants} from "../../../../../model/constants";
+import {Reminder} from "../../../../../model/vo/reminder";
+import {Version} from "../../../../../model/po/version";
+import {VersionRepository} from "../../../../../repository/version-repository";
 
 
 @Component({
@@ -18,8 +20,9 @@ import {Reminder} from "../../../../model/vo/reminder";
     styleUrls: ['./edit-group.component.less']
 })
 export class EditGroupComponent implements OnInit {
-    id: string;
+    version: Version = new Version();
     group: GroupInfo = new GroupInfo();
+    currentTab: number;
     uploading = false;
     config = {...Constants.EDITOR_CONFIG};
 
@@ -27,6 +30,7 @@ export class EditGroupComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
                 public configService: ConfigService,
+                private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
@@ -39,36 +43,59 @@ export class EditGroupComponent implements OnInit {
 
     init(): void {
         this.parseRouteParam();
-        this.initEditConfig();
+        this.versionDetail();
+        this.initByCurrentTab();
+        this.detail();
+    }
+
+    initByCurrentTab(): void {
+        this.group.tabType = this.currentTab;
+        switch (this.currentTab) {
+            case TabType.overview.value:
+                break;
+            case TabType.information.value:
+                break;
+            case TabType.esg.value:
+                break;
+            case TabType.features.value:
+                break;
+            case TabType.feesAndRates.value:
+                break;
+            case TabType.changeHistory.value:
+                break;
+        }
     }
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            if (params['id'] != Constants.NON_ID) {
-                this.id = params['id'];
-                this.detail();
-            }
+            this.version.id = params['version'];
+            this.currentTab = params['tab'];
+            this.group.id = params['id'] == Constants.NON_ID ? '' : params['id'];
+        })
+    }
+
+    versionDetail(): void {
+        this.versionRepository.versionById(this.version.id).subscribe(res => {
+            this.version = res.data;
         })
     }
 
     detail(): void {
-        this.supplierRepository.groupDetail(this.id).subscribe(res => {
+        if (!this.group.id) {
+            return;
+        }
+        this.supplierRepository.groupDetail(this.group.id, this.version.id).subscribe(res => {
             this.group = Object.assign(this.group, res.data);
         })
     }
 
     goBack(): void {
-        this.route.navigateByUrl('/supplier/supplier-tab/comparison/4');
+        let tabType = TabType.parseEnum(this.currentTab);
+        let tab = tabType.name.toLowerCase().replace(' ', '-');
+        this.route.navigateByUrl(`/supplier/supplier-tab/${tab}/${this.version.id}`);
     }
 
-    onReady(editor): void {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
-    }
-
-    dropped(files: NgxFileDropEntry[]): void {
+    droppedFile(files: NgxFileDropEntry[]): void {
         if (files[0].fileEntry.isFile) {
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
@@ -89,9 +116,6 @@ export class EditGroupComponent implements OnInit {
         }
     }
 
-    initEditConfig() {
-    }
-
     saveGroup() {
         if (!this.group.name) {
             this.toastRepository.showDanger('Name is required.')
@@ -106,13 +130,8 @@ export class EditGroupComponent implements OnInit {
                 data.groupId = res.data.id;
                 this.storage.setItem<Reminder>('reminder', data);
             });
-            this.toastRepository.showSuccess(`${this.id ? 'Update' : 'Save'} Successfully.`);
-            this.id = res.data.id;
-            this.group.id = this.id;
+            this.toastRepository.showSuccess(`${this.group.id ? 'Update' : 'Save'} Successfully.`);
+            this.group.id = res.data.id;
         });
     }
-
-    /*editorDataChange($event: CKEditor4.EventInfo) {
-        console.log($event);
-    }*/
 }

@@ -8,6 +8,15 @@ import {VersionType} from "../model/enums/version-type";
     providedIn: 'root'
 })
 export class ConfigService {
+    tabType = {
+        overview: TabType.overview.value,
+        information: TabType.information.value,
+        esg: TabType.esg.value,
+        feesAndRates: TabType.feesAndRates.value,
+        features: TabType.features.value,
+        changeHistory: TabType.changeHistory.value
+    }
+
     constructor(private router: Router) {
     }
 

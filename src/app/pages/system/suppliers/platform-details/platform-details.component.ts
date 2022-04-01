@@ -7,6 +7,7 @@ import {Version} from "../../../../model/po/version";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {ConfigService} from "../../../../service/config.service";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-platform-details',
@@ -18,6 +19,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     notMoveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     canMoveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     routerSubscription: any;
+    activatedRouteSubscription: any;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -32,9 +34,8 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.routerSubscription) {
-            this.routerSubscription.unsubscribe();
-        }
+        this.routerSubscription && this.routerSubscription.unsubscribe();
+        this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
     }
 
     subscribe(): void {
@@ -52,7 +53,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     parseRouterParam(): void {
-        this.activatedRoute.params.subscribe(res => {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
             this.version.id = res['version'];
             if (!this.version.id || this.version.id === 'version') {
                 return;
@@ -77,7 +78,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     save(id?: string): void {
-        this.route.navigateByUrl(`/supplier/edit-platform/${id || 0}/${this.version.id}`);
+        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.overview.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {

@@ -31,6 +31,7 @@ export class GroupInfo extends BaseModel{
      * 1:overview 2:information 3:esg 4:features 5:fees&rates 6:find a Bdm 7:change History
      */
     tabType?: number;
+    moveFlag?: boolean;
     attachmentVo: Attachment = new Attachment();
 }
 

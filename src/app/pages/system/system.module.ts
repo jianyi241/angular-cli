@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 
 import {SystemRoutingModule} from './system-routing.module';
 import {ComparisonToolComponent} from './suppliers/comparison-tool/comparison-tool.component';
-import {EditGroupComponent} from './suppliers/edit-group/edit-group.component';
-import {EditSubGroupComponent} from './suppliers/edit-sub-group/edit-sub-group.component';
-import {EditPropComponent} from './suppliers/edit-prop/edit-prop.component';
+import {EditGroupComponent} from './suppliers/edit/edit-group/edit-group.component';
+import {EditSubGroupComponent} from './suppliers/edit/edit-sub-group/edit-sub-group.component';
+import {EditPropComponent} from './suppliers/edit/edit-prop/edit-prop.component';
 import {FeatureFormComponent} from "./platforms/feature-form/feature-form.component";
 import {ProductsComponent} from "./platforms/products/products.component";
 import {NgSelectModule} from "@ng-select/ng-select";
@@ -17,8 +17,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {PlatformDetailsComponent} from "./suppliers/platform-details/platform-details.component";
 import {BackTopDirective} from "../../directive/back-top.directive";
-import {PlatformEditComponent} from './suppliers/platform-edit/platform-edit.component';
-import {InformationSectionEditComponent} from './suppliers/information-section-edit/information-section-edit.component';
 import {InformationComponent} from './suppliers/information/information.component';
 import {SupplierLayoutComponent} from './suppliers/supplier-layout/supplier-layout.component';
 import {EsgComponent} from './suppliers/esg/esg.component';
@@ -42,8 +40,6 @@ import {ArrayFilterPipe} from "../../pipes/array-filter.pipe";
         ToggleClassDirective,
         PlatformDetailsComponent,
         BackTopDirective,
-        PlatformEditComponent,
-        InformationSectionEditComponent,
         InformationComponent,
         SupplierLayoutComponent,
         EsgComponent,

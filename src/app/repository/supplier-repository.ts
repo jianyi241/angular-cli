@@ -36,8 +36,8 @@ export class SupplierRepository {
         return this.http.post<HttpResult<any>>(environment.baseURL + `/supplier/saveOrUpdateProperty`, prop);
     }
 
-    groupDetail(id: string): Observable<HttpResult<GroupInfo>> {
-        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/groupConfig/${id}`);
+    groupDetail(id: string, versionId: string): Observable<HttpResult<GroupInfo>> {
+        return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/groupConfig/${id}/${versionId}`);
     }
 
     subGroupDetail(id: string): Observable<HttpResult<GroupInfo>> {
