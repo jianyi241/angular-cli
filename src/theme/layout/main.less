@@ -34,10 +34,10 @@
   }
 
   &.main-form-with-tab{
-    padding-top:182px;
+    padding-top:206px;
 
     @media screen and (max-width: 940px){
-      padding-top:203px;
+      padding-top:227px;
     }
 
     .tab-menu {
@@ -60,10 +60,31 @@
       }
 
       @media screen and (max-width: 940px){
+        top:165px;
         padding:10px 0;
         height: auto;
         left:20px;
         width: calc(100% - 40px);
+      }
+    }
+  }
+
+  &.main-form-has-tip{
+    padding-top:284px;
+
+    .tab-menu {
+      top:230px;
+
+      @media screen and (max-width: 1400px){
+
+      }
+
+      @media screen and (max-width: 1240px){
+
+      }
+
+      @media screen and (max-width: 940px){
+        top:165px;
       }
     }
   }
@@ -77,6 +98,7 @@
   height: 76px;
   padding:16px 168px;
   background: #D9F0FF;
+  z-index: 99;
 
   @media screen and (max-width: 1400px){
     padding-left: 100px;

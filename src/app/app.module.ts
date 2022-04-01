@@ -30,6 +30,7 @@ import {SystemModule} from "./pages/system/system.module";
 import {ReviewsModule} from "./pages/reviews/reviews.module";
 import {ReviewLayoutComponent} from './common/review-layout/review-layout.component';
 import {ReviewHeaderComponent} from './common/review-header/review-header.component';
+import {ScrollService} from "./service/scroll.service";
 
 @NgModule({
     declarations: [
@@ -81,6 +82,7 @@ import {ReviewHeaderComponent} from './common/review-header/review-header.compon
         LocalStorageObServable,
         LayoutObservable,
         MessagingService,
+        ScrollService
     ],
     bootstrap: [AppComponent],
     exports: [

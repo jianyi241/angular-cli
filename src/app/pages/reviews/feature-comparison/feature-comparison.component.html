@@ -1,26 +1,27 @@
 <div class="loading-bar" [ngClass]="compareData.productVos.length == 0 || compareData.groupVoList.length ==0 ? 'is-loading':'has-load'"></div>
 
-<div class="sub-head-review">
-    <div class="title">Step 2 - Feature matric</div>
-    <div class="filter-content">
-        <div class="switch-button xs-ml-16">
-            <div class="switch-text active">All</div>
-            <div class="switch-text">Hide removed platforms</div>
-        </div>
+<div class="table-main-content">
+    <div class="review-content" appTableScroll (scrollEvent)="scrollEvent($event)" [maxScrollTop]="104">
+    <div class="sub-head-review">
+        <div class="title">Step 2 - Feature matric</div>
+        <div class="filter-content">
+            <div class="switch-button xs-ml-16">
+                <div class="switch-text active">All</div>
+                <div class="switch-text">Hide removed platforms</div>
+            </div>
 
-        <div class="switch-button xs-ml-16">
-            <div class="switch-text active">All</div>
-            <div class="switch-text">Hide non-essential features</div>
-        </div>
+            <div class="switch-button xs-ml-16">
+                <div class="switch-text active">All</div>
+                <div class="switch-text">Hide non-essential features</div>
+            </div>
 
-        <div class="switch-button xs-ml-16">
-            <div class="switch-text">All</div>
-            <div class="switch-text active">Hide common features</div>
+            <div class="switch-button xs-ml-16">
+                <div class="switch-text">All</div>
+                <div class="switch-text active">Hide common features</div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="review-content">
     <div class="table-container">
         <table class="table table-review" #panelContent>
             <thead>
@@ -37,21 +38,29 @@
 
             <th class="th-brand" *ngFor="let product of compareData.productVos">
                 <div class="th-brand-box">
-                    <div class="brand-pic">
-                        <img [src]="product.attachmentVo?.visitUrl"/>
+                    <div class="th-brand-box-top">
+                        <div class="box-center-left">
+                            <div class="brand-pic">
+                                <img [src]="product.attachmentVo?.visitUrl"/>
+                            </div>
+                            <div class="title" [title]="product.name">{{product.name}}</div>
+                        </div>
+
+                        <div class="box-center-right">
+                            <div class="text">Overall</div>
+                            <div class="num">98%</div>
+                        </div>
                     </div>
-                    <div class="title" [title]="product.name">{{product.name}}</div>
-                    <!--<div class="text">Overall</div>
-                    <div class="num">98%</div>
 
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">Edit comment</button>
+                        <button class="btn btn-outline-purple-light btn-edit">+ Shortlist</button>
                         <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
                     </div>
 
                     <div class="tip-message tip-success">
                        <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist
-                    </div>-->
+                    </div>
+
                 </div>
             </th>
             </thead>
@@ -104,14 +113,37 @@
 
                             <td class="content-text" *ngFor="let product of compareData.productVos">
                                 <span class="icon-block icon-18 {{getChecked(prop.id, product.productPropVoList)}}"></span>
-                                <span class="icon-block icon-info-circle-purple icon-15"></span>
+                                <ng-template #popContent>
+                                    <div class="cell-popover">
+                                        <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                        <div class="info">Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</div>
+                                        <div class="img-box">
+                                            <img src="./assets/img/popover-pic.png"/>
+                                            <div class="btn-expand" (click)="showPic({closePopover:p})"><span class="icon-block icon-expand icon-20"></span></div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <span class="icon-block icon-info-circle-purple icon-15" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="false" placement="right auto" [ngbPopover]="popContent"></span>
                             </td>
                         </tr>
                         </tbody>
                     </ng-container>
                 </ng-container>
             </ng-container>
+
+            <tfoot>
+                <th></th>
+
+                <th class="th-control" *ngFor="let product of compareData.productVos">
+                    <div class="btn-control-box">
+                        <button class="btn btn-outline-purple-light btn-edit">+ Shortlist</button>
+                        <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
+                    </div>
+                </th>
+            </tfoot>
         </table>
     </div>
 
+</div>
 </div>

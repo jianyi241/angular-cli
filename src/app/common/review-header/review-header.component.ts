@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewHeaderComponent implements OnInit {
 
-  constructor() { }
+  public  isScrollFixed :boolean;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+
   }
+
 
 }

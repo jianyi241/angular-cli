@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ReviewRepository} from "../../../repository/review-repository";
 import {CompareVo} from "../../../model/vo/compareVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {PlatformRepository} from "../../../repository/platform-repository";
+import {ImgShowModalComponent} from "../img-show-modal/img-show-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ScrollService} from "../../../service/scroll.service";
+import {ReviewLayoutComponent} from "../../../common/review-layout/review-layout.component";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -13,7 +17,11 @@ export class FeatureComparisonComponent implements OnInit {
     compareData: CompareVo = new CompareVo();
 
     constructor(private reviewRepository: ReviewRepository,
-                private platformRepository: PlatformRepository) {
+                private platformRepository: PlatformRepository,
+                private modalService: NgbModal,
+                private scrollService: ScrollService,
+                public reviewLayoutComponent:ReviewLayoutComponent
+    ) {
     }
 
 
@@ -40,4 +48,20 @@ export class FeatureComparisonComponent implements OnInit {
     }
 
 
+    showPic(object): void {
+        const modalRef = this.modalService.open(ImgShowModalComponent, {
+            size: 'lg',
+            windowClass: 'popup-modal',
+            centered: true
+        });
+        modalRef.result.then((result) => {
+        }, (reason) => {
+        });
+
+        object.closePopover.close();
+    }
+
+    scrollEvent(e):void{
+        this.reviewLayoutComponent.viewHead.isScrollFixed =e;
+    }
 }

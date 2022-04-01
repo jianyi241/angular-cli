@@ -1,0 +1,69 @@
+
+.table-cell-popover{
+  background: #FFFFFF;
+  border: 1px solid #E3E3E3;
+  border-radius: 5px;
+  max-width: 404px;
+  width: 404px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+
+  .popover-body{
+    padding:0;
+
+    .icon-close{
+      position: absolute;
+      top:16px;
+      right:16px;
+      cursor: pointer;
+      z-index: 5;
+    }
+  }
+
+  &.bs-popover-right > .arrow::before,
+  &.bs-popover-auto[x-placement^="right"] > .arrow::before {
+    left: 0;
+    border-width: 0.5rem 0.5rem 0.5rem 0;
+    border-right-color: #E3E3E3;
+  }
+}
+
+.cell-popover{
+  padding:24px 33px 34px 33px;
+
+  .info{
+    font-family: 'Epilogue';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #515B6F;
+    margin-bottom: 12px;
+  }
+
+  .img-box{
+    position: relative;
+    width: 100%;
+
+    img{
+      width: 100%;
+      height: auto;
+    }
+
+    .btn-expand{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top:50%;
+      left:50%;
+      margin-top:-16px;
+      margin-left:-16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      background-color: #4640DE;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+  }
+}

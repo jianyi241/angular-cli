@@ -146,3 +146,29 @@
     background-color: darken(#4640DE,5%);
   }
 }
+
+.switch-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4640DE;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 4px;
+  background-color: #E9EBFD;
+
+  .switch-text {
+    padding: 7px 12px;
+    cursor: pointer;
+    text-align: center;
+
+    &.active {
+      font-weight: 700;
+      background-color: #ffffff;
+    }
+
+    &:hover {
+      background-color: #ffffff;
+    }
+  }
+}

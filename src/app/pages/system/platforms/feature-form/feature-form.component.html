@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-content">
-        <div class="form-group-custom form-content-column">
+        <div class="form-group-custom form-content-column xs-pt-0">
             <div class="form-column-left">
                 <div class="main-menu">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
@@ -30,6 +30,7 @@
                         <ng-template ngbPanelHeader let-opened="opened">
                             <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened" [title]="group.name"><div class="text">{{group.name}}</div>
                                 <!--<span class="label-number xs-ml-6">7 new</span>-->
+                                <span class="dot"></span>
                                 <span class="icon-block icon-arr-up-purple icon-15"></span>
                             </button>
                         </ng-template>
@@ -40,7 +41,9 @@
                                      (click)="chooseSubGroup(subGroupItem)"
                                      [ngClass]="{'active': subGroup.id == subGroupItem.id}"
                                      [title]="subGroupItem.name"><div class="text">{{subGroupItem.name}}</div>
-                                    <!--<span class="badge badge-theme xs-ml-6">2</span>--></div>
+                                    <!--<span class="badge badge-theme xs-ml-6">2</span>-->
+                                    <span class="dot"></span>
+                                </div>
                             </div>
                         </ng-template>
                     </ngb-panel>
