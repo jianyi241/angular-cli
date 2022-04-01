@@ -43,8 +43,8 @@ export class InformationComponent implements OnInit, OnDestroy {
 
 
     init(): void {
-        this.subscribe();
         this.parseRouterParam();
+        this.subscribe();
         this.supplierVersion();
         this.sectionList();
     }
@@ -60,13 +60,13 @@ export class InformationComponent implements OnInit, OnDestroy {
     parseRouterParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
             this.version.id = res['version'];
-            if (!this.version.id || this.version.id === 'version') {
-                return;
-            }
         });
     }
 
     supplierVersion(): void {
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
         })
