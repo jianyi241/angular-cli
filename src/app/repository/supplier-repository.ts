@@ -52,4 +52,7 @@ export class SupplierRepository {
         return this.http.get<HttpResult<Version>>(environment.baseURL + `/supplier/editModel`);
     }
 
+    pushConfig(): Observable<HttpResult<Version>> {
+        return this.http.get<HttpResult<Version>>(environment.baseURL + '/supplier/publish')
+    }
 }

@@ -72,22 +72,19 @@ export class SupplierLayoutComponent implements OnInit {
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     pushConfig(): void {
-
+        this.supplierRepository.pushConfig().subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.version = res.data || this.version;
+            let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
+            this.router.navigateByUrl(`/`, {
+                skipLocationChange: true
+            }).then(r => {
+                this.router.navigate([`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`])
+            })
+        })
     }
 }
