@@ -3,19 +3,20 @@
         <div class="col-head">
             <div class="title">Group</div>
             <div class="col-head-right">
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
                 <span class="link-new" (click)="saveGroup()" [hidden]="!configService.isEditable(version.type)">+ New</span>
             </div>
         </div>
 
         <div class="col-body" >
-            <div class="list-cell" [ngClass]="{'active': reminder.groupId == group.id}"
+            <div class="list-cell {{configService.getClassByStatus(group.status)}}" [ngClass]="{'active': reminder.groupId == group.id}"
                  (click)="chooseGroup(group)"
                  *ngFor="let group of freezeGroups">
                 <div class="title" [title]="group.name">{{group.name}}</div>
                 <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)" (click)="saveGroup(group)"></span>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropGroup($event)">
-                <div class="list-cell" [ngClass]="{'active': reminder.groupId == group.id}"
+                <div class="list-cell {{configService.getClassByStatus(group.status)}}" [ngClass]="{'active': reminder.groupId == group.id}"
                      cdkDrag
                      (click)="chooseGroup(group)"
                      *ngFor="let group of moveGroups">
@@ -31,13 +32,13 @@
         <div class="col-head xs-pl-16">
             <div class="title">Sub-group</div>
             <div class="col-head-right">
-<!--                <span class="link-show">Show archived</span>-->
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type)" (click)="saveSubGroup()">+ New</span>
             </div>
         </div>
 
         <div class="col-body" cdkDropList (cdkDropListDropped)="dropSubGroup($event)">
-            <div class="list-cell list-sub-cell" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+            <div class="list-cell list-sub-cell {{configService.getClassByStatus(subGroup.status)}}" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
                  cdkDrag
                  (click)="chooseSubGroup(subGroup)"
                  *ngFor="let subGroup of subGroups">
@@ -61,7 +62,7 @@
         </div>
 
         <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
-            <div class="list-cell-large" cdkDrag
+            <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}" cdkDrag
                  [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                  *ngFor="let prop of properties">
                 <div></div>
@@ -71,7 +72,7 @@
                         <div class="title">{{prop.name}}</div>
                         <div class="text">{{configService.getPropType(prop.type)}}</div>
                     </div>
-<!--                    <span class="label label-red">Archived</span>-->
+                    <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                 </div>
                 <button class="btn btn-outline-purple-light btn-small"
                         [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop)">View

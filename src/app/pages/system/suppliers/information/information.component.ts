@@ -33,6 +33,7 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subscribe();
         this.init();
     }
 
@@ -44,7 +45,9 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouterParam();
-        this.subscribe();
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.supplierVersion();
         this.sectionList();
     }
@@ -64,9 +67,6 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     supplierVersion(): void {
-        if (!this.version.id || this.version.id === 'version') {
-            return;
-        }
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
         })

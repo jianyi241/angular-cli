@@ -48,6 +48,9 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouterParam();
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.supplierVersion();
         this.propList();
     }
@@ -55,9 +58,6 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     parseRouterParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
             this.version.id = res['version'];
-            if (!this.version.id || this.version.id === 'version') {
-                return;
-            }
         });
     }
 

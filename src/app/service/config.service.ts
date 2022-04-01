@@ -29,7 +29,7 @@ export class ConfigService {
     }
 
     getPropType(value: number): string {
-        return PropType.parseEnum(value).name;
+        return PropType.parseEnum(value)?.name || '';
     }
 
     activeMatch(routerUrl: string): string {
@@ -38,5 +38,21 @@ export class ConfigService {
 
     isEditable(versionType: string): boolean {
         return versionType === VersionType.Draft.value;
+    }
+
+    getClassByStatus(value: string): string {
+        switch (value) {
+            case 'Insert':
+            case 'Update':
+                return 'bg-blue';
+            case 'Archive':
+                return 'bg-red';
+            default:
+                return '';
+        }
+    }
+
+    isArchive(status: string) {
+        return status == 'Archive';
     }
 }

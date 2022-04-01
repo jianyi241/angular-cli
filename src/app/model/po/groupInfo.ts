@@ -25,6 +25,7 @@ export class GroupInfo extends BaseModel{
     parentName?: string;
     parentId?: string;
     sort?: number;
+    status?: string;
     subList?: Array<GroupInfo> = new Array<GroupInfo>();
     propertyVoList?: Array<PropertyInfo> = new Array<PropertyInfo>();
     /**

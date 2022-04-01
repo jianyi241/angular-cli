@@ -25,13 +25,14 @@
                 items.
             </div>
             <ng-container>
-                <div class="list-cell-large" *ngFor="let prop of notMoveProps">
+                <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status)" *ngFor="let prop of notMoveProps">
                     <div class="list-content">
                         <div class="info">
                             <div class="title">{{prop.name}}</div>
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
                         <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
                     <button class="btn btn-outline-purple-light btn-small"
                             [hidden]="configService.isEditable(version.type)" (click)="save(prop.id)">View
@@ -43,7 +44,7 @@
                 </div>
             </ng-container>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large"
+                <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let prop of canMoveProps">
@@ -54,6 +55,7 @@
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
                         <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
                     <button class="btn btn-outline-purple-light btn-small"
                             [hidden]="configService.isEditable(version.type)" (click)="save(prop.id)">View

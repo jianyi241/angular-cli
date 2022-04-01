@@ -24,13 +24,14 @@
             <div class="empty-text" *ngIf="freezeProps.length == 0 && moveProps.length == 0">This section is empty. Click on “Edit platform” to add
                 items.
             </div>
-            <div class="list-cell-large" *ngFor="let prop of freezeProps">
+            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status)" *ngFor="let prop of freezeProps">
                 <div class="list-content">
                     <div class="info">
                         <div class="title">{{prop.name}}</div>
                         <div class="text">{{configService.getPropType(prop.type)}}</div>
                     </div>
                     <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                    <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                 </div>
                 <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)" [hidden]="configService.isEditable(version.type)">View</button>
                 <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)" [hidden]="!configService.isEditable(version.type)">
@@ -38,7 +39,7 @@
                 </button>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large"
+                <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}"
                      cdkDrag [cdkDragDisabled]="!configService.isEditable(version.type)"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      *ngFor="let prop of moveProps">
@@ -49,6 +50,7 @@
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
                         <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
                     <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)" [hidden]="configService.isEditable(version.type)">View</button>
                     <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)" [hidden]="!configService.isEditable(version.type)">

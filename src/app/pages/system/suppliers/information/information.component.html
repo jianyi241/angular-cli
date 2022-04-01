@@ -3,18 +3,20 @@
         <div class="col-head">
             <div class="title">Sections</div>
             <div class="col-head-right">
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type)" (click)="saveSection()">+ New</span>
             </div>
         </div>
 
         <div class="col-body">
-            <div class="list-cell" *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
-                <div class="title tx-blue" [title]="section.name">{{section.name}}</div>
+            <div class="list-cell" [ngClass]="configService.getClassByStatus(section.status)" *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
+                <div class="title" [title]="section.name">{{section.name}}</div>
                 <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id, $event)"
                       [hidden]="!configService.isEditable(version.type)"></span>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropSections($event)">
                 <div class="list-cell"
+                     [ngClass]="configService.getClassByStatus(section.status)"
                      (click)="chooseSection(section.id)"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let section of moveSections">
@@ -52,13 +54,14 @@
                 any features.
             </div>
 
-            <div class="list-cell-large" *ngFor="let prop of freezeProps">
+            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status)" *ngFor="let prop of freezeProps">
                 <div class="list-content">
                     <div class="info">
                         <div class="title">{{prop.name}}</div>
                         <div class="text">{{configService.getPropType(prop.type)}}</div>
                     </div>
                     <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                    <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                 </div>
                 <button class="btn btn-outline-purple-light btn-small"
                         [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop.id)">View
@@ -70,7 +73,7 @@
                 </button>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large"
+                <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let prop of moveProps">
@@ -82,6 +85,7 @@
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
                         <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
                     <button class="btn btn-outline-purple-light btn-small"
                             [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop.id)">View

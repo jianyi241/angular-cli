@@ -34,7 +34,6 @@ export class EditGroupComponent implements OnInit {
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
-        this.group.tabType = TabType.features.value;
     }
 
     ngOnInit(): void {

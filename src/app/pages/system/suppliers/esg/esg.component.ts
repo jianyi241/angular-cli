@@ -29,6 +29,7 @@ export class EsgComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subscribe();
         this.init();
     }
 
@@ -39,8 +40,10 @@ export class EsgComponent implements OnInit, OnDestroy {
 
 
     init(): void {
-        this.subscribe();
         this.parseRouterParam();
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.supplierVersion();
         this.propList();
     }

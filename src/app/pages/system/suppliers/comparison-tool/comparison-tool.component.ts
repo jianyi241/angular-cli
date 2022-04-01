@@ -41,6 +41,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subscribe();
         this.init();
     }
 
@@ -52,7 +53,9 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouteParam();
-        this.subscribe();
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.supplierVersion();
         this.getGroupList();
     }
