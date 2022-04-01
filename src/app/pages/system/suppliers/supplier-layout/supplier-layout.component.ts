@@ -1,15 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ConfigService} from "../../../../service/config.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {VersionRepository} from "../../../../repository/version-repository";
+import {TabType} from "../../../../model/enums/tab-type";
+import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ToastRepository} from "../../../../repository/toast-repository";
+import {Version} from "../../../../model/po/version";
 
 @Component({
-  selector: 'app-supplier-layout',
-  templateUrl: './supplier-layout.component.html',
-  styleUrls: ['./supplier-layout.component.less']
+    selector: 'app-supplier-layout',
+    templateUrl: './supplier-layout.component.html',
+    styleUrls: ['./supplier-layout.component.less']
 })
 export class SupplierLayoutComponent implements OnInit {
+    version: Version = new Version();
+    currentTab: string;
 
-  constructor() { }
+    constructor(public configService: ConfigService,
+                private activeRouter: ActivatedRoute,
+                private versionRepository: VersionRepository,
+                private supplierRepository: SupplierRepository,
+                private toastRepository: ToastRepository,
+                private router: Router) {
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        this.init();
+    }
 
+    init(): void {
+        this.getVersion();
+    }
+
+    getVersion(): void {
+        let versionId = this.activeRouter.firstChild?.snapshot?.params['version'];
+        if (versionId) {
+            this.versionRepository.versionById(versionId).subscribe(res => {
+                this.version = res.data || this.version;
+                this.chooseTab(TabType.overview.name);
+            });
+        } else {
+            this.versionRepository.supplierVersion().subscribe(res => {
+                this.version = res.data || this.version;
+                this.version.id = res.data?.id || 'version';
+                this.chooseTab(TabType.overview.name);
+            })
+        }
+
+    }
+
+
+    chooseTab(tab: string): void {
+        if (tab == TabType.feesAndRates.name) {
+            return
+        }
+        this.currentTab = tab.toLowerCase().replace(' ', '-');
+        this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`);
+    }
+
+    editConfig(): void {
+        this.supplierRepository.editConfig().subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.version = res.data || this.version;
+            this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`)
+        })
+    }
+
+    pushConfig(): void {
+
+    }
 }

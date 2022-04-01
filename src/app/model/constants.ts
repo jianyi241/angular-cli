@@ -6,6 +6,7 @@ export class Constants {
         removePlugins: 'elementspath,resize',
         extraPlugins: 'emoji',
         editorplaceholder: "Description...",
+        readOnly: false,
         toolbarGroups: [
             { name: 'insert', groups: [ 'insert' ] },
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },

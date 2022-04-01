@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {GroupInfo} from "../model/po/groupInfo";
 import {PropertyInfo} from "../model/po/propertyInfo";
+import {Version} from "../model/po/version";
 
 @Injectable({
     providedIn: 'root'
@@ -15,12 +16,16 @@ export class SupplierRepository {
 
     }
 
-    groupList(tabType: number): Observable<HttpResult<Array<GroupInfo>>> {
-        return this.http.get<HttpResult<Array<GroupInfo>>>(environment.baseURL + `/supplier/groupList/${tabType}`);
+    groupList(tabType: number, versionId: string): Observable<HttpResult<Array<GroupInfo>>> {
+        return this.http.get<HttpResult<Array<GroupInfo>>>(environment.baseURL + `/supplier/groupList/${tabType}/${versionId}`);
     }
 
-    propList(groupId: string): Observable<HttpResult<Array<PropertyInfo>>> {
-        return this.http.get<HttpResult<Array<PropertyInfo>>>(environment.baseURL + `/supplier/propList/${groupId}`);
+    propList(groupId: string, versionId: string): Observable<HttpResult<Array<PropertyInfo>>> {
+        return this.http.get<HttpResult<Array<PropertyInfo>>>(environment.baseURL + `/supplier/propList/${groupId}/${versionId}`);
+    }
+
+    propListByType(tabType: number, versionId: string): Observable<HttpResult<Array<PropertyInfo>>> {
+        return this.http.get<HttpResult<Array<PropertyInfo>>>(environment.baseURL + `/supplier/propListByTab/${tabType}/${versionId}`);
     }
 
     saveGroup(group: GroupInfo): Observable<HttpResult<any>> {
@@ -39,8 +44,12 @@ export class SupplierRepository {
         return this.http.get<HttpResult<GroupInfo>>(environment.baseURL + `/supplier/subGroupConfig/${id}`);
     }
 
-    propDetail(id: string): Observable<HttpResult<PropertyInfo>> {
-        return this.http.get<HttpResult<PropertyInfo>>(environment.baseURL + `/supplier/propConfig/${id}`);
+    propDetail(id: string, versionId: string): Observable<HttpResult<PropertyInfo>> {
+        return this.http.get<HttpResult<PropertyInfo>>(environment.baseURL + `/supplier/propConfig/${id}/${versionId}`);
+    }
+
+    editConfig(): Observable<HttpResult<Version>> {
+        return this.http.get<HttpResult<Version>>(environment.baseURL + `/supplier/editModel`);
     }
 
 }

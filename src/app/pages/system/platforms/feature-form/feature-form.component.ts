@@ -57,7 +57,7 @@ export class FeatureFormComponent implements OnInit {
     }
 
     groupList(): void {
-        this.supplierRepository.groupList(TabType.features.value).subscribe(res => {
+        this.supplierRepository.groupList(TabType.features.value, '').subscribe(res => {
             this.groups = res.data;
             if (this.groups.length == 0) return;
             let subGroups = this.groups[0].subList || [];
@@ -67,7 +67,7 @@ export class FeatureFormComponent implements OnInit {
     }
 
     propList(subGroupId: string): void {
-        this.supplierRepository.propList(subGroupId).subscribe(res => {
+        this.supplierRepository.propList(subGroupId, '').subscribe(res => {
             this.props = res.data;
             if (this.props.length == 0 || this.productProps.length == 0) return;
             this.props.forEach(prop => {

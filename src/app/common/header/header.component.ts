@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalStorageObServable} from '../../observable/local-storage-observable';
-import {Router} from '@angular/router';
-import {CurrentUser} from '../../model/user';
+import {ActivatedRoute, Router} from '@angular/router';
+import {VersionRepository} from "../../repository/version-repository";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
     selector: 'app-header',
@@ -9,22 +9,24 @@ import {CurrentUser} from '../../model/user';
     styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-    currentUser: CurrentUser;
-
     constructor(
-        private localStorageService: LocalStorageObServable,
-        private router: Router
+        private versionRepository: VersionRepository,
+        public configService: ConfigService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute
     ) {
     }
 
     ngOnInit(): void {
-
+        this.chooseType(this.router.url.toLowerCase());
     }
 
+    chooseType(type: string) {
+        if (type.includes('/supplier')) {
+            this.router.navigateByUrl('/supplier/supplier-tab');
 
-    activeMatch(routerUrl: string): string {
-        return this.router.url.includes(routerUrl) ? 'active' : '';
+        } else if (type.includes('/platform')) {
+            this.router.navigateByUrl('/platform/platform-tab/product');
+        }
     }
-
-
 }

@@ -12,20 +12,17 @@
 
 
 import {Attachment} from "../attachment";
+import {BaseModel} from "./baseModel";
 
 /**
  * sh_product表
  */
-export class ProductInfo {
+export class ProductInfo extends BaseModel{
     attachmentId?: string;
     attachmentVo?: Attachment = new Attachment();
-    createTime?: string;
-    createUser?: string;
-    deleteFlag?: boolean;
     description?: string;
-    id?: string;
     name?: string;
-    updateTime?: string;
-    updateUser?: string;
+
+
 }
 

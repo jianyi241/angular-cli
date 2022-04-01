@@ -6,8 +6,8 @@
 
         <div class="menu">
             <a >News & Updates</a>
-            <a [routerLink]="['/supplier/supplier-tab/comparison/4']" [ngClass]="{'active': activeMatch('/supplier')}">Suppliers</a>
-            <a [routerLink]="['/platform/product']" [ngClass]="{'active': activeMatch('/platform')}">Platforms</a>
+            <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Suppliers</a>
+            <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
             <a [routerLink]="['/review/feature-comparison']" routerLinkActive="active">Advice practices</a>
         </div>
 
@@ -20,8 +20,8 @@
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
                     <a href="#">News & Updates</a>
-                    <a [routerLink]="['/supplier/comparison/4']" routerLinkActive="active">Suppliers</a>
-                    <a [routerLink]="['/platform/product']" routerLinkActive="active">Platforms</a>
+                    <a [routerLink]="['/supplier/active/comparison']" routerLinkActive="active">Suppliers</a>
+                    <a [routerLink]="['/platform/active/product']" routerLinkActive="active">Platforms</a>
                     <a href="#">Advice practices</a>
                 </div>
             </div>

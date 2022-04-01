@@ -11,18 +11,16 @@
  */
 
 
-import {Attachment} from "../attachment";
 import {BaseModel} from "./baseModel";
 
 /**
- * sh_product_prop表
+ * 版本信息表
  */
-export class ProductPropInfo extends BaseModel{
-    attachmentId?: string;
-    attachmentVo?: Attachment = new Attachment();
-    description?: string;
-    propValue?: string;
-    shProductId?: string;
-    shPropertyId?: string;
+export class Version extends BaseModel{
+    productId?: string;
+    /**
+     * Publish,Draft,History
+     */
+    type?: string;
+    version?: string;
 }
-

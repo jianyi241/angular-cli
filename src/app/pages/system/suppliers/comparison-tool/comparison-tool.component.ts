@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {GroupInfo} from "../../../../model/po/groupInfo";
-import {TabType} from "../../../../model/enums/tab-type";
 import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
@@ -38,7 +37,6 @@ export class ComparisonToolComponent implements OnInit {
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.configService.currentTabType = TabType.parseEnum(params['type']).value;
             console.log(`supplier params ==>`, params);
         })
     }
@@ -49,7 +47,7 @@ export class ComparisonToolComponent implements OnInit {
     }
 
     getGroupList(): void {
-        this.supplierRepository.groupList(4).subscribe(res => {
+        this.supplierRepository.groupList(4, '').subscribe(res => {
             this.groups = res.data;
             if (this.groups.length == 0) return;
             let groupInfo;
@@ -73,7 +71,7 @@ export class ComparisonToolComponent implements OnInit {
     }
 
     getPropList(): void {
-        this.supplierRepository.propList(this.reminder.subGroupId).subscribe(res => {
+        this.supplierRepository.propList(this.reminder.subGroupId, '').subscribe(res => {
             this.properties = res.data;
         });
     }

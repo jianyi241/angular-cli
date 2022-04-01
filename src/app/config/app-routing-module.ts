@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
+
 const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/supplier/supplier-tab/comparison/4'
+        redirectTo: '/supplier'
     },
 ];
 

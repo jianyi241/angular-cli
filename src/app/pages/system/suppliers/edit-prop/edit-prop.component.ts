@@ -8,6 +8,7 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import {FileRepository} from "../../../../repository/file-repository";
 import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {TabType} from "../../../../model/enums/tab-type";
+import {PropStatus} from "../../../../model/enums/prop-status";
 
 @Component({
     selector: 'app-edit-prop',
@@ -27,7 +28,7 @@ export class EditPropComponent implements OnInit {
                 private supplierRepository: SupplierRepository) {
         this.prop.tabType = TabType.features.value;
         this.prop.type = 3;
-        this.prop.status = 1;
+        this.prop.status = PropStatus.Normal.value;
     }
 
     ngOnInit(): void {
@@ -56,7 +57,7 @@ export class EditPropComponent implements OnInit {
     }
 
     detail(): void {
-        this.supplierRepository.propDetail(this.id).subscribe(res => {
+        this.supplierRepository.propDetail(this.id, '').subscribe(res => {
             this.prop = Object.assign(this.prop, res.data);
         })
     }

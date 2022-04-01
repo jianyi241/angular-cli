@@ -2,12 +2,12 @@
     <div class="sub-head sub-head-form">
         <div class="sub-title" (click)="goBack()">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            <div class="text-ellipsis">Platform name</div>
+            <div class="text-ellipsis">{{prop.name}}</div>
         </div>
 
-        <div class="btn-control-group">
-            <button class="btn btn-text-danger">Archive</button>
-            <button class="btn btn-purple">Update</button>
+        <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
+            <button class="btn btn-text-danger" (click)="archive()" *ngIf="prop.id">Archive</button>
+            <button class="btn btn-purple" (click)="save()">{{prop.id ? 'Update' : 'Save'}}</button>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group-right">
-                <input type="text" placeholder="Feature name" [maxLength]="100" class="form-control"/>
+                <input type="text" placeholder="Feature name" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.name" [maxLength]="100" class="form-control"/>
                 <p class="tip-info">Maximum 100 characters</p>
             </div>
         </div>
@@ -34,11 +34,12 @@
         <div class="form-group-custom">
             <div class="form-group-left">
                 <label class="control-label">Description</label>
-                <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers. This will appear as a tool tip</p>
+                <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers.
+                    This will appear as a tool tip</p>
             </div>
 
             <div class="form-group-right">
-                <ckeditor [config]="config"></ckeditor>
+                <ckeditor [config]="config" [readOnly]="!configService.isEditable(version.type)" [(ngModel)]="prop.description"></ckeditor>
                 <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
             </div>
         </div>
@@ -52,9 +53,9 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Field type</label>
-                    <ng-select disabled class="select-single" placeholder="Field type" dropdownPosition="bottom">
-                        <ng-option>Text field</ng-option>
-                        <ng-option>Boolean field</ng-option>
+                    <ng-select [disabled]="!configService.isEditable(version.type)" class="select-single" placeholder="Field type" dropdownPosition="bottom" [(ngModel)]="prop.type">
+                        <ng-option *ngFor="let type of configService.propTypeList()"
+                                   [value]="type.value">{{type.name}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -68,7 +69,7 @@
 
             <div class="form-group-right">
                 <div class="check-box">
-                    <input type="checkbox" checked name="visualAssets" id="visualAssets"/>
+                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" [(ngModel)]="prop.vsFlag" name="visualAssets" id="visualAssets"/>
                     <label for="visualAssets">Products can include a photo of this feature</label>
                 </div>
             </div>
@@ -82,7 +83,7 @@
 
             <div class="form-group-right">
                 <div class="check-box">
-                    <input type="checkbox" checked name="businessMetrics" id="businessMetrics"/>
+                    <input type="checkbox" [disabled]="!configService.isEditable(version.type)" checked [(ngModel)]="prop.bmFlag" name="businessMetrics" id="businessMetrics"/>
                     <label for="businessMetrics">Make as business metrics</label>
                 </div>
             </div>

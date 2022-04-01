@@ -9,21 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import {BaseModel} from "./baseModel";
 
 
-export class UserInfo {
-    createTime?: string;
-    createUser?: string;
-    deleteFlag?: boolean;
+export class UserInfo extends BaseModel{
     email?: string;
     firstName?: string;
-    id?: string;
     lastName?: string;
     mobile?: string;
     openId?: string;
     role?: string;
     status?: string;
-    updateTime?: string;
-    updateUser?: string;
 }
 

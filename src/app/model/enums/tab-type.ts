@@ -10,7 +10,7 @@ export class TabType implements EnumIdentity {
     static readonly esg = new TabType(3, "ESG");
     static readonly features = new TabType(4, "Features");
     static readonly feesAndRates = new TabType(5, "Fees & rates");
-    static readonly changeHistory = new TabType(7, "Change history");
+    static readonly changeHistory = new TabType(6, "Change history");
 
     private constructor(public readonly value: number, public readonly name: string) {
         TabType.AllValues.push(this);

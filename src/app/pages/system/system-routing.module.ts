@@ -14,17 +14,25 @@ import {InformationComponent} from "./suppliers/information/information.componen
 import {SupplierLayoutComponent} from "./suppliers/supplier-layout/supplier-layout.component";
 import {EsgComponent} from "./suppliers/esg/esg.component";
 import {ChangeHistoryComponent} from "./suppliers/change-history/change-history.component";
-import { ProductLayoutComponent } from './platforms/product-layout/product-layout.component';
-import { OverviewProductComponent } from './platforms/overview-product/overview-product.component';
-import { InformationProductComponent } from './platforms/information-product/information-product.component';
-import { EsgProductComponent } from './platforms/esg-product/esg-product.component';
-import { ChangeHistoryProductComponent } from './platforms/change-history-product/change-history-product.component';
+import {ProductLayoutComponent} from './platforms/product-layout/product-layout.component';
+import {OverviewProductComponent} from './platforms/overview-product/overview-product.component';
+import {InformationProductComponent} from './platforms/information-product/information-product.component';
+import {EsgProductComponent} from './platforms/esg-product/esg-product.component';
+import {ChangeHistoryProductComponent} from './platforms/change-history-product/change-history-product.component';
 
 const routes: Routes = [
     {
         path: 'supplier',
         component: LayoutComponent,
         children: [
+            {
+                path: 'edit-platform/:id/:version',
+                component: PlatformEditComponent,
+            },
+            {
+                path: 'edit-section',
+                component: InformationSectionEditComponent,
+            },
             {
                 path: 'edit-group/:id',
                 component: EditGroupComponent,
@@ -38,39 +46,34 @@ const routes: Routes = [
                 component: EditPropComponent,
             },
             {
-                path: 'edit-platform',
-                component: PlatformEditComponent,
-            },
-            {
-                path: 'edit-section',
-                component: InformationSectionEditComponent,
-            },
-            {
                 path: 'supplier-tab',
                 component: SupplierLayoutComponent,
-                children:[
+                children: [
                     {
-                        path: 'comparison/:type',
-                        component: ComparisonToolComponent,
-                    },
-                    {
-                        path: 'overview',
+                        path: 'overview/:version',
                         component: PlatformDetailsComponent,
+                        runGuardsAndResolvers: "paramsChange"
                     },
                     {
-                        path: 'information',
+                        path: 'information/:version',
                         component: InformationComponent,
                     },
+
                     {
-                        path: 'esg',
+                        path: 'esg/:version',
                         component: EsgComponent,
                     },
                     {
-                        path: 'change-history',
+                        path: 'features/:version',
+                        component: ComparisonToolComponent,
+                    },
+                    {
+                        path: 'change-history/:version',
                         component: ChangeHistoryComponent,
                     },
                 ]
             },
+
         ]
     },
     {
@@ -78,32 +81,37 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             {
-                path: 'product',
-                component: ProductsComponent,
-            },
-            {
-                path:'feature-form/:productId',
-                component:FeatureFormComponent
-            },
-            {
-                path: 'product-tab',
-                component: ProductLayoutComponent,
-                children:[
+                path: 'platform-tab',
+                children: [
                     {
-                        path: 'overview',
-                        component: OverviewProductComponent,
+                        path: 'product',
+                        component: ProductsComponent,
                     },
                     {
-                        path: 'information',
-                        component: InformationProductComponent,
-                    },
-                    {
-                        path: 'esg',
-                        component: EsgProductComponent,
-                    },
-                    {
-                        path: 'change-history',
-                        component: ChangeHistoryProductComponent,
+                        path: 'product-tab/:version',
+                        component: ProductLayoutComponent,
+                        children: [
+                            {
+                                path: 'overview',
+                                component: OverviewProductComponent,
+                            },
+                            {
+                                path: 'information',
+                                component: InformationProductComponent,
+                            },
+                            {
+                                path: 'esg',
+                                component: EsgProductComponent,
+                            },
+                            {
+                                path: 'feature-form/:productId',
+                                component: FeatureFormComponent
+                            },
+                            {
+                                path: 'change-history',
+                                component: ChangeHistoryProductComponent,
+                            },
+                        ]
                     },
                 ]
             },

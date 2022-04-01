@@ -13,17 +13,14 @@
 
 import {Attachment} from "../attachment";
 import {PropertyInfo} from "./propertyInfo";
+import {BaseModel} from "./baseModel";
 
 /**
  * sh_group表
  */
-export class GroupInfo {
+export class GroupInfo extends BaseModel{
     attachmentId?: string;
-    createTime?: string;
-    createUser?: string;
-    deleteFlag?: boolean;
     description?: string;
-    id?: string;
     name?: string;
     parentName?: string;
     parentId?: string;
@@ -34,8 +31,6 @@ export class GroupInfo {
      * 1:overview 2:information 3:esg 4:features 5:fees&rates 6:find a Bdm 7:change History
      */
     tabType?: number;
-    updateTime?: string;
-    updateUser?: string;
     attachmentVo: Attachment = new Attachment();
 }
 
