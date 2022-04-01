@@ -7,6 +7,7 @@ import {VersionRepository} from "../../../../repository/version-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-esg',
@@ -14,7 +15,6 @@ import {PropertyInfo} from "../../../../model/po/propertyInfo";
     styleUrls: ['./esg.component.less']
 })
 export class EsgComponent implements OnInit, OnDestroy {
-
     version: Version = new Version();
     moveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     freezeProps: Array<PropertyInfo> = new Array<PropertyInfo>();
@@ -56,13 +56,13 @@ export class EsgComponent implements OnInit, OnDestroy {
     parseRouterParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
             this.version.id = res['version'];
-            if (!this.version.id || this.version.id === 'version') {
-                return;
-            }
         });
     }
 
     supplierVersion(): void {
+        if (!this.version.id || this.version.id === 'version') {
+            return;
+        }
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
         })
@@ -78,11 +78,11 @@ export class EsgComponent implements OnInit, OnDestroy {
         });
     }
 
-    goSectionEdit(): void {
-        this.route.navigateByUrl(`/supplier/edit-section`);
+    save(id?: string): void {
+        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.esg.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
     }
 
-    dropSections($event: CdkDragDrop<PropertyInfo, any>) {
+    dropProps($event: CdkDragDrop<PropertyInfo, any>) {
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
     }
 

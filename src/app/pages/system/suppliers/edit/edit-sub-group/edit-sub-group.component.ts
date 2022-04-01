@@ -61,7 +61,7 @@ export class EditSubGroupComponent implements OnInit {
     }
 
     parent(): void {
-        this.supplierRepository.groupDetail(this.subGroup.parentId).subscribe(res => {
+        this.supplierRepository.groupDetail(this.subGroup.parentId, '').subscribe(res => {
             this.subGroup.parentName = res.data.name;
         })
     }
