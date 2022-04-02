@@ -15,12 +15,36 @@ export class FeatureSelectionComponent implements OnInit {
   }
 
   config = {
-    slidesPerView: 4,
+
     spaceBetween: 8,
     navigation: true,
     centeredSlides: true,
     loop: true,
     pagination: true,
+    breakpoints: {
+      1440: {
+        slidesPerView: 4,
+        spaceBetween: 8,
+
+      },
+      991: {
+        centeredSlides: true,
+        slidesPerView: 4,
+        spaceBetween: 8,
+
+      },
+      768: {
+        centeredSlides: true,
+        slidesPerView: 2,
+        spaceBetween: 8,
+      },
+      375: {
+        centeredSlides: true,
+        slidesPerView: 2,
+        spaceBetween: 8,
+      },
+
+    },
   };
 
 }

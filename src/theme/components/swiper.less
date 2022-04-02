@@ -8,10 +8,14 @@
         .swiper-wrapper {
             .swiper-slide {
                 width: 376px;
-                height: 212px;
+                min-height: 212px;
                 border: 1px solid #D6DDEB;
                 box-sizing: border-box;
                 padding: 24px;
+
+                @media (max-width:414px) {
+                    padding: 15px;
+                }
 
                 &.swiper-slide-active {
                     background: rgba(88, 242, 131, 0.1);
@@ -33,8 +37,16 @@
                     align-items: center;
                     margin-bottom: 16px;
 
+                    @media (max-width:576px) {
+                        flex-direction: column;
+                    }
+
                     img {
                         width: 40px;
+
+                        @media (max-width:576px) {
+                            margin-bottom: 15px;
+                        }
                     }
 
                     .tip {
@@ -47,6 +59,10 @@
                         font-size: 14px;
                         line-height: 160%;
                         height: 30px;
+
+                        @media (max-width:414px) {
+                            padding: 4px 8px;
+                        }
                     }
                 }
 
@@ -81,17 +97,20 @@
         text-align: center;
         left: 50%;
         transform: translateX(-50%);
+        width: 100%;
 
         .swiper-pagination-bullet {
             display: inline-block;
             width: 7px;
             height: 7px;
-            left: 211px;
-            top: 0px;
             background: #A8ADB7;
             border-radius: 6px;
             margin-right: 12px;
             transition: all 0.25s ease-in-out;
+
+            &:last-child {
+                margin-right: 0;
+            }
 
             &.swiper-pagination-bullet-active {
                 width: 28px;
