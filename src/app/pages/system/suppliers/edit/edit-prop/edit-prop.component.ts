@@ -110,7 +110,11 @@ export class EditPropComponent implements OnInit {
 
     saveProp() {
         if (!this.prop.name) {
-            this.toastRepository.showDanger('Name is required.')
+            this.toastRepository.showDanger('Name is required.');
+            return;
+        }
+        if (!this.prop.type) {
+            this.toastRepository.showDanger('Field type is required.');
             return;
         }
         this.supplierRepository.saveProp(this.prop).subscribe(res => {

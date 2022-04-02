@@ -17,7 +17,7 @@
             <div class="search-content w-310">
                 <input type="text" placeholder="Search a keyword" class="form-control"/>
                 <span class="icon icon-search icon-16"></span>
-                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showArchived()">Show archived</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hideArchive" (click)="showArchived()">Show archived</span>
             </div>
         </div>
 

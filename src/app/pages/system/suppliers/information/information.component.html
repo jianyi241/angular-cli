@@ -3,7 +3,7 @@
         <div class="col-head">
             <div class="title">Sections</div>
             <div class="col-head-right">
-                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showSectionArchived()">Show archived</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hideSectionArchive" (click)="showSectionArchived()">Show archived</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type)" (click)="saveSection()">+ New</span>
             </div>
         </div>
@@ -39,7 +39,7 @@
                     <div class="title">Business information</div>
                     <div class="text">Showing 13 in-use items</div>
                 </div>
-                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showPropArchived()">Show archived</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hidePropArchive" (click)="showPropArchived()">Show archived</span>
 
                 <button class="btn btn-outline-purple-light tx-13 tx-semi"
                         (click)="saveProp()"
