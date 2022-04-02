@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import SwiperCore, { Pagination } from "swiper";
+SwiperCore.use([Pagination]);
 @Component({
   selector: 'app-feature-selection',
   templateUrl: './feature-selection.component.html',
@@ -18,8 +20,7 @@ export class FeatureSelectionComponent implements OnInit {
     navigation: true,
     centeredSlides: true,
     loop: true,
-    pagination: { clickable: true },
-    scrollbar: { draggable: true },
+    pagination: true,
   };
 
 }

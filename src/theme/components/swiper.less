@@ -1,5 +1,102 @@
 .features-swiper {
-    background-color: red;
 
-    .swiper-container {}
+    position: relative;
+
+    .swiper-container {
+        padding-bottom: 54px;
+
+        .swiper-wrapper {
+            .swiper-slide {
+                width: 376px;
+                height: 212px;
+                border: 1px solid #D6DDEB;
+                box-sizing: border-box;
+                padding: 24px;
+
+                &.swiper-slide-active {
+                    background: rgba(88, 242, 131, 0.1);
+                    border: 2px solid #219653;
+                }
+
+                &.swiper-slide-next,
+                &.swiper-slide-prev {
+                    background: #FEFEFE;
+                }
+
+                &.swiper-slide-duplicate {
+                    background-color: transparent;
+                }
+
+                .swiper-head {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 16px;
+
+                    img {
+                        width: 40px;
+                    }
+
+                    .tip {
+                        background: #F8F8FD;
+                        padding: 4px 12px;
+                        color: #4640DE;
+                        font-family: 'Epilogue';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 14px;
+                        line-height: 160%;
+                        height: 30px;
+                    }
+                }
+
+                .swiper-body {
+                    h3 {
+                        font-family: 'ClashDisplay';
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 20px;
+                        line-height: 120%;
+                        color: #25324B;
+                        margin-bottom: 8px;
+                    }
+
+                    p {
+                        font-family: 'Epilogue';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 13px;
+                        line-height: 160%;
+                        color: #25324B;
+                    }
+                }
+            }
+        }
+    }
+
+    .swiper-pagination {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .swiper-pagination-bullet {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            left: 211px;
+            top: 0px;
+            background: #A8ADB7;
+            border-radius: 6px;
+            margin-right: 12px;
+            transition: all 0.25s ease-in-out;
+
+            &.swiper-pagination-bullet-active {
+                width: 28px;
+                background: #4640DE;
+            }
+        }
+    }
 }
