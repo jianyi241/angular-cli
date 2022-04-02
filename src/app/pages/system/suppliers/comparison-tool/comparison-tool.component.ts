@@ -12,6 +12,7 @@ import {VersionRepository} from "../../../../repository/version-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
 import {GroupStatus} from "../../../../model/enums/group-status";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -35,6 +36,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
                 private versionRepository: VersionRepository,
+                private toastRepository: ToastRepository,
                 private supplierRepository: SupplierRepository,
                 public configService: ConfigService) {
         this.storage.getItem<Reminder>('reminder' + TabType.features.value).subscribe(data => {
@@ -162,14 +164,35 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
         moveItemInArray(this.properties, $event.previousIndex, $event.currentIndex);
+        let prop = {...this.properties[$event.currentIndex]};
+        prop.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortProp(prop).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     dropSubGroup($event: CdkDragDrop<GroupInfo, any>) {
         moveItemInArray(this.subGroups, $event.previousIndex, $event.currentIndex);
+        let subGroup = {...this.subGroups[$event.currentIndex]};
+        subGroup.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortGroup(subGroup).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     dropGroup($event: CdkDragDrop<GroupInfo, any>) {
         moveItemInArray(this.moveGroups, $event.previousIndex, $event.currentIndex);
+        let group = {...this.moveGroups[$event.currentIndex]};
+        group.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortGroup(group).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     showGroupArchived(): void {

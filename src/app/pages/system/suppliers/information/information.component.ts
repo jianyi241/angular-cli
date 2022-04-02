@@ -13,6 +13,7 @@ import {Reminder} from "../../../../model/vo/reminder";
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 import {PropStatus} from "../../../../model/enums/prop-status";
 import {GroupStatus} from "../../../../model/enums/group-status";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-information',
@@ -35,6 +36,7 @@ export class InformationComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
                 private localStorage: LocalStorageObServable,
+                private toastRepository: ToastRepository,
                 private supplierRepository: SupplierRepository,
                 private versionRepository: VersionRepository) {
         this.localStorage.getItem('reminder' + TabType.information.value).subscribe(data => {
@@ -116,10 +118,24 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     dropSections($event: CdkDragDrop<GroupInfo, any>) {
         moveItemInArray(this.moveSections, $event.previousIndex, $event.currentIndex);
+        let section = {...this.moveSections[$event.currentIndex]};
+        section.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortGroup(section).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
+        let prop = {...this.moveProps[$event.currentIndex]};
+        prop.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortProp(prop).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     saveProp(id?: string): void {

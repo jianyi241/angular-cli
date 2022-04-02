@@ -55,4 +55,12 @@ export class SupplierRepository {
     pushConfig(): Observable<HttpResult<Version>> {
         return this.http.get<HttpResult<Version>>(environment.baseURL + '/supplier/publish')
     }
+
+    sortGroup(group: GroupInfo): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changeGroupSort', group);
+    }
+
+    sortProp(prop: PropertyInfo): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changePropSort', prop);
+    }
 }

@@ -9,6 +9,7 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {Constants} from "../../../../model/constants";
 import {PropStatus} from "../../../../model/enums/prop-status";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-esg',
@@ -26,6 +27,7 @@ export class EsgComponent implements OnInit, OnDestroy {
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
+                private toastRepository: ToastRepository,
                 private supplierRepository: SupplierRepository,
                 private versionRepository: VersionRepository) {
     }
@@ -89,6 +91,13 @@ export class EsgComponent implements OnInit, OnDestroy {
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
+        let prop = {...this.moveProps[$event.currentIndex]};
+        prop.newSort = $event.currentIndex + 1;
+        this.supplierRepository.sortProp(prop).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     emptyList(): boolean {
