@@ -13,6 +13,7 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
 import {GroupStatus} from "../../../../model/enums/group-status";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {PropStatus} from "../../../../model/enums/prop-status";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -193,6 +194,15 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
                 this.toastRepository.showDanger(res.msg);
             }
         })
+    }
+
+    emptyList(): boolean {
+        if (this.hidePropArchive) {
+            let filter = this.properties.filter(m => m.status != PropStatus.Archive.value);
+            return filter.length == 0;
+        } else {
+            return this.properties.length == 0
+        }
     }
 
     showGroupArchived(): void {

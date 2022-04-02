@@ -63,6 +63,10 @@
             </div>
         </div>
 
+        <div class="empty-text" *ngIf="emptyList()">This section does not have
+            any features.
+        </div>
+
         <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
             <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}" cdkDrag
                  [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
