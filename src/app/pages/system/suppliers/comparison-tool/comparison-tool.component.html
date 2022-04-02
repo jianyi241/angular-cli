@@ -9,14 +9,14 @@
         </div>
 
         <div class="col-body" >
-            <div class="list-cell {{configService.getClassByStatus(group.status)}}" [ngClass]="{'active': reminder.groupId == group.id}"
+            <div class="list-cell {{configService.getClassByStatus(group.status, version.type)}}" [ngClass]="{'active': reminder.groupId == group.id}"
                  (click)="chooseGroup(group)"
                  *ngFor="let group of freezeGroups">
                 <div class="title" [title]="group.name">{{group.name}}</div>
                 <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)" (click)="saveGroup(group)"></span>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropGroup($event)">
-                <div class="list-cell {{configService.getClassByStatus(group.status)}}" [ngClass]="{'active': reminder.groupId == group.id}"
+                <div class="list-cell {{configService.getClassByStatus(group.status, version.type)}}" [ngClass]="{'active': reminder.groupId == group.id}"
                      cdkDrag
                      (click)="chooseGroup(group)"
                      *ngFor="let group of moveGroups">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-body" cdkDropList (cdkDropListDropped)="dropSubGroup($event)">
-            <div class="list-cell list-sub-cell {{configService.getClassByStatus(subGroup.status)}}" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+            <div class="list-cell list-sub-cell {{configService.getClassByStatus(subGroup.status, version.type)}}" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
                  cdkDrag
                  (click)="chooseSubGroup(subGroup)"
                  *ngFor="let subGroup of subGroups">
@@ -62,7 +62,7 @@
         </div>
 
         <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
-            <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}" cdkDrag
+            <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}" cdkDrag
                  [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                  *ngFor="let prop of properties">
                 <div></div>

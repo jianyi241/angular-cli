@@ -40,7 +40,8 @@ export class ConfigService {
         return versionType === VersionType.Draft.value;
     }
 
-    getClassByStatus(value: string): string {
+    getClassByStatus(value: string, versionType: string): string {
+        if (versionType === VersionType.Publish.value) return '';
         switch (value) {
             case 'Insert':
             case 'Update':

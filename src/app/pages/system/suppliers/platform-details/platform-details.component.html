@@ -25,7 +25,7 @@
                 items.
             </div>
             <ng-container>
-                <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status)" *ngFor="let prop of notMoveProps">
+                <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)" *ngFor="let prop of notMoveProps">
                     <div class="list-content">
                         <div class="info">
                             <div class="title">{{prop.name}}</div>
@@ -44,7 +44,7 @@
                 </div>
             </ng-container>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}"
+                <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let prop of canMoveProps">

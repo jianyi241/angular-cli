@@ -9,6 +9,8 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
+import {Reminder} from "../../../../model/vo/reminder";
+import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
 
 @Component({
     selector: 'app-information',
@@ -17,19 +19,25 @@ import {Constants} from "../../../../model/constants";
 })
 export class InformationComponent implements OnInit, OnDestroy {
     version: Version = new Version();
-    groupId: string;
     moveSections: Array<GroupInfo> = new Array<GroupInfo>();
     freezeSections: Array<GroupInfo> = new Array<GroupInfo>();
     moveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     freezeProps: Array<PropertyInfo> = new Array<PropertyInfo>();
+    reminder: Reminder = new Reminder();
     routerSubscription: any;
     activatedRouteSubscription: any;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
+                private localStorage: LocalStorageObServable,
                 private supplierRepository: SupplierRepository,
                 private versionRepository: VersionRepository) {
+        this.localStorage.getItem('reminder' + TabType.information.value).subscribe(data => {
+            if (data != 'undefined' && data) {
+                this.reminder = data;
+            }
+        })
     }
 
     ngOnInit(): void {
@@ -77,29 +85,27 @@ export class InformationComponent implements OnInit, OnDestroy {
             if (!res.data) {
                 return;
             }
+            let section = res.data.find(g => g.id == this.reminder.groupId);
+            this.reminder.groupId = section?.id || '';
             this.moveSections = res.data.filter(g => g.moveFlag);
             this.freezeSections = res.data.filter(g => !g.moveFlag);
             if (this.freezeSections && this.freezeSections.length > 0) {
-                this.propList(this.freezeSections[0].id);
+                this.propList(this.reminder.groupId || this.freezeSections[0].id);
                 return;
             }
             if (this.moveSections && this.moveSections.length > 0) {
-                this.propList(this.moveSections[0].id);
+                this.propList(this.reminder.groupId || this.moveSections[0].id);
             }
         });
     }
 
     propList(groupId: string): void {
-        this.groupId = groupId;
-        this.supplierRepository.propList(groupId, this.version.id).subscribe(res => {
+        this.reminder.groupId = groupId;
+        this.supplierRepository.propList(this.reminder.groupId, this.version.id).subscribe(res => {
             if (!res.data) return;
             this.moveProps = res.data.filter(p => p.moveFlag);
             this.freezeProps = res.data.filter(p => !p.moveFlag);
         })
-    }
-
-    goSectionEdit(): void {
-        this.route.navigateByUrl(`/supplier/edit-section`);
     }
 
     dropSections($event: CdkDragDrop<GroupInfo, any>) {
@@ -111,15 +117,26 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     saveProp(id?: string): void {
-        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.information.value}/${id || Constants.NON_ID}/${this.groupId}/${this.version.id}`);
+        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.information.value}/${id || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`);
     }
 
     saveSection(id?: string, event?: any): void {
         event && event.stopPropagation();
+        this.storageReminder('groupId', id);
         this.route.navigateByUrl(`/supplier/edit-group/${TabType.information.value}/${id || Constants.NON_ID}/${this.version.id}`);
     }
 
     chooseSection(id: string) {
+        this.storageReminder('groupId', id);
         this.propList(id);
+    }
+
+    storageReminder(name: string, value: string):void {
+        this.reminder[name] = value;
+        this.localStorage.setItem('reminder' + TabType.information.value, this.reminder);
+    }
+
+    activeGroup(id: string): string {
+        return this.reminder.groupId == id ? 'active' : '';
     }
 }

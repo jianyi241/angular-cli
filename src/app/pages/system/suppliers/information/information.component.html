@@ -9,14 +9,14 @@
         </div>
 
         <div class="col-body">
-            <div class="list-cell" [ngClass]="configService.getClassByStatus(section.status)" *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
+            <div class="list-cell {{activeGroup(section.id)}}" [ngClass]="configService.getClassByStatus(section.status, version.type)" *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
                 <div class="title" [title]="section.name">{{section.name}}</div>
                 <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id, $event)"
                       [hidden]="!configService.isEditable(version.type)"></span>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropSections($event)">
-                <div class="list-cell"
-                     [ngClass]="configService.getClassByStatus(section.status)"
+                <div class="list-cell {{activeGroup(section.id)}}"
+                     [ngClass]="configService.getClassByStatus(section.status, version.type)"
                      (click)="chooseSection(section.id)"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let section of moveSections">
@@ -39,7 +39,7 @@
 
                 <button class="btn btn-outline-purple-light tx-13 tx-semi"
                         (click)="saveProp()"
-                        [hidden]="!configService.isEditable(version.type)">+ New
+                        [hidden]="!configService.isEditable(version.type) || !reminder.groupId">+ New
                 </button>
             </div>
 
@@ -54,7 +54,7 @@
                 any features.
             </div>
 
-            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status)" *ngFor="let prop of freezeProps">
+            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)" *ngFor="let prop of freezeProps">
                 <div class="list-content">
                     <div class="info">
                         <div class="title">{{prop.name}}</div>
@@ -73,7 +73,7 @@
                 </button>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
-                <div class="list-cell-large {{configService.getClassByStatus(prop.status)}}"
+                <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      [cdkDragDisabled]="!configService.isEditable(version.type)"
                      cdkDrag *ngFor="let prop of moveProps">
