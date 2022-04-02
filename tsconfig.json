@@ -12,6 +12,9 @@
     "importHelpers": true,
     "target": "es5",
     "module": "es2020",
+    "typeRoots": [
+     
+    ],
     "lib": [
       "es2018",
       "es2019",

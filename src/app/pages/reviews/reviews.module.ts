@@ -1,22 +1,22 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ReviewsRoutingModule} from './reviews-routing.module';
-import {FeatureComparisonComponent} from './feature-comparison/feature-comparison.component';
-import {ReviewDropdownDirective} from '../../directive/review-dropdown.directive';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReviewDropdownDirective } from '../../directive/review-dropdown.directive';
+import { TableScrollDirective } from "../../directive/table-scroll/table-scroll.directive";
+import { FeatureComparisonComponent } from './feature-comparison/feature-comparison.component';
+import { FeatureSelectionComponent } from './feature-selection/feature-selection.component';
 import { ImgShowModalComponent } from './img-show-modal/img-show-modal.component';
-import {TableScrollDirective} from "../../directive/table-scroll/table-scroll.directive";
-
+import { ReviewsRoutingModule } from './reviews-routing.module';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent,TableScrollDirective],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent],
   imports: [
     CommonModule,
     ReviewsRoutingModule,
     NgbModule
   ], exports: [
-      ReviewDropdownDirective,
-      TableScrollDirective
+    ReviewDropdownDirective,
+    TableScrollDirective
   ]
 })
 export class ReviewsModule { }

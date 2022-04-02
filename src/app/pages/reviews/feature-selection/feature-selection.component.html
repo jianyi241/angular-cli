@@ -1,0 +1,375 @@
+<div class="content">
+    <div class="sub-head-selection">
+        <h2>Step 1 - What are important for Floyd?</h2>
+    </div>
+
+    <swiper [slidesPerView]="3" [spaceBetween]="50">
+        <ng-template swiperSlide>Slide 1</ng-template>
+        <ng-template swiperSlide>Slide 2</ng-template>
+        <ng-template swiperSlide>Slide 3</ng-template>
+    </swiper>
+
+
+
+    <div class="features-accordion">
+        <div class="accordion-main">
+            <div class="list">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle="Collapse all 10 features">
+                            <div class="accordion-head"
+                                style="display: flex; justify-content: space-between; width: 100%;">
+                                <div class="text">
+                                    <p class="sub-title">Listed securities</p>
+                                    <p>Webflow is the first design and hosting platform built from the ground up for the
+                                        mobile age.
+                                    </p>
+                                </div>
+                                <div class="btn-right">Collapse all 10 features <span
+                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="features-main">
+                                <div class="features-list all-features">
+                                    <div class="title">
+                                        <h3>All features</h3>
+                                        <button>Select all </button>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p> Range of ASX listed securities in IDPS - ASX300 </p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in IDPS - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to internationally listed securities</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Pooled HIN (custodial structure)</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Individual HIN</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to IPOs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Fractional shares</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to ETFs/LICs/REITs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="features-list features-selected">
+                                    <div class="title">
+                                        <h3>Features selected</h3>
+                                    </div>
+                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
+                                        features in LHS column to select.</p>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+            <div class="list">
+                <ngb-accordion #acc="ngbAccordion">
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle="Collapse all 10 features">
+                            <div class="accordion-head"
+                                style="display: flex; justify-content: space-between; width: 100%;">
+                                <div class="text">
+                                    <p class="sub-title">Managed accounts</p>
+                                    <p>Webflow is the first design and hosting platform built from the ground up for the
+                                        mobile age. Webflow is the first design and hosting platform built from the
+                                        ground up for the mobile age. Webflow is the first design and hosting platform
+                                        built from the ground up for the mobile age.
+                                    </p>
+                                </div>
+                                <div class="btn-right">Collapse all 10 features <span
+                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="features-main">
+                                <div class="features-list all-features">
+                                    <div class="title">
+                                        <h3>All features</h3>
+                                        <button>Select all </button>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p> Range of ASX listed securities in IDPS - ASX300 </p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in IDPS - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to internationally listed securities</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Pooled HIN (custodial structure)</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Individual HIN</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to IPOs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Fractional shares</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to ETFs/LICs/REITs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="features-list features-selected">
+                                    <div class="title">
+                                        <h3>Features selected</h3>
+                                    </div>
+                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
+                                        features in LHS column to select.</p>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+            <div class="list">
+                <ngb-accordion #acc="ngbAccordion">
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle="Collapse all 10 features">
+                            <div class="accordion-head"
+                                style="display: flex; justify-content: space-between; width: 100%;">
+                                <div class="text">
+                                    <p class="sub-title">Listed securities</p>
+                                    <p>Webflow is the first design and hosting platform built from the ground up for the
+                                        mobile age.
+                                    </p>
+                                </div>
+                                <div class="btn-right">Collapse all 10 features <span
+                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="features-main">
+                                <div class="features-list all-features">
+                                    <div class="title">
+                                        <h3>All features</h3>
+                                        <button>Select all </button>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p> Range of ASX listed securities in IDPS - ASX300 </p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in IDPS - All ASX</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to internationally listed securities</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Pooled HIN (custodial structure)</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Individual HIN</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to IPOs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Fractional shares</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                        <li>
+                                            <div class="text">
+                                                <p>Access to ETFs/LICs/REITs</p>
+                                                <i class="icon icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="features-list features-selected">
+                                    <div class="title">
+                                        <h3>Features selected</h3>
+                                    </div>
+                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
+                                        features in LHS column to select.</p>
+                                    <ul>
+                                        <li>
+                                            <div class="text">
+                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                            </div>
+                                            <button>Essential</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+
+    </div>
+</div>
