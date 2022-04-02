@@ -55,7 +55,6 @@ export class EditPropComponent implements OnInit {
             case TabType.overview.value:
                 break;
             case TabType.information.value:
-                this.getGroup();
                 break;
             case TabType.esg.value:
                 break;

@@ -11,6 +11,7 @@ import {TabType} from "../../../../../model/enums/tab-type";
 import {Constants} from "../../../../../model/constants";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
+import {GroupStatus} from "../../../../../model/enums/group-status";
 
 
 @Component({
@@ -112,6 +113,11 @@ export class EditGroupComponent implements OnInit {
         } else {
             this.toastRepository.showDanger('Unsupported file types');
         }
+    }
+
+    archive(): void {
+        this.group.status = GroupStatus.Archive.value;
+        this.saveGroup();
     }
 
     saveGroup() {

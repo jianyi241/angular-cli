@@ -16,12 +16,13 @@
             <div class="search-content w-310">
                 <input type="text" placeholder="Search a keyword" class="form-control"/>
                 <span class="icon icon-search icon-16"></span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showArchived()">Show archived</span>
             </div>
         </div>
 
 
         <div class="col-body">
-            <div class="empty-text" *ngIf="freezeProps.length == 0 && moveProps.length == 0">This section is empty. Click on “Edit platform” to add
+            <div class="empty-text" *ngIf="emptyList()">This section is empty. Click on “Edit platform” to add
                 items.
             </div>
             <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)" *ngFor="let prop of freezeProps">
@@ -41,6 +42,7 @@
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
                 <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}"
                      cdkDrag [cdkDragDisabled]="!configService.isEditable(version.type)"
+                     [hidden]="hideArchive && configService.isArchive(prop.status)"
                      [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
                      *ngFor="let prop of moveProps">
                     <span class="icon-block icon-line icon-32" [hidden]="!configService.isEditable(version.type)"></span>

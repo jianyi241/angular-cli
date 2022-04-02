@@ -3,7 +3,7 @@
         <div class="col-head">
             <div class="title">Group</div>
             <div class="col-head-right">
-                <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showGroupArchived()">Show archived</span>
                 <span class="link-new" (click)="saveGroup()" [hidden]="!configService.isEditable(version.type)">+ New</span>
             </div>
         </div>
@@ -18,6 +18,7 @@
             <div cdkDropList (cdkDropListDropped)="dropGroup($event)">
                 <div class="list-cell {{configService.getClassByStatus(group.status, version.type)}}" [ngClass]="{'active': reminder.groupId == group.id}"
                      cdkDrag
+                     [hidden]="hideGroupArchive && configService.isArchive(group.status)"
                      (click)="chooseGroup(group)"
                      *ngFor="let group of moveGroups">
                     <span class="icon-block icon-line icon-24" [hidden]="!configService.isEditable(version.type)"></span>
@@ -32,7 +33,7 @@
         <div class="col-head xs-pl-16">
             <div class="title">Sub-group</div>
             <div class="col-head-right">
-                <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type)" (click)="showSubGroupArchived()">Show archived</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId" (click)="saveSubGroup()">+ New</span>
             </div>
         </div>
@@ -40,6 +41,7 @@
         <div class="col-body" cdkDropList (cdkDropListDropped)="dropSubGroup($event)">
             <div class="list-cell list-sub-cell {{configService.getClassByStatus(subGroup.status, version.type)}}" [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
                  cdkDrag
+                 [hidden]="hideSubGroupArchive && configService.isArchive(subGroup.status)"
                  (click)="chooseSubGroup(subGroup)"
                  *ngFor="let subGroup of subGroups">
                 <span class="icon-block icon-line icon-24" [hidden]="!configService.isEditable(version.type)"></span>
@@ -56,7 +58,7 @@
                 <span class="icon icon-search icon-16"></span>
             </div>
             <div class="col-head-right">
-                <span class="link-show xs-mr-21" [hidden]="!configService.isEditable(version.type)">Show archived</span>
+                <span class="link-show xs-mr-21" [hidden]="!configService.isEditable(version.type)" (click)="showPropArchived()">Show archived</span>
                 <button class="btn btn-outline-purple-light tx-13 tx-semi" [hidden]="!configService.isEditable(version.type) || !reminder.subGroupId" (click)="saveProp()">+ New</button>
             </div>
         </div>
@@ -64,6 +66,7 @@
         <div class="col-body xs-pl-16" cdkDropList (cdkDropListDropped)="dropProps($event)">
             <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}" cdkDrag
                  [ngClass]="{'list-cell-sort': configService.isEditable(version.type)}"
+                 [hidden]="hidePropArchive && configService.isArchive(prop.status)"
                  *ngFor="let prop of properties">
                 <div></div>
                 <span class="icon-block icon-line icon-32" [hidden]="!configService.isEditable(version.type)"></span>

@@ -8,6 +8,7 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {Constants} from "../../../../model/constants";
+import {PropStatus} from "../../../../model/enums/prop-status";
 
 @Component({
     selector: 'app-esg',
@@ -20,6 +21,7 @@ export class EsgComponent implements OnInit, OnDestroy {
     freezeProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     routerSubscription: any;
     activatedRouteSubscription: any;
+    hideArchive = true;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -87,6 +89,20 @@ export class EsgComponent implements OnInit, OnDestroy {
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
+    }
+
+    emptyList(): boolean {
+        if (this.hideArchive) {
+            let filter1 = this.moveProps.filter(m => m.status != PropStatus.Archive.value);
+            let filter2 = this.freezeProps.filter(m => m.status != PropStatus.Archive.value);
+            return filter1.length == 0 && filter2.length == 0;
+        } else {
+            return this.moveProps.length == 0 && this.freezeProps.length == 0;
+        }
+    }
+
+    showArchived(): void {
+        this.hideArchive = false;
     }
 
 }

@@ -11,6 +11,7 @@ import {Constants} from "../../../../../model/constants";
 import {Reminder} from "../../../../../model/vo/reminder";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
+import {GroupStatus} from "../../../../../model/enums/group-status";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -97,6 +98,11 @@ export class EditSubGroupComponent implements OnInit {
         this.supplierRepository.groupDetail(this.subGroup.parentId, this.version.id).subscribe(res => {
             this.subGroup.parentName = res.data.name;
         })
+    }
+
+    archive(): void {
+        this.subGroup.status = GroupStatus.Archive.value;
+        this.saveSubGroup();
     }
 
     saveSubGroup() {

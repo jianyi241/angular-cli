@@ -36,8 +36,9 @@ export class ConfigService {
         return this.router.url.includes(routerUrl.toLowerCase()) ? 'active' : '';
     }
 
-    isEditable(versionType: string): boolean {
-        return versionType === VersionType.Draft.value;
+    isEditable(versionType: string, status?: string): boolean {
+        if (!status) return versionType === VersionType.Draft.value;
+        return versionType === VersionType.Draft.value && status != 'Archive';
     }
 
     getClassByStatus(value: string, versionType: string): string {
@@ -55,5 +56,10 @@ export class ConfigService {
 
     isArchive(status: string) {
         return status == 'Archive';
+    }
+
+    emptyList(items: any[], status = 'Archive'): boolean {
+        let filter = items.filter(i => i.status != status);
+        return filter.length == 0;
     }
 }

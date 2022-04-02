@@ -5,8 +5,8 @@
         <div class="text-ellipsis">{{subGroup.name}}</div>
     </div>
 
-    <div class="btn-control-group">
-<!--        <button class="btn btn-clear btn-text-danger">Archive</button>-->
+    <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, subGroup.status)">
+        <button class="btn btn-text-danger" (click)="archive()" *ngIf="subGroup.id && subGroup.moveFlag">Archive</button>
         <button class="btn btn-purple" (click)="saveSubGroup()">{{subGroup.id ? 'Update' : 'Save'}}</button>
     </div>
 </div>
@@ -19,7 +19,9 @@
         </div>
 
         <div class="form-group-right">
-            <input type="text" placeholder="Name" [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
+            <input type="text" placeholder="Name"
+                   [disabled]="!configService.isEditable(version.type, subGroup.status)"
+                   [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
             <p class="tip-info">Maximum 100 characters</p>
         </div>
     </div>
@@ -31,7 +33,7 @@
         </div>
 
         <div class="form-group-right">
-            <ckeditor [(ngModel)]="subGroup.description" [config]="config"></ckeditor>
+            <ckeditor [(ngModel)]="subGroup.description" [readOnly]="!configService.isEditable(version.type, subGroup.status)" [config]="config"></ckeditor>
 <!--            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
         </div>
     </div>

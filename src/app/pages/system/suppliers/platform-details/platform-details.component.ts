@@ -8,6 +8,7 @@ import {PropertyInfo} from "../../../../model/po/propertyInfo";
 import {ConfigService} from "../../../../service/config.service";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {Constants} from "../../../../model/constants";
+import {PropStatus} from "../../../../model/enums/prop-status";
 
 @Component({
     selector: 'app-platform-details',
@@ -16,10 +17,11 @@ import {Constants} from "../../../../model/constants";
 })
 export class PlatformDetailsComponent implements OnInit, OnDestroy {
     version: Version = new Version();
-    notMoveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
-    canMoveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
+    freezeProps: Array<PropertyInfo> = new Array<PropertyInfo>();
+    moveProps: Array<PropertyInfo> = new Array<PropertyInfo>();
     routerSubscription: any;
     activatedRouteSubscription: any;
+    hideArchive: boolean = true;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -72,8 +74,8 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
             if (!res.data) {
                 return;
             }
-            this.notMoveProps = res.data.filter(p => !p.moveFlag);
-            this.canMoveProps = res.data.filter(p => p.moveFlag);
+            this.freezeProps = res.data.filter(p => !p.moveFlag);
+            this.moveProps = res.data.filter(p => p.moveFlag);
         });
     }
 
@@ -82,6 +84,20 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
-        moveItemInArray(this.canMoveProps, $event.previousIndex, $event.currentIndex);
+        moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
+    }
+
+    emptyList(): boolean {
+        if (this.hideArchive) {
+            let filter1 = this.moveProps.filter(m => m.status != PropStatus.Archive.value);
+            let filter2 = this.freezeProps.filter(m => m.status != PropStatus.Archive.value);
+            return filter1.length == 0 && filter2.length == 0;
+        } else {
+            return this.moveProps.length == 0 && this.freezeProps.length == 0;
+        }
+    }
+
+    showArchived(): void {
+        this.hideArchive = false;
     }
 }

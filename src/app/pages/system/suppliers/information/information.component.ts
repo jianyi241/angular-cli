@@ -11,6 +11,8 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
 import {Reminder} from "../../../../model/vo/reminder";
 import {LocalStorageObServable} from "../../../../observable/local-storage-observable";
+import {PropStatus} from "../../../../model/enums/prop-status";
+import {GroupStatus} from "../../../../model/enums/group-status";
 
 @Component({
     selector: 'app-information',
@@ -26,6 +28,8 @@ export class InformationComponent implements OnInit, OnDestroy {
     reminder: Reminder = new Reminder();
     routerSubscription: any;
     activatedRouteSubscription: any;
+    hideSectionArchive = true;
+    hidePropArchive = true;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -85,16 +89,18 @@ export class InformationComponent implements OnInit, OnDestroy {
             if (!res.data) {
                 return;
             }
-            let section = res.data.find(g => g.id == this.reminder.groupId);
+            let section = res.data.find(g => g.id == this.reminder.groupId && g.status != GroupStatus.Archive.value);
             this.reminder.groupId = section?.id || '';
             this.moveSections = res.data.filter(g => g.moveFlag);
             this.freezeSections = res.data.filter(g => !g.moveFlag);
-            if (this.freezeSections && this.freezeSections.length > 0) {
-                this.propList(this.reminder.groupId || this.freezeSections[0].id);
+            let filter1 = this.freezeSections.filter(f => f.status != GroupStatus.Archive.value);
+            let filter2 = this.moveSections.filter(f => f.status != GroupStatus.Archive.value);
+            if (filter1.length > 0) {
+                this.propList(this.reminder.groupId || filter1[0].id);
                 return;
             }
-            if (this.moveSections && this.moveSections.length > 0) {
-                this.propList(this.reminder.groupId || this.moveSections[0].id);
+            if (filter2.length > 0) {
+                this.propList(this.reminder.groupId || filter2[0].id);
             }
         });
     }
@@ -138,5 +144,23 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     activeGroup(id: string): string {
         return this.reminder.groupId == id ? 'active' : '';
+    }
+
+    emptyList(): boolean {
+        if (this.hideSectionArchive) {
+            let filter1 = this.moveProps.filter(m => m.status != PropStatus.Archive.value);
+            let filter2 = this.freezeProps.filter(m => m.status != PropStatus.Archive.value);
+            return filter1.length == 0 && filter2.length == 0;
+        } else {
+            return this.moveProps.length == 0 && this.freezeProps.length == 0;
+        }
+    }
+
+    showSectionArchived(): void {
+        this.hideSectionArchive = false;
+    }
+
+    showPropArchived(): void {
+        this.hidePropArchive = false;
     }
 }

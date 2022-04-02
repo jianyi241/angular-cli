@@ -11,6 +11,7 @@ import {Version} from "../../../../model/po/version";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
+import {GroupStatus} from "../../../../model/enums/group-status";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -26,6 +27,9 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     reminder: Reminder = new Reminder();
     routerSubscription: any;
     activatedRouteSubscription: any;
+    hideGroupArchive = true;
+    hideSubGroupArchive = true;
+    hidePropArchive = true;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -88,24 +92,28 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
             if (!res.data) {
                 return;
             }
-            let group = res.data.find(g => g.id == this.reminder.groupId);
-            this.reminder.groupId = group?.id || '';
             this.moveGroups = res.data.filter(g => g.moveFlag);
             this.freezeGroups = res.data.filter(g => !g.moveFlag);
+            let group = res.data.find(g => g.id == this.reminder.groupId && g.status != GroupStatus.Archive.value);
+            this.reminder.groupId = group?.id || '';
             if (this.reminder.groupId) {
                 this.subGroups = group.subList || [];
-                let subGroup = this.subGroups.find(sg => sg.id == this.reminder.subGroupId);
-                this.chooseSubGroup(subGroup || this.subGroups[0]);
+                let filter = this.subGroups.filter(sg => sg.status != GroupStatus.Archive.value);
+                let subGroup = this.subGroups.find(sg => sg.id == this.reminder.subGroupId && sg.status != GroupStatus.Archive.value);
+                this.chooseSubGroup(subGroup || filter[0]);
                 return;
             }
-            if (this.freezeGroups && this.freezeGroups.length > 0) {
-                this.reminder.groupId = this.freezeGroups[0].id;
-                this.subGroups = this.freezeGroups[0].subList || [];
-            } else if (this.moveGroups && this.moveGroups.length > 0) {
-                this.reminder.groupId = this.moveGroups[0].id;
-                this.subGroups = this.moveGroups[0].subList || [];
+            let filter1 = this.freezeGroups.filter(f => f.status != GroupStatus.Archive.value);
+            let filter2 = this.moveGroups.filter(f => f.status != GroupStatus.Archive.value);
+            if (filter1.length > 0) {
+                this.reminder.groupId = filter1[0].id;
+                this.subGroups = filter1[0].subList || [];
+            } else if (filter2.length > 0) {
+                this.reminder.groupId = filter2[0].id;
+                this.subGroups = filter2[0].subList || [];
             }
-            this.chooseSubGroup(this.subGroups[0]);
+            let filter = this.subGroups.filter(sg => sg.status != GroupStatus.Archive.value);
+            this.chooseSubGroup(filter[0]);
 
         })
     }
@@ -162,5 +170,17 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     dropGroup($event: CdkDragDrop<GroupInfo, any>) {
         moveItemInArray(this.moveGroups, $event.previousIndex, $event.currentIndex);
+    }
+
+    showGroupArchived(): void {
+        this.hideGroupArchive = false;
+    }
+
+    showSubGroupArchived(): void {
+        this.hideSubGroupArchive = false;
+    }
+
+    showPropArchived(): void {
+        this.hidePropArchive = false;
     }
 }
