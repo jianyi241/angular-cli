@@ -7,7 +7,7 @@
                     <div class="text">Showing 13 in-use items</div>
                 </div>
                 <div class="col-head-right">
-                    <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hideArchive" (click)="showArchived()">Show archived</span>
+                    <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideArchive)" (click)="showArchived()">Show archived</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
                             (click)="save()"
                             [hidden]="!configService.isEditable(version.type)">+ New

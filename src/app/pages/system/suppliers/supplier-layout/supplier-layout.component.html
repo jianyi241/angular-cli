@@ -1,10 +1,10 @@
 <div class="main has-tip">
-    <div class="head-tip" [hidden]="true">
+    <div class="head-tip" *ngIf="version.type == 'History'">
         <div class="head-tip-content">
-            <span class="icon-block icon-arr-left-blue icon-33"></span>
+            <span class="icon-block icon-arr-left-blue icon-33" (click)="backHistory()"></span>
             <div class="tip-content">
-                <div class="title" title="Release 12 Sep ‘21">Release 12 Sep ‘21</div>
-                <div class="text" title="Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`">Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`</div>
+                <div class="title" [title]="getVersionName()">{{getVersionName()}}</div>
+                <div class="text" [title]="">{{getVersionInfo()}}</div>
             </div>
         </div>
     </div>
@@ -14,13 +14,14 @@
 <!--            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>-->
             Comparison tool
         </div>
-
-        <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
-            <button class="btn btn-purple xs-ml-24"  (click)="pushConfig()">Push to suppliers</button>
-        </div>
-        <div class="btn-control-group" [hidden]="configService.isEditable(version.type)">
-            <button class="btn btn-config xs-ml-24"  (click)="editConfig()">Edit configurator</button>
-        </div>
+        <ng-container *ngIf="currentTab != 'change-history' && version.type != 'History'">
+            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
+                <button class="btn btn-purple xs-ml-24"  (click)="pushConfig()">Push to suppliers</button>
+            </div>
+            <div class="btn-control-group" [hidden]="configService.isEditable(version.type) ">
+                <button class="btn btn-config xs-ml-24"  (click)="editConfig()">Edit configurator</button>
+            </div>
+        </ng-container>
     </div>
 
     <div class="tab-menu">

@@ -33,12 +33,16 @@ export class ConfigService {
     }
 
     activeMatch(routerUrl: string): string {
-        return this.router.url.includes(routerUrl.toLowerCase()) ? 'active' : '';
+        return this.router.url.includes(routerUrl.toLowerCase().replace(' ', '-')) ? 'active' : '';
     }
 
     isEditable(versionType: string, status?: string): boolean {
         if (!status) return versionType === VersionType.Draft.value;
         return versionType === VersionType.Draft.value && status != 'Archive';
+    }
+
+    showArchiveBtn(versionType: string, flag: boolean): boolean {
+        return versionType != VersionType.Publish.value && flag;
     }
 
     getClassByStatus(value: string, versionType: string): string {

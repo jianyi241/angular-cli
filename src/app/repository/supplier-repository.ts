@@ -63,4 +63,9 @@ export class SupplierRepository {
     sortProp(prop: PropertyInfo): Observable<HttpResult<any>> {
         return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changePropSort', prop);
     }
+
+    versionList(): Observable<HttpResult<Array<Version>>> {
+        return this.http.get<HttpResult<Array<Version>>>(environment.baseURL + `/supplier/getVersionList`);
+    }
+
 }

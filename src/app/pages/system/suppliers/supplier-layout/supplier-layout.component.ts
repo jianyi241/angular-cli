@@ -6,6 +6,7 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {Version} from "../../../../model/po/version";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-supplier-layout',
@@ -34,6 +35,8 @@ export class SupplierLayoutComponent implements OnInit {
 
     getVersion(): void {
         let versionId = this.activeRouter.firstChild?.snapshot?.params['version'];
+        let url = this.activeRouter.firstChild?.snapshot?.url;
+        this.currentTab = url && url.length > 0 ? url[0].path : undefined;
         if (versionId && versionId != 'version') {
             this.versionRepository.versionById(versionId).subscribe(res => {
                 this.version = res.data || this.version;
@@ -85,6 +88,22 @@ export class SupplierLayoutComponent implements OnInit {
             }).then(r => {
                 this.router.navigate([`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`])
             })
+        })
+    }
+
+    getVersionName() {
+        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`
+    }
+
+    getVersionInfo() {
+        return `Released ${moment(this.version.updateTime).format('H:mm a D MMM YY')} by Recep Peker`
+    }
+
+    backHistory() {
+        this.versionRepository.supplierVersion().subscribe(res => {
+            this.version = res.data || this.version;
+            this.version.id = res.data?.id || 'version';
+            this.chooseTab(TabType.changeHistory.name);
         })
     }
 }
