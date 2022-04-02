@@ -117,6 +117,7 @@ export class EditSubGroupComponent implements OnInit {
             }
             this.toastRepository.showSuccess(`${this.subGroup.id ? 'Update' : 'Save'} Successfully.`);
             this.subGroup.id = res.data.id;
+            this.subGroup.moveFlag = res.data.moveFlag;
             this.storage.getItem<Reminder>('reminder' + this.currentTab).subscribe(data => {
                 data.subGroupId = res.data.id;
                 this.storage.setItem<Reminder>('reminder' + this.currentTab, data);

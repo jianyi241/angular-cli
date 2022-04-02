@@ -132,6 +132,7 @@ export class EditGroupComponent implements OnInit {
             }
             this.toastRepository.showSuccess(`${this.group.id ? 'Update' : 'Save'} Successfully.`);
             this.group.id = res.data.id;
+            this.group.moveFlag = res.data.moveFlag;
             this.storage.getItem('reminder' + this.currentTab).subscribe(data => {
                 data.groupId = this.group.id;
                 this.storage.setItem('reminder' + this.currentTab, data);
