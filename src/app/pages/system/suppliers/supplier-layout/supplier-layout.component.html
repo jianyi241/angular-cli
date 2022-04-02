@@ -15,11 +15,11 @@
             Comparison tool
         </div>
 
-        <div class="btn-control-group">
-            <button class="btn btn-purple xs-ml-24" [hidden]="!configService.isEditable(version.type)" (click)="pushConfig()">Push to suppliers</button>
+        <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
+            <button class="btn btn-purple xs-ml-24"  (click)="pushConfig()">Push to suppliers</button>
         </div>
-        <div class="btn-control-group">
-            <button class="btn btn-purple xs-ml-24" [hidden]="configService.isEditable(version.type)" (click)="editConfig()">Edit configurator</button>
+        <div class="btn-control-group" [hidden]="configService.isEditable(version.type)">
+            <button class="btn btn-config xs-ml-24"  (click)="editConfig()">Edit configurator</button>
         </div>
     </div>
 

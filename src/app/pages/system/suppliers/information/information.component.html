@@ -3,15 +3,18 @@
         <div class="col-head">
             <div class="title">Sections</div>
             <div class="col-head-right">
-                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hideSectionArchive" (click)="showSectionArchived()">Show archived</span>
-                <span class="link-new" [hidden]="!configService.isEditable(version.type)" (click)="saveSection()">+ New</span>
+                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hideSectionArchive"
+                      (click)="showSectionArchived()">Show archived</span>
+                <span class="link-new" [hidden]="!configService.isEditable(version.type)"
+                      (click)="saveSection()">+ New</span>
             </div>
         </div>
 
         <div class="col-body">
             <div class="list-cell {{activeGroup(section.id)}}"
                  [hidden]="hideSectionArchive && configService.isArchive(section.status)"
-                 [ngClass]="configService.getClassByStatus(section.status, version.type)" *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
+                 [ngClass]="configService.getClassByStatus(section.status, version.type)"
+                 *ngFor="let section of freezeSections" (click)="chooseSection(section.id)">
                 <div class="title" [title]="section.name">{{section.name}}</div>
                 <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id, $event)"
                       [hidden]="!configService.isEditable(version.type)"></span>
@@ -39,12 +42,14 @@
                     <div class="title">Business information</div>
                     <div class="text">Showing 13 in-use items</div>
                 </div>
-                <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hidePropArchive" (click)="showPropArchived()">Show archived</span>
-
-                <button class="btn btn-outline-purple-light tx-13 tx-semi"
-                        (click)="saveProp()"
-                        [hidden]="!configService.isEditable(version.type) || !reminder.groupId">+ New
-                </button>
+                <div class="col-head-right">
+                    <span class="link-show" [hidden]="!configService.isEditable(version.type) || !hidePropArchive"
+                          (click)="showPropArchived()">Show archived</span>
+                    <button class="btn btn-outline-purple-light tx-13 tx-semi"
+                            (click)="saveProp()"
+                            [hidden]="!configService.isEditable(version.type) || !reminder.groupId">+ New
+                    </button>
+                </div>
             </div>
 
             <div class="search-content w-310">
@@ -58,7 +63,8 @@
                 any features.
             </div>
 
-            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)" *ngFor="let prop of freezeProps">
+            <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)"
+                 *ngFor="let prop of freezeProps">
                 <div class="list-content">
                     <div class="info">
                         <div class="title">{{prop.name}}</div>
