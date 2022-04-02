@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ReviewLayoutComponent } from "../../common/review-layout/review-layout.component";
-import { FeatureComparisonComponent } from "./feature-comparison/feature-comparison.component";
+import { ReviewLayoutComponent } from '../../common/review-layout/review-layout.component';
+import { FeatureComparisonComponent } from './feature-comparison/feature-comparison.component';
 import { FeatureSelectionComponent } from './feature-selection/feature-selection.component';
-FeatureSelectionComponent
+
 const routes: Routes = [
   {
     path: 'review',

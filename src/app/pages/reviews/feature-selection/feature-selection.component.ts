@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-feature-selection',
   templateUrl: './feature-selection.component.html',
@@ -13,5 +12,14 @@ export class FeatureSelectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  config = {
+    slidesPerView: 4,
+    spaceBetween: 8,
+    navigation: true,
+    centeredSlides: true,
+    loop: true,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+  };
 
 }

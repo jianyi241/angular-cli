@@ -7,14 +7,16 @@ import { FeatureComparisonComponent } from './feature-comparison/feature-compari
 import { FeatureSelectionComponent } from './feature-selection/feature-selection.component';
 import { ImgShowModalComponent } from './img-show-modal/img-show-modal.component';
 import { ReviewsRoutingModule } from './reviews-routing.module';
+import {SwiperModule} from 'swiper/angular';
 
 @NgModule({
   declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent],
-  imports: [
-    CommonModule,
-    ReviewsRoutingModule,
-    NgbModule
-  ], exports: [
+    imports: [
+        CommonModule,
+        ReviewsRoutingModule,
+        NgbModule,
+        SwiperModule
+    ], exports: [
     ReviewDropdownDirective,
     TableScrollDirective
   ]
