@@ -33,7 +33,7 @@
             <div class="title">Sub-group</div>
             <div class="col-head-right">
                 <span class="link-show" [hidden]="!configService.isEditable(version.type)">Show archived</span>
-                <span class="link-new" [hidden]="!configService.isEditable(version.type)" (click)="saveSubGroup()">+ New</span>
+                <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId" (click)="saveSubGroup()">+ New</span>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
             </div>
             <div class="col-head-right">
                 <span class="link-show xs-mr-21" [hidden]="!configService.isEditable(version.type)">Show archived</span>
-                <button class="btn btn-outline-purple-light tx-13 tx-semi" [hidden]="!configService.isEditable(version.type)" (click)="saveProp()">+ New</button>
+                <button class="btn btn-outline-purple-light tx-13 tx-semi" [hidden]="!configService.isEditable(version.type) || !reminder.subGroupId" (click)="saveProp()">+ New</button>
             </div>
         </div>
 

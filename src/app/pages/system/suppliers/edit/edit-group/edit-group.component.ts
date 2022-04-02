@@ -67,7 +67,7 @@ export class EditGroupComponent implements OnInit {
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
             this.version.id = params['version'];
-            this.currentTab = params['tab'];
+            this.currentTab = parseInt(params['tab']);
             this.group.id = params['id'] == Constants.NON_ID ? '' : params['id'];
         })
     }

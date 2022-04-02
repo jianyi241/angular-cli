@@ -33,7 +33,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
                 private versionRepository: VersionRepository,
                 private supplierRepository: SupplierRepository,
                 public configService: ConfigService) {
-        this.storage.getItem<Reminder>('reminder').subscribe(data => {
+        this.storage.getItem<Reminder>('reminder' + TabType.features.value).subscribe(data => {
             if (data != 'undefined' && data) {
                 this.reminder = data;
             }
@@ -88,14 +88,25 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
             if (!res.data) {
                 return;
             }
+            let group = res.data.find(g => g.id == this.reminder.groupId);
+            this.reminder.groupId = group?.id || '';
             this.moveGroups = res.data.filter(g => g.moveFlag);
             this.freezeGroups = res.data.filter(g => !g.moveFlag);
+            if (this.reminder.groupId) {
+                this.subGroups = group.subList || [];
+                let subGroup = this.subGroups.find(sg => sg.id == this.reminder.subGroupId);
+                this.chooseSubGroup(subGroup || this.subGroups[0]);
+                return;
+            }
             if (this.freezeGroups && this.freezeGroups.length > 0) {
+                this.reminder.groupId = this.freezeGroups[0].id;
                 this.subGroups = this.freezeGroups[0].subList || [];
             } else if (this.moveGroups && this.moveGroups.length > 0) {
+                this.reminder.groupId = this.moveGroups[0].id;
                 this.subGroups = this.moveGroups[0].subList || [];
             }
             this.chooseSubGroup(this.subGroups[0]);
+
         })
     }
 
@@ -106,22 +117,25 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     saveGroup(group?: GroupInfo): void {
-        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.reminder.groupId = group?.id;
+        this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.route.navigateByUrl(`/supplier/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}`)
     }
 
     saveSubGroup(subGroup?: GroupInfo) {
-        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.reminder.subGroupId = subGroup?.id;
+        this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.route.navigateByUrl(`/supplier/edit-sub-group/${TabType.features.value}/${(subGroup?.id) || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`)
     }
 
     saveProp(prop?: PropertyInfo) {
-        this.storage.setItem<Reminder>('reminder', this.reminder);
+        this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.route.navigateByUrl(`/supplier/edit-prop/${TabType.features.value}/${(prop?.id) || Constants.NON_ID}/${this.reminder.subGroupId}/${this.version.id}`)
     }
 
     chooseGroup(group: GroupInfo) {
         this.reminder.groupId = group.id;
+        this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.subGroups = group.subList || [];
         if (this.subGroups.length == 0) {
             this.properties = new Array<PropertyInfo>();
@@ -133,6 +147,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     chooseSubGroup(subGroup: GroupInfo) {
         if (!subGroup) return;
         this.reminder.subGroupId = subGroup.id;
+        this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.getPropList(subGroup.id);
     }
 

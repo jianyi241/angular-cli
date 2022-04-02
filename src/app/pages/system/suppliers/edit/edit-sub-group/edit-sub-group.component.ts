@@ -31,7 +31,6 @@ export class EditSubGroupComponent implements OnInit {
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
-        this.subGroup.tabType = TabType.features.value;
     }
 
     ngOnInit(): void {
@@ -55,7 +54,7 @@ export class EditSubGroupComponent implements OnInit {
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
             this.version.id = params['version'];
-            this.currentTab = params['tab'];
+            this.currentTab = parseInt(params['tab']);
             this.subGroup.parentId = params['parentId'] == Constants.NON_ID ? '' : params['parentId'];
             this.subGroup.id = params['id'] == Constants.NON_ID ? '' : params['id'];
         })
@@ -110,12 +109,12 @@ export class EditSubGroupComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.storage.getItem<Reminder>('reminder').subscribe(data => {
-                data.subGroupId = res.data.id;
-                this.storage.setItem<Reminder>('reminder', data);
-            });
             this.toastRepository.showSuccess(`${this.subGroup.id ? 'Update' : 'Save'} Successfully.`);
             this.subGroup.id = res.data.id;
+            this.storage.getItem<Reminder>('reminder' + this.currentTab).subscribe(data => {
+                data.subGroupId = res.data.id;
+                this.storage.setItem<Reminder>('reminder' + this.currentTab, data);
+            });
         });
     }
 }

@@ -30,7 +30,6 @@ export class EditPropComponent implements OnInit {
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
                 private supplierRepository: SupplierRepository) {
-        this.prop.status = PropStatus.Normal.value;
     }
 
     ngOnInit(): void {
@@ -56,9 +55,9 @@ export class EditPropComponent implements OnInit {
             case TabType.overview.value:
                 break;
             case TabType.information.value:
+                this.getGroup();
                 break;
             case TabType.esg.value:
-                this.getGroup();
                 break;
             case TabType.features.value:
                 this.getGroup();
@@ -79,7 +78,7 @@ export class EditPropComponent implements OnInit {
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
             this.version.id = params['version'];
-            this.currentTab = params['tab'];
+            this.currentTab = parseInt(params['tab']);
             this.prop.shGroupId = params['groupId'] == Constants.NON_ID ? '': params['groupId'];
             this.prop.id = params['id'] == Constants.NON_ID ? '' : params['id'];
         })

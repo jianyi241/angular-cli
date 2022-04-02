@@ -51,14 +51,14 @@
             </div>
 
             <div class="form-group-right">
-                <div class="form-group">
+                <div class="form-group" *ngIf="prop.topGroupName">
                     <label class="control-label control-label-custom">Feature group</label>
                     <ng-select disabled class="select-single" placeholder="Feature group" [ngModel]="prop.topGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.topGroupName">{{prop.topGroupName}}</ng-option>
                     </ng-select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="prop.subGroupName">
                     <label class="control-label control-label-custom">Feature sub-group</label>
                     <ng-select disabled class="select-single" placeholder="Feature sub-group" [ngModel]="prop.subGroupName" dropdownPosition="bottom">
                         <ng-option [value]="prop.subGroupName">{{prop.subGroupName}}</ng-option>
@@ -75,7 +75,7 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Field type</label>
-                    <ng-select [disabled]="!configService.isEditable(version.type)" class="select-single" placeholder="Field type" dropdownPosition="bottom" [(ngModel)]="prop.type">
+                    <ng-select [disabled]="!configService.isEditable(version.type)" class="select-single" placeholder="Field type" dropdownPosition="auto" [(ngModel)]="prop.type">
                         <ng-option *ngFor="let type of configService.propTypeList()"
                                    [value]="type.value">{{type.name}}</ng-option>
                     </ng-select>

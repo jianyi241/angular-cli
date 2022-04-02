@@ -20,8 +20,8 @@ export class PropertyInfo extends BaseModel {
     description?: string;
     name?: string;
     subGroupName?: string;
-    topGroupName?: string;
-    shGroupId?: string;
+    topGroupName?: string = '';
+    shGroupId?: string = '';
     sort?: number;
     moveFlag?: boolean;
     vsFlag?: boolean = true;
