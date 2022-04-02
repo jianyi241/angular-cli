@@ -1,7 +1,7 @@
 <div class="loading-bar" [ngClass]="compareData.productVos.length == 0 || compareData.groupVoList.length ==0 ? 'is-loading':'has-load'"></div>
 
 <div class="table-main-content">
-    <div class="review-content" appTableScroll (scrollEvent)="scrollEvent($event)" [maxScrollTop]="104">
+    <div class="review-content" appTableScroll (scrollEvent)="scrollEvent($event)" [maxScrollTop]="104" [footHeight]="66">
     <div class="sub-head-review">
         <div class="title">Step 2 - Feature matric</div>
         <div class="filter-content">
