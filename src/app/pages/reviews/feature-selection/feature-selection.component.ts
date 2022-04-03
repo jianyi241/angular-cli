@@ -15,7 +15,6 @@ export class FeatureSelectionComponent implements OnInit {
   }
 
   config = {
-
     spaceBetween: 8,
     navigation: true,
     centeredSlides: true,
@@ -46,5 +45,48 @@ export class FeatureSelectionComponent implements OnInit {
 
     },
   };
+
+  public features: any[] = [
+    {
+      "title": 'Range of ASX listed securities in super/pension - ASX300',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Range of ASX listed securities in super/pension - All ASX',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Range of ASX listed securities in IDPS - ASX300',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Range of ASX listed securities in IDPS - All ASX',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Access to internationally listed securities',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Pooled HIN (custodial structure)',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Individual HIN',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Access to IPOs',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Fractional shares',
+      "status": 'Essential',
+    },
+    {
+      "title": 'Access to ETFs/LICs/REITs',
+      "status": 'Essential',
+    },
+  ];
 
 }
