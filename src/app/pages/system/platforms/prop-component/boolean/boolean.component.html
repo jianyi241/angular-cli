@@ -3,7 +3,7 @@
 
     <div class="radio-box-group">
         <div class="radio-box">
-            <input type="radio" value="yes" [(ngModel)]="prop.propValue"
+            <input type="radio" [value]="'yes'" [(ngModel)]="prop.productPropVo.propValue"
                    [disabled]="!editable"
                    (change)="onChange()"
                    [name]="prop.tabType+'_'+index"
@@ -12,7 +12,7 @@
         </div>
 
         <div class="radio-box">
-            <input type="radio" value="no" [(ngModel)]="prop.propValue"
+            <input type="radio" [value]="'no'" [(ngModel)]="prop.productPropVo.propValue"
                    [disabled]="!editable"
                    (change)="onChange()"
                    [name]="prop.tabType+'_'+index"
