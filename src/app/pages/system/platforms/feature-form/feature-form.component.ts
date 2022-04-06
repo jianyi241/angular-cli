@@ -147,15 +147,15 @@ export class FeatureFormComponent implements OnInit {
 
     saveProductProp() {
         this.dealEditProductProps(this.props);
-        this.platformRepository.saveProductProp([...this.productProps]).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            this.productPropList(() => {
-                this.dealEditProductProps(this.props);
-                this.toastRepository.showSuccess('Submit Successfully.');
-            });
-        })
+        // this.platformRepository.saveProductProp([...this.productProps]).subscribe(res => {
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg);
+        //         return;
+        //     }
+        //     this.productPropList(() => {
+        //         this.dealEditProductProps(this.props);
+        //         this.toastRepository.showSuccess('Submit Successfully.');
+        //     });
+        // })
     }
 }

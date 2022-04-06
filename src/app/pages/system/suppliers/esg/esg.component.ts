@@ -45,7 +45,7 @@ export class EsgComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouterParam();
-        if (!this.version.id || this.version.id === 'version') {
+        if (!this.version.id || this.version.id === Constants.VERSION) {
             return;
         }
         this.supplierVersion();
@@ -62,12 +62,12 @@ export class EsgComponent implements OnInit, OnDestroy {
 
     parseRouterParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
-            this.version.id = res['version'];
+            this.version.id = res[Constants.VERSION];
         });
     }
 
     supplierVersion(): void {
-        if (!this.version.id || this.version.id === 'version') {
+        if (!this.version.id || this.version.id === Constants.VERSION) {
             return;
         }
         this.versionRepository.versionById(this.version.id).subscribe(res => {

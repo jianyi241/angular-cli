@@ -27,6 +27,12 @@ import {InformationProductComponent} from './platforms/information-product/infor
 import {EsgProductComponent} from './platforms/esg-product/esg-product.component';
 import {ChangeHistoryProductComponent} from './platforms/change-history-product/change-history-product.component';
 import {ArrayFilterPipe} from "../../pipes/array-filter.pipe";
+import {BooleanComponent} from './platforms/prop-component/boolean/boolean.component';
+import {AttachmentComponent} from './platforms/prop-component/attachment/attachment.component';
+import {LongTextComponent} from './platforms/prop-component/long-text/long-text.component';
+import {ShortTextComponent} from './platforms/prop-component/short-text/short-text.component';
+import {IntegerComponent} from './platforms/prop-component/integer/integer.component';
+import {PropViewComponent} from './platforms/prop-component/prop-view/prop-view.component';
 
 
 @NgModule({
@@ -49,7 +55,13 @@ import {ArrayFilterPipe} from "../../pipes/array-filter.pipe";
         InformationProductComponent,
         EsgProductComponent,
         ChangeHistoryProductComponent,
-        ArrayFilterPipe
+        ArrayFilterPipe,
+        BooleanComponent,
+        AttachmentComponent,
+        LongTextComponent,
+        ShortTextComponent,
+        IntegerComponent,
+        PropViewComponent
     ],
     imports: [
         CommonModule,

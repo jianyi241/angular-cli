@@ -71,37 +71,32 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             {
-                path: 'platform-tab',
+                path: 'product',
+                component: ProductsComponent,
+            },
+            {
+                path: 'product-tab',
+                component: ProductLayoutComponent,
                 children: [
                     {
-                        path: 'product',
-                        component: ProductsComponent,
+                        path: 'overview/:productId/:version',
+                        component: OverviewProductComponent,
                     },
                     {
-                        path: 'product-tab/:version',
-                        component: ProductLayoutComponent,
-                        children: [
-                            {
-                                path: 'overview',
-                                component: OverviewProductComponent,
-                            },
-                            {
-                                path: 'information',
-                                component: InformationProductComponent,
-                            },
-                            {
-                                path: 'esg',
-                                component: EsgProductComponent,
-                            },
-                            {
-                                path: 'feature-form/:productId',
-                                component: FeatureFormComponent
-                            },
-                            {
-                                path: 'change-history',
-                                component: ChangeHistoryProductComponent,
-                            },
-                        ]
+                        path: 'information/:productId/:version',
+                        component: InformationProductComponent,
+                    },
+                    {
+                        path: 'esg/:productId/:version',
+                        component: EsgProductComponent,
+                    },
+                    {
+                        path: 'features/:productId/:version',
+                        component: FeatureFormComponent
+                    },
+                    {
+                        path: 'change-history/:productId/:version',
+                        component: ChangeHistoryProductComponent,
                     },
                 ]
             },

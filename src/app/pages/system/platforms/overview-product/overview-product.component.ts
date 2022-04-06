@@ -1,23 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Constants} from "../../../../model/constants";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ConfigService} from "../../../../service/config.service";
+import {VersionRepository} from "../../../../repository/version-repository";
+import {PlatformRepository} from "../../../../repository/platform-repository";
+import {ProductInfo} from "../../../../model/po/productInfo";
+import {Version} from "../../../../model/po/version";
+import {TabType} from "../../../../model/enums/tab-type";
+import {ProductFormVo} from "../../../../model/vo/productFormVo";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
-  selector: 'app-overview-product',
-  templateUrl: './overview-product.component.html',
-  styleUrls: ['./overview-product.component.less']
+    selector: 'app-overview-product',
+    templateUrl: './overview-product.component.html',
+    styleUrls: ['./overview-product.component.less']
 })
-export class OverviewProductComponent implements OnInit {
+export class OverviewProductComponent implements OnInit, OnDestroy {
+    product: ProductInfo = new ProductInfo();
+    version: Version = new Version();
+    overview: ProductFormVo = new ProductFormVo();
+    config = {...Constants.EDITOR_CONFIG};
+    routerSubscription: any;
+    activatedRouteSubscription: any;
 
-  config = {...Constants.EDITOR_CONFIG};
-  constructor(private route: Router,
-              private activatedRoute: ActivatedRoute) { }
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
+                public configService: ConfigService,
+                private toastRepository: ToastRepository,
+                private versionRepository: VersionRepository,
+                private platformRepository: PlatformRepository) {
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        this.subscribe();
+        this.init();
+    }
 
-  goBack(): void {
-    // this.route.navigateByUrl(`/supplier/supplier-tab/overview`);
-  }
+    ngOnDestroy(): void {
+        this.routerSubscription && this.routerSubscription.unsubscribe();
+        this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
+    }
 
+
+    init(): void {
+        this.parseRouterParam();
+        this.getProductPropList();
+    }
+
+    subscribe(): void {
+        this.routerSubscription = this.route.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.init();
+            }
+        });
+    }
+
+    getProductPropList(): void {
+        this.platformRepository.getProductPropList(TabType.overview.value, this.product.id, this.version.id).subscribe(res => {
+            this.overview = res.data;
+        });
+    }
+
+    parseRouterParam(): void {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
+            this.product.id = res['productId'];
+            this.version.id = res[Constants.VERSION];
+        })
+    }
 }

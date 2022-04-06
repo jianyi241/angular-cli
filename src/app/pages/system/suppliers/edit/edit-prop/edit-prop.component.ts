@@ -76,7 +76,7 @@ export class EditPropComponent implements OnInit {
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.version.id = params['version'];
+            this.version.id = params[Constants.VERSION];
             this.currentTab = parseInt(params['tab']);
             this.prop.shGroupId = params['groupId'] == Constants.NON_ID ? '': params['groupId'];
             this.prop.id = params['id'] == Constants.NON_ID ? '' : params['id'];

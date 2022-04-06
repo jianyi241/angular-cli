@@ -17,6 +17,14 @@ export class ConfigService {
         changeHistory: TabType.changeHistory.value
     }
 
+    propType = {
+        shortText: PropType.shortText.value,
+        longText: PropType.longText.value,
+        integer: PropType.integer.value,
+        boolean: PropType.boolean.value,
+        attachment: PropType.attachment.value,
+    }
+
     constructor(private router: Router) {
     }
 

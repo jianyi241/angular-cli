@@ -60,7 +60,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouteParam();
-        if (!this.version.id || this.version.id === 'version') {
+        if (!this.version.id || this.version.id === Constants.VERSION) {
             return;
         }
         this.supplierVersion();
@@ -77,12 +77,12 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
     parseRouteParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
-            this.version.id = res['version'];
+            this.version.id = res[Constants.VERSION];
         });
     }
 
     supplierVersion(): void {
-        if (!this.version.id || this.version.id === 'version') {
+        if (!this.version.id || this.version.id === Constants.VERSION) {
             return;
         }
         this.versionRepository.versionById(this.version.id).subscribe(res => {

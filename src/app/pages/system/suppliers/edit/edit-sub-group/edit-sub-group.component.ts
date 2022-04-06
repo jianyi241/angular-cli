@@ -54,7 +54,7 @@ export class EditSubGroupComponent implements OnInit {
 
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.version.id = params['version'];
+            this.version.id = params[Constants.VERSION];
             this.currentTab = parseInt(params['tab']);
             this.subGroup.parentId = params['parentId'] == Constants.NON_ID ? '' : params['parentId'];
             this.subGroup.id = params['id'] == Constants.NON_ID ? '' : params['id'];

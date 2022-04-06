@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label class="control-label control-label-custom">{{prop.name}}
+<!--        <span class="label-required">*</span>-->
+        <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
+    </label>
+    <ckeditor (blur)="blur()" [readOnly]="!editable" [(ngModel)]="prop.productPropVo.propValue" [config]="config"></ckeditor>
+    <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
+</div>

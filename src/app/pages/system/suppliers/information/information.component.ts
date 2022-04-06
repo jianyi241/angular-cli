@@ -59,7 +59,7 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouterParam();
-        if (!this.version.id || this.version.id === 'version') {
+        if (!this.version.id || this.version.id === Constants.VERSION) {
             return;
         }
         this.supplierVersion();
@@ -76,7 +76,7 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     parseRouterParam(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
-            this.version.id = res['version'];
+            this.version.id = res[Constants.VERSION];
         });
     }
 

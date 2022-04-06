@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ProductInfo} from "../../../../model/po/productInfo";
 import {PlatformRepository} from "../../../../repository/platform-repository";
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-products',
@@ -27,7 +28,7 @@ export class ProductsComponent implements OnInit {
     }
 
 
-    editProduct(id: string) {
-        this.router.navigateByUrl(`/platform/feature-form/${id}`);
+    editProduct(product: ProductInfo) {
+        this.router.navigateByUrl(`/platform/product-tab/overview/${product.id}/${product.versionId || Constants.VERSION}`);
     }
 }

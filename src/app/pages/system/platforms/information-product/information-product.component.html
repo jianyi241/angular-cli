@@ -7,152 +7,20 @@
         </div>
     </div>
 
-    <div class="form-group-custom">
+    <div class="form-group-custom" *ngFor="let group of information.groupVoList">
         <div class="form-group-left">
-            <label class="control-label">Business Information</label>
-            <p class="info">Introduce your company core info quickly to users by fill up company details</p>
+            <label class="control-label">{{group.name}}</label>
+            <p class="info" [innerHTML]="group.description"></p>
         </div>
 
         <div class="form-group-right">
-            <div class="form-group">
-                <label class="control-label control-label-custom">RSE License</label>
-                <input type="text" class="form-control" placeholder="RSE License"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Custodian</label>
-                <input type="text" class="form-control" placeholder="Custodian"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Sub-custodian(s)</label>
-                <input type="text" class="form-control" placeholder="Sub-custodian(s)"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Administrator</label>
-                <input type="text" class="form-control" placeholder="Administrator"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Investment consultant</label>
-                <input type="text" class="form-control" placeholder="Investment consultant"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Front end technology supplier</label>
-                <input type="text" class="form-control" placeholder="Front end technology supplier"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Back office technology supplier</label>
-                <input type="text" class="form-control" placeholder="Back office technology supplier"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Default broker for Australian equities</label>
-                <input type="text" class="form-control" placeholder="Default broker for Australian equities"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Default broker for international equities</label>
-                <input type="text" class="form-control" placeholder="Default broker for international equities"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Business continuity plan</label>
-                <ckeditor [config]="config"></ckeditor>
-                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Data security policy</label>
-                <ckeditor [config]="config_DataSecurityPolicy"></ckeditor>
-                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Number of service failures in the last 3 years</label>
-                <input type="text" class="form-control" placeholder="Number of service failures in the last 3 years"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Number of lawsuits/regulatory actions in the last 3 years</label>
-                <input type="text" class="form-control" placeholder="Number of lawsuits/regulatory actions in the last 3 years"/>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Contact Information</label>
-            <p class="info">Introduce your company core info quickly to users by fill up company details</p>
-        </div>
-
-        <div class="form-group-right">
-            <div class="form-group">
-                <label class="control-label control-label-custom">Telephone number</label>
-                <input type="text" class="form-control" placeholder="Telephone number"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Telephone support contact hours</label>
-                <input type="text" class="form-control" placeholder="Telephone support contact hours"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Out of hours support</label>
-                <input type="text" class="form-control" placeholder="Out of hours support"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Dedicated email support</label>
-                <input type="text" class="form-control" placeholder="Dedicated email support"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Dedicated chat support</label>
-
-                <div class="radio-box-group">
-                    <div class="radio-box">
-                        <input type="radio" value="yes" checked  name="DedicatedChatSupport" id="DedicatedChatSupport01"/>
-                        <label for="DedicatedChatSupport01">Yes</label>
-                    </div>
-
-                    <div class="radio-box">
-                        <input type="radio" value="No"  name="DedicatedChatSupport" id="DedicatedChatSupport02"/>
-                        <label for="DedicatedChatSupport02">No</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Dedicated support staff for advisers</label>
-                <input type="text" class="form-control" placeholder="Dedicated support staff for advisers"/>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Postal address</label>
-                <ckeditor [config]="config"></ckeditor>
-                <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
-            </div>
-
-            <div class="form-group">
-                <label class="control-label control-label-custom">Service level agreement</label>
-
-                <div class="radio-box-group">
-                    <div class="radio-box">
-                        <input type="radio" value="yes" checked  name="ServiceLevelAgreement" id="ServiceLevelAgreement01"/>
-                        <label for="ServiceLevelAgreement01">Yes</label>
-                    </div>
-
-                    <div class="radio-box">
-                        <input type="radio" value="No"  name="ServiceLevelAgreement" id="ServiceLevelAgreement02"/>
-                        <label for="ServiceLevelAgreement02">No</label>
-                    </div>
-                </div>
-            </div>
-
+            <app-prop-view [model]="prop"
+                           [index]="propIndex"
+                           [type]="prop.type"
+                           [tabType]="configService.tabType.information"
+                           [editable]="configService.isEditable(version.type)"
+                           (prop_change)="saveProp(prop)"
+                           *ngFor="let prop of group.propertyVoList; let propIndex = index"></app-prop-view>
         </div>
     </div>
 </div>

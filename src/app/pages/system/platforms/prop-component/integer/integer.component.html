@@ -1,0 +1,7 @@
+<div class="form-group">
+    <label class="control-label control-label-custom">{{prop.name}}
+        <!--        <span class="label-required">*</span>-->
+        <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
+    </label>
+    <input type="text" class="form-control" [disabled]="!editable" [(ngModel)]="prop.productPropVo.propValue" placeholder="Platform name"/>
+</div>

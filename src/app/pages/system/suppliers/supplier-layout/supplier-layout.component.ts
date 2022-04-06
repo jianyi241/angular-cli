@@ -7,6 +7,7 @@ import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {Version} from "../../../../model/po/version";
 import * as moment from "moment";
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-supplier-layout',
@@ -34,10 +35,10 @@ export class SupplierLayoutComponent implements OnInit {
     }
 
     getVersion(): void {
-        let versionId = this.activeRouter.firstChild?.snapshot?.params['version'];
+        let versionId = this.activeRouter.firstChild?.snapshot?.params[Constants.VERSION];
         let url = this.activeRouter.firstChild?.snapshot?.url;
         this.currentTab = url && url.length > 0 ? url[0].path : undefined;
-        if (versionId && versionId != 'version') {
+        if (versionId && versionId != Constants.VERSION) {
             this.versionRepository.versionById(versionId).subscribe(res => {
                 this.version = res.data || this.version;
                 if (this.router.url == '/supplier/supplier-tab') {
@@ -47,7 +48,7 @@ export class SupplierLayoutComponent implements OnInit {
         } else {
             this.versionRepository.supplierVersion().subscribe(res => {
                 this.version = res.data || this.version;
-                this.version.id = res.data?.id || 'version';
+                this.version.id = res.data?.id || Constants.VERSION;
                 this.chooseTab(TabType.overview.name);
             })
         }
@@ -102,7 +103,7 @@ export class SupplierLayoutComponent implements OnInit {
     backHistory() {
         this.versionRepository.supplierVersion().subscribe(res => {
             this.version = res.data || this.version;
-            this.version.id = res.data?.id || 'version';
+            this.version.id = res.data?.id || Constants.VERSION;
             this.chooseTab(TabType.changeHistory.name);
         })
     }
