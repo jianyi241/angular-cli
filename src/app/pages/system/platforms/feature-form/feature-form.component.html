@@ -46,6 +46,7 @@
                         <div class="radio-box">
                             <input type="radio" [(ngModel)]="prop.productPropVo.propValue"
                                    value="yes"
+                                   [disabled]="!configService.isEditable(version.type)"
                                    (change)="saveProp(prop)"
                                    [name]="'platform'+propIndex"
                                    [id]="'yes'+propIndex"/>
@@ -55,6 +56,7 @@
                         <div class="radio-box">
                             <input type="radio" [(ngModel)]="prop.productPropVo.propValue"
                                    value="no"
+                                   [disabled]="!configService.isEditable(version.type)"
                                    (change)="saveProp(prop)"
                                    [name]="'platform'+propIndex"
                                    [id]="'no'+propIndex"/>
@@ -65,7 +67,7 @@
                         <div class="form-three-group">
                             <label class="control-label control-label-custom-large">Enter your description of this
                                 feature</label>
-                            <ckeditor [(ngModel)]="prop.productPropVo.description" (blur)="saveProp(prop)" [config]="config"></ckeditor>
+                            <ckeditor [readOnly]="!configService.isEditable(version.type)" [(ngModel)]="prop.productPropVo.description" (blur)="saveProp(prop)" [config]="config"></ckeditor>
                             <!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
                         </div>
 
@@ -80,6 +82,7 @@
                                 <div class="form-group-right">
                                     <div class="upload-file">
                                         <ngx-file-drop dropZoneLabel="Drop files here"
+                                                       [disabled]="!configService.isEditable(version.type)"
                                                        (onFileDrop)="dropped($event, prop)"
                                                        [multiple]="false" [directory]="false"
                                                        [accept]="'.png,.svg,.gif,.jpg'">
