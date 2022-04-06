@@ -13,6 +13,7 @@ import {VersionRepository} from "../../../../repository/version-repository";
 import {GroupVo} from "../../../../model/vo/groupVo";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
+import {PropStatus} from "../../../../model/enums/prop-status";
 
 @Component({
     selector: 'app-feature-form',
@@ -119,6 +120,26 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
             prop.productPropVo = res.data;
         })
     }
+
+    groupDotFlag(group: GroupVo): boolean {
+        if (!group.subList || group.subList.length == 0) {
+            return false;
+        }
+        for (const subGroup of group.subList) {
+            if (this.subGroupDotFlag(subGroup)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    subGroupDotFlag(subGroup: GroupVo): boolean {
+        if (!subGroup.propertyVoList || subGroup.propertyVoList.length == 0) {
+            return false;
+        }
+        return subGroup.propertyVoList.some(p => p.status != PropStatus.Normal.value);
+    }
+
 
     chooseSubGroup(group: GroupVo) {
         this.subGroup = group;
