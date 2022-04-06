@@ -1,34 +1,13 @@
-<div class="main main-form main-form-with-tab">
-    <div class="sub-head sub-head-form">
-        <div class="sub-title" [routerLink]="['/platform/product']">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{product.name}}
-        </div>
-
-        <div class="btn-control-group">
-            <!--            <button class="btn btn-clear text-danger">Archive</button>-->
-            <!--            <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>-->
-            <button class="btn btn-purple xs-ml-24" (click)="saveProductProp()">Submit for review</button>
-        </div>
-    </div>
-
-    <div class="tab-menu">
-        <!--<div class="tab-text"
-             [ngClass]="{'active': configService.currentTabType == tabType.value}"
-             (click)="configService.chooseTabType(tabType.value)"
-             *ngFor="let tabType of configService.tabTypeList()">
-            {{tabType.name}} <span class="line"></span>
-        </div>-->
-    </div>
-
-    <div class="form-content">
-        <div class="form-group-custom form-content-column xs-pt-0">
-            <div class="form-column-left">
-                <div class="main-menu">
+<div class="form-content">
+    <div class="form-group-custom form-content-column xs-pt-0">
+        <div class="form-column-left">
+            <div class="main-menu">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
-                    <ngb-panel *ngFor="let group of groups,let i =index " id="ngb-panel-{{i}}">
+                    <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
                         <ng-template ngbPanelHeader let-opened="opened">
-                            <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened" [title]="group.name"><div class="text">{{group.name}}</div>
+                            <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
+                                    [title]="group.name">
+                                <div class="text">{{group.name}}</div>
                                 <!--<span class="label-number xs-ml-6">7 new</span>-->
                                 <span class="dot"></span>
                                 <span class="icon-block icon-arr-up-purple icon-15"></span>
@@ -36,11 +15,11 @@
                         </ng-template>
 
                         <ng-template ngbPanelContent>
-                            <div class="main-sub-menu"  *ngFor="let subGroupItem of group.subList">
+                            <div class="main-sub-menu" *ngFor="let subGroupItem of group.subList">
                                 <div class="sub-title"
                                      (click)="chooseSubGroup(subGroupItem)"
-                                     [ngClass]="{'active': subGroup.id == subGroupItem.id}"
-                                     [title]="subGroupItem.name"><div class="text">{{subGroupItem.name}}</div>
+                                     [title]="subGroupItem.name">
+                                    <div class="text">{{subGroupItem.name}}</div>
                                     <!--<span class="badge badge-theme xs-ml-6">2</span>-->
                                     <span class="dot"></span>
                                 </div>
@@ -48,90 +27,80 @@
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
-                </div>
-
-<!--                <div class="main-menu" *ngFor="let group of groups">-->
-<!--                    <div class="title" [toggleClass]="'open'" (click)="chooseGroup(group)" [title]="group.name"><div class="text">{{group.name}}</div>-->
-<!--                        &lt;!&ndash;<span class="label-number xs-ml-6">7 new</span>&ndash;&gt; <span-->
-<!--                                class="icon-block icon-arr-up-purple icon-15"></span></div>-->
-<!--                    <div class="main-sub-menu"  *ngFor="let subGroupItem of group.subList">-->
-<!--                        <div class="sub-title"-->
-<!--                             (click)="chooseSubGroup(subGroupItem)"-->
-<!--                             [ngClass]="{'active': subGroup.id == subGroupItem.id}"-->
-<!--                             [title]="subGroupItem.name"><div class="text">{{subGroupItem.name}}</div>-->
-<!--                            &lt;!&ndash;<span class="badge badge-theme xs-ml-6">2</span>&ndash;&gt;</div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
-
-
-            <div class="form-column-right">
-                <div class="form-column-title">
-                    <label class="control-label">{{subGroup.name}}</label>
-                    <p class="info" [innerHTML]="subGroup.description"></p>
+        </div>
+        <div class="form-column-right">
+            <div class="form-column-title">
+                <label class="control-label">{{subGroup.name}}</label>
+                <p class="info" [innerHTML]="subGroup.description"></p>
+            </div>
+            <div class="form-sub-group" *ngFor="let prop of subGroup.propertyVoList; let propIndex = index">
+                <div class="form-sub-left">
+                    <div class="title">{{prop.name}}</div>
+                    <div class="text" [innerHTML]="prop.description"></div>
                 </div>
-                <div class="form-sub-group" *ngFor="let prop of props; let propIndex = index">
-                    <div class="form-sub-left">
-                        <div class="title">{{prop.name}}</div>
-                        <div class="text" [innerHTML]="prop.description"></div>
-                    </div>
-                    <div class="form-sub-right">
-                        <div class="form-three-group">
-                            <label class="control-label control-label-custom-large">Does this feature exist on this
-                                platform?</label>
-                            <div class="radio-box">
-                                <input type="radio" [(ngModel)]="prop.propValue"
-                                       value="yes"
-                                       [name]="'platform'+propIndex"
-                                       [id]="'yes'+propIndex"/>
-                                <label for="{{'yes' + propIndex}}">Yes</label>
-                            </div>
-
-                            <div class="radio-box">
-                                <input type="radio" [(ngModel)]="prop.propValue"
-                                       value="no"
-                                       [name]="'platform'+propIndex"
-                                       [id]="'no'+propIndex"/>
-                                <label for="{{'no' + propIndex}}">No</label>
-                            </div>
+                <div class="form-sub-right">
+                    <div class="form-three-group">
+                        <label class="control-label control-label-custom-large">Does this feature exist on this
+                            platform?</label>
+                        <div class="radio-box">
+                            <input type="radio" [(ngModel)]="prop.productPropVo.propValue"
+                                   value="yes"
+                                   (change)="saveProp(prop)"
+                                   [name]="'platform'+propIndex"
+                                   [id]="'yes'+propIndex"/>
+                            <label for="{{'yes' + propIndex}}">Yes</label>
                         </div>
-                        <ng-container *ngIf="prop.propValue == 'yes'">
-                            <div class="form-three-group">
-                                <label class="control-label control-label-custom-large">Enter your description of this
-                                    feature</label>
-                                <ckeditor [(ngModel)]="prop.productDesc" [config]="config"></ckeditor>
-<!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
-                            </div>
 
-                            <div class="form-three-group">
-                                <label class="control-label control-label-custom-large">Upload a screenshot of this
-                                    feature
-                                    if applicable</label>
-                                <div class="form-upload-file">
-                                    <div class="upload-file-show" *ngIf="prop.attachmentVo?.visitUrl">
-                                        <img [src]="prop.attachmentVo?.visitUrl"/>
-                                    </div>
-                                    <div class="form-group-right">
-                                        <div class="upload-file">
-                                            <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event, prop)"
-                                                           [multiple]="false" [directory]="false"
-                                                           [accept]="'.png,.svg,.gif,.jpg'">
-                                                <ng-template ngx-file-drop-content-tmp
-                                                             let-openFileSelector="openFileSelector">
-                                                    <span [hidden]="!prop.uploading" class="icon-block icon-loading icon-32 upload-loading"></span>
-                                                    <div class="upload-content" (click)="openFileSelector()">
-                                                        <span class="icon-block icon-photo icon-32"></span>
-                                                        <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
-                                                        <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                        <div class="radio-box">
+                            <input type="radio" [(ngModel)]="prop.productPropVo.propValue"
+                                   value="no"
+                                   (change)="saveProp(prop)"
+                                   [name]="'platform'+propIndex"
+                                   [id]="'no'+propIndex"/>
+                            <label for="{{'no' + propIndex}}">No</label>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="prop.productPropVo.propValue == 'yes'">
+                        <div class="form-three-group">
+                            <label class="control-label control-label-custom-large">Enter your description of this
+                                feature</label>
+                            <ckeditor [(ngModel)]="prop.productPropVo.description" (blur)="saveProp(prop)" [config]="config"></ckeditor>
+                            <!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
+                        </div>
+
+                        <div class="form-three-group">
+                            <label class="control-label control-label-custom-large">Upload a screenshot of this
+                                feature
+                                if applicable</label>
+                            <div class="form-upload-file">
+                                <div class="upload-file-show" *ngIf="prop.productPropVo.attachmentVo?.visitUrl">
+                                    <img [src]="prop.productPropVo.attachmentVo?.visitUrl"/>
+                                </div>
+                                <div class="form-group-right">
+                                    <div class="upload-file">
+                                        <ngx-file-drop dropZoneLabel="Drop files here"
+                                                       (onFileDrop)="dropped($event, prop)"
+                                                       [multiple]="false" [directory]="false"
+                                                       [accept]="'.png,.svg,.gif,.jpg'">
+                                            <ng-template ngx-file-drop-content-tmp
+                                                         let-openFileSelector="openFileSelector">
+                                                <span [hidden]="!prop.uploading"
+                                                      class="icon-block icon-loading icon-32 upload-loading"></span>
+                                                <div class="upload-content" (click)="openFileSelector()">
+                                                    <span class="icon-block icon-photo icon-32"></span>
+                                                    <div class="file-intro"><span>Click to replace</span> or drag and
+                                                        drop
                                                     </div>
-                                                </ng-template>
-                                            </ngx-file-drop>
-                                        </div>
+                                                    <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-file-drop>
                                     </div>
                                 </div>
                             </div>
-                        </ng-container>
-                    </div>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>

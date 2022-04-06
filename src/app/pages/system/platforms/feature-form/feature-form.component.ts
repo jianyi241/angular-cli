@@ -1,126 +1,92 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {PlatformRepository} from "../../../../repository/platform-repository";
 import {ProductInfo} from "../../../../model/po/productInfo";
-import {GroupInfo} from "../../../../model/po/groupInfo";
 import {TabType} from "../../../../model/enums/tab-type";
-import {ProductPropInfo} from "../../../../model/po/productPropInfo";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
 import {Constants} from "../../../../model/constants";
-import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {ToastRepository} from "../../../../repository/toast-repository";
-import {FileRepository} from "../../../../repository/file-repository";
 import {ConfigService} from "../../../../service/config.service";
+import {Version} from "../../../../model/po/version";
+import {ProductFormVo} from "../../../../model/vo/productFormVo";
+import {VersionRepository} from "../../../../repository/version-repository";
+import {GroupVo} from "../../../../model/vo/groupVo";
+import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
+import {FileRepository} from "../../../../repository/file-repository";
 
 @Component({
     selector: 'app-feature-form',
     templateUrl: './feature-form.component.html',
     styleUrls: ['./feature-form.component.less']
 })
-export class FeatureFormComponent implements OnInit {
-    productId: string;
+export class FeatureFormComponent implements OnInit, OnDestroy {
     product: ProductInfo = new ProductInfo();
-    groups: Array<GroupInfo> = new Array<GroupInfo>();
-    subGroup: GroupInfo = new GroupInfo();
-    props: Array<PropertyVo> = new Array<PropertyVo>();
-    productProps: Array<ProductPropInfo> = new Array<ProductPropInfo>();
+    version: Version = new Version();
+    feature: ProductFormVo = new ProductFormVo();
+    subGroup: GroupVo = new GroupVo();
     config = {...Constants.EDITOR_CONFIG};
+    routerSubscription: any;
+    activatedRouteSubscription: any;
 
-    constructor(private activatedRoute: ActivatedRoute,
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
                 private toastRepository: ToastRepository,
+                private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
-                private platformRepository: PlatformRepository,
-                private supplierRepository: SupplierRepository,) {
+                private platformRepository: PlatformRepository) {
         this.config.editorplaceholder = 'What security measures are in place, e.g. ISO 27001 certification';
     }
 
     ngOnInit(): void {
-        this.parseRouteParam();
+        this.subscribe();
+        this.init();
     }
 
-    parseRouteParam(): void {
-        this.activatedRoute.params.subscribe(params => {
-            this.productId = params['productId'];
-            this.productDetail();
-            this.productPropList(() => {
-                this.groupList();
-            });
-        })
+    ngOnDestroy(): void {
+        this.routerSubscription && this.routerSubscription.unsubscribe();
+        this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
     }
 
-    productDetail(): void {
-        this.platformRepository.productDetail(this.productId).subscribe(res => {
-            this.product = Object.assign(this.product, res.data);
-        });
+
+    init(): void {
+        this.parseRouterParam();
+        this.getVersion();
+        this.getProductPropList();
     }
 
-    groupList(): void {
-        this.supplierRepository.groupList(TabType.features.value, '').subscribe(res => {
-            this.groups = res.data;
-            if (this.groups.length == 0) return;
-            let subGroups = this.groups[0].subList || [];
-            if (subGroups.length == 0) return;
-            this.chooseSubGroup(subGroups[0]);
-        })
-    }
-
-    propList(subGroupId: string): void {
-        this.supplierRepository.propList(subGroupId, '').subscribe(res => {
-            this.props = res.data;
-            if (this.props.length == 0 || this.productProps.length == 0) return;
-            this.props.forEach(prop => {
-                let find = this.productProps.find(pp => pp.shPropertyId == prop.id);
-                if (find) {
-                    prop.propValue = find.propValue;
-                    prop.productDesc = find.description;
-                    prop.attachmentVo = find.attachmentVo;
-                }
-            })
-        });
-    }
-
-    productPropList(callback?: any): void {
-        this.platformRepository.productPropList(TabType.features.value, this.productId).subscribe(res => {
-            this.productProps = res.data;
-            callback && callback();
-        })
-    }
-
-    chooseSubGroup(group: GroupInfo) {
-        this.subGroup = group;
-        this.dealEditProductProps(this.props);
-        this.propList(group.id);
-    }
-
-    dealEditProductProps(props: Array<PropertyVo>) {
-        if (props.length == 0) return;
-        let editList = props.filter(p => p.propValue).map(p => {
-            let prop = new ProductPropInfo();
-            prop.shProductId = this.productId;
-            prop.shPropertyId = p.id;
-            prop.propValue = p.propValue;
-            prop.description = p.productDesc;
-            prop.attachmentVo = p.attachmentVo;
-            return prop
-        });
-        const arr = [];
-        editList.forEach(p => {
-            let find = this.productProps.find(l => l.shPropertyId == p.shPropertyId);
-            if (find) {
-                find.propValue = p.propValue;
-                find.description = p.description;
-                find.attachmentVo = p.attachmentVo;
-            } else {
-                arr.push(p);
+    subscribe(): void {
+        this.routerSubscription = this.route.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.init();
             }
-        })
-        this.productProps = this.productProps.concat(arr);
+        });
     }
 
-    chooseGroup(group: GroupInfo) {
+    getProductPropList(): void {
+        this.platformRepository.getProductPropList(TabType.features.value, this.product.id, this.version.id).subscribe(res => {
+            this.feature = res.data;
+            if (this.feature && this.feature.groupVoList && this.feature.groupVoList.length > 0) {
+                if (this.feature.groupVoList[0].subList && this.feature.groupVoList[0].subList.length > 0)
+                    this.chooseSubGroup(this.feature.groupVoList[0].subList[0]);
+            }
+        });
+    }
 
+    getVersion() {
+        if (this.version.id == Constants.VERSION) {
+            return;
+        }
+        this.versionRepository.versionById(this.version.id).subscribe(res => {
+            this.version = res.data || this.version;
+        });
+    }
+
+    parseRouterParam(): void {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
+            this.product.id = res['productId'];
+            this.version.id = res[Constants.VERSION];
+        })
     }
 
     dropped(files: NgxFileDropEntry[], prop: PropertyVo) {
@@ -135,7 +101,8 @@ export class FeatureFormComponent implements OnInit {
                 this.fileRepository.uploadFile('img', file).then(res => {
                     prop.uploading = false;
                     if (res.statusCode == 200) {
-                        prop.attachmentVo = res.data[0];
+                        prop.productPropVo.attachmentVo = res.data[0];
+                        this.saveProp(prop);
                     }
                 });
             });
@@ -144,18 +111,16 @@ export class FeatureFormComponent implements OnInit {
         }
     }
 
+    saveProp(prop: PropertyVo): void {
+        let productProp = {...prop.productPropVo};
+        productProp.shProductId = this.product.id;
+        productProp.shPropertyId = prop.id;
+        this.platformRepository.saveProductProp(productProp).subscribe(res => {
+            prop.productPropVo = res.data;
+        })
+    }
 
-    saveProductProp() {
-        this.dealEditProductProps(this.props);
-        // this.platformRepository.saveProductProp([...this.productProps]).subscribe(res => {
-        //     if (res.statusCode != 200) {
-        //         this.toastRepository.showDanger(res.msg);
-        //         return;
-        //     }
-        //     this.productPropList(() => {
-        //         this.dealEditProductProps(this.props);
-        //         this.toastRepository.showSuccess('Submit Successfully.');
-        //     });
-        // })
+    chooseSubGroup(group: GroupVo) {
+        this.subGroup = group;
     }
 }
