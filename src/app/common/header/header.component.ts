@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.router.url.includes('/supplier')) {
+            this.router.navigateByUrl('/supplier/supplier-tab');
+        }
     }
 
     chooseType(type: string) {

@@ -33,6 +33,7 @@ import {LongTextComponent} from './platforms/prop-component/long-text/long-text.
 import {ShortTextComponent} from './platforms/prop-component/short-text/short-text.component';
 import {IntegerComponent} from './platforms/prop-component/integer/integer.component';
 import {PropViewComponent} from './platforms/prop-component/prop-view/prop-view.component';
+import {DateFormatPipe} from '../../pipes/date-format.pipe';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {PropViewComponent} from './platforms/prop-component/prop-view/prop-view.
         InformationComponent,
         SupplierLayoutComponent,
         EsgComponent,
+        DateFormatPipe,
         ChangeHistoryComponent,
         ProductLayoutComponent,
         OverviewProductComponent,

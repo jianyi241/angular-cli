@@ -60,7 +60,7 @@ export class ChangeHistoryComponent implements OnInit {
     }
 
     viewRelease(version: Version): void {
-        this.route.navigateByUrl('/', {
+        this.route.navigateByUrl('/supplier', {
             skipLocationChange: true
         }).then(() => {
             this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);

@@ -114,7 +114,7 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     getVersionInfo() {
-        return `Submitted ${moment(this.version.updateTime).format('H:mm a D MMM YY')} by Recep Peker`
+        return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`
     }
 
     backHistory() {
