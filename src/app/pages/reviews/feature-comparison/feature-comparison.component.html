@@ -104,7 +104,7 @@
                         <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
                         <tr *ngFor="let prop of subGroup.propertyVoList">
                             <td>
-                                <div class="content-title bg-red" [title]="prop.name">
+                                <div class="content-title" [ngClass]="{'bg-red': hasEssential(prop)}" [title]="prop.name">
                                     {{prop.name}}
                                     <button class="essential" [hidden]="!hasEssential(prop)">Essential</button>
                                     <span class="icon-block icon-block-right icon-info-circle-purple icon-20"></span>

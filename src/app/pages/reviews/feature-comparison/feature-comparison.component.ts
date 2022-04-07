@@ -41,21 +41,37 @@ export class FeatureComparisonComponent implements OnInit {
     getChecked(id, product: ProductVo): string {
         let prodProps = product.productPropVoList;
         if (prodProps.length == 0) {
-            product.checked = false;
             return 'icon-close-red';
         }
         let some = prodProps.some(p => p.shPropertyId == id && p.propValue == 'yes');
         if (!some) {
-            product.checked = false;
             return 'icon-close-red';
         }
-        product.checked = true;
         return 'icon-checked-green';
     }
 
     compareList(props: Array<string>) {
         this.reviewRepository.compareList(props).subscribe(res => {
             this.compareData = Object.assign(this.compareData, res.data);
+            if (!this.selectProps || this.selectProps.length == 0) {
+                return
+            }
+            if (this.compareData.productVos && this.compareData.productVos.length > 0) {
+                this.compareData.productVos.forEach(p => {
+                    if (p.productPropVoList && p.productPropVoList.length > 0) {
+                        let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
+                        let idCheck = props.some(id => !prodPropIds.includes(id));
+                        if (!idCheck) {
+                            let valueCheck = p.productPropVoList.some(pp => pp.propValue == 'no');
+                            p.checked = !valueCheck;
+                        } else {
+                            p.checked = !idCheck;
+                        }
+                    } else {
+                        p.checked = false;
+                    }
+                });
+            }
         })
     }
 
