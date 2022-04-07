@@ -11,6 +11,7 @@ import {TabType} from "../../../../../model/enums/tab-type";
 import {PropStatus} from "../../../../../model/enums/prop-status";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
+import {PropType} from "../../../../../model/enums/prop-type";
 
 @Component({
     selector: 'app-edit-prop',
@@ -21,6 +22,7 @@ export class EditPropComponent implements OnInit {
     version: Version = new Version();
     prop: PropertyInfo = new PropertyInfo();
     config = {...Constants.EDITOR_CONFIG};
+
     currentTab: number;
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -51,6 +53,9 @@ export class EditPropComponent implements OnInit {
 
     initByCurrentTab(): void{
         this.prop.tabType = this.currentTab;
+        if (this.currentTab == TabType.features.value) {
+            this.prop.type = PropType.boolean.value;
+        }
         switch (this.currentTab) {
             case TabType.overview.value:
                 break;

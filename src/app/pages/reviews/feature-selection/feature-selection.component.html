@@ -4,107 +4,33 @@
     </div>
 
     <div class="features-swiper">
-        <swiper [config]="config" [pagination]="{clickable: true}">
-            <ng-template swiperSlide>
+        <swiper [config]="config" (slideChange)="slideChange($event)" [pagination]="{clickable: true}" *ngIf="featureForm.groupVoList">
+            <ng-template swiperSlide [virtualIndex]="groupIndex" *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
                 <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
+                    <img [src]="group.attachmentVo?.visitUrl" alt="">
+                    <div class="tip" (click)="selectGroupAll(group)">Select all features</div>
                 </div>
                 <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
-                </div>
-            </ng-template>
-            <ng-template swiperSlide>
-                <div class="swiper-head">
-                    <img src="../../../../assets/img/swiper-teleconference.png" alt="">
-                    <div class="tip">Select all features</div>
-                </div>
-                <div class="swiper-body">
-                    <h3>Product menu</h3>
-                    <p>Webflow is the first design and hosting platform built from the ground up for the mobile age.</p>
+                    <h3>{{group.name}}</h3>
+                    <p [innerHTML]="group.description"></p>
                 </div>
             </ng-template>
         </swiper>
     </div>
 
 
-
     <div class="features-accordion">
-        <div class="accordion-main">
+        <div class="accordion-main" *ngIf="subGroups.length > 0">
             <div class="list">
-                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-                    <ngb-panel>
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" [destroyOnHide]="true">
+                    <ngb-panel *ngFor="let subGroup of subGroups; let subGroupIndex = index;" id="ngb-panel-{{subGroupIndex}}">
                         <ng-template ngbPanelTitle="Collapse all 10 features">
-                            <div class="accordion-head"
-                                style="display: flex; justify-content: space-between; width: 100%;">
+                            <div class="accordion-head" style="display: flex; justify-content: space-between; width: 100%;">
                                 <div class="text">
-                                    <p class="sub-title">Listed securities</p>
-                                    <p>Webflow is the first design and hosting platform built from the ground up for the
-                                        mobile age.
-                                    </p>
+                                    <p class="sub-title">{{subGroup.name}}</p>
+                                    <p [innerHTML]="subGroup.description"></p>
                                 </div>
-                                <div class="btn-right">Collapse all 10 features <span
+                                <div class="btn-right">Collapse all {{subGroup.propertyVoList.length}} features <span
                                         class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
                                 </div>
                             </div>
@@ -114,156 +40,40 @@
                                 <div class="features-list all-features">
                                     <div class="title">
                                         <h3>All features</h3>
-                                        <button>Select all </button>
+                                        <button (click)="selectSubGroupAll(subGroup)">Select all</button>
                                     </div>
-                                    <ul *ngFor="let group of features;">
-                                        <li>
+                                    <ul>
+                                        <li [hidden]="prop.selected" *ngFor="let prop of subGroup.propertyVoList" (click)="selectProp(prop)">
                                             <div class="text">
-                                                <p>{{group.title}}</p>
+                                                <p>{{prop.name}}</p>
                                                 <i class="icon-block icon-15 icon-info-circle-purple"></i>
                                             </div>
-                                            <button>{{group.status}}</button>
+                                            <button (click)="essential(prop, $event)" [ngClass]="{'tx-blue': prop.essential}">Essential</button>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="features-list features-selected">
                                     <div class="title">
                                         <h3>Features selected</h3>
+                                        <button (click)="deselectSubGroupAll(subGroup)">Deselect all</button>
                                     </div>
-                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
+                                    <p class="sub-title" [hidden]="checkSelectList(subGroup.propertyVoList)">You haven’t selected any features yet. Click on one of the
                                         features in LHS column to select.</p>
                                     <ul>
-                                        <li>
+                                        <li [hidden]="!prop.selected" *ngFor="let prop of subGroup.propertyVoList" (click)="unSelectProp(prop)">
                                             <div class="text">
-                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
+                                                <p>{{prop.name}}</p>
                                                 <i class="icon-block icon-15 icon-info-circle-purple"></i>
                                             </div>
-                                            <button>Essential</button>
+                                            <button (click)="essential(prop, $event)" [ngClass]="{'tx-blue': prop.essential}">Essential</button>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </ng-template>
-                    </ngb-panel>
-                </ngb-accordion>
-            </div>
-            <div class="list">
-                <ngb-accordion #acc="ngbAccordion">
-                    <ngb-panel>
-                        <ng-template ngbPanelTitle="Collapse all 10 features">
-                            <div class="accordion-head"
-                                style="display: flex; justify-content: space-between; width: 100%;">
-                                <div class="text">
-                                    <p class="sub-title">Managed accounts</p>
-                                    <p>Webflow is the first design and hosting platform built from the ground up for the
-                                        mobile age. Webflow is the first design and hosting platform built from the
-                                        ground up for the mobile age. Webflow is the first design and hosting platform
-                                        built from the ground up for the mobile age.
-                                    </p>
-                                </div>
-                                <div class="btn-right">Collapse all 10 features <span
-                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <div class="features-main">
-                                <div class="features-list all-features">
-                                    <div class="title">
-                                        <h3>All features</h3>
-                                        <button>Select all </button>
-                                    </div>
-                                    <ul *ngFor="let group of features;">
-                                        <li>
-                                            <div class="text">
-                                                <p>{{group.title}}</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
-                                            </div>
-                                            <button>{{group.status}}</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="features-list features-selected">
-                                    <div class="title">
-                                        <h3>Features selected</h3>
-                                    </div>
-                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
-                                        features in LHS column to select.</p>
-                                    <ul>
-                                        <li>
-                                            <div class="text">
-                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
-                                            </div>
-                                            <button>Essential</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </ng-template>
-
-
-                    </ngb-panel>
-                </ngb-accordion>
-            </div>
-            <div class="list">
-                <ngb-accordion #acc="ngbAccordion">
-                    <ngb-panel>
-                        <ng-template ngbPanelTitle="Collapse all 10 features">
-                            <div class="accordion-head"
-                                style="display: flex; justify-content: space-between; width: 100%;">
-                                <div class="text">
-                                    <p class="sub-title">Listed securities</p>
-                                    <p>Webflow is the first design and hosting platform built from the ground up for the
-                                        mobile age.
-                                    </p>
-                                </div>
-                                <div class="btn-right">Collapse all 10 features <span
-                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <div class="features-main">
-                                <div class="features-list all-features">
-                                    <div class="title">
-                                        <h3>All features</h3>
-                                        <button>Select all </button>
-                                    </div>
-                                    <ul *ngFor="let group of features;">
-                                        <li>
-                                            <div class="text">
-                                                <p>{{group.title}}</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
-                                            </div>
-                                            <button>{{group.status}}</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="features-list features-selected">
-                                    <div class="title">
-                                        <h3>Features selected</h3>
-                                    </div>
-                                    <p class="sub-title">You haven’t selected any features yet. Click on one of the
-                                        features in LHS column to select.</p>
-                                    <ul>
-                                        <li>
-                                            <div class="text">
-                                                <p>Range of ASX listed securities in super/pension - ASX300</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
-                                            </div>
-                                            <button>Essential</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </ng-template>
-
-
                     </ngb-panel>
                 </ngb-accordion>
             </div>
         </div>
-
     </div>
 </div>

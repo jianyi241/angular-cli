@@ -76,7 +76,8 @@ import {DateFormatPipe} from '../../pipes/date-format.pipe';
         DragDropModule
     ], exports: [
         ToggleClassDirective,
-        BackTopDirective
+        BackTopDirective,
+        ArrayFilterPipe
     ]
 })
 export class SystemModule {

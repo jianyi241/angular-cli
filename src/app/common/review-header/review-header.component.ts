@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {ReviewService} from "../../service/review.service";
 
 @Component({
     selector: 'app-review-header',
@@ -10,7 +11,7 @@ export class ReviewHeaderComponent implements OnInit {
 
     public isScrollFixed: boolean;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private reviewService: ReviewService) {
     }
 
     ngOnInit(): void {
@@ -19,6 +20,6 @@ export class ReviewHeaderComponent implements OnInit {
 
 
     next() {
-        this.router.navigateByUrl('/review/feature-comparison');
+        this.reviewService.next();
     }
 }
