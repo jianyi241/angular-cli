@@ -1,12 +1,17 @@
 <short-text [change]="prop_change" [prop]="model" [index]="index"
+            [prop_class]="prop_class"
             [editable]="editable"
             [tabType]="tabType"
             *ngIf="type == configService.propType.shortText"></short-text>
-<integer [tabType]="tabType" [editable]="editable" [change]="prop_change" [prop]="model" [index]="index"
+<integer [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
+         [index]="index"
          *ngIf="type == configService.propType.integer"></integer>
-<long-text [tabType]="tabType" [editable]="editable" [change]="prop_change" [prop]="model" [index]="index"
+<long-text [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
+           [index]="index"
            *ngIf="type == configService.propType.longText"></long-text>
-<boolean [tabType]="tabType" [editable]="editable" [change]="prop_change" [prop]="model" [index]="index"
+<boolean [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
+         [index]="index"
          *ngIf="type == configService.propType.boolean"></boolean>
-<attachment [tabType]="tabType" [editable]="editable" [change]="prop_change" [prop]="model" [index]="index"
+<attachment [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
+            [index]="index"
             *ngIf="type == configService.propType.attachment"></attachment>

@@ -18,7 +18,7 @@ export class IntegerComponent implements OnInit {
   @Input()
   tabType: number;
   @Input()
-  class: string;
+  prop_class: string;
   @Input()
   change: EventEmitter<PropertyVo>;
 

@@ -23,7 +23,7 @@ export class LongTextComponent implements OnInit {
     @Input()
     change: EventEmitter<PropertyVo>;
     @Input()
-    class: string;
+    prop_class: string;
 
     constructor() {
     }
