@@ -22,6 +22,8 @@ export class LongTextComponent implements OnInit {
     tabType: number;
     @Input()
     change: EventEmitter<PropertyVo>;
+    @Input()
+    class: string;
 
     constructor() {
     }

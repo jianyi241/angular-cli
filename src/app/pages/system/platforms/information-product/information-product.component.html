@@ -15,6 +15,7 @@
 
         <div class="form-group-right">
             <app-prop-view [model]="prop"
+                           [prop_class]="configService.getColorByStatus(prop.status, version.type)"
                            [index]="propIndex"
                            [type]="prop.type"
                            [tabType]="configService.tabType.information"

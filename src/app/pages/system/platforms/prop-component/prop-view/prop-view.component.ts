@@ -20,6 +20,8 @@ export class PropViewComponent implements OnInit {
     editable: boolean;
     @Input()
     tabType: number;
+    @Input()
+    prop_class: string;
     @Output()
     prop_change = new EventEmitter<PropertyVo>();
 

@@ -48,11 +48,16 @@ export class ChangeHistoryProductComponent implements OnInit {
         return `Release ${moment(version.updateTime).format('D MMM YY')}`;
     }
 
+    getVersionTime(version: Version): string {
+        if (version.type == VersionType.Draft.value) return `Last updated ${moment(version.updateTime).format('h:mma D MMM YY')}`;
+        return `Released ${moment(version.updateTime).format('h:mma D MMM YY')}`;
+    }
+
     editConfig(version: Version): void {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/platform/product-tab/information/${this.product.id}/${version.id}`]);
         });
     }
 
@@ -60,7 +65,7 @@ export class ChangeHistoryProductComponent implements OnInit {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/platform/product-tab/information/${this.product.id}/${version.id}`]);
         });
     }
 

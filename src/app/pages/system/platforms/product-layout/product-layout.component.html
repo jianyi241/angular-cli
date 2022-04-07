@@ -2,10 +2,10 @@
 
     <div class="head-tip" *ngIf="version.type == 'History'">
         <div class="head-tip-content">
-            <span class="icon-block icon-arr-left-blue icon-33"></span>
+            <span class="icon-block icon-arr-left-blue icon-33" (click)="backHistory()"></span>
             <div class="tip-content">
-                <div class="title" title="Release 12 Sep ‘21">Release 12 Sep ‘21</div>
-                <div class="text" title="Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`">Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`</div>
+                <div class="title" title="Release 12 Sep ‘21">{{getVersionName()}}</div>
+                <div class="text" title="Released 2:34pm 12 Sep 21 by Recep Peker | Submitted 1:00pm 11 Sep 21 by Bailey Hao`">{{getVersionInfo()}}</div>
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
             {{product.name}}
         </div>
 
-        <div class="btn-control-group">
+        <div class="btn-control-group" *ngIf="currentTab != 'change-history' && version.type != 'History'">
 <!--            <button class="btn text-danger">Archive</button>-->
             <button class="btn btn-outline-blue-light xs-ml-24" [hidden]="configService.isEditable(version.type)" (click)="editProduct()">Edit Product</button>
             <button class="btn btn-purple xs-ml-24" [hidden]="!configService.isEditable(version.type)" (click)="publishProduct()">Submit for review</button>

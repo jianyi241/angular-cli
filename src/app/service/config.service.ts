@@ -66,6 +66,19 @@ export class ConfigService {
         }
     }
 
+    getColorByStatus(value: string, versionType: string): string {
+        if (versionType === VersionType.Publish.value) return '';
+        switch (value) {
+            case 'Insert':
+            case 'Update':
+                return 'tx-blue';
+            case 'Archive':
+                return 'tx-red';
+            default:
+                return '';
+        }
+    }
+
     isArchive(status: string) {
         return status == 'Archive';
     }

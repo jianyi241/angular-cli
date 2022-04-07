@@ -8,6 +8,7 @@ import {Version} from "../../../../model/po/version";
 import {TabType} from "../../../../model/enums/tab-type";
 import {ProductInfo} from "../../../../model/po/productInfo";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-product-layout',
@@ -39,6 +40,8 @@ export class ProductLayoutComponent implements OnInit {
         }
         this.getModelPublishChangeFlag();
         this.getChangeTabs();
+        let url = this.activatedRoute.firstChild?.snapshot?.url;
+        this.currentTab = url && url.length > 0 ? url[0].path : undefined;
     }
 
     getVersion(): void {
@@ -104,5 +107,21 @@ export class ProductLayoutComponent implements OnInit {
 
     isChange(tabType: number): boolean {
         return this.changeTabs.some(c => c.tabType == tabType);
+    }
+
+    getVersionName() {
+        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`
+    }
+
+    getVersionInfo() {
+        return `Submitted ${moment(this.version.updateTime).format('H:mm a D MMM YY')} by Recep Peker`
+    }
+
+    backHistory() {
+        this.versionRepository.versionById(this.product.versionId).subscribe(res => {
+            this.version = res.data || this.version;
+            this.version.id = res.data?.id || Constants.VERSION;
+            this.chooseTab(TabType.changeHistory.name);
+        })
     }
 }

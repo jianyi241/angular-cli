@@ -44,6 +44,13 @@ export class ChangeHistoryComponent implements OnInit {
         return `Release ${moment(version.updateTime).format('D MMM YY')}`;
     }
 
+    getVersionTime(version: Version): string {
+        //Last updated 5:34pm 27 Mar 22
+        if (version.type == VersionType.Draft.value) return `Last updated ${moment(version.updateTime).format('h:mma D MMM YY')}`;
+        //2:34pm 1 Jan 22
+        return `Released ${moment(version.updateTime).format('h:mma D MMM YY')}`;
+    }
+
     editConfig(version: Version): void {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
