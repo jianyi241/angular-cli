@@ -22,4 +22,8 @@ export class ReviewHeaderComponent implements OnInit {
     next() {
         this.reviewService.next();
     }
+
+    goBack() {
+        this.router.navigateByUrl('/review/feature-selection');
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -7,6 +7,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./img-show-modal.component.less']
 })
 export class ImgShowModalComponent implements OnInit {
+  img: string;
 
   constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
   }

@@ -37,7 +37,7 @@
             </th>
 
             <th class="th-brand" *ngFor="let product of compareData.productVos">
-                <div class="th-brand-box">
+                <div class="th-brand-box" [ngClass]="{'bg-red': !product.checked}">
                     <div class="th-brand-box-top">
                         <div class="box-center-left">
                             <div class="brand-pic">
@@ -97,34 +97,37 @@
                             </div>
                         </td>
 
-                        <td *ngFor="let product of compareData.productVos"></td>
+                        <td *ngFor="let product of compareData.productVos" [ngClass]="{'bg-red': !product.checked}"></td>
                     </tr>
                     </tbody>
                     <ng-container>
                         <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
                         <tr *ngFor="let prop of subGroup.propertyVoList">
                             <td>
-                                <div class="content-title" [title]="prop.name">
+                                <div class="content-title bg-red" [title]="prop.name">
                                     {{prop.name}}
-                                    <span class="icon-block icon-star icon-12"></span>
+                                    <button class="essential" [hidden]="!hasEssential(prop)">Essential</button>
                                     <span class="icon-block icon-block-right icon-info-circle-purple icon-20"></span>
                                 </div>
                             </td>
 
-                            <td class="content-text" *ngFor="let product of compareData.productVos">
-                                <span class="icon-block icon-18 {{getChecked(prop.id, product.productPropVoList)}}"></span>
+                            <td class="content-text" *ngFor="let product of compareData.productVos" [ngClass]="{'bg-red': !product.checked}">
+                                <span class="icon-block icon-18 {{getChecked(prop.id, product)}}"></span>
                                 <ng-template #popContent>
                                     <div class="cell-popover">
                                         <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                        <div class="info">Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</div>
+                                        <div class="info" [innerHTML]="currentProdProp.description"></div>
                                         <div class="img-box">
-                                            <img src="./assets/img/popover-pic.png"/>
+                                            <img [src]="currentProdProp.attachmentVo?.visitUrl"/>
                                             <div class="btn-expand" (click)="showPic({closePopover:p})"><span class="icon-block icon-expand icon-20"></span></div>
                                         </div>
                                     </div>
                                 </ng-template>
 
-                                <span class="icon-block icon-info-circle-purple icon-15" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="false" placement="right auto" [ngbPopover]="popContent"></span>
+                                <span class="icon-block icon-info-circle-purple icon-15"
+                                      [hidden]="!product.checked"
+                                      (click)="openPop(prop.id, product)"
+                                      #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"></span>
                             </td>
                         </tr>
                         </tbody>
@@ -132,7 +135,7 @@
                 </ng-container>
             </ng-container>
 
-            <tfoot>
+            <!--<tfoot>
                 <th></th>
 
                 <th class="th-control" *ngFor="let product of compareData.productVos">
@@ -141,7 +144,7 @@
                         <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
                     </div>
                 </th>
-            </tfoot>
+            </tfoot>-->
         </table>
     </div>
 
