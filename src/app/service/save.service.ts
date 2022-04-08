@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ToastRepository} from "../repository/toast-repository";
 
 class SaveObj {
     path: string;
@@ -17,11 +18,12 @@ class SaveObj {
 export class SaveService {
     private saveFlow: Map<string, SaveObj> = new Map<string, SaveObj>();
 
-    constructor() {
+    constructor(private toastRepository: ToastRepository) {
     }
 
     saveCheck(path): boolean {
         if (this.has(path)) {
+            // this.toastRepository.showDanger("Click limit.");
             return true;
         }
         this.add(path);
