@@ -137,10 +137,16 @@
   }
 
   .title {
-    padding: 0 52px 0 40px;
+    padding: 0 52px 0 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &.list-cell-sort{
+    .title {
+      padding: 0 52px 0 42px;
+    }
   }
 
   &.list-cell_with-line{

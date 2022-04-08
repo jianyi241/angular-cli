@@ -22,7 +22,7 @@
                 </ng-container>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropSections($event)">
-                <div class="list-cell {{activeGroup(section.id)}}"
+                <div class="list-cell list-cell-sort {{activeGroup(section.id)}}"
                      [ngClass]="configService.getClassByStatus(section.status, version.type)"
                      (click)="chooseSection(section.id)"
                      [hidden]="hideSectionArchive && configService.isArchive(section.status)"
