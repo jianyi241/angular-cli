@@ -1,57 +1,64 @@
 <div class="main main-form">
-<div class="sub-head sub-head-form">
-    <div class="sub-title" [title]="subGroup.name" (click)="goBack()">
-        <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-        <div class="text-ellipsis">{{subGroup.name}}</div>
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" [title]="subGroup.name" (click)="goBack()">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            <div class="text-ellipsis">{{subGroup.name}}</div>
+        </div>
+        <ng-container *ngIf="version.type">
+            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, subGroup.status)">
+                <button class="btn btn-text-danger" (click)="archive()" *ngIf="subGroup.id && subGroup.moveFlag">
+                    Archive
+                </button>
+                <button class="btn btn-purple" (click)="saveSubGroup()">{{subGroup.id ? 'Update' : 'Save'}}</button>
+            </div>
+        </ng-container>
     </div>
 
-    <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, subGroup.status)">
-        <button class="btn btn-text-danger" (click)="archive()" *ngIf="subGroup.id && subGroup.moveFlag">Archive</button>
-        <button class="btn btn-purple" (click)="saveSubGroup()">{{subGroup.id ? 'Update' : 'Save'}}</button>
-    </div>
-</div>
+    <div class="form-content">
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Name</label>
+                <p class="info">Names must be descriptive of one feature</p>
+            </div>
 
-<div class="form-content">
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Name</label>
-            <p class="info">Names must be descriptive of one feature</p>
-        </div>
-
-        <div class="form-group-right">
-            <input type="text" placeholder="Name"
-                   [disabled]="!configService.isEditable(version.type, subGroup.status)"
-                   [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
-            <p class="tip-info">Maximum 100 characters</p>
-        </div>
-    </div>
-
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Description</label>
-            <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers. This will appear as a tool tip</p>
-        </div>
-
-        <div class="form-group-right">
-            <ckeditor [(ngModel)]="subGroup.description" [readOnly]="!configService.isEditable(version.type, subGroup.status)" [config]="config"></ckeditor>
-<!--            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
-        </div>
-    </div>
-
-    <div class="form-group-custom">
-        <div class="form-group-left">
-            <label class="control-label">Feature group</label>
-            <p class="info">Which feature group does this feature belong to?</p>
-        </div>
-
-        <div class="form-group-right">
-            <div class="form-group">
-                <label class="control-label control-label-custom">Feature group</label>
-                <input type="text" readonly [ngModel]="subGroup.parentName" placeholder="Feature group" class="form-control"/>
+            <div class="form-group-right">
+                <input type="text" placeholder="Name"
+                       [disabled]="!configService.isEditable(version.type, subGroup.status)"
+                       [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
+                <p class="tip-info">Maximum 100 characters</p>
             </div>
         </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Description</label>
+                <p class="info">Describe this feature so that it can be better understood by Advisors and Suppliers.
+                    This will appear as a tool tip</p>
+            </div>
+
+            <div class="form-group-right">
+                <ckeditor [(ngModel)]="subGroup.description"
+                          [readOnly]="!configService.isEditable(version.type, subGroup.status)"
+                          [config]="config"></ckeditor>
+                <!--            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Feature group</label>
+                <p class="info">Which feature group does this feature belong to?</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <label class="control-label control-label-custom">Feature group</label>
+                    <input type="text" readonly [ngModel]="subGroup.parentName" placeholder="Feature group"
+                           class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-
-
-</div>
 </div>
