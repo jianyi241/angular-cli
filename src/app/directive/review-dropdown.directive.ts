@@ -4,6 +4,7 @@ import $ from 'jquery'
 @Directive({
     selector: '[reviewDropdown]'
 })
+
 export class ReviewDropdownDirective implements OnInit{
     @Input("panel")
     panelRef: HTMLElement;
@@ -12,6 +13,7 @@ export class ReviewDropdownDirective implements OnInit{
     @Input('content-tag')
     tag: string
 
+    safe_scroll_height =197;
 
 
     constructor(private elementRef: ElementRef,
@@ -39,8 +41,20 @@ export class ReviewDropdownDirective implements OnInit{
             this.renderer.addClass(element, 'review-content-open');
             this.renderer.removeClass(element, 'review-content-close');
         }
+
+
+        this.resizeTable();
     }
 
 
+    resizeTable(){
+        let element = this.elementRef.nativeElement;
+        let table_content_height = $(element).parents('.review-content').outerHeight();
+        let table_height = $(element).parents('.table-container').outerHeight();
+
+        if(table_content_height > table_height ){
+            $(element).parents('.review-content').removeClass('table-review-fixed');
+        }
+    }
 
 }
