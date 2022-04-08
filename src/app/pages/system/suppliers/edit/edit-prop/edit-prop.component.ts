@@ -12,6 +12,8 @@ import {PropStatus} from "../../../../../model/enums/prop-status";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
 import {PropType} from "../../../../../model/enums/prop-type";
+import {environment} from "../../../../../../environments/environment";
+import {SaveService} from "../../../../../service/save.service";
 
 @Component({
     selector: 'app-edit-prop',
@@ -27,6 +29,7 @@ export class EditPropComponent implements OnInit {
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
+                private saveService: SaveService,
                 public configService: ConfigService,
                 private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
@@ -120,6 +123,9 @@ export class EditPropComponent implements OnInit {
         }
         if (!this.prop.type) {
             this.toastRepository.showDanger('Field type is required.');
+            return;
+        }
+        if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateProperty`)) {
             return;
         }
         this.supplierRepository.saveProp(this.prop).subscribe(res => {

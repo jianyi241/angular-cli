@@ -90,9 +90,10 @@ export class EsgComponent implements OnInit, OnDestroy {
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
+        let sort = this.moveProps[$event.currentIndex].sort;
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
         let prop = {...this.moveProps[$event.currentIndex]};
-        prop.newSort = $event.currentIndex + 1;
+        prop.newSort = sort;
         this.supplierRepository.sortProp(prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

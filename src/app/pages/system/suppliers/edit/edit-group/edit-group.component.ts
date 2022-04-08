@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../../../../environments/environment';
 import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from "../../../../../service/config.service";
@@ -12,6 +13,7 @@ import {Constants} from "../../../../../model/constants";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
 import {GroupStatus} from "../../../../../model/enums/group-status";
+import {SaveService} from "../../../../../service/save.service";
 
 
 @Component({
@@ -25,12 +27,12 @@ export class EditGroupComponent implements OnInit {
     currentTab: number;
     uploading = false;
     config = {...Constants.EDITOR_CONFIG};
-    saveFlag = false;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
                 public configService: ConfigService,
+                public saveService: SaveService,
                 private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
@@ -126,12 +128,10 @@ export class EditGroupComponent implements OnInit {
             this.toastRepository.showDanger('Name is required.')
             return;
         }
-        if (this.saveFlag) {
+        if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
-        this.saveFlag = true;
         this.supplierRepository.saveGroup(this.group).subscribe(res => {
-            this.saveFlag = false;
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)
                 return;

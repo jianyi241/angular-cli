@@ -117,9 +117,10 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     dropSections($event: CdkDragDrop<GroupInfo, any>) {
+        let sort = this.moveSections[$event.currentIndex].sort;
         moveItemInArray(this.moveSections, $event.previousIndex, $event.currentIndex);
         let section = {...this.moveSections[$event.currentIndex]};
-        section.newSort = $event.currentIndex + 1;
+        section.newSort = sort;
         this.supplierRepository.sortGroup(section).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -128,9 +129,10 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
+        let sort = this.moveProps[$event.currentIndex].sort;
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
         let prop = {...this.moveProps[$event.currentIndex]};
-        prop.newSort = $event.currentIndex + 1;
+        prop.newSort = sort;
         this.supplierRepository.sortProp(prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

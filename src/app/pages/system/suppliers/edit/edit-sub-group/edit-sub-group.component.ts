@@ -12,6 +12,8 @@ import {Reminder} from "../../../../../model/vo/reminder";
 import {Version} from "../../../../../model/po/version";
 import {VersionRepository} from "../../../../../repository/version-repository";
 import {GroupStatus} from "../../../../../model/enums/group-status";
+import {environment} from "../../../../../../environments/environment";
+import {SaveService} from "../../../../../service/save.service";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -28,6 +30,7 @@ export class EditSubGroupComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private storage: LocalStorageObServable,
                 public configService: ConfigService,
+                public saveService: SaveService,
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
@@ -108,6 +111,9 @@ export class EditSubGroupComponent implements OnInit {
     saveSubGroup() {
         if (!this.subGroup.name) {
             this.toastRepository.showDanger('Name is required.')
+            return;
+        }
+        if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
         this.supplierRepository.saveGroup(this.subGroup).subscribe(res => {

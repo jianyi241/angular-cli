@@ -8,7 +8,7 @@
             <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, group.status)">
                 <button class="btn btn-text-danger" (click)="archive()" *ngIf="group.id && group.moveFlag">Archive
                 </button>
-                <button class="btn btn-purple" [disabled]="saveFlag"
+                <button class="btn btn-purple"
                         (click)="saveGroup()">{{group.id ? 'Update' : 'Save'}}</button>
             </div>
         </ng-container>

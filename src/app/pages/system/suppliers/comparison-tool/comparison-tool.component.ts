@@ -167,9 +167,10 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
 
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
+        let sort = this.properties[$event.currentIndex].sort;
         moveItemInArray(this.properties, $event.previousIndex, $event.currentIndex);
         let prop = {...this.properties[$event.currentIndex]};
-        prop.newSort = $event.currentIndex + 1;
+        prop.newSort = sort;
         this.supplierRepository.sortProp(prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -178,9 +179,10 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     dropSubGroup($event: CdkDragDrop<GroupInfo, any>) {
+        let sort = this.subGroups[$event.currentIndex].sort;
         moveItemInArray(this.subGroups, $event.previousIndex, $event.currentIndex);
         let subGroup = {...this.subGroups[$event.currentIndex]};
-        subGroup.newSort = $event.currentIndex + 1;
+        subGroup.newSort = sort;
         this.supplierRepository.sortGroup(subGroup).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -189,9 +191,10 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     dropGroup($event: CdkDragDrop<GroupInfo, any>) {
+        let sort = this.moveGroups[$event.currentIndex].sort;
         moveItemInArray(this.moveGroups, $event.previousIndex, $event.currentIndex);
         let group = {...this.moveGroups[$event.currentIndex]};
-        group.newSort = $event.currentIndex + 1;
+        group.newSort = sort;
         this.supplierRepository.sortGroup(group).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
