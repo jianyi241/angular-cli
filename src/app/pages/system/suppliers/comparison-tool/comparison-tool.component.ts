@@ -156,7 +156,10 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     chooseSubGroup(subGroup: GroupInfo) {
-        if (!subGroup) return;
+        if (!subGroup) {
+            this.reminder.subGroupId = '';
+            return;
+        }
         this.reminder.subGroupId = subGroup.id;
         this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
         this.getPropList(subGroup.id);
