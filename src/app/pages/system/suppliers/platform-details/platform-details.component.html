@@ -36,10 +36,10 @@
                         <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="configService.isEditable(version.type)" (click)="save(prop.id)">View
+                            [hidden]="!prop.readOnly && configService.isEditable(version.type)" (click)="save(prop.id)">View
                     </button>
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="!configService.isEditable(version.type)" (click)="save(prop.id)">
+                            [hidden]="prop.readOnly || !configService.isEditable(version.type)" (click)="save(prop.id)">
                         <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                     </button>
                 </div>

@@ -56,10 +56,12 @@ export class FeatureComparisonComponent implements OnInit {
             if (!this.selectProps || this.selectProps.length == 0) {
                 return
             }
+            //检查当前项目是否存在uncheck
             if (this.compareData.productVos && this.compareData.productVos.length > 0) {
                 this.compareData.productVos.forEach(p => {
                     if (p.productPropVoList && p.productPropVoList.length > 0) {
                         let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
+                        //对比featureIds 和 productPropIds
                         let idCheck = props.some(id => !prodPropIds.includes(id));
                         if (!idCheck) {
                             let valueCheck = p.productPropVoList.some(pp => pp.propValue == 'no');

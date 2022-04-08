@@ -9,6 +9,7 @@ import {Version} from "../../../../model/po/version";
 import {TabType} from "../../../../model/enums/tab-type";
 import {ProductFormVo} from "../../../../model/vo/productFormVo";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {PropertyVo} from "../../../../model/vo/PropertyVo";
 
 @Component({
     selector: 'app-overview-product',
@@ -44,6 +45,7 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.parseRouterParam();
+        this.getVersion();
         this.getProductPropList();
     }
 
@@ -52,6 +54,15 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
             if (event instanceof NavigationEnd) {
                 this.init();
             }
+        });
+    }
+
+    getVersion() {
+        if (this.version.id == Constants.VERSION) {
+            return;
+        }
+        this.versionRepository.versionById(this.version.id).subscribe(res => {
+            this.version = res.data || this.version;
         });
     }
 
@@ -65,6 +76,15 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
             this.product.id = res['productId'];
             this.version.id = res[Constants.VERSION];
+        })
+    }
+
+    saveProp(prop: PropertyVo) {
+        let productProp = {...prop.productPropVo};
+        productProp.shProductId = this.product.id;
+        productProp.shPropertyId = prop.id;
+        this.platformRepository.saveProductProp(productProp).subscribe(res => {
+            prop.productPropVo = res.data;
         })
     }
 }
