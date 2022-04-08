@@ -8,6 +8,8 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import {Version} from "../../../../model/po/version";
 import * as moment from "moment";
 import {Constants} from "../../../../model/constants";
+import {SaveService} from "../../../../service/save.service";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'app-supplier-layout',
@@ -20,6 +22,7 @@ export class SupplierLayoutComponent implements OnInit {
 
     constructor(public configService: ConfigService,
                 private activeRouter: ActivatedRoute,
+                private saveService: SaveService,
                 private versionRepository: VersionRepository,
                 private supplierRepository: SupplierRepository,
                 private toastRepository: ToastRepository,
@@ -65,6 +68,9 @@ export class SupplierLayoutComponent implements OnInit {
     }
 
     editConfig(): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/supplier/editModel`)) {
+            return
+        }
         this.supplierRepository.editConfig().subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -73,10 +79,13 @@ export class SupplierLayoutComponent implements OnInit {
             this.version = res.data || this.version;
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
             this.router.navigateByUrl(`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`)
-        })
+        });
     }
 
     pushConfig(): void {
+        if (this.saveService.saveCheck(environment.baseURL + '/supplier/publish')) {
+            return
+        }
         this.supplierRepository.pushConfig().subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

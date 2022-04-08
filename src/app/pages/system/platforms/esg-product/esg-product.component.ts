@@ -12,80 +12,80 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
 
 @Component({
-  selector: 'app-esg-product',
-  templateUrl: './esg-product.component.html',
-  styleUrls: ['./esg-product.component.less']
+    selector: 'app-esg-product',
+    templateUrl: './esg-product.component.html',
+    styleUrls: ['./esg-product.component.less']
 })
 export class EsgProductComponent implements OnInit {
-  product: ProductInfo = new ProductInfo();
-  version: Version = new Version();
-  esg: ProductFormVo = new ProductFormVo();
-  config = {...Constants.EDITOR_CONFIG};
-  routerSubscription: any;
-  activatedRouteSubscription: any;
+    product: ProductInfo = new ProductInfo();
+    version: Version = new Version();
+    esg: ProductFormVo = new ProductFormVo();
+    config = {...Constants.EDITOR_CONFIG};
+    routerSubscription: any;
+    activatedRouteSubscription: any;
 
-  constructor(private route: Router,
-              private activatedRoute: ActivatedRoute,
-              public configService: ConfigService,
-              private toastRepository: ToastRepository,
-              private versionRepository: VersionRepository,
-              private platformRepository: PlatformRepository) {
-  }
-
-  ngOnInit(): void {
-    this.subscribe();
-    this.init();
-  }
-
-  ngOnDestroy(): void {
-    this.routerSubscription && this.routerSubscription.unsubscribe();
-    this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
-  }
-
-
-  init(): void {
-    this.parseRouterParam();
-    this.getVersion();
-    this.getProductPropList();
-  }
-
-  subscribe(): void {
-    this.routerSubscription = this.route.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.init();
-      }
-    });
-  }
-
-  getVersion() {
-    if (this.version.id == Constants.VERSION) {
-      return;
+    constructor(private route: Router,
+                private activatedRoute: ActivatedRoute,
+                public configService: ConfigService,
+                private toastRepository: ToastRepository,
+                private versionRepository: VersionRepository,
+                private platformRepository: PlatformRepository) {
     }
-    this.versionRepository.versionById(this.version.id).subscribe(res => {
-      this.version = res.data || this.version;
-    });
-  }
 
-  getProductPropList(): void {
-    this.platformRepository.getProductPropList(TabType.esg.value, this.product.id, this.version.id).subscribe(res => {
-      this.esg = res.data;
-    });
-  }
+    ngOnInit(): void {
+        this.subscribe();
+        this.init();
+    }
 
-  parseRouterParam(): void {
-    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
-      this.product.id = res['productId'];
-      this.version.id = res[Constants.VERSION];
-    })
-  }
+    ngOnDestroy(): void {
+        this.routerSubscription && this.routerSubscription.unsubscribe();
+        this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
+    }
 
-  saveProp(prop: PropertyVo) {
-    let productProp = {...prop.productPropVo};
-    productProp.shProductId = this.product.id;
-    productProp.shPropertyId = prop.id;
-    this.platformRepository.saveProductProp(productProp).subscribe(res => {
-      prop.productPropVo = res.data;
-    })
-  }
+
+    init(): void {
+        this.parseRouterParam();
+        this.getVersion();
+        this.getProductPropList();
+    }
+
+    subscribe(): void {
+        this.routerSubscription = this.route.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.init();
+            }
+        });
+    }
+
+    getVersion() {
+        if (this.version.id == Constants.VERSION) {
+            return;
+        }
+        this.versionRepository.versionById(this.version.id).subscribe(res => {
+            this.version = res.data || this.version;
+        });
+    }
+
+    getProductPropList(): void {
+        this.platformRepository.getProductPropList(TabType.esg.value, this.product.id, this.version.id).subscribe(res => {
+            this.esg = res.data;
+        });
+    }
+
+    parseRouterParam(): void {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
+            this.product.id = res['productId'];
+            this.version.id = res[Constants.VERSION];
+        })
+    }
+
+    saveProp(prop: PropertyVo) {
+        let productProp = {...prop.productPropVo};
+        productProp.shProductId = this.product.id;
+        productProp.shPropertyId = prop.id;
+        this.platformRepository.saveProductProp(productProp).subscribe(res => {
+            prop.productPropVo = res.data;
+        })
+    }
 
 }

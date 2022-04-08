@@ -9,6 +9,8 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {ProductInfo} from "../../../../model/po/productInfo";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import * as moment from "moment";
+import {SaveService} from "../../../../service/save.service";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'app-product-layout',
@@ -25,6 +27,7 @@ export class ProductLayoutComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 public configService: ConfigService,
+                public saveService: SaveService,
                 private platformRepository: PlatformRepository,
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository) {
@@ -69,6 +72,9 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     editProduct(): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/product/editProduct/${this.product.id}`)) {
+            return;
+        }
         this.platformRepository.editProduct(this.product.id).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -81,6 +87,9 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     publishProduct(): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
+            return;
+        }
         this.platformRepository.publishProduct(this.product.id).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

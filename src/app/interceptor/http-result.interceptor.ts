@@ -45,9 +45,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
                 if (this.saveService.has(request.url)) {
-                    setTimeout(() => {
-                        this.saveService.delete(request.url);
-                    }, 10000)
+                    this.saveService.delete(request.url);
                 }
                 return event;
             }),
