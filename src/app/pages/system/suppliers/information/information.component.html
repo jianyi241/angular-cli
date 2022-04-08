@@ -2,7 +2,7 @@
     <div class="col-content col-content-1">
         <div class="col-head">
             <div class="title">Sections</div>
-            <div class="col-head-right">
+            <div class="col-head-right" *ngIf="version.type">
                 <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideSectionArchive)"
                       (click)="showSectionArchived()">Show archived</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type)"

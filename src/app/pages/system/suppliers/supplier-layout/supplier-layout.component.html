@@ -14,7 +14,7 @@
 <!--            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>-->
             Comparison tool
         </div>
-        <ng-container *ngIf="currentTab != 'change-history' && version.type != 'History'">
+        <ng-container *ngIf="version.type && currentTab != 'change-history' && version.type != 'History'">
             <div class="btn-control-group" [hidden]="!configService.isEditable(version.type)">
                 <button class="btn btn-purple xs-ml-24"  (click)="pushConfig()">Push to suppliers</button>
             </div>
