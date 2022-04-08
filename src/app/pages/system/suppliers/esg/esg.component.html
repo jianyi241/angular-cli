@@ -24,7 +24,7 @@
 
 
         <div class="col-body">
-            <div class="empty-text" *ngIf="emptyList()">This section is empty. Click on “Edit platform” to add
+            <div class="empty-text" *ngIf="emptyList()">This section is empty. Click on “Edit configurator” to add
                 items.
             </div>
             <div class="list-cell-large" [ngClass]="configService.getClassByStatus(prop.status, version.type)" *ngFor="let prop of freezeProps">

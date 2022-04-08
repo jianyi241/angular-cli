@@ -25,6 +25,7 @@ export class EditGroupComponent implements OnInit {
     currentTab: number;
     uploading = false;
     config = {...Constants.EDITOR_CONFIG};
+    saveFlag = false;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -125,7 +126,12 @@ export class EditGroupComponent implements OnInit {
             this.toastRepository.showDanger('Name is required.')
             return;
         }
+        if (this.saveFlag) {
+            return;
+        }
+        this.saveFlag = true;
         this.supplierRepository.saveGroup(this.group).subscribe(res => {
+            this.saveFlag = false;
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)
                 return;
