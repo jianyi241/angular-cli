@@ -1,4 +1,4 @@
-<div class="main has-tip">
+<div class="main" [ngClass]="{'has-tip': version.type == 'History'}">
     <div class="head-tip" *ngIf="version.type == 'History'">
         <div class="head-tip-content">
             <span class="icon-block icon-arr-left-blue icon-33" (click)="backHistory()"></span>
