@@ -11,7 +11,7 @@
     </div>
 
 
-    <div class="head-tip" *ngIf="changeVersion && version.type != 'History'">
+    <div class="head-tip" *ngIf="version.type && changeVersion && version.type != 'History'">
         <div class="head-tip-content">
             <div class="tip-content">
                 <div class="title" title="">One or more feature fields are added by Suitability Hub admin.</div>
@@ -26,7 +26,7 @@
             {{product.name}}
         </div>
 
-        <div class="btn-control-group" *ngIf="currentTab != 'change-history' && version.type != 'History'">
+        <div class="btn-control-group" *ngIf="version.type && currentTab != 'change-history' && version.type != 'History'">
 <!--            <button class="btn text-danger">Archive</button>-->
             <button class="btn btn-outline-blue-light xs-ml-24" [hidden]="configService.isEditable(version.type)" (click)="editProduct()">Edit Product</button>
             <button class="btn btn-purple xs-ml-24" [hidden]="!configService.isEditable(version.type)" (click)="publishProduct()">Submit for review</button>
