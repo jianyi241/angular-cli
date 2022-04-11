@@ -3,5 +3,5 @@
         <!--        <span class="label-required">*</span>-->
         <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
     </label>
-    <input type="number" class="form-control" (blur)="blur()" [disabled]="!editable" [(ngModel)]="prop.productPropVo.propValue" [placeholder]="prop.name"/>
+    <input type="number" class="form-control" (focus)="focus()" (blur)="blur()" [disabled]="!editable" [(ngModel)]="prop.productPropVo.propValue" [placeholder]="prop.name"/>
 </div>

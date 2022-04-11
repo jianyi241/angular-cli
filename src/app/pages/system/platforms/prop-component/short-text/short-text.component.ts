@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {PropertyVo} from "../../../../../model/vo/PropertyVo";
+import {FocusService} from "../../../../../service/focus.service";
 
 @Component({
     selector: 'short-text',
@@ -22,13 +23,18 @@ export class ShortTextComponent implements OnInit {
     @Input()
     change: EventEmitter<PropertyVo>;
 
-    constructor() {
+    constructor(private focusService: FocusService) {
     }
 
     ngOnInit(): void {
     }
 
     blur(): void {
+        this.focusService.deleteFocus();
         this.change.emit(this.prop);
+    }
+
+    focus(): void {
+        this.focusService.addFocus();
     }
 }

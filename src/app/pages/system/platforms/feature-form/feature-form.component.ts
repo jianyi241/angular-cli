@@ -14,6 +14,7 @@ import {GroupVo} from "../../../../model/vo/groupVo";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
 import {PropStatus} from "../../../../model/enums/prop-status";
+import {FocusService} from "../../../../service/focus.service";
 
 @Component({
     selector: 'app-feature-form',
@@ -32,6 +33,7 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
+                private focusService: FocusService,
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
@@ -112,7 +114,12 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    focus() {
+        this.focusService.addFocus();
+    }
+
     saveProp(prop: PropertyVo): void {
+        this.focusService.deleteFocus();
         let productProp = {...prop.productPropVo};
         productProp.shProductId = this.product.id;
         productProp.shPropertyId = prop.id;
@@ -144,4 +151,6 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
     chooseSubGroup(group: GroupVo) {
         this.subGroup = group;
     }
+
+
 }

@@ -22,7 +22,7 @@ import {FocusService} from "../../../../service/focus.service";
 export class ProductLayoutComponent implements OnInit {
     version: Version = new Version();
     changeVersion: Version;
-    changeTabs: Array<{tabType: number}> = new Array<{tabType: number}>();
+    changeTabs: Array<{ tabType: number }> = new Array<{ tabType: number }>();
     product: ProductInfo = new ProductInfo();
     currentTab: string;
 
@@ -92,26 +92,34 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     publishProduct(): void {
-        //设置延时器, 解决失焦问题
+        if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
+            return;
+        }
+        //设置定时器, 解决失焦问题
         //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件
-        setTimeout(() => {
-            if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
+        if (this.focusService.hasFocus()) {
+            this.focusService.waitBlur(() => {
+                this.publish()
+            });
+        } else {
+            this.publish();
+        }
+    }
+
+    private publish(): void {
+        this.platformRepository.publishProduct(this.product.id).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.platformRepository.publishProduct(this.product.id).subscribe(res => {
-                if (res.statusCode != 200) {
-                    this.toastRepository.showDanger(res.msg);
-                    return;
-                }
-                this.version = res.data || this.version;
-                let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-                this.router.navigateByUrl(`/`, {
-                    skipLocationChange: true
-                }).then(r => {
-                    this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
-                })
+            this.version = res.data || this.version;
+            let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
+            this.router.navigateByUrl(`/`, {
+                skipLocationChange: true
+            }).then(r => {
+                this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
             })
-        }, 200);
+        })
     }
 
     chooseTab(tab: string): void {

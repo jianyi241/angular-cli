@@ -67,7 +67,7 @@
                         <div class="form-three-group">
                             <label class="control-label control-label-custom-large">Enter your description of this
                                 feature</label>
-                            <ckeditor [readOnly]="!configService.isEditable(version.type)" [(ngModel)]="prop.productPropVo.description" (blur)="saveProp(prop)" [config]="config"></ckeditor>
+                            <ckeditor [readOnly]="!configService.isEditable(version.type)" [(ngModel)]="prop.productPropVo.description" (focus)="focus()" (blur)="saveProp(prop)" [config]="config"></ckeditor>
                             <!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
                         </div>
 

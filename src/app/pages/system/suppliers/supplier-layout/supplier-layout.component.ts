@@ -10,6 +10,7 @@ import * as moment from "moment";
 import {Constants} from "../../../../model/constants";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
+import {VersionType} from "../../../../model/enums/version-type";
 
 @Component({
     selector: 'app-supplier-layout',
@@ -52,6 +53,7 @@ export class SupplierLayoutComponent implements OnInit {
             this.versionRepository.supplierVersion().subscribe(res => {
                 this.version = res.data || this.version;
                 this.version.id = res.data?.id || Constants.VERSION;
+                this.version.type = this.version.type || VersionType.Publish.value;
                 this.chooseTab(TabType.overview.name);
             })
         }
