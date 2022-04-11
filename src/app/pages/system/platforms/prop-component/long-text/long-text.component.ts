@@ -26,7 +26,7 @@ export class LongTextComponent implements OnInit {
     prop_class: string;
 
     constructor() {
-        this.config.editorplaceholder = '';
+        this.config.editorplaceholder = this.prop?.name || '';
     }
 
     ngOnInit(): void {
