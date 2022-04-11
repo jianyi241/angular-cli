@@ -27,7 +27,7 @@ export class FocusService {
     waitBlur(wait: any): void {
         let count = 0;
         let interval = setInterval(() => {
-            if (count == 0) {
+            if (count == 0 && this.focusQueue.length == 0) {
                 count++;
                 wait();
             }
