@@ -1,7 +1,7 @@
 
 <div class="form-content">
     <div class="form-group-custom">
-        <div class="form-group-left" style="width: 100%;">
+        <div class="form-group-left tx-blue" style="width: 100%;">
             <label class="control-label">Information</label>
             <p class="info">This is company information that you can update anytime</p>
         </div>
@@ -19,7 +19,7 @@
                            [index]="groupIndex+'_'+propIndex"
                            [type]="prop.type"
                            [tabType]="configService.tabType.information"
-                           [editable]="configService.isEditable(version.type)"
+                           [editable]="configService.isEditable(version.type, prop.status)"
                            (prop_change)="saveProp(prop)"
                            *ngFor="let prop of group.propertyVoList; let propIndex = index"></app-prop-view>
         </div>

@@ -66,9 +66,9 @@ export class ConfigService {
         }
     }
 
-    getColorByStatus(value: string, versionType: string): string {
+    getColorByStatus(status: string, versionType: string): string {
         if (versionType === VersionType.Publish.value) return '';
-        switch (value) {
+        switch (status) {
             case 'Insert':
             case 'Update':
                 return 'tx-blue';
