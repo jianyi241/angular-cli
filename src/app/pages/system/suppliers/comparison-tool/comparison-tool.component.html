@@ -21,7 +21,7 @@
             </div>
             <div cdkDropList (cdkDropListDropped)="dropGroup($event)">
                 <div class="list-cell {{configService.getClassByStatus(group.status, version.type)}}"
-                     [ngClass]="{'active': reminder.groupId == group.id}"
+                     [ngClass]="{'active': reminder.groupId == group.id, 'list-cell-sort': configService.isEditable(version.type)}"
                      cdkDrag
                      [hidden]="hideGroupArchive && configService.isArchive(group.status)"
                      (click)="chooseGroup(group)"
@@ -51,7 +51,7 @@
 
         <div class="col-body" cdkDropList (cdkDropListDropped)="dropSubGroup($event)">
             <div class="list-cell list-sub-cell {{configService.getClassByStatus(subGroup.status, version.type)}}"
-                 [ngClass]="{'active': reminder.subGroupId == subGroup.id}"
+                 [ngClass]="{'active': reminder.subGroupId == subGroup.id, 'list-cell-sort': configService.isEditable(version.type)}"
                  cdkDrag
                  [hidden]="hideSubGroupArchive && configService.isArchive(subGroup.status)"
                  (click)="chooseSubGroup(subGroup)"
