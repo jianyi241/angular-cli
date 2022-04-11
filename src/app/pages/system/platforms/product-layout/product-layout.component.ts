@@ -94,9 +94,6 @@ export class ProductLayoutComponent implements OnInit {
     publishProduct(): void {
         //设置延时器, 解决失焦问题
         //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件
-        if (this.focusService.hasFocus()) {
-            console.log("hasFocus")
-        }
         setTimeout(() => {
             if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
                 return;
