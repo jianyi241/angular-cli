@@ -1,5 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+    HttpResponse
+} from '@angular/common/http';
 import {Observable, OperatorFunction} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {LocalStorageObServable} from '../observable/local-storage-observable';
@@ -44,11 +51,14 @@ export class HttpResultInterceptor implements HttpInterceptor {
         );*/
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
-                if (this.saveService.has(request.url)) {
-                    // setTimeout(() => {
-                    //     this.saveService.delete(request.url);
-                    // }, 2000)
-                    this.saveService.delete(request.url);
+                if (event instanceof HttpResponse) {
+                    if (this.saveService.has(request.url)) {
+                        // setTimeout(() => {
+                        //     this.saveService.delete(request.url);
+                        // }, 2000)
+                        this.saveService.delete(request.url);
+                    }
+                    return event;
                 }
                 return event;
             }),

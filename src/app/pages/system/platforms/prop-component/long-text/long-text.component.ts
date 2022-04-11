@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {Constants} from "../../../../../model/constants";
 import {PropertyVo} from "../../../../../model/vo/PropertyVo";
+import {FocusService} from "../../../../../service/focus.service";
 
 @Component({
     selector: 'long-text',
@@ -25,7 +26,7 @@ export class LongTextComponent implements OnInit {
     @Input()
     prop_class: string;
 
-    constructor() {
+    constructor(private focusService: FocusService) {
 
     }
 
@@ -34,6 +35,11 @@ export class LongTextComponent implements OnInit {
     }
 
     blur(): void {
+        this.focusService.deleteFocus();
         this.change.emit(this.prop);
+    }
+
+    focus(): void {
+        this.focusService.addFocus();
     }
 }

@@ -12,6 +12,7 @@ import * as moment from "moment";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {VersionType} from "../../../../model/enums/version-type";
+import {FocusService} from "../../../../service/focus.service";
 
 @Component({
     selector: 'app-product-layout',
@@ -29,6 +30,7 @@ export class ProductLayoutComponent implements OnInit {
                 private router: Router,
                 public configService: ConfigService,
                 public saveService: SaveService,
+                private focusService: FocusService,
                 private platformRepository: PlatformRepository,
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository) {
@@ -90,22 +92,29 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     publishProduct(): void {
-        if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
-            return;
+        //设置延时器, 解决失焦问题
+        //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件
+        if (this.focusService.hasFocus()) {
+            console.log("hasFocus")
         }
-        this.platformRepository.publishProduct(this.product.id).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
+        setTimeout(() => {
+            if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
                 return;
             }
-            this.version = res.data || this.version;
-            let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.router.navigateByUrl(`/`, {
-                skipLocationChange: true
-            }).then(r => {
-                this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
+            this.platformRepository.publishProduct(this.product.id).subscribe(res => {
+                if (res.statusCode != 200) {
+                    this.toastRepository.showDanger(res.msg);
+                    return;
+                }
+                this.version = res.data || this.version;
+                let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
+                this.router.navigateByUrl(`/`, {
+                    skipLocationChange: true
+                }).then(r => {
+                    this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
+                })
             })
-        })
+        }, 200);
     }
 
     chooseTab(tab: string): void {
