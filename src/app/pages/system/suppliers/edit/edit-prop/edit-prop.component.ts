@@ -133,7 +133,7 @@ export class EditPropComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            // this.toastRepository.showSuccess(`${this.prop.id ? 'Update' : 'Save'} Successfully.`);
+            this.toastRepository.showSuccess(`${this.prop.id ? 'Update' : 'Save'} Successfully.`);
             this.prop.id = res.data.id;
             this.prop.moveFlag = res.data.moveFlag;
         });
