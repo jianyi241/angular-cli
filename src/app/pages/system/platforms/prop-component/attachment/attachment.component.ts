@@ -33,6 +33,9 @@ export class AttachmentComponent implements OnInit {
     }
 
     droppedFile(files: NgxFileDropEntry[]): void {
+        if (!this.editable) {
+            return;
+        }
         if (files[0].fileEntry.isFile) {
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {

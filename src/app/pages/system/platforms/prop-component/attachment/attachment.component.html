@@ -1,8 +1,8 @@
-<div class="form-upload-file" [ngClass]="{'form-blue': prop_class}">
+<div class="form-upload-file" [ngClass]="{'form-blue': prop_class == 'tx-blue', 'form-red': prop_class == 'tx-red'}">
     <div class="upload-file-show">
         <img [src]="prop.productPropVo.attachmentVo?.visitUrl"/>
     </div>
-    <div class="form-group-right" *ngIf="editable">
+    <div class="form-group-right">
         <div class="upload-file">
             <ngx-file-drop dropZoneLabel="Drop files here"
                            [disabled]="!editable"
@@ -11,7 +11,12 @@
                            [accept]="'.png,.svg,.gif,.jpg'">
                 <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                     <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
-                    <div class="upload-content" (click)="openFileSelector()">
+                    <div class="upload-content" *ngIf="editable" (click)="openFileSelector()">
+                        <span class="icon-block icon-photo icon-32"></span>
+                        <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                        <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                    </div>
+                    <div class="upload-content upload-disable" *ngIf="!editable">
                         <span class="icon-block icon-photo icon-32"></span>
                         <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
                         <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
