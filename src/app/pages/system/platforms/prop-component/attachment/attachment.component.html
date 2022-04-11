@@ -1,3 +1,6 @@
+<label class="control-label control-label-custom {{prop_class}}">{{prop.name}}
+    <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
+</label>
 <div class="form-upload-file" [ngClass]="{'form-blue': prop_class == 'tx-blue', 'form-red': prop_class == 'tx-red'}">
     <div class="upload-file-show">
         <img [src]="prop.productPropVo.attachmentVo?.visitUrl"/>
