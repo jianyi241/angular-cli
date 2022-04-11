@@ -125,7 +125,7 @@
                                 </ng-template>
 
                                 <span class="icon-block icon-info-circle-purple icon-15"
-                                      [hidden]="!product.checked"
+                                      [hidden]="getChecked(prop.id, product) == 'icon-close-red'"
                                       (click)="openPop(prop.id, product)"
                                       #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"></span>
                             </td>
