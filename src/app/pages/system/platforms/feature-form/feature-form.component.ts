@@ -68,7 +68,7 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
 
     getProductPropList(): void {
         this.platformRepository.getProductPropList(TabType.features.value, this.product.id, this.version.id).subscribe(res => {
-            this.feature = res.data;
+            this.feature = Object.assign(this.feature, res.data);
             if (this.feature && this.feature.groupVoList && this.feature.groupVoList.length > 0) {
                 if (this.feature.groupVoList[0].subList && this.feature.groupVoList[0].subList.length > 0)
                     this.chooseSubGroup(this.feature.groupVoList[0].subList[0]);

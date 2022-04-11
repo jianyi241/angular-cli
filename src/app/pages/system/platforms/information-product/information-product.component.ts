@@ -58,7 +58,7 @@ export class InformationProductComponent implements OnInit, OnDestroy {
 
     getProductPropList(): void {
         this.platformRepository.getProductPropList(TabType.information.value, this.product.id, this.version.id).subscribe(res => {
-            this.information = res.data;
+            this.information = Object.assign(this.information, res.data);
         });
     }
 

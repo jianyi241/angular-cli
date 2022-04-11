@@ -68,7 +68,7 @@ export class EsgProductComponent implements OnInit {
 
     getProductPropList(): void {
         this.platformRepository.getProductPropList(TabType.esg.value, this.product.id, this.version.id).subscribe(res => {
-            this.esg = res.data;
+            this.esg = Object.assign(this.esg, res.data);
         });
     }
 

@@ -68,7 +68,7 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
 
     getProductPropList(): void {
         this.platformRepository.getProductPropList(TabType.overview.value, this.product.id, this.version.id).subscribe(res => {
-            this.overview = res.data;
+            this.overview = Object.assign(this.overview, res.data);
         });
     }
 
