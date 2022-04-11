@@ -106,7 +106,7 @@
                             <td>
                                 <div class="content-title" [ngClass]="{'bg-red': hasEssential(prop)}" [title]="prop.name">
                                     {{prop.name}}
-                                    <button class="essential" [hidden]="!hasEssential(prop)">Essential</button>
+                                    <label class="label label-yellow tx-yellow xs-ml-10" [hidden]="!hasEssential(prop)">Essential</label>
                                     <span class="icon-block icon-block-right icon-info-circle-purple icon-20"></span>
                                 </div>
                             </td>
