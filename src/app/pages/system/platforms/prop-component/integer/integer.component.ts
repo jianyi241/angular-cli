@@ -29,6 +29,7 @@ export class IntegerComponent implements OnInit {
   }
 
   blur(): void {
+    this.prop.productPropVo.propValue = this.prop.productPropVo.propValue || '';
     this.change.emit(this.prop);
   }
 
