@@ -11,6 +11,7 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import * as moment from "moment";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
+import {VersionType} from "../../../../model/enums/version-type";
 
 @Component({
     selector: 'app-product-layout',
@@ -40,6 +41,8 @@ export class ProductLayoutComponent implements OnInit {
         this.getProduct();
         if (versionId != Constants.VERSION) {
             this.getVersion();
+        } else {
+            this.version.type = VersionType.Publish.value;
         }
         this.getModelPublishChangeFlag();
         this.getChangeTabs();
