@@ -11,7 +11,7 @@ export class IntegerComponent implements OnInit {
     @Input()
     prop: PropertyVo;
     @Input()
-    index: number;
+    index: string;
     @Input()
     disable: boolean;
     @Input()

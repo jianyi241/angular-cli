@@ -15,7 +15,7 @@ export class PropViewComponent implements OnInit {
     @Input()
     name: string;
     @Input()
-    index: number;
+    index: string;
     @Input()
     editable: boolean;
     @Input()

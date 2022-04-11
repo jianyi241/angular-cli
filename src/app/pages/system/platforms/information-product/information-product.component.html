@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="form-group-custom" *ngFor="let group of information.groupVoList">
+    <div class="form-group-custom" *ngFor="let group of information.groupVoList; let groupIndex = index">
         <div class="form-group-left">
             <label class="control-label">{{group.name}}</label>
             <p class="info" [innerHTML]="group.description"></p>
@@ -16,7 +16,7 @@
         <div class="form-group-right">
             <app-prop-view [model]="prop"
                            [prop_class]="configService.getColorByStatus(prop.status, version.type)"
-                           [index]="propIndex"
+                           [index]="groupIndex+'_'+propIndex"
                            [type]="prop.type"
                            [tabType]="configService.tabType.information"
                            [editable]="configService.isEditable(version.type)"

@@ -14,7 +14,7 @@ export class LongTextComponent implements OnInit {
     @Input()
     prop: PropertyVo;
     @Input()
-    index: number;
+    index: string;
     @Input()
     disable: boolean;
     @Input()
