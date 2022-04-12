@@ -14,7 +14,7 @@
         <ng-container *ngIf="overview.propertyVoList.length > 0">
             <app-prop-view [model]="overview.propertyVoList[0]"
                            [prop_class]="configService.getColorByStatus(overview.propertyVoList[0].status, version.type)"
-                           [index]="0"
+                           [index]="'0'"
                            [type]="configService.propType.attachment"
                            [tabType]="configService.tabType.overview"
                            [editable]="configService.isEditable(version.type)"
@@ -31,7 +31,7 @@
         <ng-container *ngIf="overview.propertyVoList.length > 1">
             <app-prop-view [model]="overview.propertyVoList[1]"
                            [prop_class]="configService.getColorByStatus(overview.propertyVoList[1].status, version.type)"
-                           [index]="1"
+                           [index]="'1'"
                            [type]="configService.propType.attachment"
                            [tabType]="configService.tabType.overview"
                            [editable]="configService.isEditable(version.type)"
@@ -51,7 +51,7 @@
                 <app-prop-view [model]="prop"
                                [hidden]="propIndex == 0 || propIndex == 1"
                                [prop_class]="configService.getColorByStatus(prop.status, version.type)"
-                               [index]="propIndex"
+                               [index]="propIndex+''"
                                [type]="prop.type"
                                [tabType]="configService.tabType.information"
                                [editable]="configService.isEditable(version.type)"
