@@ -78,9 +78,12 @@ export class ConfigService {
                 return '';
         }
     }
-
-    isArchive(status: string) {
-        return status == 'Archive';
+    //Archive
+    isArchive(status: string, versionType?: string): boolean {
+        if (!versionType) {
+            return status == 'Archive';
+        }
+        return status == 'Archive' && versionType == VersionType.Publish.value;
     }
 
     emptyList(items: any[], status = 'Archive'): boolean {

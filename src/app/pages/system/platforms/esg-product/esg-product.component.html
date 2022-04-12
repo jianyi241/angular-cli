@@ -18,8 +18,9 @@
                                [prop_class]="configService.getColorByStatus(prop.status, version.type)"
                                [index]="propIndex+''"
                                [type]="prop.type"
+                               [hidden]="configService.isArchive(prop.status, version.type)"
                                [tabType]="configService.tabType.information"
-                               [editable]="configService.isEditable(version.type)"
+                               [editable]="configService.isEditable(version.type, prop.status)"
                                (prop_change)="saveProp(prop)"
                                *ngFor="let prop of esg.propertyVoList; let propIndex = index"></app-prop-view>
             </ng-container>

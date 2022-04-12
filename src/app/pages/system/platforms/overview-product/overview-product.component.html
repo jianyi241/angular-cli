@@ -15,9 +15,10 @@
             <app-prop-view [model]="overview.propertyVoList[0]"
                            [prop_class]="configService.getColorByStatus(overview.propertyVoList[0].status, version.type)"
                            [index]="'0'"
+                           [hidden]="configService.isArchive(overview.propertyVoList[0].status, version.type)"
                            [type]="configService.propType.attachment"
                            [tabType]="configService.tabType.overview"
-                           [editable]="configService.isEditable(version.type)"
+                           [editable]="configService.isEditable(version.type, overview.propertyVoList[0].status)"
                            (prop_change)="saveProp(overview.propertyVoList[0])"
             ></app-prop-view>
         </ng-container>
@@ -32,9 +33,10 @@
             <app-prop-view [model]="overview.propertyVoList[1]"
                            [prop_class]="configService.getColorByStatus(overview.propertyVoList[1].status, version.type)"
                            [index]="'1'"
+                           [hidden]="configService.isArchive(overview.propertyVoList[1].status, version.type)"
                            [type]="configService.propType.attachment"
                            [tabType]="configService.tabType.overview"
-                           [editable]="configService.isEditable(version.type)"
+                           [editable]="configService.isEditable(version.type, overview.propertyVoList[1].status)"
                            (prop_change)="saveProp(overview.propertyVoList[1])"
             ></app-prop-view>
         </ng-container>
@@ -49,12 +51,12 @@
         <div class="form-group-right">
             <ng-container *ngIf="overview.propertyVoList.length > 2">
                 <app-prop-view [model]="prop"
-                               [hidden]="propIndex == 0 || propIndex == 1"
+                               [hidden]="propIndex == 0 || propIndex == 1 || configService.isArchive(prop.status, version.type)"
                                [prop_class]="configService.getColorByStatus(prop.status, version.type)"
                                [index]="propIndex+''"
                                [type]="prop.type"
                                [tabType]="configService.tabType.information"
-                               [editable]="configService.isEditable(version.type)"
+                               [editable]="configService.isEditable(version.type, prop.status)"
                                (prop_change)="saveProp(prop)"
                                *ngFor="let prop of overview.propertyVoList; let propIndex = index"></app-prop-view>
             </ng-container>

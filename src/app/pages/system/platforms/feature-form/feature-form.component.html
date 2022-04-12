@@ -1,30 +1,34 @@
 <div class="form-content">
     <div class="form-group-custom form-content-column xs-pt-0">
         <div class="form-column-left">
-            <div class="main-menu">
+            <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
                     <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
-                        <ng-template ngbPanelHeader let-opened="opened">
-                            <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
-                                    [title]="group.name">
-                                <div class="text">{{group.name}}</div>
-                                <!--<span class="label-number xs-ml-6">7 new</span>-->
-                                <span class="dot" *ngIf="groupDotFlag(group)"></span>
-                                <span class="icon-block icon-arr-up-purple icon-15"></span>
-                            </button>
-                        </ng-template>
+                        <ng-container *ngIf="!configService.isArchive(group.status, version.type)">
+                            <ng-template ngbPanelHeader let-opened="opened">
+                                <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
+                                        [title]="group.name">
+                                    <div class="text">{{group.name}}</div>
+                                    <!--<span class="label-number xs-ml-6">7 new</span>-->
+                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>
+                                    <span class="icon-block icon-arr-up-purple icon-15"></span>
+                                </button>
+                            </ng-template>
 
-                        <ng-template ngbPanelContent>
-                            <div class="main-sub-menu" *ngFor="let subGroupItem of group.subList">
-                                <div class="sub-title"
-                                     (click)="chooseSubGroup(subGroupItem)"
-                                     [title]="subGroupItem.name">
-                                    <div class="text">{{subGroupItem.name}}</div>
-                                    <!--<span class="badge badge-theme xs-ml-6">2</span>-->
-                                    <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>
+                            <ng-template ngbPanelContent>
+                                <div class="main-sub-menu"
+                                     *ngFor="let subGroupItem of group.subList">
+                                    <div class="sub-title"
+                                         *ngIf="!configService.isArchive(subGroupItem.status, version.type)"
+                                         (click)="chooseSubGroup(subGroupItem)"
+                                         [title]="subGroupItem.name">
+                                        <div class="text">{{subGroupItem.name}}</div>
+                                        <!--<span class="badge badge-theme xs-ml-6">2</span>-->
+                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </ng-template>
+                            </ng-template>
+                        </ng-container>
                     </ngb-panel>
                 </ngb-accordion>
             </div>
@@ -34,7 +38,8 @@
                 <label class="control-label">{{subGroup.name}}</label>
                 <p class="info" [innerHTML]="subGroup.description"></p>
             </div>
-            <div class="form-sub-group" *ngFor="let prop of subGroup.propertyVoList; let propIndex = index">
+            <div class="form-sub-group" [hidden]="configService.isArchive(prop.status, version.type)"
+                 *ngFor="let prop of subGroup.propertyVoList; let propIndex = index">
                 <div class="form-sub-left">
                     <div class="title {{configService.getColorByStatus(prop.status, version.type)}}">{{prop.name}}</div>
                     <div class="text" [innerHTML]="prop.description"></div>
@@ -67,7 +72,9 @@
                         <div class="form-three-group">
                             <label class="control-label control-label-custom-large">Enter your description of this
                                 feature</label>
-                            <ckeditor [readOnly]="!configService.isEditable(version.type, prop.status)" [(ngModel)]="prop.productPropVo.description" (focus)="focus()" (blur)="saveProp(prop)" [config]="config"></ckeditor>
+                            <ckeditor [readOnly]="!configService.isEditable(version.type, prop.status)"
+                                      [(ngModel)]="prop.productPropVo.description" (focus)="focus()"
+                                      (blur)="saveProp(prop)" [config]="config"></ckeditor>
                             <!--                                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
                         </div>
 
@@ -90,7 +97,9 @@
                                                          let-openFileSelector="openFileSelector">
                                                 <span [hidden]="!prop.uploading"
                                                       class="icon-block icon-loading icon-32 upload-loading"></span>
-                                                <div class="upload-content" *ngIf="configService.isEditable(version.type, prop.status)" (click)="openFileSelector()">
+                                                <div class="upload-content"
+                                                     *ngIf="configService.isEditable(version.type, prop.status)"
+                                                     (click)="openFileSelector()">
                                                     <span class="icon-block icon-photo icon-32"></span>
                                                     <div class="file-intro"><span>Click to replace</span> or drag and
                                                         drop
@@ -98,7 +107,8 @@
                                                     <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
                                                 </div>
 
-                                                <div class="upload-content upload-disable" *ngIf="!configService.isEditable(version.type, prop.status)">
+                                                <div class="upload-content upload-disable"
+                                                     *ngIf="!configService.isEditable(version.type, prop.status)">
                                                     <span class="icon-block icon-photo icon-32"></span>
                                                     <div class="file-intro"><span>Click to replace</span> or drag and
                                                         drop
