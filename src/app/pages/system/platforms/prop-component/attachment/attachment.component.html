@@ -6,7 +6,7 @@
         <img [src]="prop.productPropVo.attachmentVo?.visitUrl"/>
     </div>
     <div class="form-group-right">
-        <div class="upload-file">
+        <div class="upload-file" [ngClass]="{'xs-mb-24':!prop.readOnly}">
             <ngx-file-drop dropZoneLabel="Drop files here"
                            [disabled]="!editable"
                            (onFileDrop)="droppedFile($event)"
