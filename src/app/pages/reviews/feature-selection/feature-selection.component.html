@@ -3,8 +3,8 @@
         <h2>Step 1 - What are important for Floyd?</h2>
     </div>
 
-    <div class="features-swiper">
-        <swiper [config]="config" (slideChange)="slideChange($event)" [pagination]="{clickable: true}" *ngIf="featureForm.groupVoList">
+    <div class="features-swiper" *ngIf="featureForm.groupVoList.length > 0">
+        <swiper [config]="config" (slideChange)="slideChange($event)" [pagination]="{clickable: true}">
             <ng-template swiperSlide [virtualIndex]="groupIndex" *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
                 <div class="swiper-head">
                     <img [src]="group.attachmentVo?.visitUrl" alt="">
