@@ -1,0 +1,28 @@
+.sorting-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+
+  .icon-block{
+    cursor: pointer;
+  }
+
+  .icon-sort-asc{
+    margin-bottom: -1px;
+
+    &.active,&:hover{
+      background-image: url("../../../assets/img/icon/icon-sort-asc-active.svg");
+    }
+  }
+
+  .icon-sort-desc{
+    margin-top: -1px;
+
+    &.active,&:hover{
+      background-image: url("../../../assets/img/icon/icon-sort-desc-active.svg");
+    }
+  }
+}

@@ -1,0 +1,80 @@
+
+<div class="form-content">
+    <div class="form-group-custom">
+        <div class="form-group-left" style="width: 100%;">
+            <label class="control-label">Basic information</label>
+            <p class="info">This is company information that you can update anytime</p>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Practice logo</label>
+            <p class="info">This logo will be shown on the Suitability Reports you and your team generate</p>
+        </div>
+        <div class="form-upload-file form-blue">
+            <div class="upload-file-show">
+                <img src="../assets/img/logo-bt.png"/>
+            </div>
+            <div class="form-group-right">
+                <div class="upload-file">
+                    <ngx-file-drop dropZoneLabel="Drop files here"
+                                   [multiple]="false" [directory]="false"
+                                   [accept]="'.png,.svg,.gif,.jpg'">
+                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                            <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <div class="upload-content" (click)="openFileSelector()">
+                                <span class="icon-block icon-photo icon-32"></span>
+                                <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                            </div>
+                        </ng-template>
+                    </ngx-file-drop>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Practice details</label>
+            <p class="info">Introduce your company core info quickly to users by fill up company details</p>
+        </div>
+
+        <div class="form-group-right">
+            <div class="form-group">
+                <label class="control-label control-label-custom">Practice name</label>
+                <p class="sub-control-label">Your practice name will be shown on Suitability Reports you generate. </p>
+                <input type="text" class="form-control" placeholder="Enter practice’s name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">ABN</label>
+                <input type="text" class="form-control" placeholder="Enter ABN"/>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Domain</label>
+                <input type="text" class="form-control" placeholder="Enter domain"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">AFSL number</label>
+                <input type="text" class="form-control" placeholder="Enter Australian Financial Services License number"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Practice address</label>
+                <input type="text" class="form-control" placeholder="Enter practice's address"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Sign up date</label>
+                <input type="text" class="form-control" placeholder="Enter the sign up date"/>
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -9,9 +9,10 @@ import {ImgShowModalComponent} from './img-show-modal/img-show-modal.component';
 import {ReviewsRoutingModule} from './reviews-routing.module';
 import {SwiperModule} from 'swiper/angular';
 import {SystemModule} from "../system/system.module";
+import { ComparisonStep3Component } from './comparison-step3/comparison-step3.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, ComparisonStep3Component],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

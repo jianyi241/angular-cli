@@ -34,7 +34,6 @@
   }
 }
 
-
 .filter-content {
   display: flex;
   justify-content: flex-end;
@@ -44,8 +43,7 @@
 .review-content {
   position: relative;
   overflow: auto;
-  margin-top:78px;
-  height: calc(100% - 78px);
+  height: 100%;
 }
 
 .table-container {
@@ -96,6 +94,7 @@
       border-top: none;
       border-left: none;
       background-color: #ffffff;
+      vertical-align: middle;
 
 
       &:last-child {
@@ -178,6 +177,7 @@
     .brand-pic {
       width: 68px;
       height: 68px;
+      margin:0 auto;
 
       img {
         width: 100%;
@@ -554,65 +554,83 @@
   }
 }
 
-//
-//.row-head {
-//  position: -webkit-sticky;
-//  position: sticky;
-//  top: 0;
-//  z-index: 5;
-//
-//  .col-cell {
-//    background-color: #ffffff;
-//
-//    &.col-cell-first {
-//      left: 0 !important;
-//      z-index: 3 !important;
-//    }
-//  }
-//}
-//
-//.row-body {
-//  &.main-group {
-//    background-color: #F8F8FE;
-//  }
-//
-//  .col-cell {
-//    &.col-cell-first {
-//      background-color: #F7F7F7;
-//    }
-//  }
-//
-//  .content-text {
-//    display: flex;
-//    justify-content: center;
-//    align-items: center;
-//    position: relative;
-//    text-align: center;
-//  }
-//}
-//
-//.row-head, .row-body {
-//  display: flex;
-//  justify-content: flex-start;
-//  align-items: stretch;
-//  align-content: stretch;
-//
-//  .col-cell {
-//    width: 198px;
-//    flex-shrink: 0;
-//    flex-grow: 0;
-//    border-bottom: 1px solid #D6DDEB;
-//    border-right: 1px solid #D6DDEB;
-//
-//    &.col-cell-first {
-//      position: -webkit-sticky;
-//      position: sticky;
-//      left: 0;
-//      z-index: 2;
-//      flex: 1;
-//      flex-shrink: 0;
-//      min-width: 305px;
-//    }
-//  }
-//}
 
+.table-review-step3 {
+
+  tr{
+    td{
+     height: 75px;
+    }
+  }
+
+
+  .th-head,.th-brand,.th-first,.th-brand-box {
+    height: 245px;
+  }
+
+  .btn-control-box{
+    margin-bottom: 0;
+  }
+
+  .main-group-title{
+    padding-left: 8px;
+    max-width: 330px;
+  }
+
+
+  .detail-content{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    letter-spacing: -0.04em;
+    color: #515B6F;
+    padding:16px 12px;
+  }
+
+  .amount-content{
+    color: #25324B;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    padding:16px 12px;
+  }
+
+  .bool-content{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 10px;
+    text-align: center;
+    padding:16px 12px;
+  }
+
+  .number-content{
+    color: #515B6F;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    padding:16px 12px;
+  }
+
+  .status-green{
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    margin-top:-11px;
+    width: 3px;
+    height: 22px;
+    background: #219653;
+  }
+}
+
+
+.table-review-fixed {
+
+  .table-review-step3 {
+
+    .th-head,.th-brand,.th-first,.th-brand-box {
+      height: 66px;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+
+ul.pagination {
+  justify-content: center;
+
+  li.page-item {
+    display: inline-block;
+
+    a.page-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #515B6F;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: "Inter";
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 8px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: #E9EBFD;
+      }
+    }
+
+    &:first-child,&:last-child{
+      a{
+        font-size: 0;
+      }
+
+      &::before{
+        content:"";
+        .icon-block;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &:first-child {
+      a {
+        &::before{
+          .icon-page-left;
+        }
+      }
+
+    }
+
+    &:last-child {
+      a {
+        &::before{
+          .icon-page-right;
+        }
+      }
+    }
+
+    &.active {
+      a {
+        color:#ffffff;
+        background-color: @themeColor;
+      }
+    }
+  }
+}

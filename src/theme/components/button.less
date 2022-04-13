@@ -91,6 +91,29 @@
     padding-right:16px;
     .tx-12;
   }
+
+  &.btn-with-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.btn-purple-border{
+    color: #4640DE;
+    background: #E9EBFD;
+    border: 1px solid #4640DE;
+
+    &:hover{
+      color:darken(#4640DE,10%);
+      background:darken(#E9EBFD,2%);
+      border: 1px solid darken(#4640DE,10%);
+    }
+  }
+
+  &.btn-tiny{
+    padding:6px 12px 4px 12px;
+    .tx-12;
+  }
 }
 
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {

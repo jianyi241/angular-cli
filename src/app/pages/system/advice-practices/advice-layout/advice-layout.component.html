@@ -1,0 +1,24 @@
+<div class="main main-form main-form-with-tab">
+
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" [routerLink]="['/platform/product']">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            ABC Advisory
+        </div>
+
+        <div class="btn-control-group">
+            <button class="btn text-danger">Archive ABC Advisory</button>
+            <button class="btn btn-outline-purple-light">Disable</button>
+            <button class="btn btn-purple xs-ml-24" >Save</button>
+        </div>
+    </div>
+
+    <div class="tab-menu">
+        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/overview']" routerLinkActive="active">Overview <span class="line"></span><span class="dot"></span></div>
+        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/team']" routerLinkActive="active">Team <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/billing']" routerLinkActive="active">Billing <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/invoices']" routerLinkActive="active">Invoices <span class="line"></span></div>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

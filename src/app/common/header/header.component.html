@@ -8,7 +8,7 @@
             <a >News & Updates</a>
             <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Suppliers</a>
             <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
-            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Advice practices</a>
+            <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
         </div>
 
         <div class="phone-menu">
@@ -22,20 +22,24 @@
                     <a href="#">News & Updates</a>
                     <a [routerLink]="['/supplier/active/comparison']" routerLinkActive="active">Suppliers</a>
                     <a [routerLink]="['/platform/active/product']" routerLinkActive="active">Platforms</a>
-                    <a href="#">Advice practices</a>
+                    <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="head-right">
-        <div class="text">Manage BT</div>
+        <div class="text">Sam the BDM</div>
 
-        <div ngbDropdown placement="bottom-end">
-            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>
-            <div ngbDropdownMenu aria-labelledby="dropdownMenu">
-                <button ngbDropdownItem>Log out</button>
-            </div>
+        <div class="logout">
+            <span class="icon-block icon-logout icon-24"></span>
         </div>
+
+<!--        <div ngbDropdown placement="bottom-end">-->
+<!--            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>-->
+<!--            <div ngbDropdownMenu aria-labelledby="dropdownMenu">-->
+<!--                <button ngbDropdownItem>Log out</button>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>

@@ -17,6 +17,12 @@ import {OverviewProductComponent} from './platforms/overview-product/overview-pr
 import {InformationProductComponent} from './platforms/information-product/information-product.component';
 import {EsgProductComponent} from './platforms/esg-product/esg-product.component';
 import {ChangeHistoryProductComponent} from './platforms/change-history-product/change-history-product.component';
+import {AdviceListComponent} from "./advice-practices/advice-list/advice-list.component";
+import {AdviceLayoutComponent} from "./advice-practices/advice-layout/advice-layout.component";
+import {AdviceOverviewComponent} from "./advice-practices/advice-overview/advice-overview.component";
+import {AdviceTeamComponent} from "./advice-practices/advice-team/advice-team.component";
+import {AdviceBillingComponent} from "./advice-practices/advice-billing/advice-billing.component";
+import {AdviceInvoicesComponent} from "./advice-practices/advice-invoices/advice-invoices.component";
 
 const routes: Routes = [
     {
@@ -97,6 +103,38 @@ const routes: Routes = [
                     {
                         path: 'change-history/:productId/:version',
                         component: ChangeHistoryProductComponent,
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        path: 'advice-practices',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                component: AdviceListComponent,
+            },
+            {
+                path: 'advice-tab',
+                component: AdviceLayoutComponent,
+                children: [
+                    {
+                        path: 'overview',
+                        component: AdviceOverviewComponent,
+                    },
+                    {
+                        path: 'team',
+                        component: AdviceTeamComponent,
+                    },
+                    {
+                        path: 'billing',
+                        component: AdviceBillingComponent,
+                    },
+                    {
+                        path: 'invoices',
+                        component: AdviceInvoicesComponent,
                     },
                 ]
             },

@@ -20,3 +20,128 @@
     }
   }
 }
+
+//table-list
+.table-list{
+  font-family: 'Epilogue';
+  margin-bottom:16px;
+
+
+  thead{
+    border: 1px solid #D6DDEB;
+
+    tr{
+      th{
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 19px;
+        color: #7C8493;
+        height: 67px;
+        vertical-align: middle;
+        border:none;
+        padding:0 16px;
+
+        &:first-child{
+          padding-left:24px;
+        }
+        &:last-child{
+          padding-right:24px;
+        }
+
+        .th-cell{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          .icon-block{
+            margin-left:8px;
+            cursor: pointer;
+          }
+        }
+
+        &.text-center{
+          .th-cell{
+            justify-content: center;
+          }
+        }
+
+        &.text-right{
+          .th-cell{
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+
+    &.table-head-margin{
+      border:none;
+
+      tr{
+        th{
+          height: 16px;
+        }
+      }
+    }
+  }
+
+
+  tbody{
+    border: 1px solid #D6DDEB;
+
+    tr{
+      td{
+        height: 56px;
+        vertical-align: middle;
+        padding:0 16px;
+
+        .td-cell{
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 21px;
+          color: #25324B;
+          border: none;
+        }
+
+        .td-cell_avatar{
+          display: flex;
+          align-items: center;
+        }
+
+        &:first-child{
+          padding-left:24px;
+        }
+        &:last-child{
+          padding-right:24px;
+        }
+
+      }
+
+      &:nth-of-type(odd) {
+        background-color: transparent;
+      }
+
+      &:nth-of-type(even) {
+        background-color: #F8F8FE;
+      }
+
+      &:hover{
+        background-color: darken(#F8F8FE,1%);
+      }
+    }
+  }
+}
+
+.avatar-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
