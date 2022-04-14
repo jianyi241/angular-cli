@@ -1,0 +1,53 @@
+
+.table-layout {
+  position: relative;
+  .col-content {
+    width: 100%;
+
+    .col-body {
+      padding:32px 0;
+    }
+  }
+}
+
+
+.table-margin-list{
+  font-family: 'Epilogue';
+
+  tbody{
+    tr{
+      border: 1px solid #D6DDEB;
+
+      td{
+        height: 58px;
+        vertical-align: middle;
+        padding:0 16px;
+        border:none;
+
+        .td-cell{
+          border: none;
+
+          &.tx-size-14{
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            color: #7C8493;
+          }
+
+          &.tx-size-16{
+            font-size: 16px;
+            line-height: 26px;
+            color: #25324B;
+          }
+        }
+      }
+
+      &.tr-margin{
+        border:none;
+        td{
+          height: 16px;
+        }
+      }
+    }
+  }
+}

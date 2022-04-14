@@ -41,6 +41,9 @@ import {SortingWidgetComponent} from "../../common/sorting-widget/sorting-widget
 import { AdviceTeamComponent } from './advice-practices/advice-team/advice-team.component';
 import { AdviceBillingComponent } from './advice-practices/advice-billing/advice-billing.component';
 import { AdviceInvoicesComponent } from './advice-practices/advice-invoices/advice-invoices.component';
+import {OwlDateTimeModule} from "ng-pick-datetime";
+import { EditTeamComponent } from './advice-practices/edit-team/edit-team.component';
+import { TipModalComponent } from './advice-practices/tip-modal/tip-modal.component';
 
 
 @NgModule({
@@ -77,7 +80,9 @@ import { AdviceInvoicesComponent } from './advice-practices/advice-invoices/advi
         SortingWidgetComponent,
         AdviceTeamComponent,
         AdviceBillingComponent,
-        AdviceInvoicesComponent
+        AdviceInvoicesComponent,
+        EditTeamComponent,
+        TipModalComponent
     ],
     imports: [
         CommonModule,
@@ -88,6 +93,7 @@ import { AdviceInvoicesComponent } from './advice-practices/advice-invoices/advi
         CKEditorModule,
         NgbModule,
         DragDropModule,
+        OwlDateTimeModule,
     ], exports: [
         ToggleClassDirective,
         BackTopDirective,

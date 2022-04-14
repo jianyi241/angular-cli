@@ -1,0 +1,138 @@
+<div class="main main-form">
+
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" [routerLink]="['../advice-tab/team']">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            Team / New user
+        </div>
+
+        <div class="btn-control-group">
+            <button class="btn btn-outline-purple-light">Cancel</button>
+            <button class="btn btn-purple xs-ml-24" >Create and send welcome email</button>
+        </div>
+    </div>
+
+
+    <div class="form-content">
+        <div class="form-group-custom">
+            <div class="form-group-left" style="width: 100%;">
+                <label class="control-label">Basic information</label>
+                <p class="info">This is your personal information that you can update anytime</p>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Profile photo</label>
+                <p class="info">This helps your fellow team members recognise you</p>
+            </div>
+            <div class="form-upload-file">
+                <div class="upload-file-show">
+                    <img src="../assets/img/icon-profile.svg"/>
+                </div>
+                <div class="form-group-right">
+                    <div class="upload-file">
+                        <ngx-file-drop dropZoneLabel="Drop files here"
+                                       [multiple]="false" [directory]="false"
+                                       [accept]="'.png,.svg,.gif,.jpg'">
+                            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                                <div class="upload-content" (click)="openFileSelector()">
+                                    <span class="icon-block icon-photo icon-32"></span>
+                                    <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                    <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                                </div>
+                            </ng-template>
+                        </ngx-file-drop>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Personal details</label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label control-label-custom"><div>First name <span class="label-required">*</span></div></label>
+                            <input type="text" class="form-control" placeholder="Enter your first name"/>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label control-label-custom"><div>Last name <span class="label-required">*</span></div></label>
+                            <input type="text" class="form-control" placeholder="Enter your last name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom"><div>Work email<span class="label-required">*</span></div></label>
+                    <input type="text" class="form-control" placeholder="Enter your work email"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom">Practice role</label>
+                    <ng-select disabled class="select-single" placeholder="Select role"  dropdownPosition="bottom">
+                        <ng-option>role1</ng-option>
+                        <ng-option>role2</ng-option>
+                        <ng-option>role3</ng-option>
+                    </ng-select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom">ARN (Authorised Representative Number)</label>
+                    <input type="text" class="form-control" placeholder="Enter your work email"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Account type</label>
+                <p class="info">Update your account type</p>
+            </div>
+
+            <div class="form-group-right">
+
+                <div class="form-group">
+                    <div class="radio-box radio-box-top-2">
+                        <input type="radio" value="administrator" name="accountType" id="administrator"/>
+                        <label for="administrator">
+                            Account administrator
+                            <div class="info">Everything Advisers can do and also manage billing and team members</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-box radio-box-top-2">
+                        <input type="radio" value="adviser" name="accountType" id="adviser"/>
+                        <label for="adviser">
+                            Adviser (3 of 4 seats used)
+                            <div class="info">Can perform Suitability Reviews</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-box radio-box-top-2">
+                        <input type="radio" value="support" name="accountType" id="support"/>
+                        <label for="support">
+                            Support
+                            <div class="info">Can assist with Suitability Reviews</div>
+                        </label>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

@@ -72,16 +72,6 @@
         }
       }
     }
-
-    &.table-head-margin{
-      border:none;
-
-      tr{
-        th{
-          height: 16px;
-        }
-      }
-    }
   }
 
 
@@ -126,6 +116,19 @@
 
       &:hover{
         background-color: darken(#F8F8FE,1%);
+      }
+    }
+  }
+
+
+  thead,tbody{
+    &.table-margin{
+      border:none;
+      tr{
+        border:none;
+        th,td{
+          height: 16px;
+        }
       }
     }
   }

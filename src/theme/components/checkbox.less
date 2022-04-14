@@ -75,7 +75,8 @@
 
 //radio-box
 .radio-box {
-  height: 20px;
+  min-height: 20px;
+  height: auto;
   width: auto;
   position: relative;
   margin: 10px 0;
@@ -89,6 +90,13 @@
     font-size: 16px;
     cursor: pointer;
 
+    .info{
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+      color: #515B6F;
+    }
+
 
     &::before,
     &::after {
@@ -96,14 +104,13 @@
       display: block;
       position: absolute;
       border-radius: 100px;
-      top: 50%;
+      top: 0;
       left: 0;
     }
 
     &::before {
       height: 20px;
       width: 20px;
-      margin-top: -10px;
       line-height: 20px;
       border: 2px solid @uncheckBorderColor;
       background-color: @uncheckColor;
@@ -112,7 +119,7 @@
     &::after {
       width: 12px;
       height: 12px;
-      margin-top: -6px;
+      margin-top: 4px;
       left: 4px;
       background-color: transparent;
     }
@@ -121,7 +128,7 @@
 
   input[type="radio"] {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 0;
     width: 0;
     height: 0;
@@ -144,6 +151,15 @@
       +label {
         cursor: not-allowed;
         opacity: 0.6;
+      }
+    }
+  }
+
+  &.radio-box-top-2{
+    label {
+      &::before,
+      &::after {
+        top: 2px;
       }
     }
   }

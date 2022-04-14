@@ -71,7 +71,8 @@
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Sign up date</label>
-                <input type="text" class="form-control" placeholder="Enter the sign up date"/>
+                <input type="text" class="form-control" placeholder="Enter the sign up date" [owlDateTime]="signUpDate" [owlDateTimeTrigger]="signUpDate"/>
+                <owl-date-time #signUpDate [pickerType]="'calendar'"></owl-date-time>
             </div>
 
 

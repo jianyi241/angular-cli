@@ -23,6 +23,7 @@ import {AdviceOverviewComponent} from "./advice-practices/advice-overview/advice
 import {AdviceTeamComponent} from "./advice-practices/advice-team/advice-team.component";
 import {AdviceBillingComponent} from "./advice-practices/advice-billing/advice-billing.component";
 import {AdviceInvoicesComponent} from "./advice-practices/advice-invoices/advice-invoices.component";
+import {EditTeamComponent} from "./advice-practices/edit-team/edit-team.component";
 
 const routes: Routes = [
     {
@@ -136,8 +137,12 @@ const routes: Routes = [
                         path: 'invoices',
                         component: AdviceInvoicesComponent,
                     },
-                ]
+                ],
             },
+            {
+                path: 'edit-team',
+                component: EditTeamComponent,
+            }
         ]
     },
 ];
