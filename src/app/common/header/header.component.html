@@ -6,9 +6,11 @@
 
         <div class="menu">
             <a >News & Updates</a>
-            <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Suppliers</a>
+            <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Configurator</a>
             <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
             <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
+            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
+            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
         </div>
 
         <div class="phone-menu">
@@ -20,8 +22,8 @@
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
                     <a href="#">News & Updates</a>
-                    <a [routerLink]="['/supplier/active/comparison']" routerLinkActive="active">Suppliers</a>
-                    <a [routerLink]="['/platform/active/product']" routerLinkActive="active">Platforms</a>
+                    <a [routerLink]="['/supplier']" routerLinkActive="active">Suppliers</a>
+                    <a [routerLink]="['/platform']" routerLinkActive="active">Platforms</a>
                     <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
                 </div>
             </div>

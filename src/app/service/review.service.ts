@@ -5,14 +5,19 @@ import {Subject} from "rxjs";
     providedIn: 'root'
 })
 export class ReviewService {
-    nextSubject = new Subject<object>();
+    private nextSubject = new Subject<object>();
+    private backSubject = new Subject<object>();
     nextObservable = this.nextSubject.asObservable();
+    backObservable = this.backSubject.asObservable();
 
     constructor() {
     }
 
     next(): void {
         this.nextSubject.next();
-        this.nextObservable.subscribe()
+    }
+
+    back(): void {
+        this.backSubject.next();
     }
 }

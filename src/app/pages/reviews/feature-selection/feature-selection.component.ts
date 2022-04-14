@@ -21,7 +21,8 @@ SwiperCore.use([Pagination]);
 export class FeatureSelectionComponent implements OnInit, OnDestroy {
     featureForm: ProductFormVo = new ProductFormVo();
     subGroups: Array<GroupVo> = [];
-    reviewObservable: any;
+    reviewNextObservable: any;
+    reviewBackObservable: any;
 
     constructor(private reviewRepository: ReviewRepository,
                 private reviewService: ReviewService,
@@ -36,7 +37,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.reviewObservable.unsubscribe();
+        this.reviewNextObservable.unsubscribe();
+        this.reviewBackObservable.unsubscribe();
     }
 
 
@@ -46,7 +48,12 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
-        this.reviewObservable = this.reviewService.nextObservable.subscribe(res => {
+        this.nextSubscribe();
+        this.backSubscribe();
+    }
+
+    nextSubscribe(): void {
+        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
             let groups = this.featureForm.groupVoList;
             if (!groups || groups.length == 0) {
                 this.toastRepository.showDanger('Please select feature.');
@@ -73,6 +80,11 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
             this.storage.setItem('select-essential', selectProps);
             this.router.navigateByUrl('/review/feature-comparison');
         });
+    }
+    backSubscribe(): void {
+        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
+            // this.router.navigateByUrl('/');
+        })
     }
 
     getFeatureForm(): void {

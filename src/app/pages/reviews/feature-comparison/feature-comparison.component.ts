@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReviewRepository} from "../../../repository/review-repository";
 import {CompareVo} from "../../../model/vo/compareVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
@@ -10,21 +10,27 @@ import {ReviewLayoutComponent} from "../../../common/review-layout/review-layout
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {ProductVo} from "../../../model/vo/ProductVo";
 import {PropertyInfo} from "../../../model/po/propertyInfo";
+import {ReviewService} from "../../../service/review.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-feature-comparison',
     templateUrl: './feature-comparison.component.html',
     styleUrls: ['./feature-comparison.component.less']
 })
-export class FeatureComparisonComponent implements OnInit {
+export class FeatureComparisonComponent implements OnInit, OnDestroy {
     compareData: CompareVo = new CompareVo();
     selectProps: Array<{ id: string, essential: boolean }> = new Array<{ id: string, essential: boolean }>();
     currentProdProp: ProductPropInfo = new ProductPropInfo();
+    reviewNextObservable: any;
+    reviewBackObservable: any;
 
     constructor(private reviewRepository: ReviewRepository,
                 private platformRepository: PlatformRepository,
                 private storage: LocalStorageObServable,
+                private router: Router,
                 private modalService: NgbModal,
+                private reviewService: ReviewService,
                 private scrollService: ScrollService,
                 public reviewLayoutComponent: ReviewLayoutComponent
     ) {
@@ -32,9 +38,31 @@ export class FeatureComparisonComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.subscribe();
         this.storage.getItem('select-essential').subscribe(data => {
             this.selectProps = data || [];
             this.compareList(this.selectProps.map(p => p.id))
+        })
+    }
+
+    ngOnDestroy(): void {
+        this.reviewNextObservable.unsubscribe();
+        this.reviewBackObservable.unsubscribe();
+    }
+
+    subscribe(): void {
+        this.nextSubscribe();
+        this.backSubscribe();
+    }
+
+    nextSubscribe(): void {
+        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl('/review/metric-comparison');
+        });
+    }
+    backSubscribe(): void {
+        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
+            this.router.navigateByUrl('/review/feature-selection');
         })
     }
 
