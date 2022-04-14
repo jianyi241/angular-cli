@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoadingComponent} from '../../components/loading/loading.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {FloatInputComponent} from "../../components/float-input/float-input.component";
+import { LoginTipModalComponent } from './login-tip-modal/login-tip-modal.component';
 
 const authRoutes: Routes = [
     {
@@ -41,6 +42,7 @@ const authRoutes: Routes = [
         FloatInputComponent,
         LoadingComponent,
         ResetPasswordComponent,
+        LoginTipModalComponent,
     ],
 })
 export class AuthModule {
