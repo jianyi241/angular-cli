@@ -10,7 +10,11 @@ import {TipModalComponent} from "../tip-modal/tip-modal.component";
 })
 export class AdviceLayoutComponent implements OnInit {
 
-  constructor( private modalService: NgbModal) { }
+  public isTeamPage: boolean =false;
+
+  constructor( private modalService: NgbModal) {
+
+  }
 
   ngOnInit(): void {
   }
