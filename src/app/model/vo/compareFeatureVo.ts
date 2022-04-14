@@ -13,7 +13,7 @@ import {GroupInfo} from "../po/groupInfo";
 import {ProductVo} from "./ProductVo";
 
 
-export class CompareVo {
+export class CompareFeatureVo {
     groupVoList?: Array<GroupInfo> = new Array<GroupInfo>();
     productVos?: Array<ProductVo> = new Array<ProductVo>();
 }

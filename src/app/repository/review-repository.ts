@@ -3,8 +3,9 @@ import {Observable} from 'rxjs';
 import {HttpResult} from '../model/common/http-result';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {CompareVo} from "../model/vo/compareVo";
+import {CompareFeatureVo} from "../model/vo/compareFeatureVo";
 import {ProductFormVo} from "../model/vo/productFormVo";
+import {CompareMetricVo} from "../model/vo/compareMetircVo";
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +16,15 @@ export class ReviewRepository {
 
     }
 
-    compareList(productIds: Array<string>): Observable<HttpResult<CompareVo>> {
-        return this.http.post<HttpResult<CompareVo>>(environment.baseURL + `/compare/compareProduct`, productIds);
+    compareList(productIds: Array<string>): Observable<HttpResult<CompareFeatureVo>> {
+        return this.http.post<HttpResult<CompareFeatureVo>>(environment.baseURL + `/compare/compareProduct`, productIds);
     }
 
     getProductInfo(tabType: number): Observable<HttpResult<ProductFormVo>> {
         return this.http.get<HttpResult<ProductFormVo>>(environment.baseURL + `/compare/getTabInfo/${tabType}`);
+    }
+
+    getMetricComparison(): Observable<HttpResult<CompareMetricVo>> {
+        return this.http.get<HttpResult<CompareMetricVo>>(environment.baseURL + '/compare/queryStep3TabInfo');
     }
 }

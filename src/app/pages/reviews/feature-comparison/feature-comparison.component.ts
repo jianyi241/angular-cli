@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReviewRepository} from "../../../repository/review-repository";
-import {CompareVo} from "../../../model/vo/compareVo";
+import {CompareFeatureVo} from "../../../model/vo/compareFeatureVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {PlatformRepository} from "../../../repository/platform-repository";
 import {ImgShowModalComponent} from "../img-show-modal/img-show-modal.component";
@@ -19,7 +19,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./feature-comparison.component.less']
 })
 export class FeatureComparisonComponent implements OnInit, OnDestroy {
-    compareData: CompareVo = new CompareVo();
+    compareData: CompareFeatureVo = new CompareFeatureVo();
     selectProps: Array<{ id: string, essential: boolean }> = new Array<{ id: string, essential: boolean }>();
     currentProdProp: ProductPropInfo = new ProductPropInfo();
     reviewNextObservable: any;
