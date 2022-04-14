@@ -80,8 +80,12 @@
                                         {{getProductPropValue(prop, product.productPropVoList)}}
                                     </div>-->
                                     <div class="bool-content tx-green"
-                                         *ngIf="prop.type == configService.propType.boolean">
+                                         *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
                                         Yes
+                                    </div>
+                                    <div class="bool-content tx-red"
+                                         *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
+                                        No
                                     </div>
                                     <div class="number-content"
                                          *ngIf="prop.type == configService.propType.integer">
@@ -133,8 +137,12 @@
                                             {{getProductPropValue(prop, product.productPropVoList)}}
                                         </div>-->
                                         <div class="bool-content tx-green"
-                                             *ngIf="prop.type == configService.propType.boolean">
+                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
                                             Yes
+                                        </div>
+                                        <div class="bool-content tx-red"
+                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
+                                            No
                                         </div>
                                         <div class="number-content"
                                              *ngIf="prop.type == configService.propType.integer">
