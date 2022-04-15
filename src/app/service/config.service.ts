@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {PropType} from "../model/enums/prop-type";
 import {VersionType} from "../model/enums/version-type";
 import {PracticeStatus} from "../model/enums/practice-status";
+import {UserStatus} from "../model/enums/user-status";
+import {RoleType} from "../model/enums/role-type";
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +31,18 @@ export class ConfigService {
     practiceStatus = {
         active: PracticeStatus.Active.value,
         disable: PracticeStatus.Disable.value,
+    }
+
+    userStatus = {
+        active: UserStatus.Active.value,
+        disable: UserStatus.Disable.value,
+        pending: UserStatus.Pending.value
+    }
+
+    roleType = {
+        accountAdmin: RoleType.AccountAdmin.value,
+        adviser: RoleType.Adviser.value,
+        support: RoleType.Support.value,
     }
 
     constructor(private router: Router) {
@@ -84,6 +98,7 @@ export class ConfigService {
                 return '';
         }
     }
+
     //Archive
     isArchive(status: string, versionType?: string): boolean {
         if (!versionType) {

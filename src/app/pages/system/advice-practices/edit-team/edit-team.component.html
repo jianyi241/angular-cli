@@ -1,14 +1,16 @@
 <div class="main main-form">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title" [routerLink]="['../advice-tab/team']">
+        <div class="sub-title" [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            Team / New user
+            {{team.id ? team.firstName + ' ' + team.lastName : ''}}
         </div>
 
         <div class="btn-control-group">
-            <button class="btn btn-outline-purple-light">Cancel</button>
-            <button class="btn btn-purple xs-ml-24" >Create and send welcome email</button>
+            <button class="btn btn-outline-purple-light"
+                    [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">Cancel
+            </button>
+            <button class="btn btn-purple xs-ml-24" (click)="save()">{{team.id ? 'Save' : 'Create and send welcome email'}}</button>
         </div>
     </div>
 
@@ -28,15 +30,15 @@
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
-                    <img src="../assets/img/icon-profile.svg"/>
+                    <img [src]="(team.attachmentVo?.visitUrl || './assets/img/unassgin.png')"/>
                 </div>
                 <div class="form-group-right">
                     <div class="upload-file">
-                        <ngx-file-drop dropZoneLabel="Drop files here"
+                        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFile($event)"
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                                <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                                <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
                                 <div class="upload-content" (click)="openFileSelector()">
                                     <span class="icon-block icon-photo icon-32"></span>
                                     <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
@@ -59,36 +61,44 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="control-label control-label-custom"><div>First name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" placeholder="Enter your first name"/>
+                            <label class="control-label control-label-custom">
+                                <div>First name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" [(ngModel)]="team.firstName"
+                                   placeholder="Enter your first name"/>
                         </div>
                     </div>
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="control-label control-label-custom"><div>Last name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" placeholder="Enter your last name"/>
+                            <label class="control-label control-label-custom">
+                                <div>Last name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" [(ngModel)]="team.lastName"
+                                   placeholder="Enter your last name"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label control-label-custom"><div>Work email<span class="label-required">*</span></div></label>
-                    <input type="text" class="form-control" placeholder="Enter your work email"/>
+                    <label class="control-label control-label-custom">
+                        <div>Work email<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="team.email"
+                           placeholder="Enter your work email"/>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">Practice role</label>
-                    <ng-select disabled class="select-single" placeholder="Select role"  dropdownPosition="bottom">
-                        <ng-option>role1</ng-option>
-                        <ng-option>role2</ng-option>
-                        <ng-option>role3</ng-option>
+                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select role" dropdownPosition="bottom">
+                        <ng-option *ngFor="let practiceRole of practiceRoles" [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>
                     </ng-select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">ARN (Authorised Representative Number)</label>
-                    <input type="text" class="form-control" placeholder="Enter ARN"/>
+                    <input type="text" class="form-control" [(ngModel)]="team.arn"
+                           placeholder="Enter ARN (Authorised Representative Number)"/>
                 </div>
             </div>
         </div>
@@ -102,30 +112,13 @@
             <div class="form-group-right">
 
                 <div class="form-group">
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="administrator" name="accountType" id="administrator"/>
-                        <label for="administrator">
-                            Account administrator
-                            <div class="info">Everything Advisers can do and also manage billing and team members</div>
+                    <div class="radio-box radio-box-top-2" *ngFor="let accountType of accountRoles; let roleIndex = index">
+                        <input type="radio" [value]="accountType.id" [(ngModel)]="team.roleId" name="accountType" id="accountType-{{roleIndex}}"/>
+                        <label for="accountType-{{roleIndex}}">
+                            {{accountType.roleName}}
+                            <div class="info">{{accountType.roleDesc}}</div>
                         </label>
                     </div>
-
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="adviser" name="accountType" id="adviser"/>
-                        <label for="adviser">
-                            Adviser (3 of 4 seats used)
-                            <div class="info">Can perform Suitability Reviews</div>
-                        </label>
-                    </div>
-
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="support" name="accountType" id="support"/>
-                        <label for="support">
-                            Support
-                            <div class="info">Can assist with Suitability Reviews</div>
-                        </label>
-                    </div>
-
                 </div>
 
 

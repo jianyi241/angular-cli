@@ -26,8 +26,10 @@ export class HttpResultInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let clone;
+        //base url
+        const baseUrl = request.url;
         //random url clear cache
-        let url = request.url + (request.url.indexOf('?') > 0 ? '&' : '?') + 'random=' + new Date().getTime();
+        let url = baseUrl + (baseUrl.indexOf('?') > 0 ? '&' : '?') + 'random=' + new Date().getTime();
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             let headers = request.headers.set('access_token', accessToken);
@@ -40,16 +42,16 @@ export class HttpResultInterceptor implements HttpInterceptor {
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     //save flag
-                    if (this.saveService.has(request.url)) {
-                        this.saveService.delete(request.url);
+                    if (this.saveService.has(baseUrl)) {
+                        this.saveService.delete(baseUrl);
                     }
                     return event;
                 }
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                if (this.saveService.has(request.url)) {
-                    this.saveService.delete(request.url);
+                if (this.saveService.has(baseUrl)) {
+                    this.saveService.delete(baseUrl);
                 }
                 this.toastRepository.showDanger(error.statusText);
                 throw error;

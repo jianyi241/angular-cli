@@ -129,7 +129,7 @@ const routes: Routes = [
                 component: AdviceListComponent,
             },
             {
-                path: 'edit-team',
+                path: 'edit-team/:id/:practiceId',
                 component: EditTeamComponent,
             },
             {
