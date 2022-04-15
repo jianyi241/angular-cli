@@ -118,30 +118,30 @@ const routes: Routes = [
                 component: AdviceListComponent,
             },
             {
+                path: 'edit-team',
+                component: EditTeamComponent,
+            },
+            {
                 path: 'advice-tab',
                 component: AdviceLayoutComponent,
                 children: [
                     {
-                        path: 'overview',
+                        path: 'overview/:id',
                         component: AdviceOverviewComponent,
                     },
                     {
-                        path: 'team',
+                        path: 'team/:id',
                         component: AdviceTeamComponent,
                     },
                     {
-                        path: 'billing',
+                        path: 'billing/:id',
                         component: AdviceBillingComponent,
                     },
                     {
-                        path: 'invoices',
+                        path: 'invoices/:id',
                         component: AdviceInvoicesComponent,
                     },
                 ],
-            },
-            {
-                path: 'edit-team',
-                component: EditTeamComponent,
             }
         ]
     },

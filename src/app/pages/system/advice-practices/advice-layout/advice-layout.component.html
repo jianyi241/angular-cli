@@ -1,23 +1,32 @@
-<div class="main main-form-with-tab" [ngClass]="{'main-form':!isTeamPage}">
+<!--''-->
+<div class="main main-form-with-tab main-form">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title" [routerLink]="['/platform/product']">
+        <div class="sub-title" [routerLink]="['/advice-practices']">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            ABC Advisory
+            {{practiceService.practice.name}}
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger" (click)="onArchive()">Archive ABC Advisory</button>
-            <button class="btn btn-outline-purple-light" (click)="onDisable()">Disable</button>
-            <button class="btn btn-purple xs-ml-24" >Save</button>
+            <ng-container *ngIf="has()">
+                <button class="btn text-danger" (click)="onArchive()">Archive ABC Advisory</button>
+                <button class="btn btn-outline-purple-light" (click)="onDisable()">Disable</button>
+            </ng-container>
+            <button class="btn btn-purple xs-ml-24" (click)="save()">Save</button>
         </div>
     </div>
 
     <div class="tab-menu">
-        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/overview']" routerLinkActive="active">Overview <span class="line"></span><span class="dot"></span></div>
-        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/team']" routerLinkActive="active">Team <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/billing']" routerLinkActive="active">Billing <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/invoices']" routerLinkActive="active">Invoices <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/overview/' + practiceService.practice.id]"
+             routerLinkActive="active">Overview <span class="line"></span>
+        </div>
+        <ng-container *ngIf="has()">
+            <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/team/' + practiceService.practice.id]"
+                 routerLinkActive="active">Team <span class="line"></span>
+            </div>
+            <div class="tab-text">Billing <span class="line"></span></div>
+            <div class="tab-text">Invoices <span class="line"></span></div>
+        </ng-container>
     </div>
 
     <router-outlet></router-outlet>

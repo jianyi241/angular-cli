@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {AdviceLayoutComponent} from "../advice-layout/advice-layout.component";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-advice-team',
@@ -8,8 +7,7 @@ import {AdviceLayoutComponent} from "../advice-layout/advice-layout.component";
 })
 export class AdviceTeamComponent implements OnInit {
   page = 4;
-  constructor(public adviceLayoutComponent:AdviceLayoutComponent) {
-    this.adviceLayoutComponent.isTeamPage =true;
+  constructor() {
   }
 
   ngOnInit(): void {

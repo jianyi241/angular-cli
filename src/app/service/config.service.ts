@@ -3,6 +3,7 @@ import {TabType} from "../model/enums/tab-type";
 import {Router} from "@angular/router";
 import {PropType} from "../model/enums/prop-type";
 import {VersionType} from "../model/enums/version-type";
+import {PracticeStatus} from "../model/enums/practice-status";
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,11 @@ export class ConfigService {
         integer: PropType.integer.value,
         boolean: PropType.boolean.value,
         attachment: PropType.attachment.value,
+    }
+
+    practiceStatus = {
+        active: PracticeStatus.Active.value,
+        disable: PracticeStatus.Disable.value,
     }
 
     constructor(private router: Router) {

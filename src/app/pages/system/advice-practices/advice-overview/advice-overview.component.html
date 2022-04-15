@@ -14,15 +14,15 @@
         </div>
         <div class="form-upload-file form-blue">
             <div class="upload-file-show">
-                <img src="../assets/img/logo-bt.png"/>
+                <img [src]="practiceService.practice.attachmentVo?.visitUrl"/>
             </div>
             <div class="form-group-right">
                 <div class="upload-file">
-                    <ngx-file-drop dropZoneLabel="Drop files here"
+                    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFile($event)"
                                    [multiple]="false" [directory]="false"
                                    [accept]="'.png,.svg,.gif,.jpg'">
                         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                            <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
                             <div class="upload-content" (click)="openFileSelector()">
                                 <span class="icon-block icon-photo icon-32"></span>
                                 <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
@@ -45,33 +45,33 @@
             <div class="form-group">
                 <label class="control-label control-label-custom">Practice name</label>
                 <p class="sub-control-label">Your practice name will be shown on Suitability Reports you generate. </p>
-                <input type="text" class="form-control" placeholder="Enter practice’s name"/>
+                <input type="text" class="form-control" [(ngModel)]="practiceService.practice.name" placeholder="Enter practice’s name"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">ABN</label>
-                <input type="text" class="form-control" placeholder="Enter ABN"/>
+                <input type="text" class="form-control" [(ngModel)]="practiceService.practice.abn" placeholder="Enter ABN"/>
             </div>
 
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Domain</label>
-                <input type="text" class="form-control" placeholder="Enter domain"/>
+                <input type="text" class="form-control" [(ngModel)]="practiceService.practice.domain" placeholder="Enter domain"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">AFSL number</label>
-                <input type="text" class="form-control" placeholder="Enter Australian Financial Services License number"/>
+                <input type="text" class="form-control" [(ngModel)]="practiceService.practice.afslNum" placeholder="Enter Australian Financial Services License number"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Practice address</label>
-                <input type="text" class="form-control" placeholder="Enter practice's address"/>
+                <input type="text" class="form-control" [(ngModel)]="practiceService.practice.address" placeholder="Enter practice's address"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Sign up date</label>
-                <input type="text" class="form-control" placeholder="Enter the sign up date" [owlDateTime]="signUpDate" [owlDateTimeTrigger]="signUpDate"/>
+                <input type="text" class="form-control" placeholder="Enter the sign up date" [(ngModel)]="practiceService.practice.signDate" [owlDateTime]="signUpDate" [owlDateTimeTrigger]="signUpDate"/>
                 <owl-date-time #signUpDate [pickerType]="'calendar'"></owl-date-time>
             </div>
 

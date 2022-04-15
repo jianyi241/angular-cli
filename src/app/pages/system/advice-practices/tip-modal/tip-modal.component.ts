@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -19,5 +19,9 @@ export class TipModalComponent implements OnInit {
 
   dismiss(): void {
     this.activeModal.dismiss();
+  }
+
+  close() {
+    this.activeModal.close();
   }
 }

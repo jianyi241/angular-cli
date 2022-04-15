@@ -6,7 +6,7 @@
             </div>
 
             <div class="btn-control-group">
-                <button class="btn btn-purple btn-with-icon xs-ml-24" [routerLink]="['/advice-practices/advice-tab/overview']">
+                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="save()">
                     <span class="icon-block icon-add icon-18 xs-mr-8"></span> Add practice
                 </button>
             </div>
@@ -19,17 +19,20 @@
             </div>
 
             <div class="switch-button">
-                <div class="switch-text active">All</div>
-                <div class="switch-text">Active</div>
+                <div class="switch-text" [ngClass]="{'active': condition.status == ''}" (click)="condition.status = '';getAdvicePage()">All</div>
+                <div class="switch-text" [ngClass]="{'active': condition.status == configService.practiceStatus.active}"
+                     (click)="condition.status = configService.practiceStatus.active;getAdvicePage()">Active
+                </div>
             </div>
         </div>
     </div>
 
     <div class="table-responsive">
-       <table class="table table-list table-striped">
-           <thead>
+        <ng-container *ngIf="advicePage.total > 0">
+            <table class="table table-list table-striped">
+                <thead>
                 <tr>
-                    <th class="max-w-300">
+                    <th>
                         <div class="th-cell xs-ml-8">
                             Practice name
                             <sorting-widget></sorting-widget>
@@ -63,24 +66,26 @@
                         </div>
                     </th>
 
-                    <th class="text-right"><div class="th-cell">Action</div></th>
+                    <th class="text-right">
+                        <div class="th-cell">Action</div>
+                    </th>
                 </tr>
-           </thead>
+                </thead>
 
-           <thead class="table-margin">
+                <thead class="table-margin">
                 <tr>
                     <th colspan="6"></th>
                 </tr>
-           </thead>
+                </thead>
 
-           <tbody>
-                <tr>
+                <tbody>
+                <tr *ngFor="let practice of advicePage.records">
                     <td>
-                        <div class="td-cell max-w-300 tx-bold" title="ABC Advisory">ABC Advisory</div>
+                        <div class="td-cell tx-bold">{{practice.name}}</div>
                     </td>
 
                     <td>
-                        <div class="td-cell">1 Jan 2022</div>
+                        <div class="td-cell">{{practice.signDate | dateFormat}}</div>
                     </td>
 
                     <td>
@@ -88,194 +93,39 @@
                     </td>
 
                     <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
+                        <div class="td-cell">{{practice.billingDate | dateFormat}}</div>
                     </td>
 
                     <td>
-                        <div class="td-cell">
+                        <div class="td-cell" *ngIf="practice.archiveFlag">
                             <label class="label label-grey">Archived</label>
                         </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="Another Advisory">Another Advisory</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
+                        <div class="td-cell"
+                             *ngIf="!practice.archiveFlag && practice.status == configService.practiceStatus.disable">
+                            <label class="label label-red">Disabled</label>
+                        </div>
+                        <div class="td-cell"
+                             *ngIf="!practice.archiveFlag && practice.status == configService.practiceStatus.active">
                             <label class="label label-green-light">Active</label>
                         </div>
                     </td>
 
                     <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
+                        <button class="btn btn-purple-border btn-tiny" (click)="save(practice)">Edit</button>
                     </td>
                 </tr>
+                </tbody>
+            </table>
 
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="Another Advisory">Another Advisory</div>
-                    </td>
+            <ngb-pagination [collectionSize]="advicePage.total" [(page)]="advicePage.current"
+                            [pageSize]="advicePage.size"
+                            (pageChange)="pageChange($event)"></ngb-pagination>
+        </ng-container>
 
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
 
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-red">Disabled</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="ABC Advisory">ABC Advisory</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-grey">Archived</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="Another Advisory">Another Advisory</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-green-light">Active</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="Another Advisory">Another Advisory</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-red">Disabled</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-300 tx-bold" title="Another Advisory">Another Advisory</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">1 Jan 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">3 of 4</div>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="td-cell">1 Jan 2023</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-red">Disabled</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny">Edit</button>
-                    </td>
-                </tr>
-
-           </tbody>
-       </table>
-
-        <ngb-pagination [collectionSize]="70" [(page)]="page" (pageChange)="$event"></ngb-pagination>
-
-        <div class="empty-text">You don’s have any advice practice yet. Click on “Add practice” to add.</div>
+        <div class="empty-text" *ngIf="advicePage.total == 0">You don’s have any advice practice yet. Click on “Add
+            practice” to add.
+        </div>
 
     </div>
 </div>
