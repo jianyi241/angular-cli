@@ -1,97 +1,149 @@
 .admin-wrapper {
+  font-family: 'Manrope';
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  align-items: stretch;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: 0 20px;
-  color: var(--themeCOlor);
+  overflow: auto;
 
-  .admin{
+  .admin-left{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 634px;
+    height: 100%;
+    background-image: url('../../../../assets/img/login-bg.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #4640DE;
+
+    @media screen and (max-width: 578px){
+      display: none;
+    }
+
+    .logo{
+      width: 236px;
+      height: auto;
+      margin-top:59px;
+    }
+  }
+
+  .admin-right{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    @media (max-width:578px) {
-      justify-content: flex-start;
-      margin-top: 18px;
-    }
-    .sign-logo{
-      margin-bottom: 50px;
-      width: 100px;
-      img{
-        width: 100%;
-      }
-      @media screen and (max-width: 640px){
-        margin-bottom: 10px;
-        width: 134px;
-      }
-      @media screen and (max-width: 578px){
-        margin-bottom: 0px;
-      }
-    }
-    @media screen and (max-width: 1200px){
-      width: 60%;
+    position: relative;
+    flex:1;
+    max-width: 100%;
+    min-height: 100%;
+    padding-left:199px;
+    padding-right:199px;
+
+    @media screen and (max-width: 1024px){
+      padding-left:80px;
+      padding-right:80px;
     }
 
     @media screen and (max-width: 768px){
-      width: 100%;
+      padding-left:60px;
+      padding-right:60px;
+    }
+
+
+    @media screen and (max-width: 578px){
+      padding-left:40px;
+      padding-right:40px;
+    }
+
+    @media screen and (max-width: 350px){
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+
+    .sign-title{
+      font-family: 'ClashDisplay';
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 29px;
+      text-align: center;
+      color: #25324B;
+    }
+
+    .sign-sub-title{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 19px;
+      text-align: center;
+      color: #515B6F;
+      opacity: 0.5;
+      margin: 24px 0;
+
+      .text{
+        position: relative;
+        display: inline-block;
+        padding:0 16px;
+        background-color: #ffffff;
+        z-index: 2;
+      }
+
+      &::before{
+        content:"";
+        position: absolute;
+        top:50%;
+        left:0;
+        width: 100%;
+        height: 1px;
+        background-color: #D6DDEB;
+      }
     }
   }
 
   .form{
-    width: 420px;
+    width: 408px;
     max-width: 100%;
-    @media screen and (max-width: 768px){
-      padding:20px;
-    }
 
-    .title{
-      font-family: Inter;
-      font-weight: 800;
-      font-size: 34px;
-      line-height: 48px;
-      letter-spacing: -.09px;
-      color:#3A3335;
-      text-align: center;
-      margin-bottom: 44px;
-      @media (max-width:640px) {
-        font-size: 24px;
-      }
-      @media (max-width:578px) {
-       margin-top: 10px;
-       margin-bottom: 25px;
-      }
-    }
-
-
-    .form-bottom{
-      font-family: Inter;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin:18px 0 28px 0;
-
-      .link-text{
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 21px;
-        color:#EB5E55;
-        margin-left: auto;
-      }
+    @media screen and (max-width: 578px){
+      width: 100%;
     }
   }
+}
 
-  .btn-active {
-    background-color: #282828;
+
+.tip-error{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 19px;
+  color: #EB5757;
+  padding:4px 0;
+}
+
+.chat-box{
+  position: fixed;
+  bottom:24px;
+  right:24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  background: #4640DE;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  z-index: 10;
+  cursor: pointer;
+
+  &:hover{
+    background:darken( #4640DE,5%);
   }
 }

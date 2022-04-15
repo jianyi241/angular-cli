@@ -85,6 +85,28 @@
   }
 }
 
+.form-group-sign{
+  .control-label{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+    color:#515B6F;
+    margin-bottom: 4px;
+
+    .label-required{
+      display: inline-block;
+      padding-left: 2px;
+    }
+  }
+
+  .form-control {
+    font-size: 14px;
+    line-height: 22px;
+    color: #25324B;
+    height: 46px;
+  }
+}
+
 .form-control {
   color:#515B6F;
   font-family: 'Epilogue';
@@ -508,5 +530,23 @@
     line-height: 24px;
     .text-ellipsis;
     padding-left:24px;
+  }
+}
+
+
+//password-input
+.password-input{
+  position: relative;
+
+  .form-control{
+    padding-right:48px;
+  }
+
+  .icon-block{
+    position: absolute;
+    bottom:14px;
+    right:16px;
+    z-index: 10;
+    cursor: pointer;
   }
 }
