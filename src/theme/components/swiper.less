@@ -3,7 +3,7 @@
     position: relative;
 
     .swiper-container {
-        padding-bottom: 54px;
+        padding-bottom: 0;
 
         .swiper-wrapper {
             .swiper-slide {
@@ -116,6 +116,40 @@
                 width: 28px;
                 background: #4640DE;
             }
+        }
+    }
+}
+
+.swiper-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:24px 0;
+
+    .swiper-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 39px;
+        cursor: pointer;
+        margin:0 12px;
+    }
+
+    .swiper-dot{
+        width: 7px;
+        height: 7px;
+        background: #A8ADB7;
+        border-radius: 6px;
+        margin:0 6px;
+        transition: all 0.25s ease-in-out;
+
+        &.active{
+            width: 28px;
+            background: #4640DE;
         }
     }
 }

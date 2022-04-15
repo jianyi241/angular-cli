@@ -21,17 +21,19 @@
                     <span class="line"></span>
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
-                    <a href="#">News & Updates</a>
-                    <a [routerLink]="['/supplier']" routerLinkActive="active">Suppliers</a>
-                    <a [routerLink]="['/platform']" routerLinkActive="active">Platforms</a>
+                    <a >News & Updates</a>
+                    <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Configurator</a>
+                    <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
                     <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
+                    <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
+                    <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="head-right">
-        <div class="text">Sam the BDM</div>
+        <div class="text" [routerLink]="['/profile']">Sam the BDM</div>
 
         <div class="logout" (click)="logOut()">
             <span class="icon-block icon-logout icon-24"></span>

@@ -69,6 +69,20 @@
     justify-content: flex-end;
     align-items: center;
   }
+
+
+
+  &.form-group-custom-reset{
+    .form-group-left{
+      width: 525px;
+      padding-right:66px;
+
+      @media screen and (max-width: 890px){
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  }
 }
 
 .form-control {
@@ -117,6 +131,12 @@
   &[readonly] {
     background: #FFFFFF;
     cursor: auto;
+  }
+
+  &.form-control-amount{
+    font-weight: 600;
+    font-size: 16px;
+    color: #25324B;
   }
 }
 
@@ -380,5 +400,113 @@
   .col-6{
     padding-left: 12px;
     padding-right: 12px;
+  }
+}
+
+
+//form-group-column
+.form-group-column{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin:0 -24px;
+
+  .column-6{
+    width: 50%;
+    padding:0 24px;
+
+    @media screen and (max-width: 890px){
+      width: 100%;
+    }
+
+    &:nth-child(2){
+      border-left: 1px solid #D6DDEB;
+    }
+  }
+
+  .column-group{
+    position: relative;
+    padding-right: 35px;
+
+    .icon-delete{
+      position: absolute;
+      bottom:11px;
+      right:0;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+  }
+}
+
+.input-group_unit{
+  position: relative;
+
+  .unit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    color: #202430;
+    opacity: 0.5;
+    position: absolute;
+    top:50%;
+    left:0;
+    margin-top:-20px;
+    width: 40px;
+    height: 40px;
+    padding-top:3px;
+
+    &::before{
+      content:"";
+      position: absolute;
+      top:50%;
+      right:0;
+      margin-top:-12px;
+      width: 1px;
+      height: 24px;
+      background-color: #A8ADB7;
+    }
+  }
+
+  .form-control{
+    padding-left: 48px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #25324B;
+  }
+}
+
+
+
+
+//total-amount
+.total-amount{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:9px 24px;
+  color: #FFFFFF;
+  font-weight: 600;
+  background-color: @themeColor;
+  margin-top:24px;
+
+  .text{
+    font-family: 'Epilogue';
+    font-size: 14px;
+    line-height: 22px;
+    max-width: 270px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  .amount{
+    font-family: 'ClashDisplay';
+    font-size: 20px;
+    line-height: 24px;
+    .text-ellipsis;
+    padding-left:24px;
   }
 }

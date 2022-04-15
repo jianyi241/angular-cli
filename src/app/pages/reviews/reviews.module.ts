@@ -10,9 +10,10 @@ import {ReviewsRoutingModule} from './reviews-routing.module';
 import {SwiperModule} from 'swiper/angular';
 import {SystemModule} from "../system/system.module";
 import {MetricComparisonComponent} from './metric-comparison/metric-comparison.component';
+import { FeeComparisonComponent } from './fee-comparison/fee-comparison.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

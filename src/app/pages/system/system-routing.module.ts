@@ -24,6 +24,9 @@ import {AdviceTeamComponent} from "./advice-practices/advice-team/advice-team.co
 import {AdviceBillingComponent} from "./advice-practices/advice-billing/advice-billing.component";
 import {AdviceInvoicesComponent} from "./advice-practices/advice-invoices/advice-invoices.component";
 import {EditTeamComponent} from "./advice-practices/edit-team/edit-team.component";
+import {FeesRatesComponent} from "./suppliers/fees-rates/fees-rates.component";
+import {FeesRatesProductComponent} from "./platforms/fees-rates-product/fees-rates-product.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
     {
@@ -68,6 +71,10 @@ const routes: Routes = [
                         path: 'change-history/:version',
                         component: ChangeHistoryComponent,
                     },
+                    {
+                        path: 'fees-rate',
+                        component: FeesRatesComponent,
+                    },
                 ]
             },
 
@@ -104,6 +111,10 @@ const routes: Routes = [
                     {
                         path: 'change-history/:productId/:version',
                         component: ChangeHistoryProductComponent,
+                    },
+                    {
+                        path: 'fees-rate',
+                        component: FeesRatesProductComponent,
                     },
                 ]
             },
@@ -145,6 +156,16 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'profile',
+        component: LayoutComponent,
+        children:[
+            {
+                path:'',
+                component: ProfileComponent
+            }
+        ]
+    }
 ];
 
 

@@ -10,7 +10,8 @@
 
 //check-box
 .check-box {
-  height: 22px;
+  height: auto;
+  min-height: 22px;
   display: flex;
   width: auto;
   position: relative;
@@ -25,6 +26,7 @@
     color: #515B6F;
     line-height: 21px;
     cursor: pointer;
+    margin:0;
 
     &::before {
       content: "";
@@ -70,6 +72,43 @@
         opacity: 0.4;
       }
     }
+  }
+
+
+  &.check-box-purple{
+    margin:16px 0;
+
+    &:first-child{
+      margin-top:0;
+    }
+
+    &:last-child{
+      margin-bottom:0;
+    }
+
+    label {
+      padding-left: 30px;
+      line-height: 22px;
+
+      &::before {
+        height: 22px;
+        width: 22px;
+        margin-top: -11px;
+        background-color:transparent;
+        border: 2px solid #D6DDEB;
+      }
+    }
+
+
+    input[type="checkbox"] {
+      &:checked {
+        +label::before {
+          border:2px solid @themeColor;
+          background-color: @themeColor;
+        }
+      }
+    }
+
   }
 }
 

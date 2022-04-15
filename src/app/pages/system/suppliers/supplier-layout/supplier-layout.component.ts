@@ -66,6 +66,7 @@ export class SupplierLayoutComponent implements OnInit {
             return
         }
         this.currentTab = tab.toLowerCase().replace(' ', '-');
+
         this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`);
     }
 

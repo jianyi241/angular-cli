@@ -44,6 +44,9 @@ import { AdviceInvoicesComponent } from './advice-practices/advice-invoices/advi
 import {OwlDateTimeModule} from "ng-pick-datetime";
 import { EditTeamComponent } from './advice-practices/edit-team/edit-team.component';
 import { TipModalComponent } from './advice-practices/tip-modal/tip-modal.component';
+import { FeesRatesComponent } from './suppliers/fees-rates/fees-rates.component';
+import { FeesRatesProductComponent } from './platforms/fees-rates-product/fees-rates-product.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -82,7 +85,10 @@ import { TipModalComponent } from './advice-practices/tip-modal/tip-modal.compon
         AdviceBillingComponent,
         AdviceInvoicesComponent,
         EditTeamComponent,
-        TipModalComponent
+        TipModalComponent,
+        FeesRatesComponent,
+        FeesRatesProductComponent,
+        ProfileComponent
     ],
     imports: [
         CommonModule,
