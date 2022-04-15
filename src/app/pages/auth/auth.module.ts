@@ -8,6 +8,7 @@ import {LoadingComponent} from '../../components/loading/loading.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {FloatInputComponent} from "../../components/float-input/float-input.component";
 import { LoginTipModalComponent } from './login-tip-modal/login-tip-modal.component';
+import {TogglePwdDirective} from "../../directive/toggle-pwd/toggle-pwd.directive";
 
 const authRoutes: Routes = [
     {
@@ -43,6 +44,7 @@ const authRoutes: Routes = [
         LoadingComponent,
         ResetPasswordComponent,
         LoginTipModalComponent,
+        TogglePwdDirective
     ],
 })
 export class AuthModule {
