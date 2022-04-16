@@ -34,6 +34,12 @@ export class HeaderComponent implements OnInit {
             this.router.navigateByUrl('/supplier/supplier-tab');
         } else if (type.includes('/platform')) {
             this.router.navigateByUrl('/platform/product');
+        } else if (type.includes('/advice-practices')) {
+            if (this.currentUserService.isAdmin()) {
+                this.router.navigateByUrl('/advice-practices');
+            } else {
+                this.router.navigateByUrl(`/advice-practices/advice-tab/overview/${this.currentUserService.authentication.principal.practiceId}`);
+            }
         }
     }
 
@@ -49,7 +55,7 @@ export class HeaderComponent implements OnInit {
         modalRef.result.then((result) => {
             localStorage.removeItem(Constants.CURRENT_USER);
             localStorage.removeItem(Constants.ACCESS_TOKEN);
-            this.currentUserService.authentication = null;
+            this.currentUserService.setAuthentication(null);
             this.router.navigateByUrl('/login');
         }, (reason) => {
         });

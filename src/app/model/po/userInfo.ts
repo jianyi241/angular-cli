@@ -20,5 +20,8 @@ export class UserInfo extends BaseModel{
     openId?: string;
     role?: string;
     status?: string;
+    practiceId?: string;
+    receiveNewsFlag?: boolean;
+    arn?: string;
 }
 

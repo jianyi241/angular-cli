@@ -8,7 +8,7 @@
             <a>News & Updates</a>
             <a customLinkActive="active" [link]="['/supplier']" (click)="chooseType('/supplier')">Configurator</a>
             <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platforms</a>
-            <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
+            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Advice practices</a>
             <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
             <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
         </div>
@@ -26,7 +26,7 @@
                        (click)="chooseType('/supplier')">Configurator</a>
                     <a class="{{configService.activeMatch('/platform')}}"
                        (click)="chooseType('/platform')">Platforms</a>
-                    <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
+                    <a class="{{configService.activeMatch('/advice-practices')}}" >Advice practices</a>
                     <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
                     <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
                 </div>

@@ -1,7 +1,7 @@
 <div class="main main-form main-form-with-tab">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title">Sam Halcrow</div>
+        <div class="sub-title">{{fullName()}}</div>
 
         <div class="btn-control-group" >
             <button class="btn btn-purple xs-ml-24">Save</button>
@@ -31,7 +31,7 @@
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
-                    <img src="../assets/img/icon-profile.svg"/>
+                    <img [src]="currentUser.avatar?.visitUrl"/>
                 </div>
                 <div class="form-group-right">
                     <div class="upload-file">
@@ -63,26 +63,26 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label class="control-label control-label-custom"><div>First name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" placeholder="Enter your first name"/>
+                            <input type="text" class="form-control" [(ngModel)]="currentUser.firstName" placeholder="Enter your first name"/>
                         </div>
                     </div>
 
                     <div class="col-6">
                         <div class="form-group">
                             <label class="control-label control-label-custom"><div>Last name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" placeholder="Enter your last name"/>
+                            <input type="text" class="form-control" [(ngModel)]="currentUser.lastName" placeholder="Enter your last name"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom"><div>Email<span class="label-required">*</span></div></label>
-                    <input type="text" class="form-control" placeholder="Enter your email"/>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email" placeholder="Enter your email"/>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label control-label-custom"><div>Contact Number</div></label>
-                    <input type="text" class="form-control" placeholder="Enter your contact number"/>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.mobile" placeholder="Enter your contact number"/>
                 </div>
 
                 <div class="form-group">

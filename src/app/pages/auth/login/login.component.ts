@@ -51,6 +51,7 @@ export class LoginComponent {
                     return;
                 }
                 this.storage.setItem(Constants.CURRENT_USER, userResult.data);
+                this.currentUserService.setAuthentication(userResult.data);
                 this.router.navigateByUrl('/supplier/supplier-tab');
             });
         });
