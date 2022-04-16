@@ -62,11 +62,7 @@ export class SupplierLayoutComponent implements OnInit {
 
 
     chooseTab(tab: string): void {
-        if (tab == TabType.feesAndRates.name) {
-            return
-        }
-        this.currentTab = tab.toLowerCase().replace(' ', '-');
-
+        this.currentTab = this.configService.converterTabToRouter(tab);
         this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`);
     }
 

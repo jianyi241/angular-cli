@@ -60,8 +60,8 @@ export class ConfigService {
         return PropType.parseEnum(value)?.name || '';
     }
 
-    activeMatch(routerUrl: string): string {
-        return this.router.url.includes(routerUrl.toLowerCase().replace(' ', '-')) ? 'active' : '';
+    activeMatch(tab: string): string {
+        return this.router.url.includes(this.converterTabToRouter(tab)) ? 'active' : '';
     }
 
     isEditable(versionType: string, status?: string): boolean {
@@ -110,5 +110,15 @@ export class ConfigService {
     emptyList(items: any[], status = 'Archive'): boolean {
         let filter = items.filter(i => i.status != status);
         return filter.length == 0;
+    }
+
+    converterTabToRouter(tab: string) {
+        if (tab == TabType.changeHistory.name) {
+            return tab.toLowerCase().replace(' ', '-');
+        }
+        if (tab == TabType.feesAndRates.name) {
+            return tab.toLowerCase().replace(' & ', '-');
+        }
+        return tab.toLowerCase();
     }
 }

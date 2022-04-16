@@ -5,9 +5,9 @@
         </a>
 
         <div class="menu">
-            <a >News & Updates</a>
-            <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Configurator</a>
-            <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
+            <a>News & Updates</a>
+            <a customLinkActive="active" [link]="['/supplier']" (click)="chooseType('/supplier')">Configurator</a>
+            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platforms</a>
             <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
             <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
             <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
@@ -21,9 +21,11 @@
                     <span class="line"></span>
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
-                    <a >News & Updates</a>
-                    <a class="{{configService.activeMatch('/supplier')}}" (click)="chooseType('/supplier')">Configurator</a>
-                    <a class="{{configService.activeMatch('/platform')}}" (click)="chooseType('/platform')">Platforms</a>
+                    <a>News & Updates</a>
+                    <a class="{{configService.activeMatch('/supplier')}}"
+                       (click)="chooseType('/supplier')">Configurator</a>
+                    <a class="{{configService.activeMatch('/platform')}}"
+                       (click)="chooseType('/platform')">Platforms</a>
                     <a [routerLink]="['/advice-practices']" routerLinkActive="active">Advice practices</a>
                     <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
                     <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
@@ -39,11 +41,11 @@
             <span class="icon-block icon-logout icon-24"></span>
         </div>
 
-<!--        <div ngbDropdown placement="bottom-end">-->
-<!--            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>-->
-<!--            <div ngbDropdownMenu aria-labelledby="dropdownMenu">-->
-<!--                <button ngbDropdownItem>Log out</button>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div ngbDropdown placement="bottom-end">-->
+        <!--            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>-->
+        <!--            <div ngbDropdownMenu aria-labelledby="dropdownMenu">-->
+        <!--                <button ngbDropdownItem>Log out</button>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>

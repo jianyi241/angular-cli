@@ -51,7 +51,7 @@ export class EditSubGroupComponent implements OnInit {
 
     goBack(): void {
         let tabType = TabType.parseEnum(this.currentTab);
-        let tab = tabType.name.toLowerCase().replace(' ', '-');
+        let tab = this.configService.converterTabToRouter(tabType.name);
         this.route.navigateByUrl(`/supplier/supplier-tab/${tab}/${this.version.id}`);
     }
 

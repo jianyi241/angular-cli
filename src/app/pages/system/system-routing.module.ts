@@ -72,7 +72,7 @@ const routes: Routes = [
                         component: ChangeHistoryComponent,
                     },
                     {
-                        path: 'fees-rate',
+                        path: 'fees-rates/:version',
                         component: FeesRatesComponent,
                     },
                 ]
