@@ -10,7 +10,8 @@ import {ReviewsRoutingModule} from './reviews-routing.module';
 import {SwiperModule} from 'swiper/angular';
 import {SystemModule} from "../system/system.module";
 import {MetricComparisonComponent} from './metric-comparison/metric-comparison.component';
-import { FeeComparisonComponent } from './fee-comparison/fee-comparison.component';
+import {FeeComparisonComponent} from './fee-comparison/fee-comparison.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent],
@@ -20,6 +21,7 @@ import { FeeComparisonComponent } from './fee-comparison/fee-comparison.componen
         NgbModule,
         SwiperModule,
         SystemModule,
+        FormsModule,
     ], exports: [
     ReviewDropdownDirective,
     TableScrollDirective
