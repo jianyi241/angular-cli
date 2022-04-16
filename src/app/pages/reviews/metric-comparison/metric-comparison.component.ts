@@ -51,7 +51,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            // this.router.navigateByUrl('/review/metric-comparison');
+            this.router.navigateByUrl('/review/fee-comparison');
         });
     }
 
