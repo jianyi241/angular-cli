@@ -35,7 +35,7 @@
     </div>
 
     <div class="head-right">
-        <div class="text" [routerLink]="['/profile']">Sam the BDM</div>
+        <div class="text" [routerLink]="['/profile']">{{currentUserService.fullName()}}</div>
 
         <div class="logout" (click)="logOut()">
             <span class="icon-block icon-logout icon-24"></span>

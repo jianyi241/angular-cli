@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-login-tip-modal',
-  templateUrl: './login-tip-modal.component.html',
-  styleUrls: ['./login-tip-modal.component.less']
+    selector: 'app-login-tip-modal',
+    templateUrl: './login-tip-modal.component.html',
+    styleUrls: ['./login-tip-modal.component.less']
 })
 export class LoginTipModalComponent implements OnInit {
-  title:string;
-  subTitle:string;
-  info:string;
-  btnText:string;
-  constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) { }
+    title: string;
+    subTitle: string;
+    info: string;
+    btnText: string;
 
-  ngOnInit(): void {
-  }
+    constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
+    }
 
-  dismiss(): void {
-    this.activeModal.dismiss();
-  }
+    ngOnInit(): void {
+    }
+
+    dismiss(): void {
+        this.activeModal.dismiss();
+    }
+
+    close(): void {
+        this.activeModal.close();
+    }
 }

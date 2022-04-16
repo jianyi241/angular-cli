@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
     providedIn: 'root'
 })
 export class CurrentUserService {
-    authentication: Authentication;
+    private authentication: Authentication;
 
     constructor(private router: Router) {
         let item = localStorage.getItem(Constants.CURRENT_USER);
@@ -16,6 +16,14 @@ export class CurrentUserService {
         } else {
             this.router.navigateByUrl('/login');
         }
+    }
+
+    fullName(): string {
+        if (!this.authentication) {
+            return;
+        }
+        let names = [this.authentication.principal.firstName, this.authentication.principal.lastName]
+        return names.filter(n => n).join(" ");
     }
 
 

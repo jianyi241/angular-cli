@@ -4,6 +4,8 @@ import {VersionRepository} from "../../repository/version-repository";
 import {ConfigService} from "../../service/config.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LoginTipModalComponent} from "../../pages/auth/login-tip-modal/login-tip-modal.component";
+import {CurrentUserService} from "../../service/current-user.service";
+import {Constants} from "../../model/constants";
 
 @Component({
     selector: 'app-header',
@@ -14,6 +16,7 @@ export class HeaderComponent implements OnInit {
     constructor(
         private versionRepository: VersionRepository,
         public configService: ConfigService,
+        public currentUserService: CurrentUserService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private modalService: NgbModal
@@ -44,6 +47,10 @@ export class HeaderComponent implements OnInit {
         modalRef.componentInstance.info = 'You will always be able to log back in.';
         modalRef.componentInstance.btnText = 'Yes, log me out';
         modalRef.result.then((result) => {
+            localStorage.removeItem(Constants.CURRENT_USER);
+            localStorage.removeItem(Constants.ACCESS_TOKEN);
+            this.currentUserService.authentication = null;
+            this.router.navigateByUrl('/login');
         }, (reason) => {
         });
     }
