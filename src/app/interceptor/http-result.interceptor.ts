@@ -13,6 +13,7 @@ import {LocalStorageObServable} from '../observable/local-storage-observable';
 import {Router} from '@angular/router';
 import {ToastRepository} from "../repository/toast-repository";
 import {SaveService} from "../service/save.service";
+import {Constants} from "../model/constants";
 
 
 @Injectable()
@@ -30,9 +31,9 @@ export class HttpResultInterceptor implements HttpInterceptor {
         const baseUrl = request.url;
         //random url clear cache
         let url = baseUrl + (baseUrl.indexOf('?') > 0 ? '&' : '?') + 'random=' + new Date().getTime();
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem(Constants.ACCESS_TOKEN);
         if (accessToken) {
-            let headers = request.headers.set('access_token', accessToken);
+            let headers = request.headers.set(Constants.ACCESS_TOKEN, accessToken);
             clone = {headers, url: url};
         } else {
             clone = {url: url};

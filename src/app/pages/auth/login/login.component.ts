@@ -1,11 +1,13 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpResult } from 'src/app/model/common/http-result';
-import { LoginUser } from 'src/app/model/user';
-import { UserRepository } from 'src/app/repository/user-repository';
-import { LocalStorageObServable } from 'src/app/observable/local-storage-observable';
-import { ToastRepository } from '../../../repository/toast-repository';
-import { NgxLoadingSpinnerService } from '@k-adam/ngx-loading-spinner';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpResult} from 'src/app/model/common/http-result';
+import {LoginUser} from 'src/app/model/user';
+import {UserRepository} from 'src/app/repository/user-repository';
+import {LocalStorageObServable} from 'src/app/observable/local-storage-observable';
+import {ToastRepository} from '../../../repository/toast-repository';
+import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
+import {Constants} from "../../../model/constants";
+import {CurrentUserService} from "../../../service/current-user.service";
 
 
 @Component({
@@ -24,11 +26,14 @@ export class LoginComponent {
         private toastRepository: ToastRepository,
         private userRepository: UserRepository,
         private router: Router,
-        public localStorageObservrable: LocalStorageObServable
+        private currentUserService: CurrentUserService,
+        public storage: LocalStorageObServable
     ) {
     }
 
     loginWithEmail(): void {
+        this.loginUser.account = 'monk@arcadedevhouse.com.au';
+        this.loginUser.password = 'Bu11dogs';
         const loginObj = { ...this.loginUser };
         this.isLogin = true;
         this.userRepository.login(loginObj).subscribe((result: HttpResult<any>) => {
@@ -37,7 +42,7 @@ export class LoginComponent {
                 this.toastRepository.showDanger(result.msg, 'toastTop');
                 return;
             }
-            this.localStorageObservrable.setItem('accessToken', result.data.accessToken);
+            this.storage.setItem(Constants.ACCESS_TOKEN, result.data.accessToken);
             this.spinnerService.show();
             this.userRepository.getCurrentUser().subscribe(userResult => {
                 this.spinnerService.hide();
@@ -45,9 +50,8 @@ export class LoginComponent {
                     this.toastRepository.showDanger(userResult.msg, 'toastTop');
                     return;
                 }
-                this.localStorageObservrable.setItem('UserInfo', userResult.data);
-                // this.router.navigate(['Home']);
-                alert('login success');
+                this.storage.setItem(Constants.CURRENT_USER, userResult.data);
+                this.router.navigateByUrl('/supplier/supplier-tab');
             });
         });
     }

@@ -46,8 +46,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.reviewNextObservable.unsubscribe();
-        this.reviewBackObservable.unsubscribe();
+       this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
+       this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
     }
 
     subscribe(): void {

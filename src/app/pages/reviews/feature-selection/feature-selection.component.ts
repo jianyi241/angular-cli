@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 import {ReviewService} from "../../../service/review.service";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
-import { SwiperComponent } from "swiper/angular";
+import {SwiperComponent} from "swiper/angular";
 
 SwiperCore.use([Pagination]);
 
@@ -40,8 +40,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.reviewNextObservable.unsubscribe();
-        this.reviewBackObservable.unsubscribe();
+        this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
+        this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
     }
 
 

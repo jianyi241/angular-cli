@@ -44,7 +44,7 @@ export class CustomLinkActiveDirective implements OnInit, OnDestroy {
 
 
     ngOnDestroy(): void {
-        this.routerObservable.unsubscribe();
+        this.routerObservable && this.routerObservable.unsubscribe();
     }
 
 

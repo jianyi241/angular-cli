@@ -1,18 +1,19 @@
-import {AfterContentInit, Component} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {Component} from '@angular/core';
+import {ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ToastRepository} from './repository/toast-repository';
 import {Subscription} from 'rxjs';
-import {MessagingService} from './service/messaging.service';
 import {BsModalService} from 'ngx-bootstrap/modal';
+import {LocalStorageObServable} from "./observable/local-storage-observable";
+import {Constants} from "./model/constants";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.less'],
 })
-export class AppComponent implements AfterContentInit {
+export class AppComponent {
     private routerEventsListener: Subscription;
-    excludes: string[] = ['/reset', '/order/new', '/order/cancel', '/TV'];
+    excludes: string[] = ['/login', '/forgot', '/reset', '/order/new', '/order/cancel', '/TV'];
     message;
     title: any;
 
@@ -20,10 +21,13 @@ export class AppComponent implements AfterContentInit {
         public router: Router,
         public activatedRoute: ActivatedRoute,
         public toastRepository: ToastRepository,
-        private messagingService: MessagingService,
+        private storage: LocalStorageObServable,
         private modalService: BsModalService
     ) {
         this.routerEventsListener = this.router.events.subscribe(event => {
+            if (event instanceof ActivationEnd) {
+                this.checkAuthentication();
+            }
             if (event instanceof NavigationStart) {
                 toastRepository.showLoading(true);
             }
@@ -36,32 +40,20 @@ export class AppComponent implements AfterContentInit {
 
 
     ngOnDestroy(): void {
-        this.routerEventsListener.unsubscribe();
+        this.routerEventsListener && this.routerEventsListener.unsubscribe();
     }
 
-    ngAfterContentInit(): void {
-        // this.router.navigate(['/supplier']);
-        // this.localStorageService.getItem('UserInfo').subscribe((val) => {
-        //   let currentUrl = window.location.href;
-        //   currentUrl = currentUrl.split('/#')[1];
-        //   if (!val) {
-        //     // this.userRepository.getAccessToken().subscribe((user) => {
-        //     //   if (user.statusCode === 200) {
-        //     //     this.localStorageService.setItem("accessToken", user.data.accessToken);
-        //     //   }
-        //     // });
-        //     if (this.excludes.find(e => currentUrl.indexOf(e) != -1)) {
-        //       return;
-        //     }
-        //     // this.router.navigate(['/login']);
-        //   } else {
-        //     // this.router.navigate(["/Web/Location"]);
-        //     if (currentUrl && currentUrl !== '/') {
-        //       return;
-        //     }
-        //     // this.router.navigate(['/Home']);
-        //   }
-        // });
+    private checkAuthentication(): void {
+        //If the current route does not require a login
+        if (this.excludes.some(e => this.router.isActive(e, false))) {
+            return;
+        }
+        this.storage.getItem(Constants.CURRENT_USER).subscribe((val) => {
+            //If the current route requires login, but there is no user information
+            if (!val) {
+                this.router.navigateByUrl('/login');
+            }
+        });
     }
 
 }
