@@ -34,19 +34,20 @@ import {ShortTextComponent} from './platforms/prop-component/short-text/short-te
 import {IntegerComponent} from './platforms/prop-component/integer/integer.component';
 import {PropViewComponent} from './platforms/prop-component/prop-view/prop-view.component';
 import {DateFormatPipe} from '../../pipes/date-format.pipe';
-import { AdviceListComponent } from './advice-practices/advice-list/advice-list.component';
-import { AdviceLayoutComponent } from './advice-practices/advice-layout/advice-layout.component';
-import { AdviceOverviewComponent } from './advice-practices/advice-overview/advice-overview.component';
+import {AdviceListComponent} from './advice-practices/advice-list/advice-list.component';
+import {AdviceLayoutComponent} from './advice-practices/advice-layout/advice-layout.component';
+import {AdviceOverviewComponent} from './advice-practices/advice-overview/advice-overview.component';
 import {SortingWidgetComponent} from "../../common/sorting-widget/sorting-widget.component";
-import { AdviceTeamComponent } from './advice-practices/advice-team/advice-team.component';
-import { AdviceBillingComponent } from './advice-practices/advice-billing/advice-billing.component';
-import { AdviceInvoicesComponent } from './advice-practices/advice-invoices/advice-invoices.component';
+import {AdviceTeamComponent} from './advice-practices/advice-team/advice-team.component';
+import {AdviceBillingComponent} from './advice-practices/advice-billing/advice-billing.component';
+import {AdviceInvoicesComponent} from './advice-practices/advice-invoices/advice-invoices.component';
 import {OwlDateTimeModule} from "ng-pick-datetime";
-import { EditTeamComponent } from './advice-practices/edit-team/edit-team.component';
-import { TipModalComponent } from './advice-practices/tip-modal/tip-modal.component';
-import { FeesRatesComponent } from './suppliers/fees-rates/fees-rates.component';
-import { FeesRatesProductComponent } from './platforms/fees-rates-product/fees-rates-product.component';
-import { ProfileComponent } from './profile/profile.component';
+import {EditTeamComponent} from './advice-practices/edit-team/edit-team.component';
+import {TipModalComponent} from './advice-practices/tip-modal/tip-modal.component';
+import {FeesRatesComponent} from './suppliers/fees-rates/fees-rates.component';
+import {FeesRatesProductComponent} from './platforms/fees-rates-product/fees-rates-product.component';
+import {ProfileComponent} from './profile/profile.component';
+import {DateComponent} from './platforms/prop-component/date/date.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { ProfileComponent } from './profile/profile.component';
         TipModalComponent,
         FeesRatesComponent,
         FeesRatesProductComponent,
-        ProfileComponent
+        ProfileComponent,
+        DateComponent
     ],
     imports: [
         CommonModule,

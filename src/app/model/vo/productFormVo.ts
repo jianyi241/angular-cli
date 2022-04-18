@@ -16,5 +16,16 @@ import {PropertyVo} from "./PropertyVo";
 export class ProductFormVo {
     groupVoList?: Array<GroupVo> = new Array<GroupVo>();
     propertyVoList?: Array<PropertyVo> = new Array<PropertyVo>();
+    subProductVos?: Array<SubProductFormVo> = new Array<SubProductFormVo>();
+}
+
+
+export class SubProductFormVo {
+    id?: string;
+    name?: string;
+    shProductId?: string;
+    versionId?: string;
+    description?: string;
+    groupVos?: Array<GroupVo> = new Array<GroupVo>();
 }
 

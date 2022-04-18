@@ -7,6 +7,7 @@ export class PropType implements EnumIdentity {
     static readonly boolean = new PropType(3, "Boolean");
     static readonly integer = new PropType(4, "Integer");
     static readonly attachment = new PropType(5, "Attachment");
+    // static readonly date = new PropType(6, "Date");
 
     private constructor(public readonly value: number, public readonly name: string) {
         PropType.AllValues.push(this);

@@ -15,3 +15,8 @@
 <attachment [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
             [index]="index"
             *ngIf="type == configService.propType.attachment"></attachment>
+<app-date [change]="prop_change" [prop]="model" [index]="index"
+          [prop_class]="prop_class"
+          [editable]="editable"
+          [tabType]="tabType"
+          *ngIf="type == configService.propType.date"></app-date>

@@ -1,0 +1,7 @@
+<div class="form-group">
+    <label class="control-label control-label-custom {{prop_class}}">{{prop.name}}
+        <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
+    </label>
+    <input type="text" class="form-control" [disabled]="!editable" [placeholder]="prop.name" [(ngModel)]="date" [owlDateTime]="propDate" [owlDateTimeTrigger]="propDate"/>
+    <owl-date-time #propDate (afterPickerOpen)="focus()" [disabled]="!editable" (afterPickerClosed)="blur()" [pickerType]="'calendar'" ></owl-date-time>
+</div>

@@ -26,6 +26,7 @@ export class ConfigService {
         integer: PropType.integer.value,
         boolean: PropType.boolean.value,
         attachment: PropType.attachment.value,
+        date: 6,
     }
 
     practiceStatus = {

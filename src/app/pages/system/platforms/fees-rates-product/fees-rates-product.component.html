@@ -2,9 +2,9 @@
     <div class="form-group-custom form-content-column">
         <div class="form-column-left">
             <div class="title">Products <span class="link-new">+ New</span></div>
-            <div class="sub-title active">BT SMSF </div>
-            <div class="sub-title">Retirement solutions </div>
-            <div class="sub-title">Retirement solutions </div>
+            <div class="sub-title" [ngClass]="{'active': subProduct.id == subProductItem.id}" (click)="chooseGroup(subProductItem)" *ngFor="let subProductItem of feeRate.subProductVos">
+                {{subProductItem.name}}
+            </div>
         </div>
 
 
@@ -14,14 +14,23 @@
                 <p class="info">This is product fee information that you can update anytime.</p>
             </div>
 
-            <div class="form-sub-group">
+            <div class="form-sub-group" *ngFor="let group of subProduct.groupVos; let groupIndex = index">
                 <div class="form-sub-left">
-                    <div class="title">Fees</div>
-                    <div class="text">Introduce your product fee info quickly to users by fill up fees details</div>
+                    <div class="title">{{group.name}}</div>
+                    <div class="text" [innerHTML]="group.description"></div>
                 </div>
 
                 <div class="form-sub-right">
-                    <div class="form-three-group">
+                    <app-prop-view [model]="prop"
+                                   [prop_class]="configService.getColorByStatus(prop.status, version.type)"
+                                   [index]="groupIndex+'_'+propIndex"
+                                   [type]="prop.type"
+                                   [hidden]="configService.isArchive(prop.status, version.type)"
+                                   [tabType]="configService.tabType.information"
+                                   [editable]="configService.isEditable(version.type, prop.status)"
+                                   (prop_change)="saveProp(prop)"
+                                   *ngFor="let prop of group.propertyVoList; let propIndex = index"></app-prop-view>
+                    <!--<div class="form-three-group">
                         <label class="control-label control-label-custom">Effective date of fees and rates</label>
                         <ng-select disabled class="select-single" placeholder="Effective date of fees and rates"  dropdownPosition="bottom">
                             <ng-option>value1</ng-option>
@@ -53,12 +62,12 @@
                     <div class="form-three-group">
                         <label class="control-label control-label-custom">Fee aggregation</label>
                         <input type="text" class="form-control" placeholder="Fee aggregation"/>
-                    </div>
+                    </div>-->
 
                 </div>
             </div>
 
-            <div class="form-sub-group">
+            <!--<div class="form-sub-group">
                 <div class="form-sub-left">
                     <div class="title">Rates</div>
                     <div class="text">Introduce your product rate info quickly to users by fill up rates details</div>
@@ -82,7 +91,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
         </div>
     </div>
