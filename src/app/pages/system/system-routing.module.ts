@@ -113,7 +113,7 @@ const routes: Routes = [
                         component: ChangeHistoryProductComponent,
                     },
                     {
-                        path: 'fees-rate',
+                        path: 'fees-rates/:productId/:version',
                         component: FeesRatesProductComponent,
                     },
                 ]

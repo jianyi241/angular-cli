@@ -31,7 +31,7 @@
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
-                    <img [src]="currentUser.avatar?.visitUrl"/>
+                    <img [src]="(currentUser.avatar?.visitUrl || './assets/img/unassgin.svg')"/>
                 </div>
                 <div class="form-group-right">
                     <div class="upload-file">
@@ -39,7 +39,7 @@
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                                <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                                <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
                                 <div class="upload-content" (click)="openFileSelector()">
                                     <span class="icon-block icon-photo icon-32"></span>
                                     <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
@@ -85,12 +85,10 @@
                     <input type="text" class="form-control" [(ngModel)]="currentUser.mobile" placeholder="Enter your contact number"/>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="currentUserService.isAdvice()">
                     <label class="control-label control-label-custom">Practice role</label>
-                    <ng-select disabled class="select-single" placeholder="Select role"  dropdownPosition="bottom">
-                        <ng-option>role1</ng-option>
-                        <ng-option>role2</ng-option>
-                        <ng-option>role3</ng-option>
+                    <ng-select class="select-single" [(ngModel)]="currentUser.practiceRoleId" placeholder="Select role" dropdownPosition="bottom">
+                        <ng-option *ngFor="let practiceRole of practiceRoles" [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>
                     </ng-select>
                 </div>
 
@@ -101,7 +99,7 @@
             </div>
         </div>
 
-        <div class="form-group-custom">
+        <div class="form-group-custom" *ngIf="currentUserService.isAdvice()">
             <div class="form-group-left">
                 <label class="control-label">Account type</label>
                 <p class="info">Update your account type</p>
@@ -110,30 +108,13 @@
             <div class="form-group-right">
 
                 <div class="form-group">
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="administrator" name="accountType" id="administrator"/>
-                        <label for="administrator">
-                            Account administrator
-                            <div class="info">Everything Advisers can do and also manage billing and team members</div>
+                    <div class="radio-box radio-box-top-2" *ngFor="let accountType of accountRoles; let roleIndex = index">
+                        <input type="radio" [value]="accountType.id" [(ngModel)]="currentUser.adviceRoleId" name="accountType" id="accountType-{{roleIndex}}"/>
+                        <label for="accountType-{{roleIndex}}">
+                            {{accountType.roleName}}
+                            <div class="info">{{accountType.roleDesc}}</div>
                         </label>
                     </div>
-
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="adviser" name="accountType" id="adviser"/>
-                        <label for="adviser">
-                            Adviser (3 of 4 seats used)
-                            <div class="info">Can perform Suitability Reviews</div>
-                        </label>
-                    </div>
-
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" value="support" name="accountType" id="support"/>
-                        <label for="support">
-                            Support
-                            <div class="info">Can assist with Suitability Reviews</div>
-                        </label>
-                    </div>
-
                 </div>
             </div>
         </div>

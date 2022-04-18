@@ -123,9 +123,6 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     chooseTab(tab: string): void {
-        if (tab == TabType.feesAndRates.name) {
-            return
-        }
         this.currentTab = this.configService.converterTabToRouter(tab);
         this.router.navigateByUrl(`/platform/product-tab/${this.currentTab}/${this.product.id}/${this.version.id}`);
     }
