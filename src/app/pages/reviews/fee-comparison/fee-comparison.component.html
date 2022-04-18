@@ -21,15 +21,15 @@
                                     <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <input type="number" class="form-control" [(ngModel)]="idps.value"/>
+                                        <input type="number" class="form-control" [(ngModel)]="idps.value" />
                                     </div>
                                     <span class="icon-block icon-delete icon-19" (click)="removeIdps(idpsIndex)"
-                                          *ngIf="idpsIndex > 0"></span>
+                                        *ngIf="idpsIndex > 0"></span>
                                 </div>
                             </div>
                             <div class="column-group">
                                 <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                        (click)="addIdps()">
+                                    (click)="addIdps()">
                                     <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
                                 </button>
                             </div>
@@ -38,19 +38,20 @@
                         <div class="column-6">
                             <div class="column-group" *ngFor="let superItem of superArr; let superIndex = index">
                                 <div class="form-group">
-                                    <label class="control-label control-label-custom">Super/Pension {{superIndex + 1}}</label>
+                                    <label class="control-label control-label-custom">Super/Pension
+                                        {{superIndex + 1}}</label>
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <input type="number" class="form-control" [(ngModel)]="superItem.value"/>
+                                        <input type="number" class="form-control" [(ngModel)]="superItem.value" />
                                     </div>
                                     <span class="icon-block icon-delete icon-19" (click)="removeSuper(superIndex)"
-                                          *ngIf="superIndex > 0"></span>
+                                        *ngIf="superIndex > 0"></span>
                                 </div>
                             </div>
 
                             <div class="column-group">
                                 <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                        (click)="addSuper()">
+                                    (click)="addSuper()">
                                     <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
                                 </button>
                             </div>
@@ -72,11 +73,14 @@
 
                 <div class="form-group-right">
                     <div class="check-box check-box-purple" *ngFor="let item of platformItems; let itemIndex = index">
-                        <input type="checkbox" [(ngModel)]="item.value" name="retailInsurance" id="platform-{{itemIndex}}"/>
+                        <input type="checkbox" [(ngModel)]="item.value" name="retailInsurance"
+                            id="platform-{{itemIndex}}" />
                         <label for="platform-{{itemIndex}}">{{item.name}}</label>
                     </div>
                 </div>
             </div>
+
+
 
             <div class="form-group-custom form-group-custom-reset">
                 <div class="form-group-left">
@@ -92,7 +96,7 @@
                                 <label class="control-label control-label-custom">{{item.name}}</label>
                                 <div class="input-group_unit">
                                     <span class="unit">$</span>
-                                    <input type="number" class="form-control"/>
+                                    <input type="number" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -113,7 +117,7 @@
                         <div class="column-6">
                             <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
                                 <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount"/>
+                                <input type="number" class="form-control form-control-amount" />
                             </div>
                         </div>
                     </div>
@@ -134,7 +138,7 @@
                         <div class="column-6">
                             <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
                                 <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount"/>
+                                <input type="number" class="form-control form-control-amount" />
                             </div>
                         </div>
 
@@ -143,7 +147,7 @@
                                 <label class="control-label control-label-custom">Average value of {{item.name}}</label>
                                 <div class="input-group_unit">
                                     <span class="unit">$</span>
-                                    <input type="number" class="form-control"/>
+                                    <input type="number" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -166,7 +170,7 @@
                         <div class="column-6">
                             <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
                                 <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount"/>
+                                <input type="number" class="form-control form-control-amount" />
                             </div>
                         </div>
 
@@ -175,7 +179,7 @@
                                 <label class="control-label control-label-custom">Average value of {{item.name}}</label>
                                 <div class="input-group_unit">
                                     <span class="unit">$</span>
-                                    <input type="text" class="form-control"/>
+                                    <input type="text" class="form-control" />
                                 </div>
                             </div>
                         </div>

@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {ToastRepository} from './repository/toast-repository';
-import {Subscription} from 'rxjs';
-import {BsModalService} from 'ngx-bootstrap/modal';
-import {LocalStorageObServable} from "./observable/local-storage-observable";
-import {Constants} from "./model/constants";
-import {CurrentUserService} from "./service/current-user.service";
+import { Component } from '@angular/core';
+import { ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
+import { Constants } from "./model/constants";
+import { LocalStorageObServable } from "./observable/local-storage-observable";
+import { ToastRepository } from './repository/toast-repository';
+import { CurrentUserService } from "./service/current-user.service";
 
 @Component({
     selector: 'app-root',
@@ -14,7 +14,7 @@ import {CurrentUserService} from "./service/current-user.service";
 })
 export class AppComponent {
     private routerEventsListener: Subscription;
-    excludes: string[] = ['/login', '/forgot', '/reset', '/order/new', '/order/cancel', '/TV'];
+    excludes: string[] = ['/login', '/forgot', '/reset', '/verification', '/signup'];
     message;
     title: any;
 

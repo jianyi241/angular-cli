@@ -1,24 +1,24 @@
-.form-group-custom{
+.form-group-custom {
   font-family: 'Epilogue';
   display: flex;
   justify-content: space-between;
-  padding:24px 0;
-  border-bottom:1px solid #D6DDEB ;
+  padding: 24px 0;
+  border-bottom: 1px solid #D6DDEB;
 
-  @media screen and (max-width: 890px){
+  @media screen and (max-width: 890px) {
     flex-direction: column;
   }
 
-  .form-group-left{
+  .form-group-left {
     width: 259px;
     max-width: 100%;
 
-    @media screen and (max-width: 890px){
+    @media screen and (max-width: 890px) {
       width: 100%;
       margin-bottom: 10px;
     }
 
-    .info{
+    .info {
       font-weight: 400;
       font-size: 13px;
       line-height: 160%;
@@ -27,44 +27,44 @@
     }
   }
 
-  .control-label{
+  .control-label {
     font-weight: 600;
     font-size: 14px;
     line-height: 160%;
     color: #25324B;
     margin-bottom: 0;
 
-    &.control-label-custom{
-      color:#515B6F;
+    &.control-label-custom {
+      color: #515B6F;
       margin-bottom: 4px;
       word-break: break-word;
       .control-label-between;
     }
 
-    &.control-label-custom-large{
-      color:#515B6F;
+    &.control-label-custom-large {
+      color: #515B6F;
       font-size: 14px;
       line-height: 22.4px;
       margin-bottom: 8px;
     }
 
-    &.control-label-between{
+    &.control-label-between {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
   }
 
-  .form-group-right{
+  .form-group-right {
     width: 579px;
     max-width: 100%;
 
-    @media screen and (max-width: 890px){
+    @media screen and (max-width: 890px) {
       width: 100%;
     }
   }
 
-  .form-upload-file{
+  .form-upload-file {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -72,12 +72,12 @@
 
 
 
-  &.form-group-custom-reset{
-    .form-group-left{
+  &.form-group-custom-reset {
+    .form-group-left {
       width: 525px;
-      padding-right:66px;
+      padding-right: 66px;
 
-      @media screen and (max-width: 890px){
+      @media screen and (max-width: 890px) {
         width: 100%;
         margin-bottom: 10px;
       }
@@ -85,15 +85,15 @@
   }
 }
 
-.form-group-sign{
-  .control-label{
+.form-group-sign {
+  .control-label {
     font-weight: 600;
     font-size: 14px;
     line-height: 160%;
-    color:#515B6F;
+    color: #515B6F;
     margin-bottom: 4px;
 
-    .label-required{
+    .label-required {
       display: inline-block;
       padding-left: 2px;
     }
@@ -107,28 +107,35 @@
   }
 }
 
+.form-disabled {
+  input {
+    background: #F5F5F5 !important;
+    opacity: 1 !important;
+  }
+}
+
 .form-control {
-  color:#515B6F;
+  color: #515B6F;
   font-family: 'Epilogue';
   font-weight: 400;
   font-size: 13px;
   line-height: 160%;
   width: 100%;
   height: 43px;
-  border:1px solid #D6DDEB;
-  padding:0 16px ;
+  border: 1px solid #D6DDEB;
+  padding: 0 16px;
   border-radius: 0;
   .transition;
 
-  &:focus{
+  &:focus {
     color: #515B6F;
     background-color: #fff;
-    border-color: darken(#D6DDEB,10%);
+    border-color: darken(#D6DDEB, 10%);
     outline: 0;
-    box-shadow:none;
+    box-shadow: none;
   }
 
-  &:focus-visible{
+  &:focus-visible {
     outline: none;
   }
 
@@ -150,19 +157,20 @@
     border: 1px solid #D6DDEB;
     cursor: not-allowed;
   }
+
   &[readonly] {
     background: #FFFFFF;
     cursor: auto;
   }
 
-  &.form-control-amount{
+  &.form-control-amount {
     font-weight: 600;
     font-size: 16px;
     color: #25324B;
   }
 }
 
-.tip-info{
+.tip-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -173,10 +181,10 @@
   margin: 4px 0px;
 }
 
-.form-group{
+.form-group {
   margin-bottom: 24px;
 
-  &:last-child{
+  &:last-child {
     //margin-bottom: 0;
   }
 }
@@ -189,15 +197,15 @@
     font-weight: 400;
     color: #515B6F;
 
-    .ng-input{
+    .ng-input {
 
-      margin-top:5px;
+      margin-top: 5px;
 
-      input{
+      input {
         font-size: 13px;
         font-weight: 400;
-        color: darken(#515B6F,5%);
-        padding:0 6px !important;
+        color: darken(#515B6F, 5%);
+        padding: 0 6px !important;
       }
     }
 
@@ -207,29 +215,30 @@
       line-height: 160%;
       width: 100%;
       height: 43px;
-      border:1px solid #D6DDEB;
-      padding:0 16px ;
+      border: 1px solid #D6DDEB;
+      padding: 0 16px;
       border-radius: 0;
       box-shadow: none !important;
 
-      .ng-value-container{
-        padding:0;
+      .ng-value-container {
+        padding: 0;
       }
 
-      .ng-placeholder{
-        color:#A8ADB7;
+      .ng-placeholder {
+        color: #A8ADB7;
       }
 
-      .ng-arrow-wrapper{
+      .ng-arrow-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         padding-right: 0;
-        .ng-arrow{
+
+        .ng-arrow {
           background-image: url("../../assets/img/icon/icon-arr-down-black.svg");
           width: 20px !important;
           height: 20px !important;
-          border:none;
+          border: none;
         }
       }
 
@@ -240,16 +249,16 @@
 
     &.ng-select-focused {
       .ng-select-container {
-        border: 1px solid darken(#D6DDEB,10%);
+        border: 1px solid darken(#D6DDEB, 10%);
       }
     }
   }
 }
 
-.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
   font-weight: 400;
   color: #515B6F !important;
-  padding:8px 16px;
+  padding: 8px 16px;
 
 
   &.ng-option-selected,
@@ -258,7 +267,7 @@
   &:hover {
 
 
-    .ng-option-label{
+    .ng-option-label {
       font-weight: 400;
     }
   }
@@ -277,38 +286,39 @@
   background: #FFFFFF !important;
 }
 
-.form-group-custom{
+.form-group-custom {
 
-  .cke .cke_button_icon{
-    background-size: 24px!important;
+  .cke .cke_button_icon {
+    background-size: 24px !important;
   }
 
-  .cke .cke_button__emojipanel_icon{
-    background: url('../../assets/img/icon/icon-smile.svg') no-repeat!important;
+  .cke .cke_button__emojipanel_icon {
+    background: url('../../assets/img/icon/icon-smile.svg') no-repeat !important;
   }
 
   .cke .cke_button__bold_icon {
-    background: url('../../assets/img/icon/icon-b.svg') no-repeat!important;
+    background: url('../../assets/img/icon/icon-b.svg') no-repeat !important;
   }
 
   .cke .cke_button__italic_icon {
-    background: url('../../assets/img/icon/icon-i.svg') no-repeat!important;
+    background: url('../../assets/img/icon/icon-i.svg') no-repeat !important;
   }
 
   .cke_ltr.cke .cke_button__numberedlist_icon {
-    background: url('../../assets/img/icon/icon-sort.svg') no-repeat!important;
+    background: url('../../assets/img/icon/icon-sort.svg') no-repeat !important;
   }
 
   .cke_ltr.cke .cke_button__bulletedlist_icon {
-    background: url('../../assets/img/icon/icon-sort-dot.svg') no-repeat!important;
+    background: url('../../assets/img/icon/icon-sort-dot.svg') no-repeat !important;
   }
 
   .cke_ltr.cke .cke_button__link_icon {
-    background: url('../../assets/img/icon/icon-link.svg') no-repeat!important;
+    background: url('../../assets/img/icon/icon-link.svg') no-repeat !important;
   }
 
 
-  .cke_toolgroup a.cke_button:last-child:after, .cke_toolgroup a.cke_button.cke_button_disabled:hover:last-child:after {
+  .cke_toolgroup a.cke_button:last-child:after,
+  .cke_toolgroup a.cke_button.cke_button_disabled:hover:last-child:after {
     display: none !important;
   }
 
@@ -318,28 +328,30 @@
     border-top: 3px solid #7C8493 !important;
   }
 
-  .cke_button_icon{
+  .cke_button_icon {
     width: 24px !important;
     height: 24px !important;
   }
 
-  a.cke_button{
+  a.cke_button {
     height: 24px !important;
-    padding:3px !important;
-    margin:0 2px !important;
-    border:1px solid #ffffff !important;
+    padding: 3px !important;
+    margin: 0 2px !important;
+    border: 1px solid #ffffff !important;
   }
 
   a.cke_button_on {
     background: #f7f7f7 !important;
-    border: 1px solid darken(#f7f7f7,5%) !important;
-    padding:3px !important;
+    border: 1px solid darken(#f7f7f7, 5%) !important;
+    padding: 3px !important;
   }
 
-  a.cke_button_off:hover, a.cke_button_off:focus, a.cke_button_off:active {
+  a.cke_button_off:hover,
+  a.cke_button_off:focus,
+  a.cke_button_off:active {
     background: #f7f7f7 !important;
-    border: 1px solid darken(#f7f7f7,5%) !important;
-    padding:3px !important;
+    border: 1px solid darken(#f7f7f7, 5%) !important;
+    padding: 3px !important;
   }
 
   .cke_toolgroup {
@@ -347,17 +359,18 @@
   }
 }
 
-.label-required{
-  color:#EB5757;
+.label-required {
+  color: #EB5757;
 }
 
-.radio-box-group{
+.radio-box-group {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
-  .radio-box{
+  .radio-box {
     margin-right: 16px;
+
     label {
       font-weight: 400;
       padding-left: 32px;
@@ -365,40 +378,40 @@
   }
 }
 
-.form-blue{
-  .control-label{
+.form-blue {
+  .control-label {
     .tx-blue;
   }
 
-  .upload-file-show{
-    border:5px solid #26A4FF !important;
+  .upload-file-show {
+    border: 5px solid #26A4FF !important;
   }
 
-  .form-control{
+  .form-control {
     .bg-blue;
-    color:#3D98FF;
+    color: #3D98FF;
   }
 
 }
 
-.form-red{
-  .control-label{
+.form-red {
+  .control-label {
     .tx-red;
   }
 
-  .upload-file-show{
-    border:5px solid #EB5757 !important;
+  .upload-file-show {
+    border: 5px solid #EB5757 !important;
   }
 
-  .form-control{
+  .form-control {
     .bg-red;
-    color:#3D98FF;
+    color: #3D98FF;
   }
 
 }
 
 
-.sub-control-label{
+.sub-control-label {
   font-weight: 400;
   font-size: 13px;
   line-height: 21px;
@@ -406,20 +419,20 @@
   margin-bottom: 4px;
 }
 
-.form-error-tip{
+.form-error-tip {
   font-weight: 700;
   font-size: 14px;
   line-height: 22px;
   color: #EB5757;
 }
 
-.form-group-custom{
-  .row{
+.form-group-custom {
+  .row {
     margin-right: -12px;
     margin-left: -12px;
   }
 
-  .col-6{
+  .col-6 {
     padding-left: 12px;
     padding-right: 12px;
   }
@@ -427,33 +440,33 @@
 
 
 //form-group-column
-.form-group-column{
+.form-group-column {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  margin:0 -24px;
+  margin: 0 -24px;
 
-  .column-6{
+  .column-6 {
     width: 50%;
-    padding:0 24px;
+    padding: 0 24px;
 
-    @media screen and (max-width: 890px){
+    @media screen and (max-width: 890px) {
       width: 100%;
     }
 
-    &:nth-child(2){
+    &:nth-child(2) {
       border-left: 1px solid #D6DDEB;
     }
   }
 
-  .column-group{
+  .column-group {
     position: relative;
     padding-right: 35px;
 
-    .icon-delete{
+    .icon-delete {
       position: absolute;
-      bottom:11px;
-      right:0;
+      bottom: 11px;
+      right: 0;
       z-index: 10;
       cursor: pointer;
     }
@@ -461,10 +474,10 @@
   }
 }
 
-.input-group_unit{
+.input-group_unit {
   position: relative;
 
-  .unit{
+  .unit {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -474,26 +487,26 @@
     color: #202430;
     opacity: 0.5;
     position: absolute;
-    top:50%;
-    left:0;
-    margin-top:-20px;
+    top: 50%;
+    left: 0;
+    margin-top: -20px;
     width: 40px;
     height: 40px;
-    padding-top:3px;
+    padding-top: 3px;
 
-    &::before{
-      content:"";
+    &::before {
+      content: "";
       position: absolute;
-      top:50%;
-      right:0;
-      margin-top:-12px;
+      top: 50%;
+      right: 0;
+      margin-top: -12px;
       width: 1px;
       height: 24px;
       background-color: #A8ADB7;
     }
   }
 
-  .form-control{
+  .form-control {
     padding-left: 48px;
     font-weight: 600;
     font-size: 16px;
@@ -505,17 +518,17 @@
 
 
 //total-amount
-.total-amount{
+.total-amount {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:9px 24px;
+  padding: 9px 24px;
   color: #FFFFFF;
   font-weight: 600;
   background-color: @themeColor;
-  margin-top:24px;
+  margin-top: 24px;
 
-  .text{
+  .text {
     font-family: 'Epilogue';
     font-size: 14px;
     line-height: 22px;
@@ -524,28 +537,28 @@
     flex-shrink: 0;
   }
 
-  .amount{
+  .amount {
     font-family: 'ClashDisplay';
     font-size: 20px;
     line-height: 24px;
     .text-ellipsis;
-    padding-left:24px;
+    padding-left: 24px;
   }
 }
 
 
 //password-input
-.password-input{
+.password-input {
   position: relative;
 
-  .form-control{
-    padding-right:48px;
+  .form-control {
+    padding-right: 48px;
   }
 
-  .icon-block{
+  .icon-block {
     position: absolute;
-    bottom:14px;
-    right:16px;
+    bottom: 14px;
+    right: 16px;
     z-index: 10;
     cursor: pointer;
   }

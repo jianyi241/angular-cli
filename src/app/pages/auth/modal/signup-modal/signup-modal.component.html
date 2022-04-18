@@ -1,0 +1,65 @@
+<div class="modal-main p40">
+    <div class="modal-header">
+        <h2 class="modal-title">Almost there, let us know more about you</h2>
+    </div>
+    <div class="modal-body">
+        <div class="form modal-form">
+            <form action="">
+                <div class="forw-two xs-mb-32">
+                    <div class="form-group form-group-sign">
+                        <label class="control-label">
+                            <div>First name<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter your first name" />
+                    </div>
+                    <div class="form-group form-group-sign">
+                        <label class="control-label">
+                            <div>Last name<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter your last name" />
+                    </div>
+                </div>
+                <div class="form-group form-group-sign xs-mb-32">
+                    <label class="control-label">
+                        <div>Practice name<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your practice name" />
+                </div>
+
+                <div class="form-group xs-mb-32">
+                    <label class="control-label">
+                        <div>Practice role<span class="label-required">*</span></div>
+                    </label>
+                    <ng-select disabled class="select-single" placeholder="Support staff/paraplanner"
+                        dropdownPosition="bottom">
+                        <ng-option>Adviser </ng-option>
+                        <ng-option> Support staff/paraplanner</ng-option>
+                        <ng-option>Practice manager</ng-option>
+                        <ng-option>Other</ng-option>
+                    </ng-select>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" name="agree2" id="agree2" />
+                    <label for="agree2">
+                        <p>I agree to the <a href="javascript:void(0);">Terms of service</a> and <a
+                                href="javascript:void(0);">Privacy policy.</a></p>
+                    </label>
+                </div>
+
+                <div class="check-box check-box-purple xs-mb-32">
+                    <input type="checkbox" name="news" id="news" />
+                    <label for="news">
+                        <p>Send me relevant news and updates </p>
+                    </label>
+                </div>
+            </form>
+
+            <div class="form-button">
+                <div class="submit">
+                    <button (click)="existedModal();" class="btn btn-purple btn-sign tx-16 btn-block">Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

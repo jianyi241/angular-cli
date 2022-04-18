@@ -1,13 +1,14 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpResult} from 'src/app/model/common/http-result';
-import {LoginUser} from 'src/app/model/user';
-import {UserRepository} from 'src/app/repository/user-repository';
-import {LocalStorageObServable} from 'src/app/observable/local-storage-observable';
-import {ToastRepository} from '../../../repository/toast-repository';
-import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
-import {Constants} from "../../../model/constants";
-import {CurrentUserService} from "../../../service/current-user.service";
+import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgxLoadingSpinnerService } from '@k-adam/ngx-loading-spinner';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResult } from 'src/app/model/common/http-result';
+import { LoginUser } from 'src/app/model/user';
+import { LocalStorageObServable } from 'src/app/observable/local-storage-observable';
+import { UserRepository } from 'src/app/repository/user-repository';
+import { Constants } from "../../../model/constants";
+import { ToastRepository } from '../../../repository/toast-repository';
+import { CurrentUserService } from "../../../service/current-user.service";
 
 
 @Component({
@@ -27,7 +28,8 @@ export class LoginComponent {
         private userRepository: UserRepository,
         private router: Router,
         private currentUserService: CurrentUserService,
-        public storage: LocalStorageObServable
+        public storage: LocalStorageObServable,
+        private ngbModal: NgbModal
     ) {
     }
 
@@ -56,4 +58,6 @@ export class LoginComponent {
             });
         });
     }
+
+
 }

@@ -1,67 +1,136 @@
-&.popup-modal{
-  .modal-content{
+&.popup-modal {
+  .modal-content {
 
     background-color: transparent;
-    @media (max-width: 1036px){
-      padding:20px;
+
+    @media (max-width: 1036px) {
+      padding: 20px;
     }
   }
 }
 
-.modal-dialog{
-  &.modal-sm{
-    @media (min-width: 768px){
+.modal-dialog {
+  &.modal-sm {
+    @media (min-width: 768px) {
       width: 417px;
     }
   }
 
-  &.modal-md{
-    @media (min-width: 768px){
+  &.modal-md {
+    @media (min-width: 768px) {
       width: 417px;
     }
   }
 
-  &.modal-lg{
+  &.modal-lg {
     width: 1036px;
     max-width: 100%;
   }
 
-  .modal-content{
+  &.modal-w614 {
+    width: 614px;
+    max-width: 614px;
+  }
+
+  &.modal-w644 {
+    width: 644px;
+    max-width: 644px;
+  }
+
+  .modal-content {
     box-shadow: none;
     border-radius: 0;
-    border:none;
+    border: none;
 
-    .modal-header{
+    .modal-header {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      .modal-title{
+      .modal-title {}
 
-      }
-
-      .close{
+      .close {
         position: absolute;
-        top:50%;
-        margin-top:-11px;
-        right:16px;
+        top: 50%;
+        margin-top: -11px;
+        right: 16px;
         width: 22px;
         height: 22px;
         opacity: 1;
       }
     }
+
+    .modal-main {
+      &.p32 {
+        padding: 32px;
+      }
+
+      &.p40 {
+        padding: 40px 32px;
+      }
+
+      .modal-header {
+        padding: 0;
+        border-bottom: 0;
+        justify-content: start;
+        margin-bottom: 16px;
+
+        h2 {
+          font-family: 'ClashDisplay';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 24px;
+          line-height: 120%;
+          color: #25324B;
+
+          span {
+            color: #4640de;
+          }
+        }
+      }
+
+      .modal-body {
+        padding: 0;
+
+        .form-info {
+          p {
+            font-family: 'Epilogue';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 160%;
+            color: #7C8493;
+          }
+        }
+
+        .password-strength {
+          font-family: 'Epilogue';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 14px;
+          color: #515B6F;
+          margin-bottom: 32px;
+
+          span {
+            color: #219653;
+          }
+
+        }
+      }
+    }
   }
 }
 
-.modal-backdrop{
+.modal-backdrop {
   z-index: 1055 !important;
   background-color: #0D0B41;
   opacity: .7 !important;
 }
-body{
-  .modal{
-    &:last-child{
+
+body {
+  .modal {
+    &:last-child {
       z-index: 1060 !important;
     }
   }

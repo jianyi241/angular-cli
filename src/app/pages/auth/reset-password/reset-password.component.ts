@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserRepository } from '../../../repository/user-repository';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastRepository } from '../../../repository/toast-repository';
 import { NgxLoadingSpinnerService } from '@k-adam/ngx-loading-spinner';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RestPassword } from '../../../model/user';
-
+import { ToastRepository } from '../../../repository/toast-repository';
+import { UserRepository } from '../../../repository/user-repository';
+import { PasswordResetSuccessfullyComponent } from '../modal/password-reset-successfully/password-reset-successfully.component';
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
@@ -19,7 +20,8 @@ export class ResetPasswordComponent implements OnInit {
         private spinnerService: NgxLoadingSpinnerService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastRepository: ToastRepository) {
+        private toastRepository: ToastRepository,
+        private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
@@ -45,6 +47,14 @@ export class ResetPasswordComponent implements OnInit {
             const user = res.data;
             this.toastRepository.showSuccess('Reset Password Success.');
             this.router.navigate(['/login']);
+        });
+    }
+    resetSuccessfully(): void {
+        const ngbModalRef = this.ngbModal.open(PasswordResetSuccessfullyComponent, {
+            backdrop: 'static',
+            size: 'w614',
+            windowClass: 'password-modal',
+            centered: true
         });
     }
 }
