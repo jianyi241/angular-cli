@@ -10,6 +10,7 @@ import {RoleType} from "../model/enums/role-type";
 })
 export class CurrentUserService {
     private _authentication: Authentication;
+    private adminPaths = ['/advice-practices'];
 
     constructor(private router: Router) {
         let item = localStorage.getItem(Constants.CURRENT_USER);
@@ -32,10 +33,6 @@ export class CurrentUserService {
         return this._authentication?.principal;
     }
 
-
-
-
-
     isAdmin(): boolean {
         return this._authentication.authorities.some(r => r.authority == RoleType.AccountAdmin.value);
     }
@@ -47,5 +44,11 @@ export class CurrentUserService {
 
     get authentication(): Authentication {
         return this._authentication;
+    }
+
+    accessLimitation() {
+        if (this.adminPaths.includes(this.router.url) && !this.isAdmin()) {
+            this.router.navigateByUrl('/login');
+        }
     }
 }

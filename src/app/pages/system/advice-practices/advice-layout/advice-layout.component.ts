@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {TipModalComponent} from "../tip-modal/tip-modal.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PracticeInfo} from "../../../../model/po/practiceInfo";
 import {Constants} from "../../../../model/constants";
 import {AdviceRepository} from "../../../../repository/advice-repository";
@@ -11,6 +11,7 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import {PracticeStatus} from "../../../../model/enums/practice-status";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
     selector: 'app-advice-layout',
@@ -21,8 +22,10 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
     constructor(private modalService: NgbModal,
                 private saveService: SaveService,
                 private activatedRoute: ActivatedRoute,
+                private currentUserService: CurrentUserService,
                 private toastRepository: ToastRepository,
                 public practiceService: PracticeService,
+                private router: Router,
                 private adviceRepository: AdviceRepository) {
         this.practiceService.practice = new PracticeInfo();
     }
@@ -45,6 +48,12 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
 
     has(): boolean {
         return this.practiceService.practice.id && this.practiceService.practice.id != Constants.NON_ID;
+    }
+
+    back(): void {
+        if (this.currentUserService.isAdmin()) {
+            this.router.navigateByUrl('/advice-practices');
+        }
     }
 
     onArchive(): void {
@@ -113,4 +122,6 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
             this.practiceService.practice.billingDate = moment(res.data.billingDate).toDate();
         })
     }
+
+
 }

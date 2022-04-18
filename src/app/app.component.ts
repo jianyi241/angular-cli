@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {LocalStorageObServable} from "./observable/local-storage-observable";
 import {Constants} from "./model/constants";
+import {CurrentUserService} from "./service/current-user.service";
 
 @Component({
     selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
         public activatedRoute: ActivatedRoute,
         public toastRepository: ToastRepository,
         private storage: LocalStorageObServable,
+        private currentUserService: CurrentUserService,
         private modalService: BsModalService
     ) {
         this.routerEventsListener = this.router.events.subscribe(event => {
@@ -53,6 +55,8 @@ export class AppComponent {
             if (!val) {
                 this.router.navigateByUrl('/login');
             }
+            // Routing access rights restrictions
+            this.currentUserService.accessLimitation();
         });
     }
 

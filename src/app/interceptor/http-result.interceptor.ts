@@ -46,6 +46,12 @@ export class HttpResultInterceptor implements HttpInterceptor {
                     if (this.saveService.has(baseUrl)) {
                         this.saveService.delete(baseUrl);
                     }
+                    //authentication code check
+                    if (event.body.statusCode == 401) {
+                        this.toastRepository.showDanger(event.body.msg);
+                        this.router.navigateByUrl('/login');
+                        return;
+                    }
                     return event;
                 }
                 return event;
