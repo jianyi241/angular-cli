@@ -5,6 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RestPassword} from '../../../model/user';
 import {ToastRepository} from '../../../repository/toast-repository';
 import {UserRepository} from '../../../repository/user-repository';
+import {PasswordResetSuccessfullyComponent} from "../modal/password-reset-successfully/password-reset-successfully.component";
 
 @Component({
     selector: 'app-reset-password',
@@ -47,15 +48,13 @@ export class ResetPasswordComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            const user = res.data;
-            this.toastRepository.showSuccess('Reset Password Success.');
-            this.router.navigate(['/login']);
+            const passwordResetSuccessfullyComponent = this.ngbModal.open(PasswordResetSuccessfullyComponent, {
+                backdrop: 'static',
+                size: 'w614',
+                windowClass: 'password-modal',
+                centered: true
+            });
         });
-        // const ngbModalRef = this.ngbModal.open(PasswordResetSuccessfullyComponent, {
-        //     backdrop: 'static',
-        //     size: 'w614',
-        //     windowClass: 'password-modal',
-        //     centered: true
-        // });
+
     }
 }

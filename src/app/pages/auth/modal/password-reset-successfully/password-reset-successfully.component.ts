@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-password-reset-successfully',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordResetSuccessfullyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }
 
+  close(): void {
+    this.activeModal.close();
+  }
 }

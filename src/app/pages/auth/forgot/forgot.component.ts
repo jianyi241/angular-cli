@@ -5,6 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastRepository} from '../../../repository/toast-repository';
 import {UserRepository} from '../../../repository/user-repository';
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
+import {ResetPasswordEmailComponent} from "../modal/reset-password-email/reset-password-email.component";
 
 @Component({
     selector: 'app-forgot',
@@ -37,17 +38,18 @@ export class ForgotComponent implements OnInit {
         this.spinnerService.show();
         this.userRepository.forgotPassword(this.account).subscribe(res => {
             this.spinnerService.hide();
-            if (res.statusCode === 200) {
-                this.toastRepository.showSuccess('The reset password email has been sent. Please check your inbox.');
-            } else {
+            if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
+            } else {
+                const resetPasswordEmailComponent = this.ngbModal.open(ResetPasswordEmailComponent, {
+                    backdrop: 'static',
+                    size: 'w614',
+                    windowClass: 'password-modal',
+                    centered: true
+                });
+                resetPasswordEmailComponent.componentInstance.email = this.account;
             }
         })
-        // const ngbModalRef = this.ngbModal.open(ResetPasswordEmailComponent, {
-        //     backdrop: 'static',
-        //     size: 'w614',
-        //     windowClass: 'password-modal',
-        //     centered: true
-        // });
+
     }
 }
