@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Bold.eot');
+    src: url('ClashDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+        url('ClashDisplay-Bold.woff2') format('woff2'),
+        url('ClashDisplay-Bold.woff') format('woff'),
+        url('ClashDisplay-Bold.ttf') format('truetype'),
+        url('ClashDisplay-Bold.svg#ClashDisplay-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
