@@ -115,7 +115,9 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
             if (tip) {
                 this.toastRepository.showSuccess(msg || 'Save Successfully.')
             } else {
+                //Disable, Archive
                 this.toastRepository.showDanger(msg);
+                // this.router.navigateByUrl()
             }
             this.practiceService.practice = res.data;
             this.practiceService.practice.signDate = moment(res.data.signDate).toDate();

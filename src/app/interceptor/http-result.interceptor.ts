@@ -52,6 +52,12 @@ export class HttpResultInterceptor implements HttpInterceptor {
                         this.router.navigateByUrl('/login');
                         return;
                     }
+                    //authorization code check
+                    if (event.body.statusCode == 403) {
+                        this.toastRepository.showDanger(event.body.msg);
+                        this.router.navigateByUrl('/login');
+                        return;
+                    }
                     return event;
                 }
                 return event;

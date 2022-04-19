@@ -26,6 +26,7 @@
     "@k-adam/ngx-loading-spinner": "^1.10.2",
     "@ng-bootstrap/ng-bootstrap": "^8.0.2",
     "@ng-select/ng-select": "^5.0.8",
+    "@why520crazy/ngx-validator": "^11.0.0",
     "bootstrap": "^4.5.0",
     "ckeditor4": "^4.18.0",
     "ckeditor4-angular": "^3.0.0",

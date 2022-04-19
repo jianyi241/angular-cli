@@ -1,14 +1,15 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxLoadingSpinnerService } from '@k-adam/ngx-loading-spinner';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResult } from 'src/app/model/common/http-result';
-import { LoginUser } from 'src/app/model/user';
-import { LocalStorageObServable } from 'src/app/observable/local-storage-observable';
-import { UserRepository } from 'src/app/repository/user-repository';
-import { Constants } from "../../../model/constants";
-import { ToastRepository } from '../../../repository/toast-repository';
-import { CurrentUserService } from "../../../service/current-user.service";
+import {Component, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {HttpResult} from 'src/app/model/common/http-result';
+import {LoginUser} from 'src/app/model/user';
+import {LocalStorageObServable} from 'src/app/observable/local-storage-observable';
+import {UserRepository} from 'src/app/repository/user-repository';
+import {Constants} from "../../../model/constants";
+import {ToastRepository} from '../../../repository/toast-repository';
+import {CurrentUserService} from "../../../service/current-user.service";
+import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 
 
 @Component({
@@ -21,6 +22,17 @@ export class LoginComponent {
 
     public loginUser = new LoginUser();
     public isLogin = false;
+    validatorConfig: NgxValidatorConfig = {
+        validationMessages: {
+            account: {
+                required: 'Email is required.',
+            },
+            password: {
+                required: 'Password is required.',
+            }
+        },
+        validateOn: 'submit'
+    };
 
     constructor(
         private spinnerService: NgxLoadingSpinnerService,
@@ -34,9 +46,7 @@ export class LoginComponent {
     }
 
     loginWithEmail(): void {
-        this.loginUser.account = 'monk@arcadedevhouse.com.au';
-        this.loginUser.password = 'Bu11dogs';
-        const loginObj = { ...this.loginUser };
+        const loginObj = {...this.loginUser};
         this.isLogin = true;
         this.userRepository.login(loginObj).subscribe((result: HttpResult<any>) => {
             if (result.statusCode !== 200) {
