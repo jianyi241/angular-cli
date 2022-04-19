@@ -18,6 +18,7 @@ export class SignupModalComponent implements OnInit {
     agree = false;
     news = false;
     validatorConfig: NgxValidatorConfig;
+
     constructor(private ngbModal: NgbModal,
                 private activeModal: NgbActiveModal,
                 private toastRepository: ToastRepository,
@@ -59,12 +60,17 @@ export class SignupModalComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.ngbModal.open(ExistedModalComponent, {
+            const existedModalComponent = this.ngbModal.open(ExistedModalComponent, {
                 backdrop: 'static',
                 size: 'w614',
                 windowClass: 'password-modal',
                 centered: true
             });
+            existedModalComponent.result.then(res => {
+                this.activeModal.close();
+            }).catch(err => {
+
+            })
         });
 
     }

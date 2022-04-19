@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpResult} from '../model/common/http-result';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {LoginUser, RestPassword} from "../model/user";
+import {LoginUser, RestPassword, VerifyCode} from "../model/user";
 import {Authentication} from "../model/vo/authentication";
 import {CurrentUser} from "../model/vo/currentUser";
 import {SignupVo} from "../model/vo/signupVo";
@@ -39,5 +39,13 @@ export class UserRepository {
 
     signup(signup: SignupVo): Observable<HttpResult<Authentication>> {
         return this.http.post<HttpResult<Authentication>>(environment.baseURL + `/user/v1/signUp`, signup);
+    }
+
+    checkEmailUnique(email: string): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/user/v1/queryUserByEmail/${email}`);
+    }
+
+    verifyCode(verify: VerifyCode): Observable<HttpResult<VerifyCode>> {
+        return this.http.post<HttpResult<VerifyCode>>(environment.baseURL + '/user/v1/validUser', verify);
     }
 }

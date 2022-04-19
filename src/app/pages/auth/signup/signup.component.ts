@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AcceptInvitationModalComponent} from '../modal/accept-invitation-modal/accept-invitation-modal.component';
-import {ExistedModalComponent} from '../modal/existed-modal/existed-modal.component';
 import {SignupVo} from "../../../model/vo/signupVo";
 import {UserRepository} from "../../../repository/user-repository";
 import {SignupModalComponent} from "../modal/signup-modal/signup-modal.component";
@@ -19,6 +18,7 @@ export class SignupComponent implements OnInit {
     signup: SignupVo = new SignupVo();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
     agree = false;
+    checkEmailUnique = false;
     validatorConfig: NgxValidatorConfig = {
         validationMessages: {
             account: {
@@ -61,27 +61,24 @@ export class SignupComponent implements OnInit {
             this.toastRepository.showDanger("Please agree to the Terms of service and Privacy policy.");
             return;
         }
-        const signupModalComponent = this.ngbModal.open(SignupModalComponent, {
-            backdrop: 'static',
-            size: 'w644',
-            windowClass: 'password-modal',
-            centered: true
-        });
-        signupModalComponent.componentInstance.signup = this.signup;
-        signupModalComponent.componentInstance.practiceRoles = this.practiceRoles;
-        signupModalComponent.result.then(res => {
+        this.userRepository.checkEmailUnique(this.signup.email).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.checkEmailUnique = true;
+                return;
+            }
+            const signupModalComponent = this.ngbModal.open(SignupModalComponent, {
+                backdrop: 'static',
+                size: 'w644',
+                windowClass: 'password-modal',
+                centered: true
+            });
+            signupModalComponent.componentInstance.signup = this.signup;
+            signupModalComponent.componentInstance.practiceRoles = this.practiceRoles;
+            signupModalComponent.result.then(res => {
 
-        }).catch(res => {
+            }).catch(res => {
 
-        })
-    }
-
-    existedModal(): void {
-        const ngbModalRef = this.ngbModal.open(ExistedModalComponent, {
-            backdrop: 'static',
-            size: 'w644',
-            windowClass: 'password-modal',
-            centered: true
+            })
         });
     }
 

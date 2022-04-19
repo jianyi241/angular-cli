@@ -10,3 +10,10 @@ export class LoginUser {
     password?: string;
     accessToken?: string;
 }
+
+export class VerifyCode {
+    openId: string;
+    token: string;
+    code: string;
+
+}
