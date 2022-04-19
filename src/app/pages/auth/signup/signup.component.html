@@ -1,67 +1,74 @@
 <div class="admin-wrapper">
     <div class="admin-left">
-        <img src="./assets/img/logo_white.png" class="logo" />
+        <img src="./assets/img/logo_white.png" class="logo"/>
     </div>
     <div class="admin-right">
-        <div class="form">
-            <ul class="tab-ul">
-                <li class="active"><a href="javascript:void(0);">Advice practice</a></li>
-                <li><a href="javascript:void(0);">Other</a></li>
-            </ul>
-            <div class="form-main">
-                <div class="sign-title">Sign up with your work email </div>
-                <div class="form-group form-group-sign xs-mt-24">
-                    <label class="control-label">
-                        <div>Work email<span class="label-required">*</span></div>
-                    </label>
-                    <input type="text" class="form-control" placeholder="Enter your email" />
-                </div>
-                <p class="tip-error">Please use your work email, we don’t accept personal email addresses </p>
-                <p class="tip-error">This email already exists. Please <a [routerLink]="[ '../login' ]">log in</a> to
-                    continue.
-                </p>
-                <div class="form-group form-group-sign password-input xs-mt-24">
-                    <label class="control-label">
-                        <div>Password<span class="label-required">*</span></div>
-                    </label>
-                    <input type="password" class="form-control" autocomplete="new-password"
-                        placeholder="Enter password" />
-                    <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
-                </div>
-
-                <div class="form-group form-group-sign password-input xs-mt-24">
-                    <label class="control-label">
-                        <div>Confirm your password*<span class="label-required">*</span></div>
-                    </label>
-                    <input type="password" class="form-control" autocomplete="new-password"
-                        placeholder="Enter password again" />
-                    <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
-                </div>
-                <div class="form-group-sign xs-mt-24 xs-mb-4">
-                    <label class="control-label">
-                        <div>Your password must contain:</div>
-                    </label>
-                </div>
-                <ul>
-                    <li>• at least eight characters</li>
-                    <li>• both upper case and lower case letters </li>
-                    <li>• at least one number</li>
+        <form #signupForm="ngForm" name="signupForm" novalidate #ngxFormValidator="ngxFormValidator"
+              [ngxFormValidator]="validatorConfig">
+            <div class="form">
+                <ul class="tab-ul">
+                    <li class="active"><a>Advice practice</a></li>
+                    <li><a>Other</a></li>
                 </ul>
+                <div class="form-main">
+                    <div class="sign-title">Sign up with your work email</div>
+                    <div class="form-group form-group-sign xs-mt-24">
+                        <label class="control-label">
+                            <div>Work email<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" class="form-control" name="account" required placeholder="Enter your email"
+                               email
+                               [(ngModel)]="signup.email"/>
+                    </div>
+                    <p class="tip-error">Please use your work email, we don’t accept personal email addresses </p>
+                    <!--                <p class="tip-error">This email already exists. Please <a [routerLink]="[ '../login' ]">log in</a> to continue.</p>-->
+                    <div class="form-group form-group-sign password-input xs-mt-24">
+                        <label class="control-label">
+                            <div>Password<span class="label-required">*</span></div>
+                        </label>
+                        <input type="password" class="form-control" name="password" required autocomplete="new-password"
+                               [(ngModel)]="signup.password"
+                               placeholder="Enter password"/>
+                        <span class="icon-block icon-eye-on icon-16" *ngIf="ngxFormValidator.validator.validate()" appTogglePwd></span>
+                    </div>
 
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" name="agree" id="agree" />
-                    <label for="agree">
-                        <p>I agree to the <a (click)="acceptInvitationModal()" href="javascript:void(0);">Terms of
+                    <div class="form-group form-group-sign password-input xs-mt-24">
+                        <label class="control-label">
+                            <div>Confirm your password<span class="label-required">*</span></div>
+                        </label>
+                        <input type="password" class="form-control" autocomplete="new-password"
+                               name="confirmPassword" required
+                               [(ngModel)]="signup.confirmPassword"
+                               placeholder="Enter password again"/>
+                        <span class="icon-block icon-eye-on icon-16" *ngIf="ngxFormValidator.validator.validate()" appTogglePwd></span>
+                    </div>
+                    <div class="form-group-sign xs-mt-24 xs-mb-4">
+                        <label class="control-label">
+                            <div>Your password must contain:</div>
+                        </label>
+                    </div>
+                    <ul>
+                        <li>• at least eight characters</li>
+                        <li>• both upper case and lower case letters</li>
+                        <li>• at least one number</li>
+                    </ul>
+
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="agree" id="agree" [(ngModel)]="agree"/>
+                        <label for="agree">
+                            <p>I agree to the <a (click)="acceptInvitationModal()">Terms of
                                 service</a>
-                            and <a href="javascript:void(0);">Privacy policy.</a></p>
-                    </label>
+                                and <a href="javascript:void(0);">Privacy policy.</a></p>
+                        </label>
+                    </div>
+                    <button (ngxFormSubmit)="signupModal()"
+                            class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24">Continue
+                    </button>
+                    <div class="bottom-tip">Already have an account? <a [routerLink]="['../login']"
+                                                                        href="javascript:void(0);">Login</a></div>
                 </div>
-                <button (click)="signupModal()"
-                    class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24">Continue</button>
-                <div class="bottom-tip">Already have an account? <a [routerLink]="['../login']"
-                        href="javascript:void(0);">Login</a></div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 

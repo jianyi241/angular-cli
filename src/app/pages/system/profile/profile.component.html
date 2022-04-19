@@ -4,7 +4,7 @@
         <div class="sub-title">{{fullName()}}</div>
 
         <div class="btn-control-group" >
-            <button class="btn btn-purple xs-ml-24">Save</button>
+            <button class="btn btn-purple xs-ml-24" (click)="saveProfile()">Save</button>
         </div>
     </div>
 
@@ -36,6 +36,7 @@
                 <div class="form-group-right">
                     <div class="upload-file">
                         <ngx-file-drop dropZoneLabel="Drop files here"
+                                       (onFileDrop)="droppedFile($event)"
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Authentication} from "../model/vo/authentication";
-import {Constants} from "../model/constants";
 import {Router} from "@angular/router";
 import {CurrentUser} from "../model/vo/currentUser";
 import {RoleType} from "../model/enums/role-type";
@@ -14,12 +13,6 @@ export class CurrentUserService {
     private adminPaths = ['/advice-practices'];
 
     constructor(private router: Router) {
-        let item = localStorage.getItem(Constants.CURRENT_USER);
-        if (item) {
-            this._authentication = JSON.parse(item);
-        } else {
-            this.router.navigateByUrl('/login');
-        }
     }
 
     fullName(): string {

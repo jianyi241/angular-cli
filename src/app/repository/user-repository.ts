@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LoginUser, RestPassword} from "../model/user";
 import {Authentication} from "../model/vo/authentication";
+import {CurrentUser} from "../model/vo/currentUser";
+import {SignupVo} from "../model/vo/signupVo";
 
 @Injectable({
     providedIn: 'root'
@@ -15,20 +17,27 @@ export class UserRepository {
 
     }
 
-    public login(loginUser: LoginUser): Observable<HttpResult<any>> {
+    login(loginUser: LoginUser): Observable<HttpResult<any>> {
         return this.http.post<HttpResult<LoginUser>>(environment.baseURL + '/authentication/password', loginUser);
     }
 
-    public resetPassword(restPassword: RestPassword): Observable<HttpResult<any>> {
-        return this.http.put<HttpResult<any>>(environment.baseURL + `/public/auth/v0/reset`, restPassword);
+    resetPassword(restPassword: RestPassword): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + `/user/v1/updatePassword`, restPassword);
     }
 
-    public forgotPassword(account: string): Observable<HttpResult<any>> {
-        return this.http.post<HttpResult<any>>(environment.baseURL + `/public/auth/v0/forget`, { account });
+    forgotPassword(account: string): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/user/v1/forgetPassword/${account}`, {});
     }
 
-    public getCurrentUser(): Observable<HttpResult<Authentication>> {
+    getCurrentUser(): Observable<HttpResult<Authentication>> {
         return this.http.get<HttpResult<Authentication>>(environment.baseURL + `/user/v1/current`);
     }
 
+    updateProfile(currentUser: CurrentUser): Observable<HttpResult<Authentication>> {
+        return this.http.post<HttpResult<Authentication>>(environment.baseURL + `/user/v1/updateUserInfo`, currentUser);
+    }
+
+    signup(signup: SignupVo): Observable<HttpResult<Authentication>> {
+        return this.http.post<HttpResult<Authentication>>(environment.baseURL + `/user/v1/signUp`, signup);
+    }
 }

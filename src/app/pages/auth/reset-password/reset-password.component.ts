@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgxLoadingSpinnerService } from '@k-adam/ngx-loading-spinner';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RestPassword } from '../../../model/user';
-import { ToastRepository } from '../../../repository/toast-repository';
-import { UserRepository } from '../../../repository/user-repository';
-import { PasswordResetSuccessfullyComponent } from '../modal/password-reset-successfully/password-reset-successfully.component';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RestPassword} from '../../../model/user';
+import {ToastRepository} from '../../../repository/toast-repository';
+import {UserRepository} from '../../../repository/user-repository';
+
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
@@ -18,23 +18,26 @@ export class ResetPasswordComponent implements OnInit {
     constructor(
         private userRepository: UserRepository,
         private spinnerService: NgxLoadingSpinnerService,
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private router: Router,
         private toastRepository: ToastRepository,
         private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
-        this.restPassword.validToken = this.route.snapshot.params.token;
+        this.activatedRoute.queryParams.subscribe(queryParams => {
+            this.restPassword.validToken = queryParams['validToken'];
+            this.restPassword.openId = queryParams['openId'];
+        })
     }
 
-    confirm(): void {
+    resetPassword(): void {
         if (!this.restPassword.password || !this.restPassword.confirmPassword) {
             this.toastRepository.showDanger('Password is required.');
             return;
         }
         if (this.restPassword.password !== this.restPassword.confirmPassword) {
-            this.toastRepository.showDanger('2 passwords do not match');
+            this.toastRepository.showDanger("Passwords don't match");
             return;
         }
         this.spinnerService.show();
@@ -48,13 +51,11 @@ export class ResetPasswordComponent implements OnInit {
             this.toastRepository.showSuccess('Reset Password Success.');
             this.router.navigate(['/login']);
         });
-    }
-    resetSuccessfully(): void {
-        const ngbModalRef = this.ngbModal.open(PasswordResetSuccessfullyComponent, {
-            backdrop: 'static',
-            size: 'w614',
-            windowClass: 'password-modal',
-            centered: true
-        });
+        // const ngbModalRef = this.ngbModal.open(PasswordResetSuccessfullyComponent, {
+        //     backdrop: 'static',
+        //     size: 'w614',
+        //     windowClass: 'password-modal',
+        //     centered: true
+        // });
     }
 }
