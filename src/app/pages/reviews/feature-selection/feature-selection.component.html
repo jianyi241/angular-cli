@@ -5,7 +5,8 @@
 
     <div class="features-swiper" *ngIf="featureForm.groupVoList.length > 0">
         <swiper #swiper [config]="config" (slideChange)="slideChange($event)">
-            <ng-template swiperSlide [virtualIndex]="groupIndex" *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
+            <ng-template swiperSlide [virtualIndex]="groupIndex"
+                *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
                 <div class="swiper-head">
                     <img [src]="group.attachmentVo?.visitUrl" alt="">
                     <div class="tip" (click)="selectGroupAll(group)">Select all features</div>
@@ -18,7 +19,7 @@
         </swiper>
 
         <div class="swiper-control">
-            <div class="swiper-btn"  (click)="slideNext()">
+            <div class="swiper-btn" (click)="slidePrev()">
                 <span class="icon-block icon-slide-left icon-16"></span>
             </div>
 
@@ -26,7 +27,7 @@
                 <span class="swiper-dot" [ngClass]="{'active': groupIndex == currentIndex}"></span>
             </ng-container>
 
-            <div class="swiper-btn" (click)="slidePrev()">
+            <div class="swiper-btn" (click)="slideNext()">
                 <span class="icon-block icon-slide-right icon-16"></span>
             </div>
         </div>
@@ -38,9 +39,11 @@
         <div class="accordion-main" *ngIf="subGroups.length > 0">
             <div class="list">
                 <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" [destroyOnHide]="true">
-                    <ngb-panel *ngFor="let subGroup of subGroups; let subGroupIndex = index;" id="ngb-panel-{{subGroupIndex}}">
+                    <ngb-panel *ngFor="let subGroup of subGroups; let subGroupIndex = index;"
+                        id="ngb-panel-{{subGroupIndex}}">
                         <ng-template ngbPanelTitle="Collapse all 10 features">
-                            <div class="accordion-head" style="display: flex; justify-content: space-between; width: 100%;">
+                            <div class="accordion-head"
+                                style="display: flex; justify-content: space-between; width: 100%;">
                                 <div class="text">
                                     <p class="sub-title">{{subGroup.name}}</p>
                                     <p [innerHTML]="subGroup.description"></p>
@@ -58,12 +61,14 @@
                                         <button (click)="selectSubGroupAll(subGroup)">Select all</button>
                                     </div>
                                     <ul>
-                                        <li [hidden]="prop.selected" *ngFor="let prop of subGroup.propertyVoList" (click)="selectProp(prop)">
+                                        <li [hidden]="prop.selected" *ngFor="let prop of subGroup.propertyVoList"
+                                            (click)="selectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
                                                 <i class="icon-block icon-15 icon-info-circle-purple"></i>
                                             </div>
-                                            <button (click)="essential(prop, $event)" [ngClass]="{'tx-yellow': prop.essential}">Essential</button>
+                                            <button (click)="essential(prop, $event)"
+                                                [ngClass]="{'tx-yellow': prop.essential}">Essential</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -72,15 +77,18 @@
                                         <h3>Features selected</h3>
                                         <button (click)="deselectSubGroupAll(subGroup)">Deselect all</button>
                                     </div>
-                                    <p class="sub-title" [hidden]="checkSelectList(subGroup.propertyVoList)">You haven’t selected any features yet. Click on one of the
+                                    <p class="sub-title" [hidden]="checkSelectList(subGroup.propertyVoList)">You haven’t
+                                        selected any features yet. Click on one of the
                                         features in LHS column to select.</p>
                                     <ul>
-                                        <li [hidden]="!prop.selected" *ngFor="let prop of subGroup.propertyVoList" (click)="unSelectProp(prop)">
+                                        <li [hidden]="!prop.selected" *ngFor="let prop of subGroup.propertyVoList"
+                                            (click)="unSelectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
                                                 <i class="icon-block icon-15 icon-info-circle-purple"></i>
                                             </div>
-                                            <button (click)="essential(prop, $event)" [ngClass]="{'tx-yellow': prop.essential}">Essential</button>
+                                            <button (click)="essential(prop, $event)"
+                                                [ngClass]="{'tx-yellow': prop.essential}">Essential</button>
                                         </li>
                                     </ul>
                                 </div>
