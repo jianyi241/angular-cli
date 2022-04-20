@@ -9,6 +9,8 @@ import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../repository/file-repository";
+import {Constants} from "../../../model/constants";
+import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 
 @Component({
     selector: 'app-profile',
@@ -23,6 +25,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(public currentUserService: CurrentUserService,
                 private saveService: SaveService,
+                private storage: LocalStorageObServable,
                 private fileRepository: FileRepository,
                 private userRepository: UserRepository,
                 private toastRepository: ToastRepository,
@@ -101,6 +104,8 @@ export class ProfileComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
+            this.toastRepository.showSuccess('Save successfully.');
+            this.storage.setItem(Constants.CURRENT_USER, res.data);
             this.currentUserService.setAuthentication(res.data);
         })
     }
