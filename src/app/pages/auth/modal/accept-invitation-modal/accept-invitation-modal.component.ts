@@ -47,12 +47,15 @@ export class AcceptInvitationModalComponent implements OnInit {
 
     invite(): void {
         if (!this.agree) {
+            this.toastRepository.showDanger("Please read and agree to the Terms & conditions and Privacy policy.");
             return;
         }
         if (!this.news) {
+            this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
             return;
         }
         if (this.inviteUser.password !== this.inviteUser.confirmPassword) {
+            this.toastRepository.showDanger("Passwords don't match");
             return;
         }
         this.userRepository.inviteUser(this.inviteUser).subscribe(res => {

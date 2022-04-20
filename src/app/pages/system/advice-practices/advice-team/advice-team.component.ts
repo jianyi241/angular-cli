@@ -6,6 +6,7 @@ import {TeamCondition} from "../../../../model/condition/team-condition";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {Constants} from "../../../../model/constants";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-advice-team',
@@ -19,6 +20,7 @@ export class AdviceTeamComponent implements OnInit {
     constructor(private adviceRepository: AdviceRepository,
                 public configService: ConfigService,
                 private router: Router,
+                private toastRepository: ToastRepository,
                 private activatedRoute: ActivatedRoute) {
     }
 
@@ -42,5 +44,15 @@ export class AdviceTeamComponent implements OnInit {
 
     save(team?: TeamInfo) {
         this.router.navigateByUrl(`/advice-practices/edit-team/${team?.id || Constants.NON_ID}/${this.condition.practiceId}`);
+    }
+
+    resend(team: TeamInfo): void {
+        this.adviceRepository.resendInvite(team.openId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('The invitation email has been sent. Please check your inbox.');
+        })
     }
 }

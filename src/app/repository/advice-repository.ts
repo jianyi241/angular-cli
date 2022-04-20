@@ -54,4 +54,8 @@ export class AdviceRepository {
     getPracticeRoles(): Observable<HttpResult<Array<RoleInfo>>> {
         return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + '/advice/queryPracticeRoleList');
     }
+
+    resendInvite(openId: string): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/email/resendInviteEmail/${openId}`);
+    }
 }

@@ -33,6 +33,7 @@ export class TeamInfo {
     practiceRoleName?: string;
     practiceRoleVos?: Array<RoleInfo>;
     roleId?: string;
+    openId?: string;
     roleInfos?: Array<RoleInfo>;
     roleName?: string;
     /**
