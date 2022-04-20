@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-body">
-            <ng-container *ngIf="teamPage.total > 0">
+            <ng-container>
                 <table class="table table-list table-striped">
                     <thead>
                     <tr>
@@ -69,7 +69,7 @@
                     </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody *ngIf="teamPage.total > 0">
                     <tr *ngFor="let team of teamPage.records">
                         <td>
                             <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
@@ -107,6 +107,7 @@
                         </td>
                     </tr>
                     </tbody>
+
                 </table>
 
                 <ngb-pagination [collectionSize]="teamPage.total" [(page)]="teamPage.current" [pageSize]="teamPage.size"
@@ -117,6 +118,8 @@
             <div class="empty-text" *ngIf="teamPage.total == 0">This section is empty. Click on “+ Add team member” to
                 add.
             </div>
+
+
 
         </div>
     </div>
