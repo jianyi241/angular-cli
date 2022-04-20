@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {CurrentUser} from "../model/vo/currentUser";
 import {RoleType} from "../model/enums/role-type";
 import {RoleInfo} from "../model/po/roleInfo";
+import {Constants} from "../model/constants";
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,10 @@ export class CurrentUserService {
     private adminPaths = ['/advice-practices'];
 
     constructor(private router: Router) {
+        let item = localStorage.getItem(Constants.CURRENT_USER);
+        if (item) {
+            this._authentication = JSON.parse(item);
+        }
     }
 
     fullName(): string {

@@ -2,7 +2,7 @@ import {EnumIdentity} from "../interfaces/EnumIdentity";
 
 export class RoleType implements EnumIdentity {
     private static AllValues: Array<RoleType> = new Array<RoleType>();
-    static readonly SuperAdmin = new RoleType("Super Admin", "Super Admin");
+    static readonly SuperAdmin = new RoleType("Admin", "Super Admin");
     static readonly AccountAdmin = new RoleType('Account administrator', "Account administrator");
     static readonly Adviser = new RoleType('Adviser', "Adviser");
     static readonly Support = new RoleType('Support', "Support");

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {VerifyCode} from "../../../model/user";
 import {UserRepository} from "../../../repository/user-repository";
 import {ToastRepository} from "../../../repository/toast-repository";
@@ -11,22 +11,39 @@ import {ToastRepository} from "../../../repository/toast-repository";
 })
 export class VerificationCodeComponent implements OnInit {
     verifyCode: VerifyCode = new VerifyCode();
+    email: string;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private userRepository: UserRepository,
+                private router: Router,
                 private toastRepository: ToastRepository) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(queryParams => {
-            this.verifyCode.token = queryParams['verifyToken'];
+            this.verifyCode.token = queryParams['validToken'];
             this.verifyCode.openId = queryParams['openId'];
-            this.getVerifyEmail({token: this.verifyCode.token, openId: this.verifyCode.openId});
+            this.getVerifyEmail();
         })
     }
 
-    getVerifyEmail(condition: { token: string, openId: string }): void {
+    getVerifyEmail(): void {
+        this.userRepository.queryInvitationInfo(this.verifyCode).subscribe(res => {
+            if (res.statusCode != 200) {
+                return
+            }
+            this.email = res.data.email;
+        });
+    }
 
+    resend(): void {
+        this.userRepository.resendActiveEmail(this.verifyCode.openId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('The valid code email has been sent. Please check your inbox.');
+        });
     }
 
     verify(): void {
@@ -35,6 +52,8 @@ export class VerificationCodeComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
+            this.toastRepository.showSuccess('Verification successfully.');
+            this.router.navigateByUrl('/login');
         })
     }
 }

@@ -8,6 +8,8 @@ import {AdviceRepository} from "../../../repository/advice-repository";
 import {RoleInfo} from "../../../model/po/roleInfo";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
+import {ActivatedRoute, Router} from "@angular/router";
+import {VerifyCode} from "../../../model/user";
 
 @Component({
     selector: 'app-signup',
@@ -16,6 +18,7 @@ import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 })
 export class SignupComponent implements OnInit {
     signup: SignupVo = new SignupVo();
+    verification: VerifyCode = new VerifyCode();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
     agree = false;
     checkEmailUnique = false;
@@ -37,12 +40,23 @@ export class SignupComponent implements OnInit {
 
 
     constructor(private ngbModal: NgbModal,
+                private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private userRepository: UserRepository,
                 private toastRepository: ToastRepository,
                 private adviceRepository: AdviceRepository) {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(queryParams => {
+            let openId = queryParams['openId'];
+            let validToken = queryParams['validToken'];
+            if (openId && validToken) {
+                this.verification.openId = openId;
+                this.verification.token = validToken
+                this.acceptInvitationModal();
+            }
+        })
         this.getPracticeRoles();
     }
 
@@ -83,11 +97,18 @@ export class SignupComponent implements OnInit {
     }
 
     acceptInvitationModal(): void {
-        const ngbModalRef = this.ngbModal.open(AcceptInvitationModalComponent, {
+        const acceptInvitationModalComponent = this.ngbModal.open(AcceptInvitationModalComponent, {
             backdrop: 'static',
             size: 'w614',
             windowClass: 'password-modal',
             centered: true
         });
+        acceptInvitationModalComponent.componentInstance.verification = {...this.verification};
+        acceptInvitationModalComponent.result.then(res => {
+            this.toastRepository.showSuccess('Accept invitation successfully.');
+            this.router.navigateByUrl('/login');
+        }).catch(err => {
+
+        })
     }
 }
