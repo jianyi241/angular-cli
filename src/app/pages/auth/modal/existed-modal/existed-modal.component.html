@@ -9,10 +9,10 @@
             </div>
             <div class="form-button">
                 <div class="submit">
-                    <button [routerLink]="['/login']" (click)="close()" class="btn btn-purple btn-sign tx-16 btn-block">Send email to
+                    <button (click)="close()" class="btn btn-purple btn-sign tx-16 btn-block">Send email to
                         Suitability Hub admin</button>
                 </div>
-                <button class="btn  btn-clear btn-sign btn-text-theme tx-16 btn-block" [routerLink]="['/login']" (click)="close()">Cancel</button>
+                <button class="btn  btn-clear btn-sign btn-text-theme tx-16 btn-block" (click)="activeModal.dismiss()">Cancel</button>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ExistedModalComponent implements OnInit {
 
-    constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
+    constructor(private modalService: NgbModal, public activeModal: NgbActiveModal) {
     }
 
 

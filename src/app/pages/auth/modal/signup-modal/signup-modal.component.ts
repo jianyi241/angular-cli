@@ -57,20 +57,21 @@ export class SignupModalComponent implements OnInit {
         }
         this.userRepository.signup(this.signup).subscribe(res => {
             if (res.statusCode != 200) {
+                if (res.statusCode == 201) {
+                    const existedModalComponent = this.ngbModal.open(ExistedModalComponent, {
+                        backdrop: 'static',
+                        size: 'w614',
+                        windowClass: 'password-modal',
+                        centered: true
+                    });
+                    existedModalComponent.result.then(res => {
+                    }).catch(err => {
+                    })
+                    return;
+                }
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            const existedModalComponent = this.ngbModal.open(ExistedModalComponent, {
-                backdrop: 'static',
-                size: 'w614',
-                windowClass: 'password-modal',
-                centered: true
-            });
-            existedModalComponent.result.then(res => {
-                this.activeModal.close();
-            }).catch(err => {
-
-            })
         });
 
     }
