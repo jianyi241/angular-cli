@@ -5,8 +5,8 @@
 
     <div class="admin-right">
         <div class="form">
-            <form #loginForm="ngForm" novalidate name="loginForm" #ngxFormValidator="ngxFormValidator"
-                [ngxFormValidator]="validatorConfig">
+            <form #loginForm="ngForm" novalidate name="loginForm"
+                  [ngxFormValidator]="validatorConfig">
 
                 <div class="sign-title">Welcome back</div>
                 <div class="sign-sub-title"><span class="text">Login with email</span></div>
@@ -26,8 +26,7 @@
                     <input type="password" name="password" required class="form-control"
                         [(ngModel)]="loginUser.password" autocomplete="new-password"
                         placeholder="Enter your password" />
-                    <span class="icon-block icon-eye-on icon-16" appTogglePwd
-                        *ngIf="ngxFormValidator.validator.validate()"></span>
+                    <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                 </div>
                 <!--                <p class="tip-error">Password does not match the record in our system. </p>-->
 

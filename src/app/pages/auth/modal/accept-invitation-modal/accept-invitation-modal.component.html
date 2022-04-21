@@ -1,4 +1,4 @@
-<form name="inviteForm" #inviteForm="ngForm" novalidate #ngxFormValidator="ngxFormValidator"
+<form name="inviteForm" #inviteForm="ngForm" novalidate
     [ngxFormValidator]="validatorConfig">
     <div class="modal-main p40">
         <div class="modal-header">
@@ -47,7 +47,7 @@
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password" name="password"
                         required autocomplete="new-password" [(ngModel)]="inviteUser.password" />
-                    <span class="icon-block icon-eye-on icon-16" *ngIf="ngxFormValidator.validator.validate()"
+                    <span class="icon-block icon-eye-on icon-16"
                         appTogglePwd></span>
                 </div>
                 <div class="form-group form-group-sign password-input">
@@ -57,7 +57,7 @@
                     <input type="password" class="form-control" placeholder="Enter your password again"
                         autocomplete="new-password" name="confirmPassword" required
                         [(ngModel)]="inviteUser.confirmPassword" />
-                    <span class="icon-block icon-eye-on icon-16" *ngIf="ngxFormValidator.validator.validate()"
+                    <span class="icon-block icon-eye-on icon-16"
                         appTogglePwd></span>
                 </div>
                 <p class="password-strength">Your password is <span>strong</span></p>

@@ -71,7 +71,6 @@
   }
 
 
-
   &.form-group-custom-reset {
     .form-group-left {
       width: 525px;
@@ -520,8 +519,6 @@
 }
 
 
-
-
 //total-amount
 .total-amount {
   display: flex;
@@ -562,7 +559,7 @@
 
   .icon-block {
     position: absolute;
-    bottom: 14px;
+    top: 43px;
     right: 16px;
     z-index: 10;
     cursor: pointer;
@@ -572,6 +569,20 @@
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
   border-color: #FF151F;
+  padding-right: 0 !important;
+  background-image: none !important;
+}
+
+.was-validated .form-control:invalid,
+.form-control.has-invalid {
+  border-color: #FF151F;
+}
+
+.has-invalid-feedback {
+  color: #FF151F;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
 }
 
 .invalid-feedback {

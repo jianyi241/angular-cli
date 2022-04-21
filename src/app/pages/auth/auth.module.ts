@@ -17,8 +17,41 @@ import {SignupComponent} from './signup/signup.component';
 import {VerificationCodeComponent} from './verification-code/verification-code.component';
 import {ExistedModalComponent} from './modal/existed-modal/existed-modal.component';
 import {AcceptInvitationModalComponent} from './modal/accept-invitation-modal/accept-invitation-modal.component';
-import {NgxValidatorModule} from "@why520crazy/ngx-validator";
+import {NgxValidatorModule, ValidationFeedbackStrategy} from "@why520crazy/ngx-validator";
 
+const INVALID_CLASS = 'has-invalid';
+const INVALID_FEEDBACK_CLASS = 'has-invalid-feedback';
+//自定义表单验证策略
+export class CustomValidationFeedbackStrategy implements ValidationFeedbackStrategy {
+    removeError(element: HTMLElement): void {
+        if (element) {
+            element.classList.remove(INVALID_CLASS);
+        }
+        if (element && element.parentElement) {
+            const invalidFeedback = element.parentElement.querySelector(`.${INVALID_FEEDBACK_CLASS}`);
+            if (invalidFeedback) {
+                element.parentElement.removeChild(invalidFeedback);
+            }
+        }
+    }
+
+    showError(element: HTMLElement, errorMessages: string[]): void {
+        if (element) {
+            element.classList.add(INVALID_CLASS);
+        }
+
+        if (element && element.parentElement) {
+            const documentFrag = document.createDocumentFragment();
+            const divNode = document.createElement('DIV');
+            const textNode = document.createTextNode(errorMessages[0]);
+            divNode.appendChild(textNode);
+            divNode.setAttribute('class', INVALID_FEEDBACK_CLASS);
+            documentFrag.appendChild(divNode);
+            element.parentElement.append(documentFrag);
+        }
+    }
+
+}
 
 const authRoutes: Routes = [
     {
@@ -49,7 +82,9 @@ const authRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [CommonModule, FormsModule, NgSelectModule, RouterModule.forChild(authRoutes), ReactiveFormsModule, NgxValidatorModule],
+    imports: [CommonModule, FormsModule, NgSelectModule, RouterModule.forChild(authRoutes), ReactiveFormsModule, NgxValidatorModule.forRoot({
+        validationFeedbackStrategy: new CustomValidationFeedbackStrategy()
+    })],
     exports: [
         RouterModule,
         LoginComponent,
@@ -78,3 +113,4 @@ const authRoutes: Routes = [
 })
 export class AuthModule {
 }
+
