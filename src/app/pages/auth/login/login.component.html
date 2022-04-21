@@ -1,13 +1,12 @@
 <div class="admin-wrapper">
     <div class="admin-left">
-        <img src="./assets/img/logo_white.png" class="logo"/>
+        <img src="./assets/img/logo_white.png" class="logo" />
     </div>
 
     <div class="admin-right">
         <div class="form">
-            <form #loginForm="ngForm" novalidate name="loginForm"
-                  #ngxFormValidator="ngxFormValidator"
-                  [ngxFormValidator]="validatorConfig">
+            <form #loginForm="ngForm" novalidate name="loginForm" #ngxFormValidator="ngxFormValidator"
+                [ngxFormValidator]="validatorConfig">
 
                 <div class="sign-title">Welcome back</div>
                 <div class="sign-sub-title"><span class="text">Login with email</span></div>
@@ -15,7 +14,8 @@
                     <label class="control-label">
                         <div>Email<span class="label-required">*</span></div>
                     </label>
-                    <input type="text" class="form-control" required name="account" [(ngModel)]="loginUser.account" placeholder="Enter your email"/>
+                    <input type="text" class="form-control" required name="account" [(ngModel)]="loginUser.account"
+                        placeholder="Enter your email" />
                 </div>
 
 
@@ -23,23 +23,25 @@
                     <label class="control-label">
                         <div>Password<span class="label-required">*</span></div>
                     </label>
-                    <input type="password" name="password" required class="form-control" [(ngModel)]="loginUser.password" autocomplete="new-password"
-                           placeholder="Enter your password"/>
-                    <span class="icon-block icon-eye-on icon-16" appTogglePwd *ngIf="ngxFormValidator.validator.validate()"></span>
+                    <input type="password" name="password" required class="form-control"
+                        [(ngModel)]="loginUser.password" autocomplete="new-password"
+                        placeholder="Enter your password" />
+                    <span class="icon-block icon-eye-on icon-16" appTogglePwd
+                        *ngIf="ngxFormValidator.validator.validate()"></span>
                 </div>
-<!--                <p class="tip-error">Password does not match the record in our system. </p>-->
+                <!--                <p class="tip-error">Password does not match the record in our system. </p>-->
 
-                <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-48" type="button" (ngxFormSubmit)="loginWithEmail()">Login
+                <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-48" type="button"
+                    (ngxFormSubmit)="loginWithEmail()">Login
                 </button>
                 <button [routerLink]="[ '../forgot' ]"
-                        class="btn btn-clear tx-purple btn-sign tx-16 tx-semi btn-block">Forgot
+                    class="btn btn-clear tx-purple btn-sign tx-16 tx-semi btn-block">Forgot
                     password
                 </button>
 
                 <button [routerLink]="[ '../signup' ]"
-                        class="btn btn-outline-purple-light btn-block tx-semi xs-mt-50"><span
-                        class="tx-dark">Don’t have an
-                    account?</span> Sign up
+                    class="btn btn-outline-purple-light btn-block tx-semi xs-mt-50"><span class="tx-dark">Don’t have an
+                        account?</span> Sign up
                 </button>
             </form>
         </div>
