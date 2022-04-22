@@ -1,13 +1,13 @@
 <div class="admin-wrapper">
     <div class="admin-left">
-        <img src="./assets/img/logo_white.png" class="logo"/>
+        <img src="./assets/img/logo_white.png" class="logo" />
     </div>
 
     <div class="admin-right">
         <div class="form">
             <ul class="tab-ul">
                 <li class="active"><a href="javascript:void(0);">Advice practice</a></li>
-                <li><a href="javascript:void(0);">Other</a></li>
+                <li><a href="javascript:void(0);">Supplier</a></li>
             </ul>
             <div class="form-main">
                 <div class="sign-title">Thanks Sam, we’ve sent a verification email to
@@ -19,13 +19,14 @@
                         <div>Verification code</div>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter 4-digit code"
-                           [(ngModel)]="verifyCode.code"/>
+                        [(ngModel)]="verifyCode.code" />
                 </div>
                 <p class="tip-error">This verification code is incorrect. Please check and try again. If you’re having
                     trouble you can chat with us now.</p>
                 <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-22" (click)="verify()">Verify</button>
 
-                <div class="bottom-tip">Didn’t receive the email? <a href="javascript:void(0);" (click)="resend()">Resend</a></div>
+                <div class="bottom-tip">Didn’t receive the email? <a href="javascript:void(0);"
+                        (click)="resend()">Resend</a></div>
             </div>
         </div>
     </div>
