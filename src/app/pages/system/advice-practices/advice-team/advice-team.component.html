@@ -27,37 +27,38 @@
 
         <div class="col-body">
             <ng-container>
-                <table class="table table-list table-striped">
+                <div class="table-list-wrap">
+                 <table class="table table-list table-striped">
                     <thead>
                     <tr>
-                        <th class="text-center max-w-300">
+                        <th class="max-w-300">
                             <div class="th-cell">
                                 Full name
                                 <sorting-widget></sorting-widget>
                             </div>
                         </th>
-                        <th>
+                        <th style="width:20%;">
                             <div class="th-cell">
                                 Account type
                                 <sorting-widget></sorting-widget>
                             </div>
                         </th>
 
-                        <th>
+                        <th style="width:15%;">
                             <div class="th-cell">
                                 Last logged in
                                 <sorting-widget></sorting-widget>
                             </div>
                         </th>
 
-                        <th>
+                        <th style="width:15%;">
                             <div class="th-cell">
                                 Status
                                 <sorting-widget></sorting-widget>
                             </div>
                         </th>
 
-                        <th class="text-right">
+                        <th class="text-center">
                             <div class="th-cell">Action</div>
                         </th>
                     </tr>
@@ -109,7 +110,7 @@
                     </tbody>
 
                 </table>
-
+                </div>
                 <ngb-pagination [collectionSize]="teamPage.total" [(page)]="teamPage.current" [pageSize]="teamPage.size"
                                 (pageChange)="pageChange($event)"></ngb-pagination>
 

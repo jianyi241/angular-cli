@@ -29,7 +29,8 @@
 
     <div class="table-responsive">
         <ng-container>
-            <table class="table table-list table-striped">
+            <div class="table-list-wrap">
+                <table class="table table-list table-striped">
                 <thead>
                 <tr>
                     <th>
@@ -116,7 +117,7 @@
                 </tr>
                 </tbody>
             </table>
-
+            </div>
             <ngb-pagination [collectionSize]="advicePage.total" [(page)]="advicePage.current"
                             [pageSize]="advicePage.size"
                             (pageChange)="pageChange($event)"></ngb-pagination>
