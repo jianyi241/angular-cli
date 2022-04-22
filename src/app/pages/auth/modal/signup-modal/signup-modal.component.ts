@@ -17,6 +17,7 @@ export class SignupModalComponent implements OnInit {
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
     agree = false;
     news = false;
+    join = false;
     validatorConfig: NgxValidatorConfig;
 
     constructor(private ngbModal: NgbModal,
@@ -48,11 +49,15 @@ export class SignupModalComponent implements OnInit {
 
     existedModal(): void {
         if (!this.agree) {
-            this.toastRepository.showDanger("Please read and agree to the Terms & conditions and Privacy policy.");
+            this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
             return;
         }
         if (!this.news) {
-            this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
+            this.toastRepository.showDanger("Please agree to have marketing information from SuitabilityHub sent to you");
+            return;
+        }
+        if (!this.join) {
+            this.toastRepository.showDanger("Please agree to join the research team and be invited to participate in occasional surveys");
             return;
         }
         this.userRepository.signup(this.signup).subscribe(res => {
