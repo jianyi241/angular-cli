@@ -10,6 +10,7 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {Constants} from "../../../../model/constants";
 import {PropStatus} from "../../../../model/enums/prop-status";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {Sort} from "../../../../model/vo/sort";
 
 @Component({
     selector: 'app-platform-details',
@@ -86,11 +87,12 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
-        let sort = this.moveProps[$event.currentIndex].sort;
+        let cur = this.moveProps[$event.previousIndex];
+        let tar = this.moveProps[$event.currentIndex];
+        let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
+        console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
-        let prop = {...this.moveProps[$event.currentIndex]};
-        prop.newSort = sort;
-        this.supplierRepository.sortProp(prop).subscribe(res => {
+        this.supplierRepository.sortProp(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

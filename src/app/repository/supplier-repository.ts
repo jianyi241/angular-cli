@@ -6,6 +6,7 @@ import {environment} from '../../environments/environment';
 import {GroupInfo} from "../model/po/groupInfo";
 import {PropertyInfo} from "../model/po/propertyInfo";
 import {Version} from "../model/po/version";
+import {Sort} from "../model/vo/sort";
 
 @Injectable({
     providedIn: 'root'
@@ -56,12 +57,12 @@ export class SupplierRepository {
         return this.http.get<HttpResult<Version>>(environment.baseURL + '/supplier/publish')
     }
 
-    sortGroup(group: GroupInfo): Observable<HttpResult<any>> {
-        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changeGroupSort', group);
+    sortGroup(sort: Sort): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changeGroupSort', sort);
     }
 
-    sortProp(prop: PropertyInfo): Observable<HttpResult<any>> {
-        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changePropSort', prop);
+    sortProp(sort: Sort): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<GroupInfo>>(environment.baseURL + '/supplier/changePropSort', sort);
     }
 
     versionList(): Observable<HttpResult<Array<Version>>> {

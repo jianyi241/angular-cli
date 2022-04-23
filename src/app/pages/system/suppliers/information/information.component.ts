@@ -14,6 +14,7 @@ import {LocalStorageObServable} from "../../../../observable/local-storage-obser
 import {PropStatus} from "../../../../model/enums/prop-status";
 import {GroupStatus} from "../../../../model/enums/group-status";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {Sort} from "../../../../model/vo/sort";
 
 @Component({
     selector: 'app-information',
@@ -117,11 +118,12 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     dropSections($event: CdkDragDrop<GroupInfo, any>) {
-        let sort = this.moveSections[$event.currentIndex].sort;
+        let cur = this.moveSections[$event.previousIndex];
+        let tar = this.moveSections[$event.currentIndex];
+        let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
+        console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveSections, $event.previousIndex, $event.currentIndex);
-        let section = {...this.moveSections[$event.currentIndex]};
-        section.newSort = sort;
-        this.supplierRepository.sortGroup(section).subscribe(res => {
+        this.supplierRepository.sortGroup(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
@@ -129,11 +131,12 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
-        let sort = this.moveProps[$event.currentIndex].sort;
+        let cur = this.moveProps[$event.previousIndex];
+        let tar = this.moveProps[$event.currentIndex];
+        let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
+        console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
-        let prop = {...this.moveProps[$event.currentIndex]};
-        prop.newSort = sort;
-        this.supplierRepository.sortProp(prop).subscribe(res => {
+        this.supplierRepository.sortProp(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
@@ -155,7 +158,7 @@ export class InformationComponent implements OnInit, OnDestroy {
         this.propList(id);
     }
 
-    storageReminder(name: string, value: string):void {
+    storageReminder(name: string, value: string): void {
         this.reminder[name] = value;
         this.localStorage.setItem('reminder' + TabType.information.value, this.reminder);
     }
