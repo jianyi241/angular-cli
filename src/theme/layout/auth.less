@@ -73,25 +73,37 @@
 
             li {
                 list-style: none;
-                padding: 12px 7px;
-                font-family: 'Epilogue';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 14px;
-                line-height: 1;
+                border-radius: 80px;
+                transition: all .25s ease-in-out;
 
                 a {
-                    color: #212F73;
+                    display: block;
+                    color: #4640DE;
+                    transition: all .25s ease-in-out;
+                    text-decoration: none;
+                    padding: 11px 12px;
+                    font-family: 'Epilogue';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 1;
+
+                    cursor: pointer;
+
                 }
 
-                &.active {
-                    background: #E9EBFD;
+                &.active,
+                &:hover {
+                    background: #4640DE;
                     font-weight: 400;
 
                     a {
-                        color: #4640DE;
+                        color: #fff;
                     }
+                }
 
+                &:last-child {
+                    margin-left: 1px;
                 }
             }
         }

@@ -6,19 +6,11 @@ export const environment = {
   }
 };
 
-/*export const environment = {
-  production: false,
-  baseURL: 'http://54.206.175.12/suitability-api-test',
-  arcadeAuth: {
-    clientId: '38ca222b-1ec7-455b-ab16-6df3d5d10341'
-  }
-};*/
-
-
 // export const environment = {
 //   production: false,
-//   baseURL: 'http://54.206.175.12/suitability-api-staging',
+//   baseURL: 'http://54.206.175.12/suitability-api-test',
 //   arcadeAuth: {
-//     clientId: '88ebd822-8fe2-4b45-9d00-09b18f314b38'
+//     clientId: '38ca222b-1ec7-455b-ab16-6df3d5d10341'
 //   }
 // };
+
