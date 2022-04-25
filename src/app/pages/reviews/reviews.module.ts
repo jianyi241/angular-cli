@@ -12,9 +12,10 @@ import {SystemModule} from "../system/system.module";
 import {MetricComparisonComponent} from './metric-comparison/metric-comparison.component';
 import {FeeComparisonComponent} from './fee-comparison/fee-comparison.component';
 import {FormsModule} from "@angular/forms";
+import {ShowMoreDirective} from "../../directive/show-more.directive";
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
@@ -24,7 +25,8 @@ import {FormsModule} from "@angular/forms";
         FormsModule,
     ], exports: [
     ReviewDropdownDirective,
-    TableScrollDirective
+    TableScrollDirective,
+    ShowMoreDirective
   ]
 })
 export class ReviewsModule { }
