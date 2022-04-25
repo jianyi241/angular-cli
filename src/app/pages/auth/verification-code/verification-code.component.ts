@@ -43,6 +43,7 @@ export class VerificationCodeComponent implements OnInit {
                 return;
             }
             this.toastRepository.showSuccess('The valid code email has been sent. Please check your inbox.');
+            this.router.navigateByUrl(`/verification?validToken=${res.data.token}&openId=${res.data.openId}`)
         });
     }
 

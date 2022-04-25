@@ -6,6 +6,7 @@ import {UserRepository} from "../../../../repository/user-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {ExistedModalComponent} from "../existed-modal/existed-modal.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-signup-modal',
@@ -21,6 +22,7 @@ export class SignupModalComponent implements OnInit {
     validatorConfig: NgxValidatorConfig;
 
     constructor(private ngbModal: NgbModal,
+                private router: Router,
                 private activeModal: NgbActiveModal,
                 private toastRepository: ToastRepository,
                 private userRepository: UserRepository) {
@@ -77,6 +79,8 @@ export class SignupModalComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
+            this.activeModal.close();
+            this.router.navigateByUrl(`/verification?validToken=${res.data.token}&openId=${res.data.openId}`);
         });
 
     }

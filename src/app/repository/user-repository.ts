@@ -37,8 +37,8 @@ export class UserRepository {
         return this.http.post<HttpResult<Authentication>>(environment.baseURL + `/user/v1/updateUserInfo`, currentUser);
     }
 
-    signup(signup: SignupVo): Observable<HttpResult<Authentication>> {
-        return this.http.post<HttpResult<Authentication>>(environment.baseURL + `/user/v1/signUp`, signup);
+    signup(signup: SignupVo): Observable<HttpResult<VerifyCode>> {
+        return this.http.post<HttpResult<VerifyCode>>(environment.baseURL + `/user/v1/signUp`, signup);
     }
 
     checkEmailUnique(email: string): Observable<HttpResult<any>> {
@@ -57,7 +57,7 @@ export class UserRepository {
         return this.http.post<HttpResult<InviteUser>>(environment.baseURL + '/user/v1/inviteSignup', inviteUser);
     }
 
-    resendActiveEmail(openId: string): Observable<HttpResult<any>> {
-        return this.http.get<HttpResult<any>>(environment.baseURL + `/email/resendActiveEmail/${openId}`)
+    resendActiveEmail(openId: string): Observable<HttpResult<VerifyCode>> {
+        return this.http.get<HttpResult<VerifyCode>>(environment.baseURL + `/email/resendActiveEmail/${openId}`)
     }
 }
