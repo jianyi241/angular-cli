@@ -1,7 +1,7 @@
 <div class="form-content">
     <div class="form-group-custom form-content-column">
         <div class="form-column-left">
-            <div class="title">Products <span class="link-new">+ New</span></div>
+            <div class="title">Products <span class="link-new" *ngIf="configService.isEditable(version.type)" (click)="saveProduct()">+ New</span></div>
             <div class="sub-title" [ngClass]="{'active': subProduct.id == subProductItem.id}" (click)="chooseGroup(subProductItem)" *ngFor="let subProductItem of feeRate.subProductVos">
                 {{subProductItem.name}}
             </div>

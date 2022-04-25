@@ -12,6 +12,7 @@ import {Constants} from "../../../../model/constants";
 import {TabType} from "../../../../model/enums/tab-type";
 import {ProductFormVo, SubProductFormVo} from "../../../../model/vo/productFormVo";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
+import {SubProduct} from "../../../../model/po/subProduct";
 
 @Component({
     selector: 'app-fees-rates-product',
@@ -102,5 +103,20 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
             }
             prop.productPropVo = res.data;
         })
+    }
+
+    saveProduct() {
+        let sub = new SubProduct();
+        sub.name = 'New Product'
+        sub.shProductId = this.product.id;
+        sub.versionId = this.version.id;
+        this.platformRepository.saveSubProduct(sub).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.getProductPropList();
+            this.toastRepository.showSuccess("Create Successfully.");
+        });
     }
 }

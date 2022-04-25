@@ -9,6 +9,7 @@ import {ProductPropInfo} from "../model/po/productPropInfo";
 import {Constants} from "../model/constants";
 import {ProductFormVo} from "../model/vo/productFormVo";
 import {Version} from "../model/po/version";
+import {SubProduct} from "../model/po/subProduct";
 
 @Injectable({
     providedIn: 'root'
@@ -63,5 +64,9 @@ export class PlatformRepository {
 
     versionList(productId: string): Observable<HttpResult<Array<Version>>> {
         return this.http.get<HttpResult<Array<Version>>>(environment.baseURL + `/product/getProductVersionList/${productId}`);
+    }
+
+    saveSubProduct(subProduct: SubProduct): Observable<HttpResult<SubProduct>> {
+        return this.http.post<HttpResult<SubProduct>>(environment.baseURL + '/product/saveSubProduct', subProduct);
     }
 }
