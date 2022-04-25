@@ -48,6 +48,10 @@ export class VerificationCodeComponent implements OnInit {
     }
 
     verify(): void {
+        if (!this.verifyCode.code) {
+            this.toastRepository.showDanger('Verification code is required.');
+            return;
+        }
         this.userRepository.verifyCode(this.verifyCode).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
@@ -55,6 +59,6 @@ export class VerificationCodeComponent implements OnInit {
             }
             this.toastRepository.showSuccess('Verification successfully.');
             this.router.navigateByUrl('/login');
-        })
+        });
     }
 }
