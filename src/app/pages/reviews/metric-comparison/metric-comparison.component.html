@@ -79,8 +79,15 @@
                                         </ng-template>
                                     </div>
                                     <div class="detail-content"
-                                         *ngIf="prop.type == configService.propType.longText"
-                                         [innerHTML]="getProductPropValue(prop, product.productPropVoList)">
+                                         *ngIf="prop.type == configService.propType.longText">
+                                        <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                        <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent">More</span>
+                                        <ng-template #popContent>
+                                            <div class="cell-popover">
+                                                <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                                <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                            </div>
+                                        </ng-template>
                                     </div>
                                     <!--<div class="amount-content"
                                          *ngIf="prop.type == configService.propType.integer">

@@ -5,7 +5,8 @@ import $ from 'jquery';
   selector: '[appShowMore]'
 })
 export class ShowMoreDirective {
-    maxHeight = 136;
+    maxHeight = 170;
+    maxWidth = 198;
 
   constructor(private renderer: Renderer2,private elementRef: ElementRef) {
 
@@ -13,7 +14,8 @@ export class ShowMoreDirective {
 
       setTimeout(()=> {
           let _clientHeight = this.elementRef.nativeElement.clientHeight;
-          if(_clientHeight > this.maxHeight){
+          let _clientWidth = this.elementRef.nativeElement.clientWidth;
+          if(_clientHeight > this.maxHeight || _clientWidth > this.maxWidth){
                 this.renderer.addClass(this.elementRef.nativeElement,'detail-content-more');
                 $(element).siblings('.more-link').show();
           }
