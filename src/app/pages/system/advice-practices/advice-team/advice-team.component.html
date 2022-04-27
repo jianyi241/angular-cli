@@ -51,14 +51,14 @@
                             </div>
                         </th>
 
-                        <th style="width:15%;">
+                        <th style="width:15%;" class="text-center">
                             <div class="th-cell">
                                 Status
                                 <sorting-widget></sorting-widget>
                             </div>
                         </th>
 
-                        <th class="text-center">
+                        <th class="text-right">
                             <div class="th-cell">Action</div>
                         </th>
                     </tr>
@@ -90,7 +90,7 @@
                         </td>
 
 
-                        <td>
+                        <td class="text-center">
                             <div class="td-cell" *ngIf="team.status == configService.userStatus.active">
                                 <label class="label label-green-light">Active</label>
                             </div>
