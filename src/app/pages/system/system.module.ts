@@ -55,6 +55,7 @@ import { SupplierTeamComponent } from './suppliers/supplier-edit/supplier-team/s
 import { SupplierPlatformComponent } from './suppliers/supplier-edit/supplier-platform/supplier-platform.component';
 import { SupplierBillingComponent } from './suppliers/supplier-edit/supplier-billing/supplier-billing.component';
 import { SupplierInvoicesComponent } from './suppliers/supplier-edit/supplier-invoices/supplier-invoices.component';
+import { ManageSupplierUsersComponent } from './suppliers/supplier-edit/manage-supplier-users/manage-supplier-users.component';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { SupplierInvoicesComponent } from './suppliers/supplier-edit/supplier-in
         SupplierTeamComponent,
         SupplierPlatformComponent,
         SupplierBillingComponent,
-        SupplierInvoicesComponent
+        SupplierInvoicesComponent,
+        ManageSupplierUsersComponent
     ],
     imports: [
         CommonModule,
