@@ -149,14 +149,14 @@
 
                 <div class="form-group">
                     <div class="radio-box radio-box-top-2">
-                        <input type="radio" name="CommunicationPreferences" id="likeToReceive"/>
+                        <input type="radio" name="CommunicationPreferences" id="likeToReceive" [value]="true" [(ngModel)]="currentUser.receiveNewsFlag"/>
                         <label for="likeToReceive">
                             I want like to receive periodic updates and news from SuitabilityHub
                         </label>
                     </div>
 
                     <div class="radio-box radio-box-top-2">
-                        <input type="radio" name="CommunicationPreferences" id="DoNotToreceive"/>
+                        <input type="radio" name="CommunicationPreferences" id="DoNotToreceive" [value]="false" [(ngModel)]="currentUser.receiveNewsFlag"/>
                         <label for="DoNotToreceive">
                             I don’t want to receive periodic updates and news from SuitabilityHub
                         </label>
