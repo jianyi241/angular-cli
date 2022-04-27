@@ -45,7 +45,7 @@ export class AcceptInvitationModalComponent implements OnInit {
     }
 
     fullName(): string {
-        return [this.inviteUser.firstName, this.inviteUser.lastName].join(',');
+        return [this.inviteUser.firstName, this.inviteUser.lastName].join(' ');
     }
 
 
