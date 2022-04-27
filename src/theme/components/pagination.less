@@ -20,26 +20,31 @@ ul.pagination {
       background-color: transparent;
 
       &:hover {
+        color: #515B6F;
         background-color: #E9EBFD;
+      }
+
+      &:focus{
+        outline: none;
+        box-shadow: none;
       }
     }
 
     &:first-child,&:last-child{
       a{
         font-size: 0;
-      }
 
-      &::before{
-        content:"";
-        .icon-block;
-        width: 24px;
-        height: 24px;
+        span{
+          .icon-block;
+          width: 24px;
+          height: 24px;
+        }
       }
     }
 
     &:first-child {
       a {
-        &::before{
+        span{
           .icon-page-left;
         }
       }
@@ -48,7 +53,7 @@ ul.pagination {
 
     &:last-child {
       a {
-        &::before{
+        span{
           .icon-page-right;
         }
       }

@@ -6,9 +6,10 @@
         <form #signupForm="ngForm" name="signupForm" novalidate [ngxFormValidator]="validatorConfig">
             <div class="form">
                 <ul class="tab-ul">
-                    <li class="active"><a href="javascript:void(0);">Advice practice</a></li>
-                    <li><a href="javascript:void(0);">Supplier</a></li>
+                    <li [ngClass]="{ 'active':currentTab =='Advice practice'}" (click)="currentTab='Advice practice'"><a href="javascript:void(0);">Advice practice</a></li>
+                    <li [ngClass]="{ 'active':currentTab =='Supplier'}" (click)="currentTab='Supplier'"><a href="javascript:void(0);">Supplier</a></li>
                 </ul>
+
                 <div class="form-main">
                     <div class="sign-title">Sign up with your work email</div>
                     <div class="form-group form-group-sign xs-mt-24">
@@ -18,7 +19,8 @@
                         <input type="text" class="form-control" name="account" required placeholder="Enter your email"
                             email [(ngModel)]="signup.email" />
                     </div>
-                    <p class="tip-error">Please use your work email, we don’t accept personal email addresses </p>
+                    <p class="tip-error" *ngIf="currentTab=='Advice practice'">Please use your work email, we don’t accept personal email addresses </p>
+                    <p class="tip-error" *ngIf="currentTab=='Supplier'">Oops, this email does not look like an adviser address. Please contact us for assistance </p>
                     <p class="tip-error" *ngIf="checkEmailUnique">This email already exists. Please <a
                             [routerLink]="[ '/login' ]">log in</a>
                         to continue.</p>
@@ -39,18 +41,21 @@
                             required [(ngModel)]="signup.confirmPassword" placeholder="Enter password again" />
                         <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                     </div>
-                    <div class="form-group-sign xs-mt-24 xs-mb-4">
-                        <label class="control-label">
-                            <div>Your password must contain:</div>
-                        </label>
-                    </div>
-                    <ul>
-                        <li>• at least eight characters</li>
-                        <li>• both upper case and lower case letters</li>
-                        <li>• at least one number</li>
-                    </ul>
 
-                    <div class="check-box check-box-purple">
+                    <ng-container  *ngIf="currentTab=='Advice practice'">
+                        <div class="form-group-sign xs-mt-24 xs-mb-4">
+                            <label class="control-label">
+                                <div>Your password must contain:</div>
+                            </label>
+                        </div>
+                        <ul>
+                            <li>• at least eight characters</li>
+                            <li>• both upper case and lower case letters</li>
+                            <li>• at least one number</li>
+                        </ul>
+                    </ng-container>
+
+                    <div class="check-box check-box-purple xs-mt-24 xs-mb-0">
                         <input type="checkbox" name="agree" id="agree" [(ngModel)]="agree" />
                         <label for="agree">
                             <p>I agree to the <a href="javascript:void(0);">Terms of
@@ -64,6 +69,7 @@
                     <div class="bottom-tip">Already have an account? <a [routerLink]="['../login']"
                             href="javascript:void(0);">Login</a></div>
                 </div>
+
             </div>
         </form>
     </div>

@@ -24,6 +24,5 @@ export class InviteUser extends UserInfo {
     confirmPassword: string;
     practiceName: string;
     validToken: string;
-    //advice, supplier
     companyType: string;
 }

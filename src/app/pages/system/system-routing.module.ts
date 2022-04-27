@@ -27,6 +27,13 @@ import {EditTeamComponent} from "./advice-practices/edit-team/edit-team.componen
 import {FeesRatesComponent} from "./suppliers/fees-rates/fees-rates.component";
 import {FeesRatesProductComponent} from "./platforms/fees-rates-product/fees-rates-product.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {SupplierListComponent} from "./suppliers/supplier-list/supplier-list.component";
+import {SupplierEditComponent} from "./suppliers/supplier-edit/supplier-edit.component";
+import {SupplierOverviewComponent} from "./suppliers/supplier-edit/supplier-overview/supplier-overview.component";
+import {SupplierTeamComponent} from "./suppliers/supplier-edit/supplier-team/supplier-team.component";
+import {SupplierPlatformComponent} from "./suppliers/supplier-edit/supplier-platform/supplier-platform.component";
+import {SupplierBillingComponent} from "./suppliers/supplier-edit/supplier-billing/supplier-billing.component";
+import {SupplierInvoicesComponent} from "./suppliers/supplier-edit/supplier-invoices/supplier-invoices.component";
 
 const routes: Routes = [
     {
@@ -74,6 +81,36 @@ const routes: Routes = [
                     {
                         path: 'fees-rates/:version',
                         component: FeesRatesComponent,
+                    },
+                ]
+            },
+            {
+                path: 'supplier-list',
+                component: SupplierListComponent,
+            },
+            {
+                path: 'supplier-edit',
+                component: SupplierEditComponent,
+                children: [
+                    {
+                        path: 'overview',
+                        component: SupplierOverviewComponent,
+                    },
+                    {
+                        path: 'team',
+                        component: SupplierTeamComponent,
+                    },
+                    {
+                        path: 'platforms',
+                        component: SupplierPlatformComponent,
+                    },
+                    {
+                        path: 'billing',
+                        component: SupplierBillingComponent,
+                    },
+                    {
+                        path: 'invoices',
+                        component: SupplierInvoicesComponent,
                     },
                 ]
             },
