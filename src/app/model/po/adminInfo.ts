@@ -23,7 +23,7 @@ export class AdminInfo extends BaseModel{
     practiceRoleId?: string;
     receiveNewsFlag?: boolean;
     role?: string;
-    status?: string;
+    status?: string; // Active,Disable,Pending
     supplierName?: string;
     validCode?: string;
     validToken?: number;

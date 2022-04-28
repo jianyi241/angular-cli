@@ -22,8 +22,8 @@ export class AdminRepository {
     }
 
     // 获取admin role列表
-    getAdminRoles(): Observable<HttpResult<AdminRole>> {
-        return this.http.get<HttpResult<AdminRole>>(environment.baseURL + '/admin/queryAdminRoleList')
+    getAdminRoles(): Observable<HttpResult<Array<AdminRole>>> {
+        return this.http.get<HttpResult<Array<AdminRole>>>(environment.baseURL + '/admin/queryAdminRoleList')
     }
 
     // 根据userId获取管理员信息

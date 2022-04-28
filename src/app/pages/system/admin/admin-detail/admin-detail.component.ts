@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {TeamInfo} from "../../../../model/po/teamInfo";
-import {Constants} from "../../../../model/constants";
 import {AdviceRepository} from "../../../../repository/advice-repository";
 import {RoleInfo} from "../../../../model/po/roleInfo";
 import {ToastRepository} from "../../../../repository/toast-repository";
@@ -9,6 +8,9 @@ import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
+import {AdminRepository} from "../../../../repository/admin-repository";
+import {AdminRole} from "../../../../model/po/adminRole";
+import {AdminInfo} from "../../../../model/po/adminInfo";
 
 @Component({
   selector: 'app-admin-detail',
@@ -17,75 +19,58 @@ import {FileRepository} from "../../../../repository/file-repository";
 })
 export class AdminDetailComponent implements OnInit {
   type: string;
-  id: string;
   status: number = 1;
   team: TeamInfo = new TeamInfo();
-  accountRoles: Array<RoleInfo> = new Array<RoleInfo>();
-  practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
+  adminInfo: AdminInfo = new AdminInfo();
+  adminRoles: Array<AdminRole> = new Array<AdminRole>();
   uploading = false;
 
   constructor(private activatedRoute: ActivatedRoute,
+              private adminRepository: AdminRepository,
               private saveService: SaveService,
               private fileRepository: FileRepository,
-              private toastRepository: ToastRepository,
-              private adviceRepository: AdviceRepository) {
+              private toastRepository: ToastRepository) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       console.log('params ===> ', params)
-      this.id = params['id']
+      this.adminInfo.id = params['id']
       this.type = params['type']
-      console.log('this.id ===> ', this.id)
+      console.log('this.id ===> ', this.adminInfo.id)
       console.log('this.type ===> ', this.type)
     })
-    this.getAccountRoles()
+    this.getAdminRoles()
+    this.getAdminDetail()
   }
 
-  getTeamDetail(): void {
-    this.adviceRepository.teamDetail(this.team.id).subscribe(res => {
-      this.team = Object.assign(this.team, res.data);
+  getStatusCls(status: string): string {
+    switch (status) {
+      case "Active":
+          return "label-green-light"
+        break;
+      case "Pending":
+        return "label-orange"
+      break;
+      case "Disable":
+        return "label-default"
+    }
+    return "";
+  }
+
+  getAdminDetail(): void {
+    this.adminRepository.getAdminInfo(this.adminInfo.id).subscribe(res => {
+      this.adminInfo = Object.assign(this.adminInfo, res.data);
+      console.log('admin detail ===> ', this.adminInfo)
     })
   }
 
-  getAccountRoles(): void {
-    // this.adviceRepository.getAccountRoles().subscribe(res => {
-    //   console.log('account roles ===> ', res.data)
-    //   this.accountRoles = res.data;
-    //   this.team.roleId = this.accountRoles.find(a => a.roleName == RoleType.Adviser.value).id;
-    // })
-    const arr: Array<RoleInfo> = [
-      {
-        authority: "user",
-        createTime: null,
-        createUser: null,
-        deleteFlag: false,
-        id: "1",
-        roleDesc: "Can publish changes made by Suppliers and Administrators. Can create new Administrators",
-        roleName: "Super administrator",
-        updateTime: null,
-        updateUser: null
-      },
-      {
-        authority: "user",
-        createTime: null,
-        createUser: null,
-        deleteFlag: false,
-        id: "2",
-        roleDesc: "Can review changes from suppliers and make own changes,but cannot publish. Can view and manage Supplier and Adviser users",
-        roleName: "Administrator",
-        updateTime: null,
-        updateUser: null
-      },
-    ]
-    this.accountRoles = arr;
-    this.team.roleId = "1"
-  }
-
-  getPracticeRoles(): void {
-    this.adviceRepository.getPracticeRoles().subscribe(res => {
-      console.log('practice roles ===> ', res.data)
-      this.practiceRoles = res.data;
+  getAdminRoles(): void {
+    this.adminRepository.getAdminRoles().subscribe(res => {
+      if (res.statusCode === 200) {
+        this.adminRoles = res.data
+      }
+      console.log('admin roles ===> ', this.adminRoles)
     })
   }
 
@@ -101,8 +86,8 @@ export class AdminDetailComponent implements OnInit {
         this.fileRepository.uploadFile('img', file).then(res => {
           this.uploading = false;
           if (res.statusCode == 200) {
-            console.log('upload img result ===> ', res)
-            this.team.attachmentVo = res.data[0];
+            this.adminInfo.avatar = res.data[0];
+            console.log('this.adminInfo.avatar ===> ', this.adminInfo.avatar)
           }
         });
       });
@@ -112,23 +97,24 @@ export class AdminDetailComponent implements OnInit {
   }
 
   save(): void {
-    let copyTeam = {...this.team};
-    if (!copyTeam.firstName) {
+    let _adminInfo = {...this.adminInfo};
+    if (!_adminInfo.firstName) {
       this.toastRepository.showDanger('First name is required.');
       return;
     }
-    if (!copyTeam.lastName) {
+    if (!_adminInfo.lastName) {
       this.toastRepository.showDanger('Last name is required.');
       return;
     }
-    if (!copyTeam.email) {
+    if (!_adminInfo.email) {
       this.toastRepository.showDanger('Work email is required.');
       return;
     }
     if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
       return;
     }
-    this.toastRepository.showSuccess('New user created and welcome email sent');
+    // this.toastRepository.showSuccess('New user created and welcome email sent');
+
     // this.adviceRepository.saveTeam(copyTeam).subscribe(res => {
     //   if (res.statusCode != 200) {
     //     this.toastRepository.showDanger(res.msg);
