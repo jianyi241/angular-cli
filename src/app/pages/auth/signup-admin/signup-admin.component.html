@@ -1,0 +1,38 @@
+<div class="admin-wrapper">
+    <div class="admin-left">
+        <img src="./assets/img/logo_white.png" class="logo" />
+    </div>
+    <div class="admin-right">
+        <form #signupForm="ngForm" name="signupForm" novalidate [ngxFormValidator]="validatorConfig">
+            <div class="form">
+                <div class="form-main">
+                    <div class="sign-title">Hi Bailey, set your password and get in now</div>
+                    <div class="form-group form-group-sign password-input xs-mt-24">
+                        <label class="control-label">
+                            <div>Password<span class="label-required">*</span></div>
+                        </label>
+                        <input type="password" class="form-control" name="password" required autocomplete="new-password"
+                               [(ngModel)]="signup.password" placeholder="Enter password" />
+                        <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
+                    </div>
+
+                    <div class="form-group form-group-sign password-input xs-mt-24">
+                        <label class="control-label">
+                            <div>Enter password again<span class="label-required">*</span></div>
+                        </label>
+                        <input type="password" class="form-control" autocomplete="new-password" name="confirmPassword"
+                               required [(ngModel)]="signup.confirmPassword" placeholder="Enter password again" />
+                        <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
+                    </div>
+                    <button (ngxFormSubmit)="toSignUp()"
+                            class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24" style="margin-top: 36px !important;">Set password
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="chat-box">
+    <span class="icon-block icon-chat icon-20"></span>
+</div>
