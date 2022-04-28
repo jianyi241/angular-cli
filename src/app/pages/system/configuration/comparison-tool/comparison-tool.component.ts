@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../repository/configuration-repository";
 import {GroupInfo} from "../../../../model/po/groupInfo";
 import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
@@ -39,7 +39,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
                 private storage: LocalStorageObServable,
                 private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
-                private supplierRepository: SupplierRepository,
+                private configurationRepository: ConfigurationRepository,
                 public configService: ConfigService) {
         this.storage.getItem<Reminder>('reminder' + TabType.features.value).subscribe(data => {
             if (data != 'undefined' && data) {
@@ -92,7 +92,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     getGroupList(): void {
-        this.supplierRepository.groupList(TabType.features.value, this.version.id).subscribe(res => {
+        this.configurationRepository.groupList(TabType.features.value, this.version.id).subscribe(res => {
             if (!res.data) {
                 return;
             }
@@ -123,7 +123,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     getPropList(subGroupId: string): void {
-        this.supplierRepository.propList(subGroupId, this.version.id).subscribe(res => {
+        this.configurationRepository.propList(subGroupId, this.version.id).subscribe(res => {
             this.properties = res.data;
         });
     }
@@ -173,7 +173,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.properties, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortProp(sort).subscribe(res => {
+        this.configurationRepository.sortProp(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
@@ -186,7 +186,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.subGroups, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortGroup(sort).subscribe(res => {
+        this.configurationRepository.sortGroup(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
@@ -199,7 +199,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveGroups, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortGroup(sort).subscribe(res => {
+        this.configurationRepository.sortGroup(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

@@ -11,7 +11,7 @@ import {Sort} from "../model/vo/sort";
 @Injectable({
     providedIn: 'root'
 })
-export class SupplierRepository {
+export class ConfigurationRepository {
 
     constructor(private http: HttpClient) {
 

@@ -3,7 +3,7 @@ import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {TabType} from "../../../../model/enums/tab-type";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../repository/configuration-repository";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {Version} from "../../../../model/po/version";
 import * as moment from "moment";
@@ -14,10 +14,10 @@ import {VersionType} from "../../../../model/enums/version-type";
 
 @Component({
     selector: 'app-supplier-layout',
-    templateUrl: './supplier-layout.component.html',
-    styleUrls: ['./supplier-layout.component.less']
+    templateUrl: './configuration-layout.component.html',
+    styleUrls: ['./configuration-layout.component.less']
 })
-export class SupplierLayoutComponent implements OnInit {
+export class ConfigurationLayoutComponent implements OnInit {
     version: Version = new Version();
     currentTab: string;
 
@@ -25,7 +25,7 @@ export class SupplierLayoutComponent implements OnInit {
                 private activeRouter: ActivatedRoute,
                 private saveService: SaveService,
                 private versionRepository: VersionRepository,
-                private supplierRepository: SupplierRepository,
+                private configurationRepository: ConfigurationRepository,
                 private toastRepository: ToastRepository,
                 private router: Router) {
     }
@@ -73,7 +73,7 @@ export class SupplierLayoutComponent implements OnInit {
         if (this.saveService.saveCheck(environment.baseURL + `/supplier/editModel`)) {
             return
         }
-        this.supplierRepository.editConfig().subscribe(res => {
+        this.configurationRepository.editConfig().subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
@@ -88,7 +88,7 @@ export class SupplierLayoutComponent implements OnInit {
         if (this.saveService.saveCheck(environment.baseURL + '/supplier/publish')) {
             return
         }
-        this.supplierRepository.pushConfig().subscribe(res => {
+        this.configurationRepository.pushConfig().subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EsgComponent } from './esg.component';
+import {EsgComponent} from './esg.component';
 
 describe('EsgComponent', () => {
   let component: EsgComponent;

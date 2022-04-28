@@ -49,7 +49,7 @@ export class AdminListComponent implements OnInit, OnDestroy {
     // this.adminPage.size = 10
     // this.adminPage.total = 1000
     // this.adminPage.records = arr
-    this.adminRepository.getAdminInfoList(this.adminPage).subscribe(res => {
+    this.adminRepository.getAdminInfoList(null).subscribe(res => {
       console.log('get admin list ===> ', res)
     },err => {})
   }

@@ -1,13 +1,13 @@
 import {EnumIdentity} from "../interfaces/EnumIdentity";
 
 export class RoleType implements EnumIdentity {
+    //type: 1 -> Admin User, 2 -> Supplier User, 3 -> Advice User
     private static AllValues: Array<RoleType> = new Array<RoleType>();
-    static readonly SuperAdmin = new RoleType("Admin", "Super Admin");
-    static readonly AccountAdmin = new RoleType('Account administrator', "Account administrator");
-    static readonly Adviser = new RoleType('Adviser', "Adviser");
-    static readonly Support = new RoleType('Support', "Support");
+    static readonly AdminUser = new RoleType(1, "Admin User");
+    static readonly SupplierUser = new RoleType(2, "Supplier User");
+    static readonly AdviceUser = new RoleType(3, "Advice User");
 
-    private constructor(public readonly value: string, public readonly name: string) {
+    private constructor(public readonly value: number, public readonly name: string) {
         RoleType.AllValues.push(this);
     }
 

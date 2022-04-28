@@ -12,8 +12,8 @@
                         <div class="switch-text" [ngClass]="{'active': this.condition.accountType == ''}" (click)="this.condition.accountType = ''; this.getTeamList()">
                             Everyone
                         </div>
-                        <div class="switch-text" [ngClass]="{'active': this.condition.accountType == configService.roleType.adviser}"
-                             (click)="this.condition.accountType = configService.roleType.adviser; this.getTeamList()">
+                        <div class="switch-text" [ngClass]="{'active': this.condition.accountType == configService.roles.adviser}"
+                             (click)="this.condition.accountType = configService.roles.adviser; this.getTeamList()">
                             Advisers
                         </div>
                     </div>

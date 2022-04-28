@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../repository/configuration-repository";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {GroupInfo} from "../../../../model/po/groupInfo";
 import {Version} from "../../../../model/po/version";
@@ -38,7 +38,7 @@ export class InformationComponent implements OnInit, OnDestroy {
                 public configService: ConfigService,
                 private localStorage: LocalStorageObServable,
                 private toastRepository: ToastRepository,
-                private supplierRepository: SupplierRepository,
+                private configurationRepository: ConfigurationRepository,
                 private versionRepository: VersionRepository) {
         this.localStorage.getItem('reminder' + TabType.information.value).subscribe(data => {
             if (data != 'undefined' && data) {
@@ -88,7 +88,7 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     sectionList(): void {
-        this.supplierRepository.groupList(TabType.information.value, this.version.id).subscribe(res => {
+        this.configurationRepository.groupList(TabType.information.value, this.version.id).subscribe(res => {
             if (!res.data) {
                 return;
             }
@@ -110,7 +110,7 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     propList(groupId: string): void {
         this.reminder.groupId = groupId;
-        this.supplierRepository.propList(this.reminder.groupId, this.version.id).subscribe(res => {
+        this.configurationRepository.propList(this.reminder.groupId, this.version.id).subscribe(res => {
             if (!res.data) return;
             this.moveProps = res.data.filter(p => p.moveFlag);
             this.freezeProps = res.data.filter(p => !p.moveFlag);
@@ -123,7 +123,7 @@ export class InformationComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveSections, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortGroup(sort).subscribe(res => {
+        this.configurationRepository.sortGroup(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
@@ -136,7 +136,7 @@ export class InformationComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortProp(sort).subscribe(res => {
+        this.configurationRepository.sortProp(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
         } else if (type.includes('/platform')) {
             this.router.navigateByUrl('/platform/product');
         } else if (type.includes('/advice-practices')) {
-            if (this.currentUserService.isAdmin()) {
+            if (this.currentUserService.isAdminUser()) {
                 this.router.navigateByUrl('/advice-practices');
             } else {
                 this.router.navigateByUrl(`/advice-practices/advice-tab/overview/${this.currentUserService.authentication.principal.practiceId}`);
