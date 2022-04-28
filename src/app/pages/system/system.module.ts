@@ -48,7 +48,8 @@ import {FeesRatesComponent} from './suppliers/fees-rates/fees-rates.component';
 import {FeesRatesProductComponent} from './platforms/fees-rates-product/fees-rates-product.component';
 import {ProfileComponent} from './profile/profile.component';
 import {DateComponent} from './platforms/prop-component/date/date.component';
-
+import { AdminListComponent } from './admin/admin-list/admin-list.component';
+import { AdminDetailComponent } from './admin/admin-detail/admin-detail.component';
 
 @NgModule({
     declarations: [
@@ -90,7 +91,9 @@ import {DateComponent} from './platforms/prop-component/date/date.component';
         FeesRatesComponent,
         FeesRatesProductComponent,
         ProfileComponent,
-        DateComponent
+        DateComponent,
+        AdminListComponent,
+        AdminDetailComponent
     ],
     imports: [
         CommonModule,

@@ -64,8 +64,7 @@ import {CustomLinkActiveDirective} from './directive/custom-link-active.directiv
         CKEditorModule,
         SystemModule,
         ReviewsModule,
-        NgbAccordionModule,
-
+        NgbAccordionModule
     ],
     providers: [
 

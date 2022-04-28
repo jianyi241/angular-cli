@@ -14,7 +14,7 @@ import { CurrentUserService } from "./service/current-user.service";
 })
 export class AppComponent {
     private routerEventsListener: Subscription;
-    excludes: string[] = ['/login', '/forgot', '/reset', '/verification', '/signup'];
+    excludes: string[] = ['/login', '/forgot', '/reset', '/verification', '/signup', '/signup-admin'];
     message;
     title: any;
 

@@ -19,7 +19,7 @@
   padding-left: 168px;
   padding-right:168px;
   background-color: #4640DE;
-  z-index:99;
+  z-index:999;
 
   @media screen and (max-width: 1400px){
     padding-left: 100px;
@@ -132,6 +132,7 @@
   font-size: 16px;
   line-height: 25.6px;
   text-align: center;
+  z-index: inherit;
 
   @media screen and (max-width: 1100px){
     font-size: 14px;
@@ -142,11 +143,39 @@
   }
 
   .text{
+    position: relative;
     margin-right: 34px;
     cursor: pointer;
-
+    z-index: inherit;
     @media screen and (max-width: 1100px){
       margin-right: 20px;
+    }
+
+    .user-menu {
+      position: absolute;
+      width: 248px;
+      //height: 248px;
+      right: 0;
+      top: 30px;
+      font-size: 13px;
+      color: #4640DE;
+      background: #FFFFFF;
+      border: 1px solid #D6DDEB;
+      box-shadow: -8px 8px 40px rgba(0, 0, 0, 0.08);
+      z-index: 999;
+      > .menu-item {
+        height: 62px;
+        display: flex;
+        align-items: center;
+        padding-left: 22px;
+        z-index: 999;
+        &:not(:last-child) {
+          border-bottom: 1px solid #E2E7F5;
+        }
+        > .menu-name {
+          margin-left: 14px;
+        }
+      }
     }
   }
 

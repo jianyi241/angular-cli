@@ -1,10 +1,10 @@
 
 ul.pagination {
+  align-items: center;
   justify-content: center;
 
   li.page-item {
     display: inline-block;
-
     a.page-link {
       display: flex;
       justify-content: center;
@@ -25,22 +25,28 @@ ul.pagination {
     }
 
     &:first-child,&:last-child{
+      vertical-align: top;
       a{
-        font-size: 0;
+        //font-size: 0;
+
       }
 
-      &::before{
-        content:"";
-        .icon-block;
-        width: 24px;
-        height: 24px;
-      }
+      //&::before{
+      //  content:"";
+      //  .icon-block;
+      //  width: 24px;
+      //  height: 24px;
+      //}
     }
 
     &:first-child {
       a {
+        background: url("../../assets/img/icon/icon-page-prev.svg") center center/50% no-repeat;
+        > span {
+          opacity: 0;
+        }
         &::before{
-          .icon-page-left;
+          .icon-page-left {}
         }
       }
 
@@ -48,8 +54,12 @@ ul.pagination {
 
     &:last-child {
       a {
+        background: url("../../assets/img/icon/icon-page-next.svg") center center/50% no-repeat;
+        > span {
+          opacity: 0;
+        }
         &::before{
-          .icon-page-right;
+          .icon-page-right {}
         }
       }
     }

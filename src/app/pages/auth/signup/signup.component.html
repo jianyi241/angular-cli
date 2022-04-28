@@ -6,8 +6,8 @@
         <form #signupForm="ngForm" name="signupForm" novalidate [ngxFormValidator]="validatorConfig">
             <div class="form">
                 <ul class="tab-ul">
-                    <li class="active"><a href="javascript:void(0);">Advice practice</a></li>
-                    <li><a href="javascript:void(0);">Supplier</a></li>
+                    <li [ngClass]="[signup.companyType === 1 ? 'active' : '']" (click)="switchCompanyType(1)"><a href="javascript:void(0);">Advice practice</a></li>
+                    <li [ngClass]="[signup.companyType === 2 ? 'active' : '']" (click)="switchCompanyType(2)"><a href="javascript:void(0);">Supplier</a></li>
                 </ul>
                 <div class="form-main">
                     <div class="sign-title">Sign up with your work email</div>
@@ -15,7 +15,7 @@
                         <label class="control-label">
                             <div>Work email<span class="label-required">*</span></div>
                         </label>
-                        <input type="text" class="form-control" name="account" required placeholder="Enter your email"
+                        <input type="text" class="form-control" name="account" required placeholder="Enter your work email"
                             email [(ngModel)]="signup.email" />
                     </div>
                     <p class="tip-error">Please use your work email, we don’t accept personal email addresses </p>

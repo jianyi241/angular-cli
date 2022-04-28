@@ -27,6 +27,8 @@ import {EditTeamComponent} from "./advice-practices/edit-team/edit-team.componen
 import {FeesRatesComponent} from "./suppliers/fees-rates/fees-rates.component";
 import {FeesRatesProductComponent} from "./platforms/fees-rates-product/fees-rates-product.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {AdminListComponent} from "./admin/admin-list/admin-list.component";
+import {AdminDetailComponent} from "./admin/admin-detail/admin-detail.component";
 
 const routes: Routes = [
     {
@@ -78,6 +80,20 @@ const routes: Routes = [
                 ]
             },
 
+        ]
+    },
+    {
+        path: 'admin-manage',
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'list',
+                component: AdminListComponent
+            },
+            {
+                path: 'detail/:type/:id',
+                component: AdminDetailComponent
+            }
         ]
     },
     {

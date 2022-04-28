@@ -6,8 +6,9 @@ import {Subject} from "rxjs";
 })
 export class ReviewService {
     private nextSubject = new Subject<object>();
-    private backSubject = new Subject<object>();
     nextObservable = this.nextSubject.asObservable();
+    private backSubject = new Subject<object>();
+
     backObservable = this.backSubject.asObservable();
 
     constructor() {

@@ -50,6 +50,5 @@ export class ForgotComponent implements OnInit {
                 resetPasswordEmailComponent.componentInstance.email = this.account;
             }
         })
-
     }
 }
