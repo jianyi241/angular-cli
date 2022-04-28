@@ -37,6 +37,7 @@ export class SignupComponent implements OnInit {
         },
         validateOn: 'submit'
     };
+    currentTab='Advice practice';
 
 
     constructor(private ngbModal: NgbModal,

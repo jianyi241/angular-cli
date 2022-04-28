@@ -5,6 +5,7 @@ ul.pagination {
 
   li.page-item {
     display: inline-block;
+
     a.page-link {
       display: flex;
       justify-content: center;
@@ -20,15 +21,25 @@ ul.pagination {
       background-color: transparent;
 
       &:hover {
+        color: #515B6F;
         background-color: #E9EBFD;
+      }
+
+      &:focus{
+        outline: none;
+        box-shadow: none;
       }
     }
 
     &:first-child,&:last-child{
-      vertical-align: top;
       a{
         //font-size: 0;
 
+        span{
+          .icon-block;
+          width: 24px;
+          height: 24px;
+        }
       }
 
       //&::before{

@@ -1,0 +1,167 @@
+
+<div class="form-content">
+    <div class="form-group-custom">
+        <div class="form-group-left" style="width: 100%;">
+            <label class="control-label">Billing information</label>
+            <p class="info">This is the information that will appear on your invoice</p>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Plan details</label>
+            <p class="info">See the plan you’re on</p>
+        </div>
+
+        <div class="form-group-right">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">Premium user licenses</label>
+                        <input type="text" class="form-control" value="1 of 4" placeholder="Enter Premium user licenses"/>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">BDM user licenses</label>
+                        <input type="text" class="form-control" value="4 of 4" placeholder="Enter BDM user licenses"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Next billing date</label>
+                <input type="text" class="form-control" placeholder="Enter next billing date" [owlDateTime]="nextBillingDate" [owlDateTimeTrigger]="nextBillingDate"/>
+                <owl-date-time #nextBillingDate [pickerType]="'calendar'"></owl-date-time>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Subscription expiry date</label>
+                <input type="text" class="form-control" placeholder="Enter subscription expiry date" [owlDateTime]="subscriptionExpiryDate" [owlDateTimeTrigger]="subscriptionExpiryDate"/>
+                <owl-date-time #subscriptionExpiryDate [pickerType]="'calendar'"></owl-date-time>
+            </div>
+
+            <div class="form-group">
+                <div class="form-error-tip">Do not rollover subscription</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Billing details</label>
+            <p class="info">Update any details which will be applied from your next invoice onwards</p>
+        </div>
+
+        <div class="form-group-right">
+            <div class="form-group">
+                <label class="control-label control-label-custom">Company name</label>
+                <input type="text" class="form-control" placeholder="Enter company name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">ABN</label>
+                <input type="text" class="form-control" placeholder="Enter company ABN"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Street address line 1</label>
+                <input type="text" class="form-control" placeholder="Enter street address line 1"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Street address line 2</label>
+                <input type="text" class="form-control" placeholder="Enter street address line 2"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Suburb</label>
+                <input type="text" class="form-control" placeholder="Enter suburb"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">State</label>
+                <input type="text" class="form-control" placeholder="Enter state"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Postcode</label>
+                <input type="text" class="form-control" placeholder="Enter postcode"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Billing contact email</label>
+                <input type="text" class="form-control" placeholder="Enter the billing contact's email"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Billing contact first name</label>
+                <input type="text" class="form-control" placeholder="Enter the billing contact's first name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Billing contact last name</label>
+                <input type="text" class="form-control" placeholder="Enter the billing contact's last name"/>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Update credit card details</label>
+            <p class="info">Manage your credit card details for your next invoice</p>
+        </div>
+
+        <div class="form-group-right">
+            <div class="form-group">
+                <label class="control-label control-label-custom">Name on credit card</label>
+                <input type="text" class="form-control" placeholder="Enter name on credit card"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Credit card number</label>
+                <input type="password" class="form-control"  placeholder="Enter credit card number" autocomplete="new-password"/>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">Expiry month</label>
+                        <ng-select disabled class="select-single" placeholder="Expiry month"  dropdownPosition="bottom">
+                            <ng-option>02 - February</ng-option>
+                            <ng-option>03 - February</ng-option>
+                            <ng-option>04 - February</ng-option>
+                            <ng-option>05 - February</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">Expiry year</label>
+                        <ng-select disabled class="select-single" placeholder="Expiry year"  dropdownPosition="bottom">
+                            <ng-option>2024</ng-option>
+                            <ng-option>2025</ng-option>
+                            <ng-option>2026</ng-option>
+                            <ng-option>2027</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">CVV</label>
+                        <input type="text" class="form-control" placeholder="Enter CVV"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
