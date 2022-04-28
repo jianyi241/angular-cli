@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (!this.currentUserService.isAdmin()) {
+        if (!this.currentUserService.isAdminUser()) {
             this.getAccountRoles();
             this.getPracticeRoles();
         }
@@ -43,7 +43,6 @@ export class ProfileComponent implements OnInit {
     getAccountRoles(): void {
         this.adviceRepository.getAccountRoles().subscribe(res => {
             this.accountRoles = res.data;
-            this.currentUser.adviceRoleId = this.currentUserService.adviceRole()?.id;
         })
     }
 

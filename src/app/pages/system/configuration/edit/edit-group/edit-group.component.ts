@@ -4,7 +4,7 @@ import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from "../../../../../service/config.service";
 import {GroupInfo} from "../../../../../model/po/groupInfo";
-import {SupplierRepository} from "../../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../../repository/configuration-repository";
 import {LocalStorageObServable} from "../../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../../repository/toast-repository";
 import {FileRepository} from "../../../../../repository/file-repository";
@@ -36,7 +36,7 @@ export class EditGroupComponent implements OnInit {
                 private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
-                private supplierRepository: SupplierRepository) {
+                private configurationRepository: ConfigurationRepository) {
     }
 
     ngOnInit(): void {
@@ -86,7 +86,7 @@ export class EditGroupComponent implements OnInit {
         if (!this.group.id) {
             return;
         }
-        this.supplierRepository.groupDetail(this.group.id, this.version.id).subscribe(res => {
+        this.configurationRepository.groupDetail(this.group.id, this.version.id).subscribe(res => {
             this.group = Object.assign(this.group, res.data);
         })
     }
@@ -94,7 +94,7 @@ export class EditGroupComponent implements OnInit {
     goBack(): void {
         let tabType = TabType.parseEnum(this.currentTab);
         let tab =this.configService.converterTabToRouter(tabType.name);
-        this.route.navigateByUrl(`/supplier/supplier-tab/${tab}/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/configuration-tab/${tab}/${this.version.id}`);
     }
 
     droppedFile(files: NgxFileDropEntry[]): void {
@@ -131,7 +131,7 @@ export class EditGroupComponent implements OnInit {
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
-        this.supplierRepository.saveGroup(this.group).subscribe(res => {
+        this.configurationRepository.saveGroup(this.group).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)
                 return;

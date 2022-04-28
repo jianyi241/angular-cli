@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {ToastRepository} from "../../../../repository/toast-repository";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../repository/configuration-repository";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {Version} from "../../../../model/po/version";
 import {VersionType} from "../../../../model/enums/version-type";
@@ -21,7 +21,7 @@ export class ChangeHistoryComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
                 private toastRepository: ToastRepository,
-                private supplierRepository: SupplierRepository,
+                private configurationRepository: ConfigurationRepository,
                 private versionRepository: VersionRepository) {
     }
 
@@ -34,7 +34,7 @@ export class ChangeHistoryComponent implements OnInit {
     }
 
     versionList(): void {
-        this.supplierRepository.versionList().subscribe(res => {
+        this.configurationRepository.versionList().subscribe(res => {
             this.versions = res.data;
         })
     }
@@ -55,15 +55,15 @@ export class ChangeHistoryComponent implements OnInit {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/configuration/configuration-tab/overview/${version.id}`]);
         });
     }
 
     viewRelease(version: Version): void {
-        this.route.navigateByUrl('/supplier', {
+        this.route.navigateByUrl('/configuration', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/configuration/configuration-tab/overview/${version.id}`]);
         });
     }
 }

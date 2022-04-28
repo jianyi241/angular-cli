@@ -51,7 +51,7 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
     }
 
     back(): void {
-        if (this.currentUserService.isAdmin()) {
+        if (this.currentUserService.isAdminUser()) {
             this.router.navigateByUrl('/advice-practices');
         }
     }

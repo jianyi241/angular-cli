@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from '../../common/layout/layout.component';
-import {ComparisonToolComponent} from './suppliers/comparison-tool/comparison-tool.component';
-import {EditGroupComponent} from './suppliers/edit/edit-group/edit-group.component';
-import {EditSubGroupComponent} from "./suppliers/edit/edit-sub-group/edit-sub-group.component";
-import {EditPropComponent} from "./suppliers/edit/edit-prop/edit-prop.component";
+import {ComparisonToolComponent} from './configuration/comparison-tool/comparison-tool.component';
+import {EditGroupComponent} from './configuration/edit/edit-group/edit-group.component';
+import {EditSubGroupComponent} from "./configuration/edit/edit-sub-group/edit-sub-group.component";
+import {EditPropComponent} from "./configuration/edit/edit-prop/edit-prop.component";
 import {FeatureFormComponent} from "./platforms/feature-form/feature-form.component";
 import {ProductsComponent} from './platforms/products/products.component';
-import {PlatformDetailsComponent} from "./suppliers/platform-details/platform-details.component";
-import {InformationComponent} from "./suppliers/information/information.component";
-import {SupplierLayoutComponent} from "./suppliers/supplier-layout/supplier-layout.component";
-import {EsgComponent} from "./suppliers/esg/esg.component";
-import {ChangeHistoryComponent} from "./suppliers/change-history/change-history.component";
+import {PlatformDetailsComponent} from "./configuration/platform-details/platform-details.component";
+import {InformationComponent} from "./configuration/information/information.component";
+import {ConfigurationLayoutComponent} from "./configuration/configuration-layout/configuration-layout.component";
+import {EsgComponent} from "./configuration/esg/esg.component";
+import {ChangeHistoryComponent} from "./configuration/change-history/change-history.component";
 import {ProductLayoutComponent} from './platforms/product-layout/product-layout.component';
 import {OverviewProductComponent} from './platforms/overview-product/overview-product.component';
 import {InformationProductComponent} from './platforms/information-product/information-product.component';
@@ -24,7 +24,7 @@ import {AdviceTeamComponent} from "./advice-practices/advice-team/advice-team.co
 import {AdviceBillingComponent} from "./advice-practices/advice-billing/advice-billing.component";
 import {AdviceInvoicesComponent} from "./advice-practices/advice-invoices/advice-invoices.component";
 import {EditTeamComponent} from "./advice-practices/edit-team/edit-team.component";
-import {FeesRatesComponent} from "./suppliers/fees-rates/fees-rates.component";
+import {FeesRatesComponent} from "./configuration/fees-rates/fees-rates.component";
 import {FeesRatesProductComponent} from "./platforms/fees-rates-product/fees-rates-product.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {SupplierListComponent} from "./suppliers/supplier-list/supplier-list.component";
@@ -43,50 +43,6 @@ const routes: Routes = [
         path: 'supplier',
         component: LayoutComponent,
         children: [
-            {
-                path: 'edit-group/:tab/:id/:version',
-                component: EditGroupComponent,
-            },
-            {
-                path: 'edit-sub-group/:tab/:id/:parentId/:version',
-                component: EditSubGroupComponent,
-            },
-            {
-                path: 'edit-prop/:tab/:id/:groupId/:version',
-                component: EditPropComponent,
-            },
-            {
-                path: 'supplier-tab',
-                component: SupplierLayoutComponent,
-                children: [
-                    {
-                        path: 'overview/:version',
-                        component: PlatformDetailsComponent,
-                        runGuardsAndResolvers: "paramsChange"
-                    },
-                    {
-                        path: 'information/:version',
-                        component: InformationComponent,
-                    },
-
-                    {
-                        path: 'esg/:version',
-                        component: EsgComponent,
-                    },
-                    {
-                        path: 'features/:version',
-                        component: ComparisonToolComponent,
-                    },
-                    {
-                        path: 'change-history/:version',
-                        component: ChangeHistoryComponent,
-                    },
-                    {
-                        path: 'fees-rates/:version',
-                        component: FeesRatesComponent,
-                    },
-                ]
-            },
             {
                 path: 'supplier-list',
                 component: SupplierListComponent,
@@ -123,6 +79,52 @@ const routes: Routes = [
             },
 
         ]
+    },
+    {
+        path: 'configuration', component: LayoutComponent, children: [{
+            path: 'edit-group/:tab/:id/:version',
+            component: EditGroupComponent,
+        },
+            {
+                path: 'edit-sub-group/:tab/:id/:parentId/:version',
+                component: EditSubGroupComponent,
+            },
+            {
+                path: 'edit-prop/:tab/:id/:groupId/:version',
+                component: EditPropComponent,
+            },
+            {
+                path: 'configuration-tab',
+                component: ConfigurationLayoutComponent,
+                children: [
+                    {
+                        path: 'overview/:version',
+                        component: PlatformDetailsComponent,
+                        runGuardsAndResolvers: "paramsChange"
+                    },
+                    {
+                        path: 'information/:version',
+                        component: InformationComponent,
+                    },
+
+                    {
+                        path: 'esg/:version',
+                        component: EsgComponent,
+                    },
+                    {
+                        path: 'features/:version',
+                        component: ComparisonToolComponent,
+                    },
+                    {
+                        path: 'change-history/:version',
+                        component: ChangeHistoryComponent,
+                    },
+                    {
+                        path: 'fees-rates/:version',
+                        component: FeesRatesComponent,
+                    },
+                ]
+            },]
     },
     {
         path: 'admin-manage',

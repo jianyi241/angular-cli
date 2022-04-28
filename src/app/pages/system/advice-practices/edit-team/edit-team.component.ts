@@ -4,7 +4,6 @@ import {TeamInfo} from "../../../../model/po/teamInfo";
 import {Constants} from "../../../../model/constants";
 import {AdviceRepository} from "../../../../repository/advice-repository";
 import {RoleInfo} from "../../../../model/po/roleInfo";
-import {RoleType} from "../../../../model/enums/role-type";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
@@ -52,7 +51,7 @@ export class EditTeamComponent implements OnInit {
     getAccountRoles(): void {
         this.adviceRepository.getAccountRoles().subscribe(res => {
             this.accountRoles = res.data;
-            this.team.roleId = this.accountRoles.find(a => a.roleName == RoleType.Adviser.value).id;
+            this.team.roleId = this.accountRoles[0].id;
         })
     }
 
@@ -97,7 +96,7 @@ export class EditTeamComponent implements OnInit {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
-        if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {    
+        if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
             return;
         }
         this.adviceRepository.saveTeam(copyTeam).subscribe(res => {

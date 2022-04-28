@@ -27,18 +27,18 @@ export class HeaderComponent implements OnInit {
     showMenu: boolean = false
 
     ngOnInit(): void {
-        if (this.router.url == '/supplier') {
-            this.router.navigateByUrl('/supplier/supplier-tab');
+        if (this.router.url == '/configuration') {
+            this.router.navigateByUrl('/configuration/configuration-tab');
         }
     }
 
     chooseType(type: string) {
-        if (type.includes('/supplier') && !this.router.url.includes('/supplier/supplier-tab')) {
-            this.router.navigateByUrl('/supplier/supplier-tab');
+        if (type.includes('/configuration') && !this.router.url.includes('/configuration/configuration-tab')) {
+            this.router.navigateByUrl('/configuration/configuration-tab');
         } else if (type.includes('/platform')) {
             this.router.navigateByUrl('/platform/product');
         } else if (type.includes('/advice-practices')) {
-            if (this.currentUserService.isAdmin()) {
+            if (this.currentUserService.isAdminUser()) {
                 this.router.navigateByUrl('/advice-practices');
             } else {
                 this.router.navigateByUrl(`/advice-practices/advice-tab/overview/${this.currentUserService.authentication.principal.practiceId}`);

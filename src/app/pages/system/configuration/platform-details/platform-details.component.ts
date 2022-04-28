@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {SupplierRepository} from "../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../repository/configuration-repository";
 import {TabType} from "../../../../model/enums/tab-type";
 import {VersionRepository} from "../../../../repository/version-repository";
 import {Version} from "../../../../model/po/version";
@@ -29,7 +29,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 public configService: ConfigService,
                 private toastRepository: ToastRepository,
-                private supplierRepository: SupplierRepository,
+                private configurationRepository: ConfigurationRepository,
                 private versionRepository: VersionRepository) {
     }
 
@@ -73,7 +73,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     propList(): void {
-        this.supplierRepository.propListByType(TabType.overview.value, this.version.id).subscribe(res => {
+        this.configurationRepository.propListByType(TabType.overview.value, this.version.id).subscribe(res => {
             if (!res.data) {
                 return;
             }
@@ -83,7 +83,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     save(id?: string): void {
-        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.overview.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/edit-prop/${TabType.overview.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {
@@ -92,7 +92,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveProps, $event.previousIndex, $event.currentIndex);
-        this.supplierRepository.sortProp(sort).subscribe(res => {
+        this.configurationRepository.sortProp(sort).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

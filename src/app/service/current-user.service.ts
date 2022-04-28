@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Authentication} from "../model/vo/authentication";
 import {Router} from "@angular/router";
 import {CurrentUser} from "../model/vo/currentUser";
-import {RoleType} from "../model/enums/role-type";
 import {RoleInfo} from "../model/po/roleInfo";
 import {Constants} from "../model/constants";
+import {RoleType} from "../model/enums/role-type";
 
 @Injectable({
     providedIn: 'root'
@@ -36,16 +36,16 @@ export class CurrentUserService {
         return this._authentication.authorities;
     }
 
-    adviceRole(): RoleInfo {
-        return this._authentication.authorities.find(a => a.authority != RoleType.SuperAdmin.value);
+    isAdminUser(): boolean {
+        return this._authentication.authorities.some(r => r.type == RoleType.AdminUser.value);
     }
 
-    isAdmin(): boolean {
-        return this._authentication.authorities.some(r => r.authority == RoleType.SuperAdmin.value);
+    isAdviceUser(): boolean {
+        return this._authentication.authorities.some(r => r.type == RoleType.AdviceUser.value);
     }
 
-    isAdvice(): boolean {
-        return this._authentication.authorities.some(r => r.authority != RoleType.SuperAdmin.value);
+    isSupplierUser(): boolean {
+        return this._authentication.authorities.some(r => r.type == RoleType.SupplierUser.value);
     }
 
     setAuthentication(authentication: Authentication): void {
@@ -58,7 +58,7 @@ export class CurrentUserService {
     }
 
     accessLimitation() {
-        if (this.adminPaths.includes(this.router.url) && !this.isAdmin()) {
+        if (this.adminPaths.includes(this.router.url) && !this.isAdminUser()) {
             this.router.navigateByUrl('/login');
         }
     }

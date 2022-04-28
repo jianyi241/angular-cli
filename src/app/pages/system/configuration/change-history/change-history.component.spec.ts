@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ChangeHistoryComponent } from './change-history.component';
+import {ChangeHistoryComponent} from './change-history.component';
 
 describe('ChangeHistoryComponent', () => {
   let component: ChangeHistoryComponent;

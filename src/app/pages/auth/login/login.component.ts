@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HttpResult} from 'src/app/model/common/http-result';
@@ -75,7 +75,7 @@ export class LoginComponent {
                 }
                 this.storage.setItem(Constants.CURRENT_USER, userResult.data);
                 this.currentUserService.setAuthentication(userResult.data);
-                this.router.navigateByUrl('/supplier/supplier-tab');
+                this.router.navigateByUrl('/configuration/configuration-tab');
             });
         });
     }

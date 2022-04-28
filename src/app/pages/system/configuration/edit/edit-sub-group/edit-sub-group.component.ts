@@ -5,7 +5,7 @@ import {ConfigService} from "../../../../../service/config.service";
 import {LocalStorageObServable} from "../../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../../repository/toast-repository";
 import {FileRepository} from "../../../../../repository/file-repository";
-import {SupplierRepository} from "../../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../../repository/configuration-repository";
 import {TabType} from "../../../../../model/enums/tab-type";
 import {Constants} from "../../../../../model/constants";
 import {Reminder} from "../../../../../model/vo/reminder";
@@ -34,7 +34,7 @@ export class EditSubGroupComponent implements OnInit {
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
-                private supplierRepository: SupplierRepository) {
+                private configurationRepository: ConfigurationRepository) {
     }
 
     ngOnInit(): void {
@@ -52,7 +52,7 @@ export class EditSubGroupComponent implements OnInit {
     goBack(): void {
         let tabType = TabType.parseEnum(this.currentTab);
         let tab = this.configService.converterTabToRouter(tabType.name);
-        this.route.navigateByUrl(`/supplier/supplier-tab/${tab}/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/configuration-tab/${tab}/${this.version.id}`);
     }
 
     parseRouteParam(): void {
@@ -92,13 +92,13 @@ export class EditSubGroupComponent implements OnInit {
         if (!this.subGroup.id) {
             return;
         }
-        this.supplierRepository.subGroupDetail(this.subGroup.id, this.version.id).subscribe(res => {
+        this.configurationRepository.subGroupDetail(this.subGroup.id, this.version.id).subscribe(res => {
             this.subGroup = Object.assign(this.subGroup, res.data);
         });
     }
 
     parent(): void {
-        this.supplierRepository.groupDetail(this.subGroup.parentId, this.version.id).subscribe(res => {
+        this.configurationRepository.groupDetail(this.subGroup.parentId, this.version.id).subscribe(res => {
             this.subGroup.parentName = res.data.name;
         })
     }
@@ -116,7 +116,7 @@ export class EditSubGroupComponent implements OnInit {
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
-        this.supplierRepository.saveGroup(this.subGroup).subscribe(res => {
+        this.configurationRepository.saveGroup(this.subGroup).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

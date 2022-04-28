@@ -6,7 +6,7 @@ import {Constants} from "../../../../../model/constants";
 import {LocalStorageObServable} from "../../../../../observable/local-storage-observable";
 import {ToastRepository} from "../../../../../repository/toast-repository";
 import {FileRepository} from "../../../../../repository/file-repository";
-import {SupplierRepository} from "../../../../../repository/supplier-repository";
+import {ConfigurationRepository} from "../../../../../repository/configuration-repository";
 import {TabType} from "../../../../../model/enums/tab-type";
 import {PropStatus} from "../../../../../model/enums/prop-status";
 import {Version} from "../../../../../model/po/version";
@@ -34,7 +34,7 @@ export class EditPropComponent implements OnInit {
                 private versionRepository: VersionRepository,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
-                private supplierRepository: SupplierRepository) {
+                private configurationRepository: ConfigurationRepository) {
     }
 
     ngOnInit(): void {
@@ -79,7 +79,7 @@ export class EditPropComponent implements OnInit {
     goBack(): void {
         let tabType = TabType.parseEnum(this.currentTab);
         let tab = this.configService.converterTabToRouter(tabType.name);
-        this.route.navigate([`/supplier/supplier-tab/${tab}/${this.version.id}`]);
+        this.route.navigate([`/configuration/configuration-tab/${tab}/${this.version.id}`]);
     }
 
     parseRouteParam(): void {
@@ -95,7 +95,7 @@ export class EditPropComponent implements OnInit {
         if (!this.prop.id) {
             return;
         }
-        this.supplierRepository.propDetail(this.prop.id, this.version.id).subscribe(res => {
+        this.configurationRepository.propDetail(this.prop.id, this.version.id).subscribe(res => {
             this.prop = Object.assign(this.prop, res.data);
         });
     }
@@ -105,7 +105,7 @@ export class EditPropComponent implements OnInit {
         if (!this.prop.shGroupId) {
             return;
         }
-        this.supplierRepository.subGroupDetail(this.prop.shGroupId, this.version.id).subscribe(res => {
+        this.configurationRepository.subGroupDetail(this.prop.shGroupId, this.version.id).subscribe(res => {
             this.prop.topGroupName = res.data.parentName;
             this.prop.subGroupName = res.data.name;
         });
@@ -128,7 +128,7 @@ export class EditPropComponent implements OnInit {
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateProperty`)) {
             return;
         }
-        this.supplierRepository.saveProp(this.prop).subscribe(res => {
+        this.configurationRepository.saveProp(this.prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

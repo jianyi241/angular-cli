@@ -5,7 +5,7 @@ import {PropType} from "../model/enums/prop-type";
 import {VersionType} from "../model/enums/version-type";
 import {PracticeStatus} from "../model/enums/practice-status";
 import {UserStatus} from "../model/enums/user-status";
-import {RoleType} from "../model/enums/role-type";
+import {RoleEnum} from "../model/enums/role-enum";
 
 @Injectable({
     providedIn: 'root'
@@ -40,10 +40,16 @@ export class ConfigService {
         pending: UserStatus.Pending.value
     }
 
-    roleType = {
-        accountAdmin: RoleType.AccountAdmin.value,
-        adviser: RoleType.Adviser.value,
-        support: RoleType.Support.value,
+    roles = {
+        superAdmin: RoleEnum.SuperAdmin.value,
+        admin: RoleEnum.Admin.value,
+        accountAdmin: RoleEnum.AccountAdmin.value,
+        adviser: RoleEnum.Adviser.value,
+        support: RoleEnum.Support.value,
+        owner: RoleEnum.Owner.value,
+        administrator: RoleEnum.Administrator.value,
+        premiumUser: RoleEnum.PremiumUser.value,
+        businessDevelopmentManager: RoleEnum.BusinessDevelopmentManager.value,
     }
 
     constructor(private router: Router) {
