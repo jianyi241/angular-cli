@@ -1,4 +1,3 @@
-
 <div class="form-content">
     <div class="form-group-custom">
         <div class="form-group-left" style="width: 100%;">
@@ -14,15 +13,15 @@
         </div>
         <div class="form-upload-file form-blue">
             <div class="upload-file-show">
-                <img src="../assets/img/logo-hub.png"/>
+                <img [src]="supplierService.supplier.attachmentVo?.visitUrl"/>
             </div>
             <div class="form-group-right">
                 <div class="upload-file">
-                    <ngx-file-drop dropZoneLabel="Drop files here"
+                    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFile($event)"
                                    [multiple]="false" [directory]="false"
                                    [accept]="'.png,.svg,.gif,.jpg'">
                         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                            <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
                             <div class="upload-content" (click)="openFileSelector()">
                                 <span class="icon-block icon-photo icon-32"></span>
                                 <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
@@ -43,34 +42,41 @@
 
         <div class="form-group-right">
             <div class="form-group">
-                <label class="control-label control-label-custom"><div>Company name<span class="label-required">*</span></div></label>
-                <input type="text" class="form-control" placeholder="Enter company name"/>
+                <label class="control-label control-label-custom">
+                    <div>Company name<span class="label-required">*</span></div>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter company name" [(ngModel)]="supplierService.supplier.name"/>
             </div>
 
             <div class="form-group">
-                <label class="control-label control-label-custom"><div>Website<span class="label-required">*</span></div></label>
-                <input type="text" class="form-control" placeholder="Enter website"/>
+                <label class="control-label control-label-custom">
+                    <div>Website<span class="label-required">*</span></div>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter website" [(ngModel)]="supplierService.supplier.website"/>
             </div>
 
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Key contact name</label>
-                <input type="text" class="form-control" placeholder="Enter key contact name"/>
+                <input type="text" class="form-control" placeholder="Enter key contact name"
+                       [(ngModel)]="supplierService.supplier.contactName"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Key contact number</label>
-                <input type="text" class="form-control" placeholder="Enter key contact number"/>
+                <input type="text" class="form-control" placeholder="Enter key contact number"
+                       [(ngModel)]="supplierService.supplier.contactNum"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Key contact email</label>
-                <input type="text" class="form-control" placeholder="Enter key contact email"/>
+                <input type="text" class="form-control" placeholder="Enter key contact email"
+                       [(ngModel)]="supplierService.supplier.contactEmail"/>
             </div>
 
             <div class="form-group">
                 <label class="control-label control-label-custom">Description</label>
-                <ckeditor [config]="config"></ckeditor>
+                <ckeditor [config]="config" [(ngModel)]="supplierService.supplier.description"></ckeditor>
             </div>
 
 

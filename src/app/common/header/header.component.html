@@ -29,7 +29,7 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
-            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
             <a>Suitability review</a>
             <!--            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>-->
             <!--            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>-->
@@ -77,7 +77,7 @@
                         <img src="./assets/img/icon/icon-suitabilityhub-users.svg" class="menu-icon"/>
                         <div class="menu-name">SuitabilityHub users</div>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" [routerLink]="['/configuration/configuration-tab']">
                         <img src="./assets/img/icon/icon-suitabilityhub-configurator.svg" class="menu-icon"/>
                         <div class="menu-name">SuitabilityHub configurator</div>
                     </div>

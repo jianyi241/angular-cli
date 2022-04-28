@@ -11,37 +11,29 @@
  */
 
 
-import {RoleInfo} from "./roleInfo";
 import {Attachment} from "../attachment";
 
 /**
- * sh_team表
+ * sh_supplier表
  */
-export class TeamInfo {
-    arn?: string;
-    attachmentVo?: Attachment = new Attachment();
+export class SupplierInfo {
+    archiveFlag?: boolean;
+    attachmentVo?: Attachment;
+    contactEmail?: string;
+    contactName?: string;
+    contactNum?: string;
     createTime?: string;
     createUser?: string;
     deleteFlag?: boolean;
-    email?: string;
-    firstName?: string;
+    description?: string;
     id?: string;
-    lastName?: string;
-    loginTime?: string;
-    companyId?: string;
-    practiceRoleId?: string;
-    practiceRoleName?: string;
-    practiceRoleVos?: Array<RoleInfo>;
-    roleId?: string;
-    openId?: string;
-    roleInfos?: Array<RoleInfo>;
-    roleName?: string;
+    name?: string;
     /**
-     * Active,Pending,Disable
+     * Active,Disable
      */
     status?: string;
     updateTime?: string;
     updateUser?: string;
-    userId?: string;
+    website?: string;
 }
 

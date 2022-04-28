@@ -52,7 +52,7 @@ const routes: Routes = [
                 component: SupplierEditComponent,
                 children: [
                     {
-                        path: 'overview',
+                        path: 'overview/:id',
                         component: SupplierOverviewComponent,
                     },
                     {
