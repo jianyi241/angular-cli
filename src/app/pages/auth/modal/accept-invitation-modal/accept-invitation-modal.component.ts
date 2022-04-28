@@ -56,7 +56,7 @@ export class AcceptInvitationModalComponent implements OnInit {
             return;
         }
 
-        if(this.inviteUser.companyType!='supplier'){
+        if (this.inviteUser.companyType != 2) {
             if (!this.news) {
                 this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
                 return;
