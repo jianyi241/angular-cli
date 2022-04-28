@@ -13,7 +13,7 @@ import {environment} from "../../../../../environments/environment";
 import {VersionType} from "../../../../model/enums/version-type";
 
 @Component({
-    selector: 'app-supplier-layout',
+    selector: 'app-configuration-layout',
     templateUrl: './configuration-layout.component.html',
     styleUrls: ['./configuration-layout.component.less']
 })
@@ -45,7 +45,7 @@ export class ConfigurationLayoutComponent implements OnInit {
         if (versionId && versionId != Constants.VERSION) {
             this.versionRepository.versionById(versionId).subscribe(res => {
                 this.version = res.data || this.version;
-                if (this.router.url == '/supplier/supplier-tab') {
+                if (this.router.url == '/configuration/configuration-tab') {
                     this.chooseTab(TabType.overview.name);
                 }
             });
@@ -66,7 +66,7 @@ export class ConfigurationLayoutComponent implements OnInit {
             return;
         }
         this.currentTab = this.configService.converterTabToRouter(tab);
-        this.router.navigateByUrl(`/supplier/supplier-tab/${this.currentTab}/${this.version.id}`);
+        this.router.navigateByUrl(`/configuration/configuration-tab/${this.currentTab}/${this.version.id}`);
     }
 
     editConfig(): void {
@@ -80,7 +80,7 @@ export class ConfigurationLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
-            this.router.navigateByUrl(`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`)
+            this.router.navigateByUrl(`/configuration/configuration-tab/${urlSegment.path}/${this.version.id}`)
         });
     }
 
@@ -98,7 +98,7 @@ export class ConfigurationLayoutComponent implements OnInit {
             this.router.navigateByUrl(`/`, {
                 skipLocationChange: true
             }).then(r => {
-                this.router.navigate([`/supplier/supplier-tab/${urlSegment.path}/${this.version.id}`])
+                this.router.navigate([`/configuration/configuration-tab/${urlSegment.path}/${this.version.id}`])
             })
         })
     }

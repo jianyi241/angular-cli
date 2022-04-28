@@ -44,50 +44,6 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             {
-                path: 'edit-group/:tab/:id/:version',
-                component: EditGroupComponent,
-            },
-            {
-                path: 'edit-sub-group/:tab/:id/:parentId/:version',
-                component: EditSubGroupComponent,
-            },
-            {
-                path: 'edit-prop/:tab/:id/:groupId/:version',
-                component: EditPropComponent,
-            },
-            {
-                path: 'supplier-tab',
-                component: ConfigurationLayoutComponent,
-                children: [
-                    {
-                        path: 'overview/:version',
-                        component: PlatformDetailsComponent,
-                        runGuardsAndResolvers: "paramsChange"
-                    },
-                    {
-                        path: 'information/:version',
-                        component: InformationComponent,
-                    },
-
-                    {
-                        path: 'esg/:version',
-                        component: EsgComponent,
-                    },
-                    {
-                        path: 'features/:version',
-                        component: ComparisonToolComponent,
-                    },
-                    {
-                        path: 'change-history/:version',
-                        component: ChangeHistoryComponent,
-                    },
-                    {
-                        path: 'fees-rates/:version',
-                        component: FeesRatesComponent,
-                    },
-                ]
-            },
-            {
                 path: 'supplier-list',
                 component: SupplierListComponent,
             },
@@ -123,6 +79,52 @@ const routes: Routes = [
             },
 
         ]
+    },
+    {
+        path: 'configuration', component: LayoutComponent, children: [{
+            path: 'edit-group/:tab/:id/:version',
+            component: EditGroupComponent,
+        },
+            {
+                path: 'edit-sub-group/:tab/:id/:parentId/:version',
+                component: EditSubGroupComponent,
+            },
+            {
+                path: 'edit-prop/:tab/:id/:groupId/:version',
+                component: EditPropComponent,
+            },
+            {
+                path: 'configuration-tab',
+                component: ConfigurationLayoutComponent,
+                children: [
+                    {
+                        path: 'overview/:version',
+                        component: PlatformDetailsComponent,
+                        runGuardsAndResolvers: "paramsChange"
+                    },
+                    {
+                        path: 'information/:version',
+                        component: InformationComponent,
+                    },
+
+                    {
+                        path: 'esg/:version',
+                        component: EsgComponent,
+                    },
+                    {
+                        path: 'features/:version',
+                        component: ComparisonToolComponent,
+                    },
+                    {
+                        path: 'change-history/:version',
+                        component: ChangeHistoryComponent,
+                    },
+                    {
+                        path: 'fees-rates/:version',
+                        component: FeesRatesComponent,
+                    },
+                ]
+            },]
     },
     {
         path: 'admin-manage',

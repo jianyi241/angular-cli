@@ -144,13 +144,13 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     saveProp(id?: string): void {
-        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.information.value}/${id || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/edit-prop/${TabType.information.value}/${id || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`);
     }
 
     saveSection(id?: string, event?: any): void {
         event && event.stopPropagation();
         this.storageReminder('groupId', id);
-        this.route.navigateByUrl(`/supplier/edit-group/${TabType.information.value}/${id || Constants.NON_ID}/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/edit-group/${TabType.information.value}/${id || Constants.NON_ID}/${this.version.id}`);
     }
 
     chooseSection(id: string) {

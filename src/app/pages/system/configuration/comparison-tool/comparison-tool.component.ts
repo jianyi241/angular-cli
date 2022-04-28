@@ -131,18 +131,18 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     saveGroup(group?: GroupInfo): void {
         this.reminder.groupId = group?.id;
         this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}`)
+        this.route.navigateByUrl(`/configuration/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}`)
     }
 
     saveSubGroup(subGroup?: GroupInfo) {
         this.reminder.subGroupId = subGroup?.id;
         this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-sub-group/${TabType.features.value}/${(subGroup?.id) || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`)
+        this.route.navigateByUrl(`/configuration/edit-sub-group/${TabType.features.value}/${(subGroup?.id) || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`)
     }
 
     saveProp(prop?: PropertyInfo) {
         this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
-        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.features.value}/${(prop?.id) || Constants.NON_ID}/${this.reminder.subGroupId}/${this.version.id}`)
+        this.route.navigateByUrl(`/configuration/edit-prop/${TabType.features.value}/${(prop?.id) || Constants.NON_ID}/${this.reminder.subGroupId}/${this.version.id}`)
     }
 
     chooseGroup(group: GroupInfo) {

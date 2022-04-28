@@ -83,7 +83,7 @@ export class PlatformDetailsComponent implements OnInit, OnDestroy {
     }
 
     save(id?: string): void {
-        this.route.navigateByUrl(`/supplier/edit-prop/${TabType.overview.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/edit-prop/${TabType.overview.value}/${id || Constants.NON_ID}/0/${this.version.id}`);
     }
 
     dropProps($event: CdkDragDrop<PropertyInfo, any>) {

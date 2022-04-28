@@ -55,15 +55,15 @@ export class ChangeHistoryComponent implements OnInit {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/configuration/configuration-tab/overview/${version.id}`]);
         });
     }
 
     viewRelease(version: Version): void {
-        this.route.navigateByUrl('/supplier', {
+        this.route.navigateByUrl('/configuration', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/supplier/supplier-tab/overview/${version.id}`]);
+            this.route.navigate([`/configuration/configuration-tab/overview/${version.id}`]);
         });
     }
 }
