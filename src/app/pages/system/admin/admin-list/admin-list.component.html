@@ -1,0 +1,88 @@
+<div class="table-layout main">
+    <div class="col-content">
+        <div class="sub-head">
+            <div class="title">
+                Administrators
+            </div>
+            <div class="btn-control-group">
+                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="toDetail('0', null)">
+                     Create administrator
+                </button>
+            </div>
+        </div>
+        <div class="search-content w-310">
+            <input type="text" placeholder="Search a keyword" class="form-control"/>
+            <span class="icon icon-search icon-16"></span>
+        </div>
+        <div class="col-body">
+            <ng-container>
+                <table class="table table-list table-striped">
+                        <thead>
+                        <tr>
+                            <th class="max-w-300">
+                                <div class="th-cell">
+                                    Full name
+                                    <sorting-widget (sortChange)="sortList('lastName', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th style="width:20%;">
+                                <div class="th-cell">
+                                    Account type
+                                    <sorting-widget (sortChange)="sortList('accountType', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th style="width:15%;">
+                                <div class="th-cell">
+                                    Status
+                                    <sorting-widget (sortChange)="sortList('status', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-cell">Action</div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead class="table-margin">
+                        <tr>
+                            <th colspan="5"></th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="adminPage.total > 0">
+                        <tr *ngFor="let admin of adminPage.records">
+                            <td>
+                                <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
+                                    <div class="avatar-box xs-mr-16">
+                                        <img [src]="(admin.imgUrl)" />
+                                    </div>
+                                    <div class="text-ellipsis max-w-300">{{admin.firstName + ' ' + admin.lastName}}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-cell">{{admin.accountType}}</div>
+                            </td>
+                            <td>
+                                <div class="td-cell" *ngIf="admin.status == configService.userStatus.active">
+                                    <label class="label label-green-light">Active</label>
+                                </div>
+                                <div class="td-cell" *ngIf="admin.status == configService.userStatus.disable">
+                                    <label class="label label-grey">Disabled</label>
+                                </div>
+                                <div class="td-cell" *ngIf="admin.status == configService.userStatus.pending">
+                                    <label class="label label-orange">Pending</label>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-purple-border btn-tiny xs-ml-16" *ngIf="admin.status == configService.userStatus.pending">Resend invitation</button>
+                                <button class="btn btn-purple-border btn-tiny xs-ml-16" (click)="toDetail('1', admin.id)">Edit</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                <ngb-pagination [collectionSize]="adminPage.total" [(page)]="adminPage.current" [pageSize]="adminPage.size"
+                                (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
+            </ng-container>
+            <div class="empty-text" *ngIf="adminPage.total == 0">This section is empty.
+            </div>
+        </div>
+    </div>
+</div>
