@@ -35,8 +35,8 @@ import {SupplierPlatformComponent} from "./suppliers/supplier-edit/supplier-plat
 import {SupplierBillingComponent} from "./suppliers/supplier-edit/supplier-billing/supplier-billing.component";
 import {SupplierInvoicesComponent} from "./suppliers/supplier-edit/supplier-invoices/supplier-invoices.component";
 import {ManageSupplierUsersComponent} from "./suppliers/supplier-edit/manage-supplier-users/manage-supplier-users.component";
-import {AdminListComponent} from "./admin/admin-list/admin-list.component";
-import {AdminDetailComponent} from "./admin/admin-detail/admin-detail.component";
+import {AdminListComponent} from './admin/admin-list/admin-list.component';
+import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
 
 const routes: Routes = [
     {
@@ -217,9 +217,9 @@ const routes: Routes = [
     {
         path: 'profile',
         component: LayoutComponent,
-        children:[
+        children: [
             {
-                path:'',
+                path: '',
                 component: ProfileComponent
             }
         ]
