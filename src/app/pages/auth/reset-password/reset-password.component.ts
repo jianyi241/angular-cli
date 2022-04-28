@@ -6,6 +6,7 @@ import {RestPassword} from '../../../model/user';
 import {ToastRepository} from '../../../repository/toast-repository';
 import {UserRepository} from '../../../repository/user-repository';
 import {PasswordResetSuccessfullyComponent} from "../modal/password-reset-successfully/password-reset-successfully.component";
+import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 
 @Component({
     selector: 'app-reset-password',
@@ -15,6 +16,19 @@ import {PasswordResetSuccessfullyComponent} from "../modal/password-reset-succes
 export class ResetPasswordComponent implements OnInit {
 
     restPassword: RestPassword = new RestPassword();
+    validateTip: number = 0
+    validatorConfig: NgxValidatorConfig = {
+        validationMessages: {
+            password: {
+                required: 'Password is required.',
+            },
+            confirmPassword: {
+                required: 'Enter password is required.',
+            }
+        },
+        validateOn: 'submit'
+    };
+
 
     constructor(
         private userRepository: UserRepository,
@@ -33,14 +47,23 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     resetPassword(): void {
-        if (!this.restPassword.password || !this.restPassword.confirmPassword) {
-            this.toastRepository.showDanger('Password is required.');
-            return;
-        }
+        // if (!this.restPassword.password || !this.restPassword.confirmPassword) {
+        //     this.toastRepository.showDanger('Password is required.');
+        //     return;
+        // }
+        // 正则
+        const pwdReg = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,}).{8,}$/
         if (this.restPassword.password !== this.restPassword.confirmPassword) {
-            this.toastRepository.showDanger("Passwords don't match");
+            // this.toastRepository.showDanger("Passwords don't match");
+            this.validateTip = 1
             return;
         }
+        if (!pwdReg.test(this.restPassword.password)) {
+            this.validateTip = 2
+            console.log('this.showRegTip ===> ', this.validateTip)
+            return;
+        }
+        this.validateTip = 0
         this.spinnerService.show();
         this.userRepository.resetPassword(this.restPassword).subscribe(res => {
             this.spinnerService.hide();

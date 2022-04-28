@@ -37,6 +37,7 @@ export class SignupComponent implements OnInit {
         },
         validateOn: 'submit'
     };
+    currentTab='Advice practice';
 
 
     constructor(private ngbModal: NgbModal,
@@ -58,6 +59,11 @@ export class SignupComponent implements OnInit {
             }
         })
         this.getPracticeRoles();
+        this.signup.companyType = 1
+    }
+
+    switchCompanyType(_companyType: number): void {
+        this.signup.companyType = _companyType
     }
 
     getPracticeRoles(): void {

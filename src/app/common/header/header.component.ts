@@ -7,6 +7,7 @@ import {LoginTipModalComponent} from "../../pages/auth/login-tip-modal/login-tip
 import {CurrentUserService} from "../../service/current-user.service";
 import {Constants} from "../../model/constants";
 
+
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -22,6 +23,8 @@ export class HeaderComponent implements OnInit {
         private modalService: NgbModal
     ) {
     }
+
+    showMenu: boolean = false
 
     ngOnInit(): void {
         if (this.router.url == '/supplier') {
@@ -57,7 +60,15 @@ export class HeaderComponent implements OnInit {
             localStorage.removeItem(Constants.ACCESS_TOKEN);
             this.currentUserService.setAuthentication(null);
             this.router.navigateByUrl('/login');
+            this.changeMenu()
         }, (reason) => {
+            this.changeMenu()
         });
     }
+
+    changeMenu(): void {
+        this.showMenu = !this.showMenu
+        console.log('this.showMenu ===> ', this.showMenu)
+    }
+
 }

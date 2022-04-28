@@ -79,8 +79,6 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 160%;
-    display: flex;
-    align-items: center;
     color: #515B6F;
     margin-bottom: 0;
 
@@ -126,6 +124,24 @@
       }
     }
 
+  }
+
+  &.check-box_with_info{
+    label {
+      font-weight: 600;
+
+      .info {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20.8px;
+        color: #515B6F;
+      }
+
+      &::before {
+        top:0;
+        margin-top: 0;
+      }
+    }
   }
 }
 
@@ -217,6 +233,22 @@
       &::before,
       &::after {
         top: 2px;
+      }
+    }
+  }
+
+  &.radio-box-small{
+    label {
+      font-weight: 600;
+      color: #515B6F;
+      font-size: 14px;
+      line-height: 22px;
+
+      .info {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 21px;
+        color: #515B6F;
       }
     }
   }

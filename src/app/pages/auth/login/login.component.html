@@ -38,7 +38,7 @@
                     password
                 </button>
 
-                <button [routerLink]="[ '../signup' ]"
+                <button *ngIf="loginType === 1" [routerLink]="[ '../signup' ]"
                     class="btn btn-outline-purple-light btn-block tx-semi xs-mt-50"><span class="tx-dark">Don’t have an
                         account?</span> Sign up
                 </button>

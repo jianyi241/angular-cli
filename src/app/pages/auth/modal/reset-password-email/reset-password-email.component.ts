@@ -8,6 +8,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ResetPasswordEmailComponent implements OnInit {
   email: string;
+
   constructor(private modalService: NgbModal, private ngbActiveModal: NgbActiveModal) {
   }
 

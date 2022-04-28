@@ -18,6 +18,7 @@ import {VerificationCodeComponent} from './verification-code/verification-code.c
 import {ExistedModalComponent} from './modal/existed-modal/existed-modal.component';
 import {AcceptInvitationModalComponent} from './modal/accept-invitation-modal/accept-invitation-modal.component';
 import {NgxValidatorModule, ValidationFeedbackStrategy} from "@why520crazy/ngx-validator";
+import { SignupAdminComponent } from './signup-admin/signup-admin.component';
 
 const INVALID_CLASS = 'has-invalid';
 const INVALID_FEEDBACK_CLASS = 'has-invalid-feedback';
@@ -79,6 +80,11 @@ const authRoutes: Routes = [
         pathMatch: 'full',
         component: VerificationCodeComponent,
     },
+    {
+        path: 'signup-admin',
+        pathMatch: 'full',
+        component: SignupAdminComponent,
+    }
 ];
 
 @NgModule({
@@ -92,6 +98,7 @@ const authRoutes: Routes = [
         LoadingComponent,
         ResetPasswordComponent,
         SignupComponent,
+        SignupAdminComponent
     ],
     declarations: [
         LoginComponent,
@@ -108,7 +115,7 @@ const authRoutes: Routes = [
         VerificationCodeComponent,
         ExistedModalComponent,
         AcceptInvitationModalComponent,
-
+        SignupAdminComponent
     ],
 })
 export class AuthModule {

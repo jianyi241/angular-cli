@@ -12,7 +12,7 @@ import {ToastRepository} from "../../../repository/toast-repository";
 export class VerificationCodeComponent implements OnInit {
     verifyCode: VerifyCode = new VerifyCode();
     email: string;
-    firstName: string;
+    currentTab='Advice practice';
 
     constructor(private activatedRoute: ActivatedRoute,
                 private userRepository: UserRepository,
@@ -34,7 +34,6 @@ export class VerificationCodeComponent implements OnInit {
                 return
             }
             this.email = res.data.email;
-            this.firstName = res.data.firstName;
         });
     }
 

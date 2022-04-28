@@ -7,8 +7,8 @@
         <div class="form">
             <form #forgotForm="ngForm" novalidate name="forgotForm"
                   [ngxFormValidator]="validatorConfig">
-                <div class="sign-title">Welcome back</div>
-                <div class="sign-sub-title"><span class="text">Forgot with email</span></div>
+                <div class="sign-title">Reset your password</div>
+                <div class="sign-sub-title"><span class="text">Enter email</span></div>
 
                 <div class="form-group form-group-sign xs-mb-0">
                     <label class="control-label">
@@ -16,11 +16,10 @@
                     </label>
                     <input type="text" class="form-control" name="account" required [(ngModel)]="account" placeholder="Enter your email" />
                 </div>
-                <button (ngxFormSubmit)="sendForgotEmail();" class="btn btn-purple btn-sign tx-16 btn-block xs-mt-48">Forgot
-                    password</button>
-                <button [routerLink]="['../signup']" class="btn btn-outline-purple-light btn-block tx-semi xs-mt-50"><span
-                        class="tx-dark">Don’t have an
-                    account?</span> Sign up</button>
+                <button (ngxFormSubmit)="sendForgotEmail();" class="btn btn-purple btn-sign tx-16 btn-block xs-mt-48">Send reset password link</button>
+                <button [routerLink]="[ '/login' ]"
+                        class="btn btn-outline-purple-light btn-block tx-semi" style="border-width: 0">Log in
+                </button>
             </form>
         </div>
     </div>

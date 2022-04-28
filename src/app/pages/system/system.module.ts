@@ -48,7 +48,17 @@ import {FeesRatesComponent} from './suppliers/fees-rates/fees-rates.component';
 import {FeesRatesProductComponent} from './platforms/fees-rates-product/fees-rates-product.component';
 import {ProfileComponent} from './profile/profile.component';
 import {DateComponent} from './platforms/prop-component/date/date.component';
+import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
+import { SupplierEditComponent } from './suppliers/supplier-edit/supplier-edit.component';
+import { SupplierOverviewComponent } from './suppliers/supplier-edit/supplier-overview/supplier-overview.component';
+import { SupplierTeamComponent } from './suppliers/supplier-edit/supplier-team/supplier-team.component';
+import { SupplierPlatformComponent } from './suppliers/supplier-edit/supplier-platform/supplier-platform.component';
+import { SupplierBillingComponent } from './suppliers/supplier-edit/supplier-billing/supplier-billing.component';
+import { SupplierInvoicesComponent } from './suppliers/supplier-edit/supplier-invoices/supplier-invoices.component';
+import { ManageSupplierUsersComponent } from './suppliers/supplier-edit/manage-supplier-users/manage-supplier-users.component';
 
+import { AdminListComponent } from './admin/admin-list/admin-list.component';
+import { AdminDetailComponent } from './admin/admin-detail/admin-detail.component';
 
 @NgModule({
     declarations: [
@@ -90,7 +100,18 @@ import {DateComponent} from './platforms/prop-component/date/date.component';
         FeesRatesComponent,
         FeesRatesProductComponent,
         ProfileComponent,
-        DateComponent
+        DateComponent,
+        SupplierListComponent,
+        SupplierEditComponent,
+        SupplierOverviewComponent,
+        SupplierTeamComponent,
+        SupplierPlatformComponent,
+        SupplierBillingComponent,
+        SupplierInvoicesComponent,
+        ManageSupplierUsersComponent
+        DateComponent,
+        AdminListComponent,
+        AdminDetailComponent
     ],
     imports: [
         CommonModule,

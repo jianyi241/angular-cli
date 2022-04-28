@@ -1,0 +1,79 @@
+
+<div class="form-content">
+    <div class="form-group-custom">
+        <div class="form-group-left" style="width: 100%;">
+            <label class="control-label">Basic information</label>
+            <p class="info">This information will be displayed publicly</p>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Company logo<span class="label-required">*</span></label>
+            <p class="info">This image will be shown publicly as company logo</p>
+        </div>
+        <div class="form-upload-file form-blue">
+            <div class="upload-file-show">
+                <img src="../assets/img/logo-hub.png"/>
+            </div>
+            <div class="form-group-right">
+                <div class="upload-file">
+                    <ngx-file-drop dropZoneLabel="Drop files here"
+                                   [multiple]="false" [directory]="false"
+                                   [accept]="'.png,.svg,.gif,.jpg'">
+                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                            <span class="icon-block icon-loading icon-32 upload-loading"></span>
+                            <div class="upload-content" (click)="openFileSelector()">
+                                <span class="icon-block icon-photo icon-32"></span>
+                                <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                            </div>
+                        </ng-template>
+                    </ngx-file-drop>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Company details</label>
+            <p class="info">Add key information about your company</p>
+        </div>
+
+        <div class="form-group-right">
+            <div class="form-group">
+                <label class="control-label control-label-custom"><div>Company name<span class="label-required">*</span></div></label>
+                <input type="text" class="form-control" placeholder="Enter company name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom"><div>Website<span class="label-required">*</span></div></label>
+                <input type="text" class="form-control" placeholder="Enter website"/>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Key contact name</label>
+                <input type="text" class="form-control" placeholder="Enter key contact name"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Key contact number</label>
+                <input type="text" class="form-control" placeholder="Enter key contact number"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Key contact email</label>
+                <input type="text" class="form-control" placeholder="Enter key contact email"/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label control-label-custom">Description</label>
+                <ckeditor [config]="config"></ckeditor>
+            </div>
+
+
+        </div>
+    </div>
+</div>

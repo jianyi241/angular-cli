@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HttpResult} from 'src/app/model/common/http-result';
@@ -19,9 +19,9 @@ import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
     encapsulation: ViewEncapsulation.Emulated,
 })
 export class LoginComponent {
-
     public loginUser = new LoginUser();
     public isLogin = false;
+    public loginType: number = 1
     validatorConfig: NgxValidatorConfig = {
         validationMessages: {
             account: {
@@ -39,10 +39,21 @@ export class LoginComponent {
         private toastRepository: ToastRepository,
         private userRepository: UserRepository,
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private currentUserService: CurrentUserService,
         public storage: LocalStorageObServable,
         private ngbModal: NgbModal
     ) {
+    }
+
+    ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(queryParams => {
+            console.log('queryParams ==> ', queryParams)
+            if (queryParams.type === '2') {
+                this.loginType = 2
+            }
+        })
+        console.log('login...')
     }
 
     loginWithEmail(): void {
