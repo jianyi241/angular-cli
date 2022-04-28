@@ -6,7 +6,7 @@
             <p>The following is required and will only be shared with SuitabilityHub</p>
         </div>
         <div class="modal-body">
-            <div class="form modal-form" *ngIf="inviteUser.companyType!='supplier'">
+            <div class="form modal-form" *ngIf="inviteUser.companyType!==2">
                 <div class="form-group form-group-sign">
                     <label class="control-label">
                         <div>First name<span class="label-required">*</span></div>
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="form modal-form" *ngIf="inviteUser.companyType=='supplier'">
+            <div class="form modal-form" *ngIf="inviteUser.companyType===2">
                 <div class="forw-two xs-mb-32">
                     <div class="form-group form-group-sign">
                         <label class="control-label">
