@@ -84,12 +84,13 @@
 
                         <td>
                             <div class="td-cell">
-                                <label class="label label-green-light">Active</label>
-                                <!--                                <label class="label label-red">Archived</label>-->
+                                <label class="label label-green-light" *ngIf="team.status == configService.userStatus.active">Active</label>
+                                <label class="label label-orange" *ngIf="team.status == configService.userStatus.pending">Pending</label>
                             </div>
                         </td>
 
                         <td class="text-right">
+                            <button class="btn btn-purple-border btn-tiny xs-ml-16" (click)="resend(team)" *ngIf="team.status == configService.userStatus.pending">Resend invitation</button>
                             <button class="btn btn-purple-border btn-tiny xs-ml-16" (click)="save(team)">Edit
                             </button>
                         </td>
