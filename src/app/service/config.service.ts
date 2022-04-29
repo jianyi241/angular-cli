@@ -128,4 +128,8 @@ export class ConfigService {
         }
         return tab.toLowerCase();
     }
+
+    fullName(firstName: string, lastName: string) {
+        return [firstName, lastName].join(' ');
+    }
 }

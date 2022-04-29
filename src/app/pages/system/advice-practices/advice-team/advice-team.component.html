@@ -77,7 +77,7 @@
                                 <div class="avatar-box xs-mr-16">
                                     <img [src]="(team.attachmentVo?.visitUrl) || './assets/img/unassgin.svg'"/>
                                 </div>
-                                <div class="text-ellipsis max-w-300">{{team.firstName + ' ' + team.lastName}}</div>
+                                <div class="text-ellipsis max-w-300">{{configService.fullName(team.firstName, team.lastName)}}</div>
                             </div>
                         </td>
 

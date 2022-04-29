@@ -18,18 +18,17 @@
     </div>
 
     <div class="tab-menu">
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/overview']" routerLinkActive="active">Overview
+        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/overview/' + supplierService.supplier.id]"
+             routerLinkActive="active">Overview
             <span class="line"></span></div>
         <ng-container *ngIf="supplierService.supplier.id">
-            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/team']" routerLinkActive="active">Team <span
+            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/team/' + supplierService.supplier.id]"
+                 routerLinkActive="active">Team <span
                     class="line"></span></div>
-            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/platforms']" routerLinkActive="active">
-                Platforms
-                <span class="line"></span></div>
-            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/billing']" routerLinkActive="active">Billing
+            <div class="tab-text">Billing
                 <span
                         class="line"></span></div>
-            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/invoices']" routerLinkActive="active">Invoices
+            <div class="tab-text">Invoices
                 <span class="line"></span></div>
         </ng-container>
     </div>

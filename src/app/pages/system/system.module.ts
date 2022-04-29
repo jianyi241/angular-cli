@@ -55,7 +55,7 @@ import {SupplierTeamComponent} from './suppliers/supplier-edit/supplier-team/sup
 import {SupplierPlatformComponent} from './suppliers/supplier-edit/supplier-platform/supplier-platform.component';
 import {SupplierBillingComponent} from './suppliers/supplier-edit/supplier-billing/supplier-billing.component';
 import {SupplierInvoicesComponent} from './suppliers/supplier-edit/supplier-invoices/supplier-invoices.component';
-import {ManageSupplierUsersComponent} from './suppliers/supplier-edit/manage-supplier-users/manage-supplier-users.component';
+import {EditSupplierTeamComponent} from './suppliers/supplier-edit/edit-team/edit-supplier-team.component';
 
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
@@ -108,7 +108,7 @@ import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component'
         SupplierPlatformComponent,
         SupplierBillingComponent,
         SupplierInvoicesComponent,
-        ManageSupplierUsersComponent,
+        EditSupplierTeamComponent,
         AdminListComponent,
         AdminDetailComponent
     ],

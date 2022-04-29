@@ -7,7 +7,7 @@
         <div class="menu" *ngIf="currentUserService.isAdminUser()">
             <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
             <a customLinkActive="active" [link]="['/advice-practices']" [routerLink]="['/advice-practices']">Practices</a>
-            <a customLinkActive="active" [link]="['/supplier/supplier-list']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
+            <a customLinkActive="active" [link]="['/supplier']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
             <a>News & updates</a>
             <!--<a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
             <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
