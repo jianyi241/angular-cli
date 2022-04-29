@@ -13,13 +13,22 @@
 
 import {RoleInfo} from "./roleInfo";
 import {Attachment} from "../attachment";
+import {SupplierPublicDetailInfo} from "./supplierPublicDetailInfo";
+import {SupplierUserProductInfo} from "./supplierUserProductInfo";
 
 /**
  * sh_team表
  */
 export class TeamInfo {
     arn?: string;
-    attachmentVo?: Attachment = new Attachment();
+    attachmentVo?: Attachment;
+    bdmFlag?: boolean;
+    commFlag?: boolean;
+    companyId?: string;
+    /**
+     * 1practice,2supplier
+     */
+    companyType?: number;
     createTime?: string;
     createUser?: string;
     deleteFlag?: boolean;
@@ -28,20 +37,27 @@ export class TeamInfo {
     id?: string;
     lastName?: string;
     loginTime?: string;
-    companyId?: string;
+    mobile?: string;
+    openId?: string;
+    planFlag?: boolean;
     practiceRoleId?: string;
     practiceRoleName?: string;
     practiceRoleVos?: Array<RoleInfo>;
+    receiveNewsFlag?: boolean;
     roleId?: string;
-    openId?: string;
-    roleInfos?: Array<RoleInfo>;
     roleName?: string;
     /**
      * Active,Pending,Disable
      */
     status?: string;
+    supplierPublicDetailVo: SupplierPublicDetailInfo = new SupplierPublicDetailInfo() ;
+    supplierUserProductVoList: Array<SupplierUserProductInfo> = new Array<SupplierUserProductInfo>();
+    updateNewsFlag?: boolean;
     updateTime?: string;
     updateUser?: string;
     userId?: string;
 }
+
+
+
 

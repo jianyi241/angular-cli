@@ -75,7 +75,7 @@ export class LoginComponent {
                 }
                 this.storage.setItem(Constants.CURRENT_USER, userResult.data);
                 this.currentUserService.setAuthentication(userResult.data);
-                this.router.navigateByUrl('/configuration/configuration-tab');
+                this.router.navigateByUrl('/platform/product');
             });
         });
     }

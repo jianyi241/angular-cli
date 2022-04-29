@@ -32,4 +32,8 @@ export class SupplierRepository {
     getSupplierDetail(id: string): Observable<HttpResult<SupplierInfo>> {
         return this.http.get<HttpResult<SupplierInfo>>(environment.baseURL + `/supplier/querySupplierInfo/${id}`);
     }
+
+    getSupplierRole(): Observable<HttpResult<Array<RoleInfo>>> {
+        return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + `/supplier/querySupplierRole`);
+    }
 }

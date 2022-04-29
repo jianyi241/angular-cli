@@ -10,6 +10,7 @@ import {environment} from "../../../../../environments/environment";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
 import {TeamRepository} from "../../../../repository/team-repository";
+import {ConfigService} from "../../../../service/config.service";
 
 @Component({
     selector: 'app-edit-team',
@@ -25,6 +26,7 @@ export class EditTeamComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private saveService: SaveService,
+                public configService: ConfigService,
                 private fileRepository: FileRepository,
                 private toastRepository: ToastRepository,
                 private adviceRepository: AdviceRepository,

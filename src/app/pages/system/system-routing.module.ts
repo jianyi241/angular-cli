@@ -48,6 +48,10 @@ const routes: Routes = [
                 component: SupplierListComponent,
             },
             {
+                path: 'edit-team/:id/:companyId',
+                component: EditSupplierTeamComponent,
+            },
+            {
                 path: 'supplier-edit',
                 component: SupplierEditComponent,
                 children: [
@@ -73,11 +77,6 @@ const routes: Routes = [
                     },
                 ]
             },
-            {
-                path: 'edit-team/:id/:companyId',
-                component: EditSupplierTeamComponent,
-            },
-
         ]
     },
     {
