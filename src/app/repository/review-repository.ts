@@ -6,6 +6,10 @@ import {environment} from '../../environments/environment';
 import {CompareFeatureVo} from "../model/vo/compareFeatureVo";
 import {ProductFormVo} from "../model/vo/productFormVo";
 import {CompareMetricVo} from "../model/vo/compareMetircVo";
+import {Page} from "../model/vo/page";
+import {ComparisonInfo} from "../model/po/comparisonInfo";
+import {ComparisonCondition} from "../model/condition/comparisonCondition";
+import {AnalyseTypeInfo} from "../model/po/analyseTypeInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +30,17 @@ export class ReviewRepository {
 
     getMetricComparison(): Observable<HttpResult<CompareMetricVo>> {
         return this.http.get<HttpResult<CompareMetricVo>>(environment.baseURL + '/compare/queryStep3TabInfo');
+    }
+
+    getComparisonList(condition: ComparisonCondition): Observable<HttpResult<Page<ComparisonInfo>>> {
+        return this.http.post<HttpResult<Page<ComparisonInfo>>>(`${environment.baseURL}/compare/queryComparisonList`, condition);
+    }
+
+    getCompareDetail(comparisonId: string): Observable<HttpResult<ComparisonInfo>> {
+        return this.http.get<HttpResult<ComparisonInfo>>(environment.baseURL + `/compare/queryComparisonInfo/${comparisonId}`);
+    }
+
+    getAnalyseType(): Observable<HttpResult<Array<AnalyseTypeInfo>>> {
+        return this.http.get<HttpResult<Array<AnalyseTypeInfo>>>(environment.baseURL + `/compare/queryAnalyseType`);
     }
 }

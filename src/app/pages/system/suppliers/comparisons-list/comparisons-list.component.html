@@ -6,7 +6,7 @@
             </div>
 
             <div class="btn-control-group">
-                <button class="btn btn-purple btn-with-icon xs-ml-24" [routerLink]="['/review/comparison-setup']">
+                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="save()">
                     <span class="icon-block icon-add icon-18 xs-mr-8"></span> Add comparison
                 </button>
             </div>
@@ -58,14 +58,6 @@
                             <sorting-widget></sorting-widget>
                         </div>
                     </th>
-
-                    <th>
-                        <div class="th-cell">
-                            Type
-                            <sorting-widget></sorting-widget>
-                        </div>
-                    </th>
-
                     <th>
                         <div class="th-cell">
                             Status
@@ -84,9 +76,9 @@
             </thead>
 
             <tbody>
-                <tr>
+                <tr *ngFor="let comparison of comparisonPage.records">
                     <td>
-                        <div class="td-cell max-w-212 tx-bold" title="Comparison report - BT Individule Q1 2022">Comparison report - BT Individule Q1 2022</div>
+                        <div class="td-cell max-w-212 tx-bold" [title]="comparison.name">{{comparison.name}}</div>
                     </td>
 
                     <td>
@@ -99,7 +91,7 @@
                     </td>
 
                     <td>
-                        <div class="td-cell">Sam Jason</div>
+                        <div class="td-cell">{{comparison.adviserName}}</div>
                     </td>
 
                     <td>
@@ -107,116 +99,28 @@
                     </td>
 
                     <td>
-                        <div class="td-cell">13:49 13 July, 2021</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">BDM</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-purple xs-pl-16 xs-pr-16">In progress</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny xs-ml-12">View</button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-copy icon-20"></span></button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-trash icon-20"></span></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-212 tx-bold" title="BT Business - Comparison report - Q2 2022">BT Business - Comparison report - Q2 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell td-cell_avatar">
-                            <div class="avatar-box avatar-box-small xs-mr-8">
-                                <img src="../../../../../assets/img/avatar.png"/>
-                            </div>
-                            <div class="max-w-100">David Doe</div>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">Sam Jason</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">Features | Business metric analysis</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">13:49 13 July, 2021</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">non-BDM</div>
+                        <div class="td-cell">{{comparison.createTime | dateFormat}}</div>
                     </td>
 
                     <td>
                         <div class="td-cell">
                             <label class="label label-green xs-pl-16 xs-pr-16">Completed</label>
+<!--                            <label class="label label-purple xs-pl-16 xs-pr-16">In progress</label>-->
+<!--                            <label class="label label-red xs-pl-16 xs-pr-16">Archived</label>-->
                         </div>
                     </td>
 
                     <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny xs-ml-12">View</button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-copy icon-20"></span></button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-trash icon-20"></span></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="td-cell max-w-212 tx-bold" title="BT Individule - Q1 2022">BT Individule - Q1 2022</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell td-cell_avatar">
-                            <div class="avatar-box avatar-box-small xs-mr-8">
-                                <img src="../../../../../assets/img/avatar.png"/>
-                            </div>
-                            <div class="max-w-100">David Doe</div>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">Sam Jason</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">Features | Pricing</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">13:49 13 July, 2021</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">non-BDM</div>
-                    </td>
-
-                    <td>
-                        <div class="td-cell">
-                            <label class="label label-red xs-pl-16 xs-pr-16">Archived</label>
-                        </div>
-                    </td>
-
-                    <td class="text-right">
-                        <button class="btn btn-purple-border btn-tiny xs-ml-12">View</button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-copy icon-20"></span></button>
-                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-reset icon-20"></span></button>
+                        <button class="btn btn-purple-border btn-tiny xs-ml-12" (click)="save(comparison)">View</button>
+<!--                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-copy icon-20"></span></button>-->
+<!--                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-trash icon-20"></span></button>-->
                     </td>
                 </tr>
             </tbody>
         </table>
         </div>
 
-        <ngb-pagination [collectionSize]="70" [(page)]="page" (pageChange)="$event"></ngb-pagination>
+        <ngb-pagination [collectionSize]="comparisonPage.total" [(page)]="comparisonPage.current" [pageSize]="comparisonPage.size" (pageChange)="pageChange($event)"></ngb-pagination>
 
         <div class="empty-text">You don’s have any comparison yet. Click on “Add comparison” to add.</div>
 

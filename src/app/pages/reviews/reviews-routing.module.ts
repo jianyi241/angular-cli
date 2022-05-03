@@ -18,27 +18,27 @@ const routes: Routes = [
         component: ReviewLayoutComponent,
         children: [
             {
-                path: 'feature-comparison',
-                component: FeatureComparisonComponent,
-            },
-            {
-                path: 'feature-selection',
-                component: FeatureSelectionComponent,
-            },
-            {
-                path: 'metric-comparison',
-                component: MetricComparisonComponent,
-            },
-            {
-                path: 'fee-comparison',
-                component: FeeComparisonComponent,
-            },
-            {
-                path: 'comparison-setup',
+                path: 'comparison-setup/:id',
                 component: ComparisonSetupComponent,
             },
             {
-                path: 'business-metric-comparison',
+                path: 'feature-comparison/:id',
+                component: FeatureComparisonComponent,
+            },
+            {
+                path: 'feature-selection/:id',
+                component: FeatureSelectionComponent,
+            },
+            {
+                path: 'metric-comparison/:id',
+                component: MetricComparisonComponent,
+            },
+            {
+                path: 'fee-comparison/:id',
+                component: FeeComparisonComponent,
+            },
+            {
+                path: 'business-metric-comparison/:id',
                 component: BusinessMetricComparisonComponent,
             },
         ]
