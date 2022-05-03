@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {TeamInfo} from "../../../../model/po/teamInfo";
 import {Page} from "../../../../model/vo/page";
-import {AdviceRepository} from "../../../../repository/advice-repository";
 import {TeamCondition} from "../../../../model/condition/team-condition";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {Constants} from "../../../../model/constants";
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {TeamRepository} from "../../../../repository/team-repository";
 
 @Component({
     selector: 'app-advice-team',
@@ -17,7 +17,7 @@ export class AdviceTeamComponent implements OnInit {
     teamPage: Page<TeamInfo> = new Page<TeamInfo>();
     condition: TeamCondition = new TeamCondition(1, 10);
 
-    constructor(private adviceRepository: AdviceRepository,
+    constructor(private teamRepository: TeamRepository,
                 public configService: ConfigService,
                 private router: Router,
                 private toastRepository: ToastRepository,
@@ -26,13 +26,13 @@ export class AdviceTeamComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe(params => {
-            this.condition.practiceId = params['id'];
+            this.condition.companyId = params['id'];
         })
         this.getTeamList();
     }
 
     getTeamList(): void {
-        this.adviceRepository.teamList(this.condition).subscribe(res => {
+        this.teamRepository.teamList(this.condition).subscribe(res => {
             this.teamPage = Object.assign(this.teamPage, res.data);
         });
     }
@@ -43,11 +43,11 @@ export class AdviceTeamComponent implements OnInit {
     }
 
     save(team?: TeamInfo) {
-        this.router.navigateByUrl(`/advice-practices/edit-team/${team?.id || Constants.NON_ID}/${this.condition.practiceId}`);
+        this.router.navigateByUrl(`/advice-practices/edit-team/${team?.id || Constants.NON_ID}/${this.condition.companyId}`);
     }
 
     resend(team: TeamInfo): void {
-        this.adviceRepository.resendInvite(team.openId).subscribe(res => {
+        this.teamRepository.resendInvite(team.openId).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

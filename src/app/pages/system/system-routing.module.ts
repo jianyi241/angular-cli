@@ -34,7 +34,7 @@ import {SupplierTeamComponent} from "./suppliers/supplier-edit/supplier-team/sup
 import {SupplierPlatformComponent} from "./suppliers/supplier-edit/supplier-platform/supplier-platform.component";
 import {SupplierBillingComponent} from "./suppliers/supplier-edit/supplier-billing/supplier-billing.component";
 import {SupplierInvoicesComponent} from "./suppliers/supplier-edit/supplier-invoices/supplier-invoices.component";
-import {ManageSupplierUsersComponent} from "./suppliers/supplier-edit/manage-supplier-users/manage-supplier-users.component";
+import {EditSupplierTeamComponent} from "./suppliers/supplier-edit/edit-team/edit-supplier-team.component";
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
 
@@ -48,15 +48,19 @@ const routes: Routes = [
                 component: SupplierListComponent,
             },
             {
+                path: 'edit-team/:id/:companyId',
+                component: EditSupplierTeamComponent,
+            },
+            {
                 path: 'supplier-edit',
                 component: SupplierEditComponent,
                 children: [
                     {
-                        path: 'overview',
+                        path: 'overview/:id',
                         component: SupplierOverviewComponent,
                     },
                     {
-                        path: 'team',
+                        path: 'team/:id',
                         component: SupplierTeamComponent,
                     },
                     {
@@ -73,18 +77,16 @@ const routes: Routes = [
                     },
                 ]
             },
-            {
-                path: 'manage-supplier-users',
-                component: ManageSupplierUsersComponent,
-            },
-
         ]
     },
     {
-        path: 'configuration', component: LayoutComponent, children: [{
-            path: 'edit-group/:tab/:id/:version',
-            component: EditGroupComponent,
-        },
+        path: 'configuration',
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'edit-group/:tab/:id/:version',
+                component: EditGroupComponent,
+            },
             {
                 path: 'edit-sub-group/:tab/:id/:parentId/:version',
                 component: EditSubGroupComponent,

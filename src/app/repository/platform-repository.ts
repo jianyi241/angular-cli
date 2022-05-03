@@ -10,6 +10,7 @@ import {Constants} from "../model/constants";
 import {ProductFormVo} from "../model/vo/productFormVo";
 import {Version} from "../model/po/version";
 import {SubProduct} from "../model/po/subProduct";
+import {ProductAccessVo} from "../model/vo/productAccessVo";
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,10 @@ export class PlatformRepository {
 
     productList(): Observable<HttpResult<Array<ProductInfo>>> {
         return this.http.get<HttpResult<Array<ProductInfo>>>(environment.baseURL + `/product/getProductList`);
+    }
+
+    getAllProduct(): Observable<HttpResult<Array<ProductAccessVo>>> {
+        return this.http.get<HttpResult<Array<ProductAccessVo>>>(environment.baseURL + `/product/queryAllProduct`);
     }
 
     groupAndPropList(productId: string): Observable<HttpResult<Array<GroupInfo>>> {

@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.toastRepository.showSuccess('Save successfully.');
+            this.toastRepository.showSuccess('Save Successfully.');
             this.storage.setItem(Constants.CURRENT_USER, res.data);
             this.currentUserService.setAuthentication(res.data);
         })

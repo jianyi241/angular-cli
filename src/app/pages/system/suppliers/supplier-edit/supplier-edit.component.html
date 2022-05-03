@@ -2,24 +2,35 @@
 <div class="main main-form-with-tab main-form">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" [routerLink]="['/supplier/supplier-list']"></span>
-            BT
+        <div class="sub-title" [routerLink]="['/supplier/supplier-list']">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            {{supplierService.supplier.name}}
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger">Archive BT</button>
-            <button class="btn btn-outline-purple-light">Cancel</button>
-            <button class="btn btn-purple xs-ml-24">Save</button>
+            <button class="btn text-danger" *ngIf="supplierService.supplier.id" (click)="archiveSupplier()">
+                Archive {{supplierService.supplier.name}}</button>
+            <button class="btn btn-outline-purple-light" [routerLink]="['/supplier/supplier-list']"
+                    *ngIf="!supplierService.supplier.id">Cancel
+            </button>
+            <button class="btn btn-purple xs-ml-24" (click)="saveSupplier()">Save</button>
         </div>
     </div>
 
     <div class="tab-menu">
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/overview']" routerLinkActive="active">Overview <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/team']" routerLinkActive="active">Team <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/platforms']" routerLinkActive="active">Platforms <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/billing']" routerLinkActive="active">Billing <span class="line"></span></div>
-        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/invoices']" routerLinkActive="active">Invoices <span class="line"></span></div>
+        <div class="tab-text" [routerLink]="['/supplier/supplier-edit/overview/' + supplierService.supplier.id]"
+             routerLinkActive="active">Overview
+            <span class="line"></span></div>
+        <ng-container *ngIf="supplierService.supplier.id">
+            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/team/' + supplierService.supplier.id]"
+                 routerLinkActive="active">Team <span
+                    class="line"></span></div>
+            <div class="tab-text">Billing
+                <span
+                        class="line"></span></div>
+            <div class="tab-text">Invoices
+                <span class="line"></span></div>
+        </ng-container>
     </div>
 
     <router-outlet></router-outlet>

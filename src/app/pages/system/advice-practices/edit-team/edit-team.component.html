@@ -3,7 +3,7 @@
     <div class="sub-head sub-head-form">
         <div class="sub-title" [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{team.id ? team.firstName + ' ' + team.lastName : ''}}
+            {{configService.fullName(team.firstName, team.lastName)}}
         </div>
 
         <div class="btn-control-group">

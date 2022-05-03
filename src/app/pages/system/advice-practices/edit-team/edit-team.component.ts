@@ -9,6 +9,8 @@ import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
+import {TeamRepository} from "../../../../repository/team-repository";
+import {ConfigService} from "../../../../service/config.service";
 
 @Component({
     selector: 'app-edit-team',
@@ -24,15 +26,17 @@ export class EditTeamComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private saveService: SaveService,
+                public configService: ConfigService,
                 private fileRepository: FileRepository,
                 private toastRepository: ToastRepository,
-                private adviceRepository: AdviceRepository) {
+                private adviceRepository: AdviceRepository,
+                private teamRepository: TeamRepository) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe(params => {
             this.practiceId = params['practiceId'];
-            this.team.practiceId = this.practiceId;
+            this.team.companyId = this.practiceId;
             if (params['id'] != Constants.NON_ID) {
                 this.team.id = params['id'];
                 this.getTeamDetail();
@@ -43,7 +47,7 @@ export class EditTeamComponent implements OnInit {
     }
 
     getTeamDetail(): void {
-        this.adviceRepository.teamDetail(this.team.id).subscribe(res => {
+        this.teamRepository.teamDetail(this.team.id).subscribe(res => {
             this.team = Object.assign(this.team, res.data);
         })
     }
@@ -99,7 +103,7 @@ export class EditTeamComponent implements OnInit {
         if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
             return;
         }
-        this.adviceRepository.saveTeam(copyTeam).subscribe(res => {
+        this.teamRepository.saveTeam(copyTeam).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

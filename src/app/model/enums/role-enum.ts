@@ -18,6 +18,10 @@ export class RoleEnum implements EnumIdentity {
         RoleEnum.AllValues.push(this);
     }
 
+    public static parseEnum(value: string): RoleEnum {
+        return RoleEnum.AllValues.find(r => r.value == value);
+    }
+
     public static Values(): Array<RoleEnum> {
         return RoleEnum.AllValues;
     }

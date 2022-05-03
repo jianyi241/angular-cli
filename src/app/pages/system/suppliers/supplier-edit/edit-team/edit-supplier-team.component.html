@@ -1,0 +1,265 @@
+<div class="main main-form">
+
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            {{configService.fullName(team.firstName, team.lastName)}} <label class="label label-orange xs-ml-8"
+                                                                             *ngIf="team.status">{{team.status}}</label>
+        </div>
+
+        <div class="btn-control-group">
+            <button class="btn tx-red">Archive Reynaud</button>
+            <button class="btn btn-outline-purple-light"
+                    [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">Cancel
+            </button>
+            <button class="btn btn-purple xs-ml-24" *ngIf="!team.id" (click)="save()">Create and send welcome email
+            </button>
+            <button class="btn btn-purple xs-ml-24" *ngIf="team.id" (click)="save()">Save</button>
+        </div>
+    </div>
+
+
+    <div class="form-content">
+        <div class="form-group-custom">
+            <div class="form-group-left" style="width: 100%;">
+                <label class="control-label">Basic information</label>
+                <p class="info">This is your personal information that you can update anytime</p>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Account type</label>
+                <p class="info">Update your account type</p>
+            </div>
+
+            <div class="form-group-right">
+
+                <div class="form-group">
+                    <div class="radio-box radio-box-top-2 radio-box-small"
+                         *ngFor="let supplierRole of supplierRoles; let roleIndex = index">
+                        <input type="radio" name="accountType" id="supplierRole{{roleIndex}}" [value]="supplierRole.id"
+                               [(ngModel)]="team.roleId"/>
+                        <label for="supplierRole{{roleIndex}}">
+                            {{supplierRole.roleName}}
+                            <div class="info">{{supplierRole.roleDesc}}</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Profile photo</label>
+                <p class="info">This helps your fellow team members recognise you</p>
+            </div>
+            <div class="form-upload-file">
+                <div class="upload-file-show">
+                    <img [src]="team.attachmentVo?.visitUrl"/>
+                </div>
+                <div class="form-group-right">
+                    <div class="upload-file">
+                        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFile($event)"
+                                       [multiple]="false" [directory]="false"
+                                       [accept]="'.png,.svg,.gif,.jpg'">
+                            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
+                                <div class="upload-content" (click)="openFileSelector()">
+                                    <span class="icon-block icon-photo icon-32"></span>
+                                    <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
+                                    <div class="file-tip">SVG, PNG, JPG or GIF (max. 400 x 400px)</div>
+                                </div>
+                            </ng-template>
+                        </ngx-file-drop>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Personal details</label>
+                <p class="info">This information is not shared publicly on SuitabilityHub</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label control-label-custom">
+                                <div>First name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter your first name"
+                                   [(ngModel)]="team.firstName"/>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label control-label-custom">
+                                <div>Last name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter your last name"
+                                   [(ngModel)]="team.lastName"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Work email<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your work email"
+                           [(ngModel)]="team.email"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Job title<span class="label-required">*</span></div>
+                    </label>
+                    <ng-select disabled class="select-single" placeholder="Select job title" dropdownPosition="bottom">
+                        <ng-option>title1</ng-option>
+                        <ng-option>title2</ng-option>
+                        <ng-option>title3</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Product access</label>
+                <p class="info">Choose which of your products should feature this BDM's contact details</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple xs-mb-24" *ngFor="let product of products">
+                        <input type="checkbox" [name]="product.name" [id]="product.id" [(ngModel)]="product.checked"/>
+                        <label for="{{product.id}}">{{product.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Public details</label>
+                <p class="info">This information will be shared publicly on SuitabilityHub</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="check-box check-box-purple xs-mb-24">
+                    <input type="checkbox" name="ShowUserDetails" id="ShowUserDetails" [(ngModel)]="team.bdmFlag"/>
+                    <label for="ShowUserDetails">Show this user's details on the "Find a BDM" page</label>
+                </div>
+
+                <ng-container *ngIf="team.bdmFlag">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Public contact number</div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter public contact number"
+                               [(ngModel)]="team.supplierPublicDetailVo.contactNum"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Preferred contact hours</div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter preferred contact hours"
+                               [(ngModel)]="team.supplierPublicDetailVo.contactHours"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Public email</div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter public email"
+                               [(ngModel)]="team.supplierPublicDetailVo.contactEmail"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>LinkedIn profile URL</div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter linkedIn profile URL"
+                               [(ngModel)]="team.supplierPublicDetailVo.linkedUrl"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Region</div>
+                        </label>
+                        <ng-select disabled class="select-single" placeholder="Select region" dropdownPosition="bottom"
+                                   [(ngModel)]="team.supplierPublicDetailVo.region">
+                            <ng-option>Region1</ng-option>
+                            <ng-option>Region2</ng-option>
+                            <ng-option>Region3</ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">Biography</label>
+                        <ckeditor [config]="config" [(ngModel)]="team.supplierPublicDetailVo.biography"></ckeditor>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Additional permissions</label>
+                <p class="info">Select any other permissions you’d like this user to access</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple check-box_with_info">
+                        <input type="checkbox" name="AdditionalPermissions" id="ProductManagement" checked/>
+                        <label for="ProductManagement">Product management
+                            <div class="info">This user can submit changes to products, including product profiles,
+                                features, business metrics and pricing.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Communication preferences</label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="CommunicationPreferences" id="SendProduct"
+                               [(ngModel)]="team.updateNewsFlag"/>
+                        <label for="SendProduct">Send me product updates and news from SuitabilityHub</label>
+                    </div>
+
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="CommunicationPreferences" id="SendMarketing"
+                               [(ngModel)]="team.commFlag"/>
+                        <label for="SendMarketing">Send me marketing communications from SuitabilityHub</label>
+                    </div>
+
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="CommunicationPreferences" id="joinResearch"
+                               [(ngModel)]="team.planFlag"/>
+                        <label for="joinResearch">I want to join the research panel and be invited to occasional
+                            surveys</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
