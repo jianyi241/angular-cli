@@ -27,8 +27,13 @@ export class TeamRepository {
         return this.http.post<HttpResult<TeamInfo>>(environment.baseURL + '/team/saveOrUpdateTeamMember', teamInfo);
     }
 
-    resendInvite(openId: string): Observable<HttpResult<any>> {
+    resendAdviceInvite(openId: string): Observable<HttpResult<any>> {
         return this.http.get<HttpResult<any>>(environment.baseURL + `/email/resendInviteEmail/${openId}`);
     }
+
+    resendSupplierInvite(openId: string): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/email/resendSupplierInvite/${openId}`);
+    }
+
 
 }

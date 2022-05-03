@@ -124,7 +124,7 @@ export class EditSupplierTeamComponent implements OnInit {
             return;
         }
         if (!this.team.email) {
-            this.toastRepository.showDanger('Work name is required.');
+            this.toastRepository.showDanger('Work email is required.');
             return;
         }
         this.team.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({

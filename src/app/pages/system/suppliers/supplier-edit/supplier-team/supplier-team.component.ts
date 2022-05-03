@@ -49,7 +49,7 @@ export class SupplierTeamComponent implements OnInit {
     }
 
     resend(team: TeamInfo): void {
-        this.teamRepository.resendInvite(team.openId).subscribe(res => {
+        this.teamRepository.resendSupplierInvite(team.openId).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
