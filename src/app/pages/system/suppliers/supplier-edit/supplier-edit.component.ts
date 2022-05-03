@@ -9,6 +9,7 @@ import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {TipModalComponent} from "../../advice-practices/tip-modal/tip-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
     selector: 'app-supplier-edit',
@@ -20,6 +21,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     constructor(public supplierService: SupplierService,
                 private modalService: NgbModal,
                 private saveService: SaveService,
+                public currentUserService: CurrentUserService,
                 private supplierRepository: SupplierRepository,
                 private activatedRoute: ActivatedRoute,
                 private toastRepository: ToastRepository,
@@ -37,6 +39,13 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.supplierService.supplier = null;
+    }
+
+
+    goBack(): void {
+        if (this.currentUserService.isAdminUser()) {
+            this.router.navigateByUrl('/supplier/supplier-list');
+        }
     }
 
 
@@ -118,4 +127,5 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
         }, (reason) => {
         });
     }*/
+
 }

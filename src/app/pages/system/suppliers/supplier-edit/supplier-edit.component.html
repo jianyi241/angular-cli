@@ -2,8 +2,8 @@
 <div class="main main-form-with-tab main-form">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title" [routerLink]="['/supplier/supplier-list']">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+        <div class="sub-title" (click)="goBack()">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" *ngIf="currentUserService.isAdminUser()"></span>
             {{supplierService.supplier.name}}
         </div>
 

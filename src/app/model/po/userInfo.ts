@@ -18,6 +18,7 @@ export class UserInfo extends BaseModel{
     lastName?: string;
     mobile?: string;
     openId?: string;
+    companyId?: string;
     role?: string;
     status?: string;
     practiceId?: string;

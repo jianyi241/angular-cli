@@ -9,33 +9,17 @@
             <a customLinkActive="active" [link]="['/advice-practices']" [routerLink]="['/advice-practices']">Practices</a>
             <a customLinkActive="active" [link]="['/supplier']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
             <a>News & updates</a>
-            <!--<a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
-            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
-            &lt;!&ndash;<a customLinkActive="active" [link]="['/suppliers']"  (click)="chooseType('/suppliers')">Suppliers</a>&ndash;&gt;
-            <a customLinkActive="active" [link]="['/supplier']" (click)="chooseType('/supplier')">Suppliers</a>
-            <a>News & Updates</a>-->
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
             <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
             <a>Platform analysis</a>
-            <!--<a>Suitability review</a>
-            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
-            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
-            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
-            &lt;!&ndash;<a customLinkActive="active" [link]="['/suppliers']"  (click)="chooseType('/suppliers')">Suppliers</a>&ndash;&gt;
-            <a customLinkActive="active" [link]="['/supplier']" (click)="chooseType('/supplier')">Suppliers</a>-->
             <a>News & Updates</a>
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
             <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
             <a>Suitability review</a>
-            <!--            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>-->
-            <!--            <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>-->
-            <!--            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>-->
-            <!--            &lt;!&ndash;<a customLinkActive="active" [link]="['/suppliers']"  (click)="chooseType('/suppliers')">Suppliers</a>&ndash;&gt;-->
-            <!--            <a customLinkActive="active" [link]="['/supplier']" (click)="chooseType('/supplier')">Suppliers</a>-->
             <a>News & Updates</a>
         </div>
 
@@ -81,12 +65,9 @@
                         <img src="./assets/img/icon/icon-suitabilityhub-configurator.svg" class="menu-icon"/>
                         <div class="menu-name">SuitabilityHub configurator</div>
                     </div>
-
-
-
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isSupplierUser()">
-                    <div class="menu-item">
+                    <div class="menu-item" [routerLink]="['/supplier/supplier-edit/overview/' + currentUserService.currentUser().companyId]">
                         <img src="./assets/img/icon/icon-company.svg" class="menu-icon"/>
                         <div class="menu-name">Manage company</div>
                     </div>
@@ -103,16 +84,5 @@
                 </div>
             </div>
         </div>
-
-        <!--        <div class="logout" (click)="logOut()">-->
-        <!--            <span class="icon-block icon-logout icon-24"></span>-->
-        <!--        </div>-->
-
-        <!--        <div ngbDropdown placement="bottom-end">-->
-        <!--            <div id="dropdownMenu" ngbDropdownToggle class="dropdown-text">Sam the BDM <span class="icon-block icon-arr-down icon-15"></span></div>-->
-        <!--            <div ngbDropdownMenu aria-labelledby="dropdownMenu">-->
-        <!--                <button ngbDropdownItem>Log out</button>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </div>
