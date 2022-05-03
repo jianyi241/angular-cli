@@ -1,14 +1,14 @@
 <div class="main main-form">
 
     <div class="sub-head sub-head-form">
-        <div class="sub-title" [routerLink]="['/admin-manage/list']">
+        <div class="sub-title" [routerLink]="['/admin/list']">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            New administrator
-            <label class="label status" [ngClass]="[getStatusCls(adminInfo.status)]">{{ adminInfo.status }}</label>
+            {{ type === '0' ? 'New administrator' : 'Recep Peker'}}
+            <label class="label status" [ngClass]="[getStatusCls()]">{{ adminInfo.status }}</label>
         </div>
 
         <div class="btn-control-group">
-            <button class="btn btn-purple xs-ml-24" (click)="save()">{{'Create and send welcome email'}}</button>
+            <button class="btn btn-purple xs-ml-24" (click)="submit()">{{getOperateText()}}</button>
         </div>
     </div>
 
@@ -62,7 +62,7 @@
                                 <div>First name <span class="label-required">*</span></div>
                             </label>
                             <input type="text" class="form-control" [(ngModel)]="adminInfo.firstName"
-                                   placeholder="Enter your first name"/>
+                                   placeholder="Enter your first name" (blur)="blurUpdate()"/>
                         </div>
                     </div>
                     <div class="col-6">
@@ -71,7 +71,7 @@
                                 <div>Last name <span class="label-required">*</span></div>
                             </label>
                             <input type="text" class="form-control" [(ngModel)]="adminInfo.lastName"
-                                   placeholder="Enter your last name"/>
+                                   placeholder="Enter your last name"(blur)="blurUpdate()"/>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         <div>Work email<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" [(ngModel)]="adminInfo.email"
-                           placeholder="Enter your work email"/>
+                           placeholder="Enter your work email" (blur)="blurUpdate()"/>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <div class="radio-box radio-box-top-2" *ngFor="let adminType of adminRoles; let roleIndex = index">
-                        <input type="radio" [value]="adminType.roleName" [(ngModel)]="adminInfo.accountType" name="adminType" id="adminType-{{roleIndex}}"/>
+                        <input type="radio" [value]="adminType.id" [(ngModel)]="adminInfo.adviceRoleId" name="adminType" id="adminType-{{roleIndex}}" (ngModelChange)="blurUpdate()"/>
                         <label for="adminType-{{roleIndex}}">
                             {{adminType.roleName}}
                             <div class="info">{{adminType.roleDesc}}</div>

@@ -60,4 +60,9 @@ export class UserRepository {
     resendActiveEmail(openId: string): Observable<HttpResult<VerifyCode>> {
         return this.http.get<HttpResult<VerifyCode>>(environment.baseURL + `/email/resendActiveEmail/${openId}`)
     }
+
+    // 重新发送邀请邮件
+    reSendInviteAdmin(openId: string): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + '/email/resendInvite/' + openId)
+    }
 }

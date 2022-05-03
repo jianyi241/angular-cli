@@ -4,6 +4,7 @@ import {AdminRepository} from "../../../../repository/admin-repository";
 import {Router} from "@angular/router";
 import {Page} from "../../../../model/vo/page";
 import {Condition} from "../../../../model/condition";
+import {Constants} from "../../../../model/constants";
 
 @Component({
   selector: 'app-admin-list',
@@ -14,7 +15,7 @@ export class AdminListComponent implements OnInit, OnDestroy {
   routerSubscription: any;
   activatedRouteSubscription: any;
   adminPage: Page<any> = new Page<any>();
-  condition: Condition = new Condition(1,2)
+  condition: Condition = new Condition(1,10)
   constructor(private router: Router,
               private adminRepository: AdminRepository,
               public configService: ConfigService) {
@@ -74,7 +75,7 @@ export class AdminListComponent implements OnInit, OnDestroy {
 
   toDetail(type, id): void {
     console.log('current row id ===> ', id)
-    this.router.navigateByUrl('/admin-manage/detail/'+type+'/'+id)
+    this.router.navigateByUrl(`/admin/detail/${type}/${id || Constants.NON_ID}`)
   }
 
   pageChange(current: number) {

@@ -3,8 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpResult} from '../model/common/http-result';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {InviteUser} from "../model/user";
-import {AdminRole} from "../model/po/adminRole";
+import {RoleInfo} from "../model/po/roleInfo";
 import {AdminInfo} from "../model/po/adminInfo";
 import {Condition} from "../model/condition";
 import {Page} from "../model/vo/page";
@@ -17,13 +16,9 @@ export class AdminRepository {
     constructor(private http: HttpClient) {
     }
 
-    inviteUser(inviteUser: InviteUser): Observable<HttpResult<InviteUser>> {
-        return this.http.post<HttpResult<InviteUser>>(environment.baseURL + '/user/v1/inviteSignup', inviteUser);
-    }
-
     // 获取admin role列表
-    getAdminRoles(): Observable<HttpResult<Array<AdminRole>>> {
-        return this.http.get<HttpResult<Array<AdminRole>>>(environment.baseURL + '/admin/queryAdminRoleList')
+    getAdminRoles(): Observable<HttpResult<Array<RoleInfo>>> {
+        return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + '/admin/queryAdminRoleList')
     }
 
     // 根据userId获取管理员信息
@@ -41,3 +36,4 @@ export class AdminRepository {
         return this.http.post<HttpResult<AdminInfo>>(environment.baseURL + '/admin/saveOrUpdateAdmin', adminInfo)
     }
 }
+

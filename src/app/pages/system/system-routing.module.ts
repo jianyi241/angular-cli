@@ -127,7 +127,7 @@ const routes: Routes = [
             },]
     },
     {
-        path: 'admin-manage',
+        path: 'admin',
         component: LayoutComponent,
         children: [
             {

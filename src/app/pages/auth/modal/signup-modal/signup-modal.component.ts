@@ -82,8 +82,5 @@ export class SignupModalComponent implements OnInit {
             this.activeModal.close();
             this.router.navigateByUrl(`/verification?validToken=${res.data.token}&openId=${res.data.openId}`);
         });
-
     }
-
-
 }
