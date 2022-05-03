@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
-import { Constants } from "./model/constants";
-import { LocalStorageObServable } from "./observable/local-storage-observable";
-import { ToastRepository } from './repository/toast-repository';
-import { CurrentUserService } from "./service/current-user.service";
+import {Component} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {Subscription} from 'rxjs';
+import {LocalStorageObServable} from "./observable/local-storage-observable";
+import {ToastRepository} from './repository/toast-repository';
+import {CurrentUserService} from "./service/current-user.service";
 
 @Component({
     selector: 'app-root',
@@ -13,8 +12,7 @@ import { CurrentUserService } from "./service/current-user.service";
     styleUrls: ['./app.component.less'],
 })
 export class AppComponent {
-    private routerEventsListener: Subscription;
-    excludes: string[] = ['/login', '/forgot', '/reset', '/verification', '/signup', '/signup-admin'];
+    private readonly routerEventsListener: Subscription;
     message;
     title: any;
 
@@ -27,9 +25,6 @@ export class AppComponent {
         private modalService: BsModalService
     ) {
         this.routerEventsListener = this.router.events.subscribe(event => {
-            if (event instanceof ActivationEnd) {
-                this.checkAuthentication();
-            }
             if (event instanceof NavigationStart) {
                 toastRepository.showLoading(true);
             }
@@ -43,21 +38,6 @@ export class AppComponent {
 
     ngOnDestroy(): void {
         this.routerEventsListener && this.routerEventsListener.unsubscribe();
-    }
-
-    private checkAuthentication(): void {
-        //If the current route does not require a login
-        if (this.excludes.some(e => this.router.isActive(e, false))) {
-            return;
-        }
-        this.storage.getItem(Constants.CURRENT_USER).subscribe((val) => {
-            //If the current route requires login, but there is no user information
-            if (!val) {
-                this.router.navigateByUrl('/login');
-            }
-            // Routing access rights restrictions
-            this.currentUserService.accessLimitation();
-        });
     }
 
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Authentication} from "../model/vo/authentication";
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {CurrentUser} from "../model/vo/currentUser";
 import {RoleInfo} from "../model/po/roleInfo";
 import {Constants} from "../model/constants";
@@ -11,7 +11,21 @@ import {RoleType} from "../model/enums/role-type";
 })
 export class CurrentUserService {
     private _authentication: Authentication;
-    private adminPaths = ['/advice-practices'];
+
+    private roleMenus = [
+        {
+            type: RoleType.AdminUser.value,
+            menus: ['/']
+        },
+        {
+            type: RoleType.SupplierUser.value,
+            menus: ['/profile', '/platform', '/supplier/supplier-edit', '/supplier/edit-team']
+        },
+        {
+            type: RoleType.AdviceUser.value,
+            menus: ['/profile', '/platform', '/advice-practices/advice-tab', '/advice-practices/edit-team']
+        }
+    ];
 
     constructor(private router: Router) {
         let item = localStorage.getItem(Constants.CURRENT_USER);
@@ -57,9 +71,19 @@ export class CurrentUserService {
         return this._authentication;
     }
 
-    accessLimitation() {
-        if (this.adminPaths.includes(this.router.url) && !this.isAdminUser()) {
-            this.router.navigateByUrl('/login');
+    activeGuard(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+        if (!this.authentication) {
+            return this.router.parseUrl('/login');
         }
+        if (this.isAdminUser()) {
+            return true;
+        }
+        if (this.isSupplierUser()) {
+            return this.roleMenus.some(r => r.type == RoleType.SupplierUser.value && r.menus.some(m => state.url.startsWith(m)));
+        }
+        if (this.isAdviceUser()) {
+            return this.roleMenus.some(r => r.type == RoleType.AdviceUser.value && r.menus.some(m => state.url.startsWith(m)));
+        }
+        return false;
     }
 }

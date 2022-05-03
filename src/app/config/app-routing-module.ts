@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
+import {AuthActivateGuard} from "./auth-activate-guard";
 
 const routes: Routes = [
     {
@@ -19,7 +20,7 @@ const routes: Routes = [
             useHash: true,
         }),
     ],
-    providers: [{provide: APP_BASE_HREF, useValue: '/'}],
+    providers: [AuthActivateGuard, {provide: APP_BASE_HREF, useValue: '/'}],
     exports: [RouterModule],
 })
 export class AppRoutingModule {

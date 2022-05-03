@@ -37,12 +37,16 @@ import {SupplierInvoicesComponent} from "./suppliers/supplier-edit/supplier-invo
 import {EditSupplierTeamComponent} from "./suppliers/supplier-edit/edit-team/edit-supplier-team.component";
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
+import {AuthActivateGuard} from "../../config/auth-activate-guard";
+import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonsListComponent} from "./advice-practices/comparisons-list/comparisons-list.component";
 
 const routes: Routes = [
     {
         path: 'supplier',
         component: LayoutComponent,
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         children: [
             {
                 path: 'supplier-list',
@@ -82,6 +86,8 @@ const routes: Routes = [
     },
     {
         path: 'configuration',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         component: LayoutComponent,
         children: [
             {
@@ -131,6 +137,8 @@ const routes: Routes = [
     },
     {
         path: 'admin',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         component: LayoutComponent,
         children: [
             {
@@ -145,6 +153,8 @@ const routes: Routes = [
     },
     {
         path: 'platform',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         component: LayoutComponent,
         children: [
             {
@@ -185,6 +195,8 @@ const routes: Routes = [
     },
     {
         path: 'advice-practices',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         component: LayoutComponent,
         children: [
             {
@@ -225,6 +237,8 @@ const routes: Routes = [
     },
     {
         path: 'profile',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
         component: LayoutComponent,
         children: [
             {
@@ -235,9 +249,9 @@ const routes: Routes = [
     }
 ];
 
-
 @NgModule({
     imports: [RouterModule.forChild(routes)],
+    providers: [AuthActivateGuard, AuthActivateChildGuard],
     exports: [RouterModule]
 })
 export class SystemRoutingModule {
