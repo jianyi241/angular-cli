@@ -221,11 +221,11 @@ textarea.form-control{
       margin-top: 5px;
 
       input {
-        font-size: 13px;
-        font-weight: 400;
-        color: darken(#515B6F, 5%);
-        padding: 0 6px !important;
         font-family: 'Epilogue';
+        font-weight: 400;
+        font-size: 13px;
+        color: darken(#515B6F, 5%);
+        padding: 0  !important;
       }
     }
 
@@ -270,6 +270,15 @@ textarea.form-control{
     &.ng-select-focused {
       .ng-select-container {
         border: 1px solid darken(#D6DDEB, 10%);
+      }
+    }
+
+
+    &.ng-select-single{
+      .ng-input {
+        input {
+          padding: 0 5px!important;
+        }
       }
     }
   }
