@@ -17,9 +17,10 @@ import { ComparisonSetupComponent } from './comparison-setup/comparison-setup.co
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import { BusinessMetricComparisonComponent } from './business-metric-comparison/business-metric-comparison.component';
+import { SaveTemplateTipComponent } from './save-template-tip/save-template-tip.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, BusinessMetricComparisonComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, BusinessMetricComparisonComponent, SaveTemplateTipComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

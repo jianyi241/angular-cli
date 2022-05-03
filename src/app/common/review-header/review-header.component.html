@@ -18,12 +18,10 @@
             <div class="switch-text active">Hide common features</div>
         </div>
 
-        <button class="btn btn-text-theme btn-with-info-icon" *ngIf="!isScrollFixed">Save as feature template <span
+        <button class="btn btn-text-theme btn-with-info-icon" *ngIf="!isScrollFixed" (click)="saveTemplate()">Save as feature template <span
                 class="icon-block icon-info-bold icon-14"></span></button>
         <button class="btn btn-outline-blue-light xs-ml-30" (click)="goBack()">Go back</button>
         <button class="btn btn-outline-blue-light xs-ml-16">Load a template</button>
-
-
         <button class="btn btn-purple xs-ml-16" (click)="next()">Next</button>
     </div>
 </div>
