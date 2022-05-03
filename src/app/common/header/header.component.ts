@@ -32,20 +32,6 @@ export class HeaderComponent implements OnInit {
         }
     }
 
-    chooseType(type: string) {
-        if (type.includes('/configuration') && !this.router.url.includes('/configuration/configuration-tab')) {
-            this.router.navigateByUrl('/configuration/configuration-tab');
-        } else if (type.includes('/platform')) {
-            this.router.navigateByUrl('/platform/product');
-        } else if (type.includes('/advice-practices')) {
-            if (this.currentUserService.isAdminUser()) {
-                this.router.navigateByUrl('/advice-practices');
-            } else {
-                this.router.navigateByUrl(`/advice-practices/advice-tab/overview/${this.currentUserService.authentication.principal.practiceId}`);
-            }
-        }
-    }
-
     logOut(): void {
         const modalRef = this.modalService.open(LoginTipModalComponent, {
             size: 'small',
