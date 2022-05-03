@@ -25,23 +25,31 @@
 
         <div class="phone-menu">
             <!--Phone response-->
-            <!--<div ngbDropdown placement="bottom-end">
+            <div ngbDropdown placement="bottom-end">
                 <div class="icon-menu" id="dropdownPhoneMenu" ngbDropdownToggle>
                     <span class="line"></span>
                     <span class="line"></span>
                     <span class="line"></span>
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
-                    <a>News & Updates</a>
-                    <a class="{{configService.activeMatch('/supplier')}}"
-                       (click)="chooseType('/supplier')">Configurator</a>
-                    <a class="{{configService.activeMatch('/platform')}}"
-                       (click)="chooseType('/platform')">Platforms</a>
-                    <a class="{{configService.activeMatch('/advice-practices')}}">Advice practices</a>
-                    <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Due Diligence</a>
-                    <a [routerLink]="['/review/feature-selection']" routerLinkActive="active">Comparison Tool</a>
+                    <ng-container *ngIf="currentUserService.isAdminUser()">
+                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+                        <a customLinkActive="active" [link]="['/advice-practices']" [routerLink]="['/advice-practices']">Practices</a>
+                        <a customLinkActive="active" [link]="['/supplier']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
+                        <a>News & updates</a>
+                    </ng-container>
+                    <ng-container *ngIf="currentUserService.isSupplierUser()">
+                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+                        <a>Platform analysis</a>
+                        <a>News & Updates</a>
+                    </ng-container>
+                    <ng-container *ngIf="currentUserService.isAdviceUser()">
+                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+                        <a>Suitability review</a>
+                        <a>News & Updates</a>
+                    </ng-container>
                 </div>
-            </div>-->
+            </div>
         </div>
     </div>
 
