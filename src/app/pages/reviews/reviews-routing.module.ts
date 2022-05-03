@@ -5,6 +5,8 @@ import {FeatureComparisonComponent} from './feature-comparison/feature-compariso
 import {FeatureSelectionComponent} from './feature-selection/feature-selection.component';
 import {MetricComparisonComponent} from "./metric-comparison/metric-comparison.component";
 import {FeeComparisonComponent} from "./fee-comparison/fee-comparison.component";
+import {ComparisonSetupComponent} from "./comparison-setup/comparison-setup.component";
+import {BusinessMetricComparisonComponent} from "./business-metric-comparison/business-metric-comparison.component";
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
       {
         path: 'fee-comparison',
         component: FeeComparisonComponent,
+      },
+      {
+        path: 'comparison-setup',
+        component: ComparisonSetupComponent,
+      },
+      {
+        path: 'business-metric-comparison',
+        component: BusinessMetricComparisonComponent,
       },
     ]
   },

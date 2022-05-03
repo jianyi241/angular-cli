@@ -13,9 +13,13 @@ import {MetricComparisonComponent} from './metric-comparison/metric-comparison.c
 import {FeeComparisonComponent} from './fee-comparison/fee-comparison.component';
 import {FormsModule} from "@angular/forms";
 import {ShowMoreDirective} from "../../directive/show-more.directive";
+import { ComparisonSetupComponent } from './comparison-setup/comparison-setup.component';
+import {NgSelectModule} from "@ng-select/ng-select";
+import {CKEditorModule} from "ckeditor4-angular";
+import { BusinessMetricComparisonComponent } from './business-metric-comparison/business-metric-comparison.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, BusinessMetricComparisonComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
@@ -23,6 +27,8 @@ import {ShowMoreDirective} from "../../directive/show-more.directive";
         SwiperModule,
         SystemModule,
         FormsModule,
+        NgSelectModule,
+        CKEditorModule,
     ], exports: [
     ReviewDropdownDirective,
     TableScrollDirective,

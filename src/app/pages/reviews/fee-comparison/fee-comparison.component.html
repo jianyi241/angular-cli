@@ -1,193 +1,191 @@
-<div class="loading-bar is-loading"></div>
+<div class="loading-bar has-load"></div>
 
 <div class="table-main-content">
-    <div class="review-content">
-        <div class="sub-head-review">
-            <div class="title">Step 3 - Fee calculator</div>
-        </div>
+    <div class="sub-head-review">
+        <div class="title">Step 3 - Fee calculator</div>
+    </div>
 
-        <div class="form-content">
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">Approximately how much do you expect to have in each account</label>
-                    <p class="info">(average balance for next 12 months)</p>
-                </div>
+    <div class="form-content">
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">Approximately how much do you expect to have in each account</label>
+                <p class="info">(average balance for next 12 months)</p>
+            </div>
 
-                <div class="form-group-right">
-                    <div class="form-group-column">
-                        <div class="column-6">
-                            <div class="column-group" *ngFor="let idps of idpsArr; let idpsIndex = index">
-                                <div class="form-group">
-                                    <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
-                                    <div class="input-group_unit">
-                                        <span class="unit">$</span>
-                                        <input type="number" class="form-control" [(ngModel)]="idps.value" />
-                                    </div>
-                                    <span class="icon-block icon-delete icon-19" (click)="removeIdps(idpsIndex)"
-                                        *ngIf="idpsIndex > 0"></span>
+            <div class="form-group-right">
+                <div class="form-group-column">
+                    <div class="column-6">
+                        <div class="column-group" *ngFor="let idps of idpsArr; let idpsIndex = index">
+                            <div class="form-group">
+                                <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
+                                <div class="input-group_unit">
+                                    <span class="unit">$</span>
+                                    <input type="number" class="form-control" [(ngModel)]="idps.value" />
                                 </div>
+                                <span class="icon-block icon-delete icon-19" (click)="removeIdps(idpsIndex)"
+                                      *ngIf="idpsIndex > 0"></span>
                             </div>
-                            <div class="column-group">
-                                <button class="btn btn-outline-purple-light btn-with-icon btn-block"
+                        </div>
+                        <div class="column-group">
+                            <button class="btn btn-outline-purple-light btn-with-icon btn-block"
                                     (click)="addIdps()">
-                                    <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
-                                </button>
+                                <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="column-6">
+                        <div class="column-group" *ngFor="let superItem of superArr; let superIndex = index">
+                            <div class="form-group">
+                                <label class="control-label control-label-custom">Super/Pension
+                                    {{superIndex + 1}}</label>
+                                <div class="input-group_unit">
+                                    <span class="unit">$</span>
+                                    <input type="number" class="form-control" [(ngModel)]="superItem.value" />
+                                </div>
+                                <span class="icon-block icon-delete icon-19" (click)="removeSuper(superIndex)"
+                                      *ngIf="superIndex > 0"></span>
                             </div>
                         </div>
 
-                        <div class="column-6">
-                            <div class="column-group" *ngFor="let superItem of superArr; let superIndex = index">
-                                <div class="form-group">
-                                    <label class="control-label control-label-custom">Super/Pension
-                                        {{superIndex + 1}}</label>
-                                    <div class="input-group_unit">
-                                        <span class="unit">$</span>
-                                        <input type="number" class="form-control" [(ngModel)]="superItem.value" />
-                                    </div>
-                                    <span class="icon-block icon-delete icon-19" (click)="removeSuper(superIndex)"
-                                        *ngIf="superIndex > 0"></span>
-                                </div>
-                            </div>
-
-                            <div class="column-group">
-                                <button class="btn btn-outline-purple-light btn-with-icon btn-block"
+                        <div class="column-group">
+                            <button class="btn btn-outline-purple-light btn-with-icon btn-block"
                                     (click)="addSuper()">
-                                    <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
-                                </button>
-                            </div>
+                                <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="total-amount">
-                        <div class="text">Total value of investments and super</div>
-                        <div class="amount" title="$150,000">{{totalValue() | currency}}</div>
-                    </div>
+                <div class="total-amount">
+                    <div class="text">Total value of investments and super</div>
+                    <div class="amount" title="$150,000">{{totalValue() | currency}}</div>
                 </div>
             </div>
-
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">Which of the following will you hold through the platform?</label>
-                    <p class="info"></p>
-                </div>
-
-                <div class="form-group-right">
-                    <div class="check-box check-box-purple" *ngFor="let item of platformItems; let itemIndex = index">
-                        <input type="checkbox" [(ngModel)]="item.value" name="retailInsurance"
-                            id="platform-{{itemIndex}}" />
-                        <label for="platform-{{itemIndex}}">{{item.name}}</label>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">Approximately how much do you intend to hold in each investment
-                        class</label>
-                    <p class="info"></p>
-                </div>
-
-                <div class="form-group-right">
-                    <div class="form-group-column">
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">{{item.name}}</label>
-                                <div class="input-group_unit">
-                                    <span class="unit">$</span>
-                                    <input type="number" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">In total, how many different funds, individual stocks and managed
-                        account models do you intend to hold? (across all portfolios) </label>
-                    <p class="info"></p>
-                </div>
-
-                <div class="form-group-right">
-                    <div class="form-group-column">
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">In total, how many transactions do you expect will occur in the next 12
-                        months <span class="tx-line">outside SMA/MDAs</span>, and what do you anticipate will be the average transaction
-                        size?</label>
-                    <p class="info">(including transactions from any rebalancing)</p>
-                </div>
-
-                <div class="form-group-right">
-                    <div class="form-group-column">
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount" />
-                            </div>
-                        </div>
-
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
-                                <div class="input-group_unit">
-                                    <span class="unit">$</span>
-                                    <input type="number" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="form-group-custom form-group-custom-reset">
-                <div class="form-group-left">
-                    <label class="control-label">In total, how many transactions do you expect will occur in the next 12
-                        months <span class="tx-line">within SMA/MDAs</span>, and what do you anticipate will be the average transaction size
-                        ?</label>
-                    <p class="info">(including transactions from any rebalancing)</p>
-                </div>
-
-                <div class="form-group-right">
-                    <div class="form-group-column">
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                                <input type="number" class="form-control form-control-amount" />
-                            </div>
-                        </div>
-
-                        <div class="column-6">
-                            <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                                <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
-                                <div class="input-group_unit">
-                                    <span class="unit">$</span>
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">Which of the following will you hold through the platform?</label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="check-box check-box-purple" *ngFor="let item of platformItems; let itemIndex = index">
+                    <input type="checkbox" [(ngModel)]="item.value" name="retailInsurance"
+                           id="platform-{{itemIndex}}" />
+                    <label for="platform-{{itemIndex}}">{{item.name}}</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">Approximately how much do you intend to hold in each investment
+                    class</label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group-column">
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">{{item.name}}</label>
+                            <div class="input-group_unit">
+                                <span class="unit">$</span>
+                                <input type="number" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">In total, how many different funds, individual stocks and managed
+                    account models do you intend to hold? (across all portfolios) </label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group-column">
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
+                            <input type="number" class="form-control form-control-amount" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">In total, how many transactions do you expect will occur in the next 12
+                    months <span class="tx-line">outside SMA/MDAs</span>, and what do you anticipate will be the average transaction
+                    size?</label>
+                <p class="info">(including transactions from any rebalancing)</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group-column">
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
+                            <input type="number" class="form-control form-control-amount" />
+                        </div>
+                    </div>
+
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
+                            <div class="input-group_unit">
+                                <span class="unit">$</span>
+                                <input type="number" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">In total, how many transactions do you expect will occur in the next 12
+                    months <span class="tx-line">within SMA/MDAs</span>, and what do you anticipate will be the average transaction size
+                    ?</label>
+                <p class="info">(including transactions from any rebalancing)</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group-column">
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
+                            <input type="number" class="form-control form-control-amount" />
+                        </div>
+                    </div>
+
+                    <div class="column-6">
+                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
+                            <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
+                            <div class="input-group_unit">
+                                <span class="unit">$</span>
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

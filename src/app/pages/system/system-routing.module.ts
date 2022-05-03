@@ -37,6 +37,7 @@ import {SupplierInvoicesComponent} from "./suppliers/supplier-edit/supplier-invo
 import {EditSupplierTeamComponent} from "./suppliers/supplier-edit/edit-team/edit-supplier-team.component";
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
+import {ComparisonsListComponent} from "./advice-practices/comparisons-list/comparisons-list.component";
 
 const routes: Routes = [
     {
@@ -215,7 +216,11 @@ const routes: Routes = [
                         component: AdviceInvoicesComponent,
                     },
                 ],
-            }
+            },
+            {
+                path: 'comparisons-list',
+                component: ComparisonsListComponent,
+            },
         ]
     },
     {

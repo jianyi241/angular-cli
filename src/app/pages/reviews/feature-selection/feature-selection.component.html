@@ -1,6 +1,6 @@
 <div class="content">
     <div class="sub-head-selection">
-        <h2>Step 1 - What are important for Floyd?</h2>
+        <h2>Step 2 - What features are important for Miracle? <span class="text">Select the features you would like to include in the comparison</span></h2>
     </div>
 
     <div class="features-swiper" *ngIf="featureForm.groupVoList.length > 0">
@@ -8,11 +8,26 @@
             <ng-template swiperSlide [virtualIndex]="groupIndex"
                 *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
                 <div class="swiper-head">
-                    <img [src]="group.attachmentVo?.visitUrl" alt="">
+                    <!-- <img [src]="group.attachmentVo?.visitUrl" alt="">-->
+                    <span class="icon-block icon-teleconference icon-40"></span>
                     <div class="tip" (click)="selectGroupAll(group)">Select all features</div>
+                    <!-- <div class="tip tx-red">Deselect all features</div> -->
                 </div>
                 <div class="swiper-body">
                     <h3>{{group.name}}</h3>
+
+                    <!-- green flag-->
+                    <!--<div class="swiper-status">
+                        <span class="icon-block icon-flag-green icon-13 xs-mr-8"></span>
+                        <span class="num">3</span>/76 selected
+                    </div>-->
+
+                    <!-- red flag-->
+                    <div class="swiper-status tx-red">
+                        <span class="icon-block icon-flag-red icon-13 xs-mr-8"></span>
+                        <span class="num">3</span>/76 selected
+                    </div>
+
                     <p [innerHTML]="group.description"></p>
                 </div>
             </ng-template>

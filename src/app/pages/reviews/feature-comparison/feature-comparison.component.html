@@ -53,8 +53,12 @@
                     </div>
 
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">+ Shortlist</button>
-                        <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
+                        <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
+                        <button class="btn btn-outline-purple-light btn-trash">
+                            <span class="icon-block icon-trash icon-20"></span>
+                            <!-- reset icon-->
+                            <!--<span class="icon-block icon-reset-red icon-20"></span>-->
+                        </button>
                     </div>
 
                     <div class="tip-message tip-success">
@@ -140,7 +144,7 @@
 
                 <th class="th-control" *ngFor="let product of compareData.productVos">
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">+ Shortlist</button>
+                        <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
                         <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
                     </div>
                 </th>
