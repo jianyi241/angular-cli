@@ -42,6 +42,7 @@
                         <div class="box-center-left">
                             <div class="brand-pic">
                                 <img [src]="product.attachmentVo?.visitUrl"/>
+                                <!-- <label class="label-brand label-brand-orange">Main</label>-->
                             </div>
                             <div class="title" [title]="product.name">{{product.name}}</div>
                         </div>
@@ -53,12 +54,25 @@
                     </div>
 
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
+                        <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'  container="body"  [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto" [ngbPopover]="popCommentContent">Add comment</button>
                         <button class="btn btn-outline-purple-light btn-trash">
                             <span class="icon-block icon-trash icon-20"></span>
                             <!-- reset icon-->
                             <!--<span class="icon-block icon-reset-red icon-20"></span>-->
                         </button>
+
+                        <ng-template #popCommentContent>
+                            <div class="comment-popover">
+                              <div class="title">Add a comment</div>
+
+                                <textarea class="form-control xs-mb-16"></textarea>
+
+                                <div class="comment-footer">
+                                    <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8" (click)="pComment.close()">Cancel</button>
+                                    <button class="btn btn-block btn-purple tx-16 xs-ml-8">Save</button>
+                                </div>
+                            </div>
+                        </ng-template>
                     </div>
 
                     <div class="tip-message tip-success">
@@ -144,9 +158,26 @@
 
                 <th class="th-control" *ngFor="let product of compareData.productVos">
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
-                        <button class="btn btn-outline-purple-light btn-trash"><span class="icon-block icon-trash icon-20"></span></button>
+                        <button class="btn btn-outline-purple-light btn-edit" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'  container="body"  [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto" [ngbPopover]="popCommentContent">Add comment</button>
+                        <button class="btn btn-outline-purple-light btn-trash">
+                            <span class="icon-block icon-trash icon-20"></span>
+                            <!-- reset icon-->
+                            <!--<span class="icon-block icon-reset-red icon-20"></span>-->
+                        </button>
                     </div>
+
+                    <ng-template #popCommentContent>
+                        <div class="comment-popover">
+                            <div class="title">Add a comment</div>
+
+                            <textarea class="form-control xs-mb-16"></textarea>
+
+                            <div class="comment-footer">
+                                <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8" (click)="pComment.close()">Cancel</button>
+                                <button class="btn btn-block btn-purple tx-16 xs-ml-8">Save</button>
+                            </div>
+                        </div>
+                    </ng-template>
                 </th>
             </tfoot>
         </table>

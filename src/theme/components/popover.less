@@ -27,9 +27,22 @@
 
   &.bs-popover-right > .arrow::before,
   &.bs-popover-auto[x-placement^="right"] > .arrow::before {
-    left: 0;
-    border-width: 0.5rem 0.5rem 0.5rem 0;
     border-right-color: #E3E3E3;
+  }
+
+  &.bs-popover-left > .arrow::before,
+  &.bs-popover-auto[x-placement^="left"] > .arrow::before {
+    border-left-color: #E3E3E3;
+  }
+
+  &.bs-popover-top > .arrow::before,
+  &.bs-popover-auto[x-placement^="top"] > .arrow::before {
+    border-top-color: #E3E3E3;
+  }
+
+  &.bs-popover-bottom > .arrow::before,
+  &.bs-popover-auto[x-placement^="bottom"] > .arrow::before {
+    border-bottom-color: #E3E3E3;
   }
 }
 
@@ -74,5 +87,55 @@
       z-index: 5;
     }
 
+  }
+}
+
+
+.table-comment-popover{
+  background: #FFFFFF;
+  border: 1px solid #E3E3E3;
+  border-radius: 0;
+  max-width: 653px;
+  width: 653px;
+  box-shadow: none;
+
+  .popover-body{
+    padding:0;
+  }
+
+
+  &.bs-popover-top > .arrow::before, &.bs-popover-auto[x-placement^="top"] > .arrow::before {
+    border-top-color: #E3E3E3;
+  }
+}
+
+.comment-popover{
+  padding:16px;
+  height: auto;
+  overflow: hidden;
+
+  .title{
+    font-family: 'Epilogue';
+    font-weight: 700;
+    font-size: 14px;
+    line-height:24px;
+    color: #515B6F;
+    margin-bottom: 16px;
+  }
+
+  textarea.form-control{
+    height: 150px;
+  }
+
+  .comment-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .btn-block{
+      margin-top:0 !important;
+      margin-bottom: 0 !important;
+      padding:16px 21px;
+    }
   }
 }
