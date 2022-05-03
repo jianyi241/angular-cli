@@ -288,6 +288,17 @@ textarea.form-control{
           padding-top:5px;
           padding-bottom:5px;
         }
+
+        .ng-custom-value{
+          font-family: 'Epilogue';
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 22px;
+          color: #25324B;
+          padding: 0;
+          margin: 4px 0 0 0;
+          background-color: transparent;
+        }
       }
     }
   }
@@ -389,6 +400,14 @@ textarea.form-control{
             &::after{
               background-image: url("../../assets/img/icon/icon-checkbox.svg");
             }
+          }
+        }
+      }
+
+      &.ng-option-disabled{
+        .select-multiple-item{
+          .check-item{
+            opacity: .7;
           }
         }
       }

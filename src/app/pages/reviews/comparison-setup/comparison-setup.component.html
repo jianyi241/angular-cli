@@ -16,7 +16,7 @@
                 <div class="form-group-right">
                     <div class="form-group">
                         <label class="control-label control-label-custom"><div>Owner<span class="label-required">*</span></div></label>
-                        <ng-select disabled class="select-single" placeholder="Select owner"  dropdownPosition="bottom">
+                        <ng-select class="select-single" placeholder="Select owner"  dropdownPosition="bottom">
                             <ng-option>
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
@@ -117,7 +117,7 @@
 
                     <div class="form-group">
                         <label class="control-label control-label-custom"><div>Select one from below<span class="label-required">*</span></div></label>
-                        <ng-select disabled class="select-single" placeholder="Enter name of product"  dropdownPosition="bottom">
+                        <ng-select class="select-single" placeholder="Enter name of product"  dropdownPosition="bottom">
                             <ng-option>product01</ng-option>
                             <ng-option>product02</ng-option>
                         </ng-select>
@@ -135,7 +135,13 @@
                 <div class="form-group-right">
                     <div class="form-group xs-mb-8">
                         <label class="control-label control-label-custom"><div>Select up to three platforms to include in non-fee analysis</div></label>
-                        <ng-select disabled class="select-single" [multiple]="true" [closeOnSelect]="false"  placeholder="Enter name of platform"  dropdownPosition="bottom">
+                        <ng-select class="select-single"   [multiple]="true" [clearable]="false" [closeOnSelect]="false"  placeholder="Enter name of platform"  dropdownPosition="bottom">
+                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                <div class="ng-value ng-custom-value">
+                                    {{items.length}}/4 selected
+                                </div>
+                            </ng-template>
+
                             <ng-option>
                                 <div class="select-multiple-item">
                                     <div class="check-item"></div>
@@ -143,9 +149,9 @@
                                 </div>
                             </ng-option>
 
-                            <ng-option>
+                            <ng-option [disabled]="true">
                                 <div class="select-multiple-item">
-                                    <div class="check-item checked has_main"></div>
+                                    <div class="check-item"></div>
                                     BT Panaroma
                                     <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12"></span>
                                     <span class="item-status state_yellow">Main</span>
@@ -174,7 +180,13 @@
 
                     <div class="form-group xs-mb-8">
                         <label class="control-label control-label-custom"><div>Select platforms to include in fee analysis</div></label>
-                        <ng-select disabled class="select-single" [multiple]="true" placeholder="Enter name of platform"  dropdownPosition="bottom">
+                        <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false" placeholder="Enter name of platform"  dropdownPosition="bottom">
+                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                <div class="ng-value ng-custom-value">
+                                    {{items.length}}/4 selected
+                                </div>
+                            </ng-template>
+
                             <ng-option>
                                 <div class="select-multiple-item">
                                     <div class="check-item"></div>
@@ -182,9 +194,9 @@
                                 </div>
                             </ng-option>
 
-                            <ng-option>
+                            <ng-option [disabled]="true">
                                 <div class="select-multiple-item">
-                                    <div class="check-item checked has_main"></div>
+                                    <div class="check-item"></div>
                                     BT Panaroma
                                     <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12"></span>
                                     <span class="item-status state_yellow">Main</span>
@@ -223,7 +235,7 @@
                 <div class="form-group-right">
                     <div class="form-group">
                         <label class="control-label control-label-custom"><div>Load feature selection from a saved tempalte</div></label>
-                        <ng-select disabled class="select-single" placeholder="Enter template name"  dropdownPosition="bottom">
+                        <ng-select class="select-single" placeholder="Enter template name"  dropdownPosition="bottom">
                             <ng-option>template01</ng-option>
                             <ng-option>template02</ng-option>
                         </ng-select>
@@ -232,7 +244,7 @@
 
                     <div class="form-group">
                         <label class="control-label control-label-custom"><div>Load feature selection from another analysis</div></label>
-                        <ng-select disabled class="select-single" placeholder="Enter another analysis"  dropdownPosition="bottom">
+                        <ng-select class="select-single" placeholder="Enter another analysis"  dropdownPosition="bottom">
                             <ng-option>analysis01</ng-option>
                             <ng-option>analysis02</ng-option>
                         </ng-select>

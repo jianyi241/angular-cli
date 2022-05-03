@@ -8,6 +8,7 @@ import {Constants} from "../../../model/constants";
 })
 export class ComparisonSetupComponent implements OnInit {
   config = {...Constants.EDITOR_CONFIG};
+  itemsselectItem=[];
   constructor() { }
 
   ngOnInit(): void {
