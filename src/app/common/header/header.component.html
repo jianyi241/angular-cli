@@ -18,7 +18,7 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
-            <a customLinkActive="active" [link]="['/advice-practices']" (click)="chooseType('/advice-practices')">Practices</a>
+            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
             <a>Suitability review</a>
             <a>News & Updates</a>
         </div>
@@ -73,8 +73,8 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isAdviceUser()">
-                    <div class="menu-item">
-                        <img src="./assets/img/icon/icon-company.svg" class="menu-icon"/>
+                    <div class="menu-item" [routerLink]="['/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId]">
+                        <img src="./assets/img/icon/icon-company.svg" class="menu-icon" />
                         <div class="menu-name">Manage practice</div>
                     </div>
                 </ng-container>

@@ -22,7 +22,7 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
     constructor(private modalService: NgbModal,
                 private saveService: SaveService,
                 private activatedRoute: ActivatedRoute,
-                private currentUserService: CurrentUserService,
+                public currentUserService: CurrentUserService,
                 private toastRepository: ToastRepository,
                 public practiceService: PracticeService,
                 private router: Router,

@@ -3,7 +3,7 @@
 
     <div class="sub-head sub-head-form">
         <div class="sub-title" (click)="back()">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16" *ngIf="currentUserService.isAdminUser()"></span>
             {{practiceService.practice.name}}
         </div>
 
