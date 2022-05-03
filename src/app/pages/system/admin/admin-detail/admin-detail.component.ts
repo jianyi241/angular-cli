@@ -36,13 +36,10 @@ export class AdminDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe(params => {
-            console.log('params ===> ', params)
             if (params['id'] !== Constants.NON_ID) {
                 this.adminInfo.id = params['id']
             }
             this.type = params['type']
-            console.log('this.id ===> ', this.adminInfo.id)
-            console.log('this.type ===> ', this.type)
         })
         this.getAdminRoles()
         if (this.type === '1') {
@@ -82,7 +79,6 @@ export class AdminDetailComponent implements OnInit {
     getAdminDetail(): void {
         this.adminRepository.getAdminInfo(this.adminInfo.id).subscribe(res => {
             this.adminInfo = Object.assign(this.adminInfo, res.data);
-            console.log('admin detail ===> ', this.adminInfo)
         })
     }
 
@@ -94,7 +90,6 @@ export class AdminDetailComponent implements OnInit {
                     this.adminInfo.adviceRoleId = this.adminRoles[0].id
                 }
             }
-            console.log('admin roles ===> ', this.adminRoles)
         })
     }
 
@@ -111,7 +106,6 @@ export class AdminDetailComponent implements OnInit {
                     this.uploading = false;
                     if (res.statusCode == 200) {
                         this.adminInfo.avatar = res.data[0];
-                        console.log('this.adminInfo.avatar ===> ', this.adminInfo.avatar)
                         if (this.type === '1') {
                             this.save()
                         }
@@ -124,7 +118,6 @@ export class AdminDetailComponent implements OnInit {
     }
 
     submit(): void {
-        console.log('submit ===> ', this.adminInfo.status)
         if (this.adminInfo.status === this.configService.userStatus.pending) { // 重发邀请邮件
             this.sendInvite()
             return
@@ -144,13 +137,14 @@ export class AdminDetailComponent implements OnInit {
 
     sendInvite(): void {
         this.userRepository.reSendInviteAdmin(this.adminInfo.openId).subscribe(res => {
-            console.log('send email ===> ', res)
+            if (res.statusCode === 200) {
+                this.toastRepository.showSuccess(res.msg);
+            }
         }, err => {
         })
     }
 
     save(): void {
-        console.log('save...')
         let _adminInfo = {...this.adminInfo};
         if (!_adminInfo.firstName) {
             this.toastRepository.showDanger('First name is required.');

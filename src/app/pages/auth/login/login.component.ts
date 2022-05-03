@@ -48,12 +48,10 @@ export class LoginComponent {
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(queryParams => {
-            console.log('queryParams ==> ', queryParams)
             if (queryParams.type === '2') {
                 this.loginType = 2
             }
         })
-        console.log('login...')
     }
 
     loginWithEmail(): void {

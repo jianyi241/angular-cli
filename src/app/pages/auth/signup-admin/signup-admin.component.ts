@@ -58,7 +58,6 @@ export class SignupAdminComponent implements OnInit {
       } else {
         this.toastRepository.showDanger(res.msg || 'failed operation')
       }
-      console.log('admin signup result ===> ', res)
     })
   }
 }

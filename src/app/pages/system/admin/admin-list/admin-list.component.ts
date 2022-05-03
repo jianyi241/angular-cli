@@ -36,14 +36,13 @@ export class AdminListComponent implements OnInit, OnDestroy {
 
   getSuppliesList(): void {
     this.adminRepository.getAdminInfoList(this.condition).subscribe(res => {
-      console.log('get admin list ===> ', res)
       this.adminPage = res.data
     },err => {})
   }
 
   sortList(column: string, sortType: number): void {
+    return;
     // sortType 0.normal 1.asc 2.desc
-    console.log('sort list...', column, '------ ', sortType)
     let newList: Array<any> = []
     if (sortType === 1) {
       newList = this.adminPage.records.sort((a,b) => {
@@ -70,20 +69,16 @@ export class AdminListComponent implements OnInit, OnDestroy {
       return
     }
     this.adminPage.records = newList
-    console.log('admin records new ===> ', this.adminPage.records)
   }
 
   toDetail(type, id): void {
-    console.log('current row id ===> ', id)
     this.router.navigateByUrl(`/admin/detail/${type}/${id || Constants.NON_ID}`)
   }
 
   pageChange(current: number) {
     this.condition.current = current
     this.getSuppliesList()
-    console.log('current ===> ', current)
   }
-
 }
 
 
