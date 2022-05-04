@@ -7,6 +7,5 @@ export class ComparisonVo extends ComparisonInfo{
     nonFeeProducts: Array<string> = new Array<string>();
     feeProductName?: string;
     nonFeeProductName?: string;
-    mainPlatformName?: string;
 }
 

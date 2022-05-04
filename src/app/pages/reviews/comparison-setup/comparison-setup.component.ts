@@ -89,6 +89,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         comparison.analyseVoList = this.analyses.filter(a => a.checked).map(a => {
             let analyse = new ComparisonAnalyseInfo();
             analyse.shAnalyseId = a.id;
+            analyse.name = a.name;
             return analyse;
         })
         let feeProducts = comparison.feeProducts.map(f => {
@@ -197,11 +198,11 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     changeMainPlatform() {
         let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
-        this.reviewService.comparison.mainPlatformName = mainPlatform.name;
+        this.reviewService.comparison.productName = mainPlatform.name;
     }
 
     changeCheckMain() {
         this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : null
-        this.reviewService.comparison.mainPlatformName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformName : ''
+        this.reviewService.comparison.productName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.productName : ''
     }
 }

@@ -17,6 +17,8 @@
 export class ComparisonAnalyseInfo {
     id?: string;
     shAnalyseId?: string;
+    name?: string;
+    stepSort?: number;
     shComparisonId?: string;
 }
 

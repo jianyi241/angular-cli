@@ -7,6 +7,8 @@ import {Constants} from "../../model/constants";
 import {ReviewRepository} from "../../repository/review-repository";
 import {ComparisonVo} from "../../model/vo/comparisonVo";
 import {CurrentUserService} from "../../service/current-user.service";
+import {ComparisonAnalyseInfo} from "../../model/po/comparisonAnalyseInfo";
+import {AnalysisType} from "../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-review-header',
@@ -77,4 +79,17 @@ export class ReviewHeaderComponent implements OnInit {
     }
 
 
+    getDynamicAnaName(analysis: ComparisonAnalyseInfo): string {
+        let analysisType = AnalysisType.parseEnum(analysis.name);
+        return analysisType?.name || '';
+    }
+
+    getDynamicAnaLinks(analysis: ComparisonAnalyseInfo): Array<string> {
+        let analysisType = AnalysisType.parseEnum(analysis.name);
+        return analysisType?.links || [];
+    }
+
+    totalDynamicAna(): number {
+        return this.reviewService.comparison.analyseVoList.length + 2;
+    }
 }

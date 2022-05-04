@@ -19,7 +19,6 @@ import {ComparisonProductInfo} from "./comparisonProductInfo";
  */
 export class ComparisonInfo {
     adviserName?: string;
-    analyse?: string;
     analyseVoList?: Array<ComparisonAnalyseInfo>;
     companyId?: string;
     comparisonProductVoList?: Array<ComparisonProductInfo>;
@@ -34,6 +33,7 @@ export class ComparisonInfo {
     name?: string;
     objectives?: string;
     practiceName?: string;
+    productName?: string;
     updateTime?: string;
     updateUser?: string;
     userId?: string;
