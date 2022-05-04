@@ -14,7 +14,7 @@
 /**
  * sh_analyse_type表
  */
-export interface AnalyseTypeInfo {
+export class AnalyseTypeInfo {
     createTime?: string;
     createUser?: string;
     deleteFlag?: boolean;

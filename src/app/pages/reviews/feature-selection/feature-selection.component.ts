@@ -47,7 +47,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     init(): void {
         this.subscribe();
-        this.getFeatureForm();
+        // this.getFeatureForm();
     }
 
     subscribe(): void {
@@ -86,7 +86,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            // this.router.navigateByUrl('/');
+            this.router.navigateByUrl(`/review/comparison-setup/${this.reviewService.comparison.id}`);
         })
     }
 

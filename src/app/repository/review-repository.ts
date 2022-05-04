@@ -9,7 +9,9 @@ import {CompareMetricVo} from "../model/vo/compareMetircVo";
 import {Page} from "../model/vo/page";
 import {ComparisonInfo} from "../model/po/comparisonInfo";
 import {ComparisonCondition} from "../model/condition/comparisonCondition";
-import {AnalyseTypeInfo} from "../model/po/analyseTypeInfo";
+import {TeamInfo} from "../model/po/teamInfo";
+import {AnalyseTypeVo} from "../model/vo/analyseTypeVo";
+import {ComparisonVo} from "../model/vo/comparisonVo";
 
 @Injectable({
     providedIn: 'root'
@@ -36,11 +38,19 @@ export class ReviewRepository {
         return this.http.post<HttpResult<Page<ComparisonInfo>>>(`${environment.baseURL}/compare/queryComparisonList`, condition);
     }
 
-    getCompareDetail(comparisonId: string): Observable<HttpResult<ComparisonInfo>> {
-        return this.http.get<HttpResult<ComparisonInfo>>(environment.baseURL + `/compare/queryComparisonInfo/${comparisonId}`);
+    getCompareDetail(comparisonId: string): Observable<HttpResult<ComparisonVo>> {
+        return this.http.get<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/queryComparisonInfo/${comparisonId}`);
     }
 
-    getAnalyseType(): Observable<HttpResult<Array<AnalyseTypeInfo>>> {
-        return this.http.get<HttpResult<Array<AnalyseTypeInfo>>>(environment.baseURL + `/compare/queryAnalyseType`);
+    getAnalyseType(): Observable<HttpResult<Array<AnalyseTypeVo>>> {
+        return this.http.get<HttpResult<Array<AnalyseTypeVo>>>(environment.baseURL + `/compare/queryAnalyseType`);
+    }
+
+    getSupplierUser(): Observable<HttpResult<Array<TeamInfo>>> {
+        return this.http.get<HttpResult<Array<TeamInfo>>>(environment.baseURL + '/compare/querySupplierUser');
+    }
+
+    saveComparison(comparison: ComparisonVo): Observable<HttpResult<ComparisonVo>> {
+        return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveOrUpdateComparison`, comparison);
     }
 }

@@ -3,7 +3,7 @@
 <div class="table-main-content">
     <div class="review-content">
         <div class="sub-head-review">
-            <div class="title">Step 1 - Comparison setup </div>
+            <div class="title">Step 1 - Comparison setup</div>
         </div>
 
         <div class="form-content">
@@ -15,50 +15,42 @@
 
                 <div class="form-group-right">
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Owner<span class="label-required">*</span></div></label>
-                        <ng-select class="select-single" placeholder="Select owner"  dropdownPosition="bottom">
-                            <ng-option>
+                        <label class="control-label control-label-custom">
+                            <div>Owner<span class="label-required">*</span></div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Select owner" dropdownPosition="bottom"
+                                   (change)="changeOwner()"
+                                   [(ngModel)]="reviewService.comparison.userId">
+                            <ng-option *ngFor="let user of supplierUsers" [value]="user.id">
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
-                                        <img src="./assets/img/avatar.png"/>
+                                        <img [src]="user.attachmentVo?.visitUrl"/>
                                     </div>
-                                    David Doe
-                                </div>
-                            </ng-option>
-
-                            <ng-option>
-                                <div class="select-avatar-item">
-                                    <div class="avatar-box">
-                                        <img src="./assets/img/icon-profile.svg"/>
-                                    </div>
-                                    David Doe
+                                    {{configService.fullName(user.firstName, user.lastName)}}
                                 </div>
                             </ng-option>
                         </ng-select>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Name of analysis<span class="label-required">*</span></div></label>
-                        <input type="text" placeholder="Enter name of analysis" class="form-control"/>
+                        <label class="control-label control-label-custom">
+                            <div>Name of analysis<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" placeholder="Enter name of analysis" [maxlength]="100" class="form-control"
+                               [(ngModel)]="reviewService.comparison.name"/>
                         <div class="tip-info">Maximum 100 characters</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Select what you would like to analyse (multiple select)<span class="label-required">*</span></div></label>
+                        <label class="control-label control-label-custom">
+                            <div>Select what you would like to analyse (multiple select)<span
+                                    class="label-required">*</span></div>
+                        </label>
 
-                        <div class="check-box check-box-purple">
-                            <input type="checkbox" name="featureAnalysis" id="featureAnalysis"/>
-                            <label for="featureAnalysis">Feature analysis</label>
-                        </div>
-
-                        <div class="check-box check-box-purple">
-                            <input type="checkbox" name="businessMetricAnalysis" id="businessMetricAnalysis"/>
-                            <label for="businessMetricAnalysis">Business metric analysis</label>
-                        </div>
-
-                        <div class="check-box check-box-purple">
-                            <input type="checkbox" name="feeAnalysis" id="feeAnalysis"/>
-                            <label for="feeAnalysis">Fee analysis</label>
+                        <div class="check-box check-box-purple" *ngFor="let analysis of analyses; let anaIndex = index">
+                            <input type="checkbox" name="analysis{{anaIndex}}" id="analysis{{anaIndex}}"
+                                   [(ngModel)]="analysis.checked"/>
+                            <label for="analysis{{anaIndex}}">{{analysis.name}}</label>
                         </div>
                     </div>
                 </div>
@@ -66,19 +58,25 @@
 
             <div class="form-group-custom form-group-custom-reset">
                 <div class="form-group-left">
-                    <label class="control-label"><div>Who is this analysis for?<span class="label-required">*</span></div></label>
+                    <label class="control-label">
+                        <div>Who is this analysis for?<span class="label-required">*</span></div>
+                    </label>
                     <p class="info"></p>
                 </div>
 
                 <div class="form-group-right">
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Adviser name<span class="label-required">*</span></div></label>
-                        <input type="text" placeholder="Enter adviser name" class="form-control"/>
+                        <label class="control-label control-label-custom">
+                            <div>Adviser name<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" placeholder="Enter adviser name" [(ngModel)]="reviewService.comparison.adviserName" class="form-control"/>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Practice name<span class="label-required">*</span></div></label>
-                        <input type="text" placeholder="Enter practice name" class="form-control"/>
+                        <label class="control-label control-label-custom">
+                            <div>Practice name<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" placeholder="Enter practice name" [(ngModel)]="reviewService.comparison.practiceName" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -86,11 +84,12 @@
             <div class="form-group-custom form-group-custom-reset">
                 <div class="form-group-left">
                     <label class="control-label">Objectives</label>
-                    <p class="info">Articulate the objectives of this analysis. This will appear on the final review report</p>
+                    <p class="info">Articulate the objectives of this analysis. This will appear on the final review
+                        report</p>
                 </div>
 
                 <div class="form-group-right">
-                    <ckeditor [config]="config"></ckeditor>
+                    <ckeditor [config]="config" [(ngModel)]="reviewService.comparison.objectives"></ckeditor>
                     <div class="tip-info">Maximum 5,000 characters</div>
                 </div>
             </div>
@@ -105,21 +104,31 @@
                 <div class="form-group-right">
                     <div class="radio-box-group">
                         <div class="radio-box">
-                            <input type="radio" name="platformAnalysis" checked id="yes"/>
+                            <input type="radio" [disabled]="disableAnalyse()"
+                                   name="platformAnalysis" id="yes"
+                                   (change)="changeCheckMain()"
+                                   [value]="true" [(ngModel)]="reviewService.comparison.mainPlatformCheck"/>
                             <label for="yes">Yes</label>
                         </div>
 
                         <div class="radio-box">
-                            <input type="radio" name="platformAnalysis" id="no"/>
+                            <input type="radio" [disabled]="disableAnalyse()"
+                                   name="platformAnalysis" id="no"
+                                   (change)="changeCheckMain()"
+                                   [value]="false" [(ngModel)]="reviewService.comparison.mainPlatformCheck"/>
                             <label for="no">No</label>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Select one from below<span class="label-required">*</span></div></label>
-                        <ng-select class="select-single" placeholder="Enter name of product"  dropdownPosition="bottom">
-                            <ng-option>product01</ng-option>
-                            <ng-option>product02</ng-option>
+                    <div class="form-group" *ngIf="reviewService.comparison.mainPlatformCheck" >
+                        <label class="control-label control-label-custom">
+                            <div>Select one from below<span class="label-required">*</span></div>
+                        </label>
+                        <ng-select class="select-single" [disabled]="disableAnalyse()"
+                                   (change)="changeMainPlatform()"
+                                   placeholder="Enter name of product" dropdownPosition="bottom"
+                                   [(ngModel)]="reviewService.comparison.mainPlatformId">
+                            <ng-option *ngFor="let product of products" [value]="product.id">{{product.name}}</ng-option>
                         </ng-select>
                     </div>
 
@@ -134,93 +143,61 @@
 
                 <div class="form-group-right">
                     <div class="form-group xs-mb-8">
-                        <label class="control-label control-label-custom"><div>Select up to three platforms to include in non-fee analysis</div></label>
-                        <ng-select class="select-single"   [multiple]="true" [clearable]="false" [closeOnSelect]="false"  placeholder="Enter name of platform"  dropdownPosition="bottom">
+                        <label class="control-label control-label-custom">
+                            <div>Select up to three platforms to include in non-fee analysis</div>
+                        </label>
+                        <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
+                                   (change)="changeNonFee()"
+                                   [(ngModel)]="reviewService.comparison.nonFeeProducts"
+                                   placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                 <div class="ng-value ng-custom-value">
                                     {{items.length}}/4 selected
                                 </div>
                             </ng-template>
-
-                            <ng-option>
+                            <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="(reviewService.comparison.mainPlatformId == product.id) || false">
                                 <div class="select-multiple-item">
                                     <div class="check-item"></div>
-                                    BT Asgard
-                                </div>
-                            </ng-option>
-
-                            <ng-option [disabled]="true">
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    BT Panaroma
-                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12"></span>
-                                    <span class="item-status state_yellow">Main</span>
-                                </div>
-                            </ng-option>
-
-                            <ng-option>
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    Netwealth
-                                </div>
-                            </ng-option>
-
-                            <ng-option>
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    Hub24
+                                    {{product.name}}
+                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
+                                    <span class="item-status state_yellow" *ngIf="reviewService?.comparison.mainPlatformId == product.id">Main</span>
                                 </div>
                             </ng-option>
                         </ng-select>
                     </div>
 
                     <div class="form-group">
-                        <textarea placeholder="Platforms selected will be showing here" class="form-control"></textarea>
+                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.nonFeeProductName">
+
+                        </textarea>
                     </div>
 
                     <div class="form-group xs-mb-8">
-                        <label class="control-label control-label-custom"><div>Select platforms to include in fee analysis</div></label>
-                        <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false" placeholder="Enter name of platform"  dropdownPosition="bottom">
+                        <label class="control-label control-label-custom">
+                            <div>Select platforms to include in fee analysis</div>
+                        </label>
+                        <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
+                                   (change)="changeFee()"
+                                   [(ngModel)]="reviewService.comparison.feeProducts"
+                                   placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                 <div class="ng-value ng-custom-value">
                                     {{items.length}}/4 selected
                                 </div>
                             </ng-template>
-
-                            <ng-option>
+                            <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="reviewService?.comparison.mainPlatformId == product.id">
                                 <div class="select-multiple-item">
                                     <div class="check-item"></div>
-                                    BT Asgard
-                                </div>
-                            </ng-option>
-
-                            <ng-option [disabled]="true">
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    BT Panaroma
-                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12"></span>
-                                    <span class="item-status state_yellow">Main</span>
-                                </div>
-                            </ng-option>
-
-                            <ng-option>
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    Netwealth
-                                </div>
-                            </ng-option>
-
-                            <ng-option>
-                                <div class="select-multiple-item">
-                                    <div class="check-item"></div>
-                                    Hub24
+                                    {{product.name}}
+                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
+                                    <span class="item-status state_yellow" *ngIf="reviewService.comparison.mainPlatformId == product.id">Main</span>
                                 </div>
                             </ng-option>
                         </ng-select>
                     </div>
 
                     <div class="form-group">
-                        <textarea placeholder="Platforms selected will be showing here" class="form-control"></textarea>
+                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.feeProductName"></textarea>
                     </div>
 
                 </div>
@@ -234,8 +211,10 @@
 
                 <div class="form-group-right">
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Load feature selection from a saved tempalte</div></label>
-                        <ng-select class="select-single" placeholder="Enter template name"  dropdownPosition="bottom">
+                        <label class="control-label control-label-custom">
+                            <div>Load feature selection from a saved tempalte</div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Enter template name" dropdownPosition="bottom">
                             <ng-option>template01</ng-option>
                             <ng-option>template02</ng-option>
                         </ng-select>
@@ -243,8 +222,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label control-label-custom"><div>Load feature selection from another analysis</div></label>
-                        <ng-select class="select-single" placeholder="Enter another analysis"  dropdownPosition="bottom">
+                        <label class="control-label control-label-custom">
+                            <div>Load feature selection from another analysis</div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Enter another analysis" dropdownPosition="bottom">
                             <ng-option>analysis01</ng-option>
                             <ng-option>analysis02</ng-option>
                         </ng-select>
