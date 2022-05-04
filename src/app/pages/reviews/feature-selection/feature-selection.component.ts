@@ -1,8 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import SwiperCore, {Pagination} from "swiper";
 import {ReviewRepository} from "../../../repository/review-repository";
-import {TabType} from "../../../model/enums/tab-type";
-import {ProductFormVo} from "../../../model/vo/productFormVo";
 import {GroupVo} from "../../../model/vo/groupVo";
 import {PropertyVo} from "../../../model/vo/PropertyVo";
 import {Router} from "@angular/router";
@@ -10,6 +8,10 @@ import {ReviewService} from "../../../service/review.service";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {SwiperComponent} from "swiper/angular";
+import {AnalysisType} from "../../../model/enums/analysis-type";
+import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
+import {SaveService} from "../../../service/save.service";
+import {environment} from "../../../../environments/environment";
 
 SwiperCore.use([Pagination]);
 
@@ -20,83 +22,14 @@ SwiperCore.use([Pagination]);
 
 })
 export class FeatureSelectionComponent implements OnInit, OnDestroy {
-    @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-    featureForm: ProductFormVo = new ProductFormVo();
+    @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
+    featureForm: Array<GroupVo> = new Array<GroupVo>();
     subGroups: Array<GroupVo> = [];
+    initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
-    currentIndex:number=0;
-
-    constructor(private reviewRepository: ReviewRepository,
-                private reviewService: ReviewService,
-                private toastRepository: ToastRepository,
-                private storage: LocalStorageObServable,
-                private ref: ChangeDetectorRef,
-                private router: Router) {
-    }
-
-    ngOnInit(): void {
-        this.init();
-    }
-
-    ngOnDestroy(): void {
-        this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
-        this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
-    }
-
-
-    init(): void {
-        this.subscribe();
-        // this.getFeatureForm();
-    }
-
-    subscribe(): void {
-        this.nextSubscribe();
-        this.backSubscribe();
-    }
-
-    nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            let groups = this.featureForm.groupVoList;
-            if (!groups || groups.length == 0) {
-                this.toastRepository.showDanger('Please select feature.');
-                return;
-            }
-            let subGroups = groups.flatMap(g => g.subList);
-            if (!subGroups || subGroups.length == 0) {
-                this.toastRepository.showDanger('Please select feature.');
-                return;
-            }
-            let props = subGroups.flatMap(s => s.propertyVoList);
-            if (!props || props.length == 0) {
-                this.toastRepository.showDanger('Please select feature.');
-                return;
-            }
-            let selectProps = props.filter(p => p.selected).map(p => ({
-                id: p.id,
-                essential: p.essential || false,
-            }));
-            if (!selectProps || selectProps.length == 0) {
-                this.toastRepository.showDanger('Please select feature.');
-                return;
-            }
-            this.storage.setItem('select-essential', selectProps);
-            this.router.navigateByUrl('/review/feature-comparison');
-        });
-    }
-    backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/comparison-setup/${this.reviewService.comparison.id}`);
-        })
-    }
-
-    getFeatureForm(): void {
-        this.reviewRepository.getProductInfo(TabType.features.value).subscribe(res => {
-            this.featureForm = res.data || this.featureForm;
-            this.subGroups = this.featureForm.groupVoList[0].subList || [];
-        })
-    }
-
+    reviewSaveObservable: any;
+    currentIndex: number = 0;
     config = {
         spaceBetween: 8,
         navigation: false,
@@ -129,23 +62,116 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         },
     };
 
+    constructor(private reviewRepository: ReviewRepository,
+                private reviewService: ReviewService,
+                private saveService: SaveService,
+                private toastRepository: ToastRepository,
+                private storage: LocalStorageObServable,
+                private ref: ChangeDetectorRef,
+                private router: Router) {
+    }
+
+    ngOnInit(): void {
+        this.init();
+    }
+
+    ngOnDestroy(): void {
+        this.initComparisonObservable && this.initComparisonObservable.unsubscribe();
+        this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
+        this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+    }
+
+
+    init(): void {
+        this.subscribe();
+        this.getFeatureSelection();
+    }
+
+    subscribe(): void {
+        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+            this.getFeatureSelection();
+        })
+        this.saveSubscribe();
+        this.nextSubscribe();
+        this.backSubscribe();
+    }
+
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
+            let groups = this.featureForm;
+            let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
+            if (this.validSave(props)) {
+                return;
+            }
+            if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+                return;
+            }
+            let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+            let comparisonProps = props.map(p => {
+                let prop = new ComparisonPropertyInfo();
+                prop.essential = p.essential;
+                prop.shPropertyId = p.id;
+                prop.shAnalyseId = analyseInfo.shAnalyseId;
+                prop.shComparisonId = this.reviewService.comparison.id;
+                return prop;
+            });
+            this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+                if (res.statusCode != 200) {
+                    this.toastRepository.showDanger(res.msg);
+                    return;
+                }
+                this.toastRepository.showSuccess('Save successfully.');
+            });
+        })
+    }
+
+    validSave(props: Array<PropertyVo>): boolean {
+        if (props.length == 0) {
+            this.toastRepository.showDanger('Please select feature.');
+            return true;
+        }
+        return false;
+    }
+
+    nextSubscribe(): void {
+        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/review/feature-comparison/${this.reviewService.comparison.id}`);
+        });
+    }
+
+    backSubscribe(): void {
+        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
+            this.reviewService.preStep(AnalysisType.feature);
+        })
+    }
+
+    getFeatureSelection(): void {
+        if (!this.reviewService.comparison.id) {
+            return
+        }
+        this.reviewRepository.getFeatureGroupAndProperty(this.reviewService.comparison.id).subscribe(res => {
+            this.featureForm = res.data || this.featureForm;
+        });
+    }
+
     checkSelectList(props: Array<PropertyVo>): boolean {
-        return props.some(p => p.selected);
+        return props.some(p => p.compChecked);
     }
 
     slideChange(event: any): void {
-        this.subGroups = this.featureForm.groupVoList[event.realIndex].subList || [];
+        this.subGroups = this.featureForm[event.realIndex].subList || [];
         this.ref.detectChanges();
-        this.currentIndex=event.realIndex;
+        this.currentIndex = event.realIndex;
     }
 
     selectProp(prop: PropertyVo) {
-        prop.selected = true;
+        prop.compChecked = true;
         this.ref.detectChanges();
     }
 
     unSelectProp(prop: PropertyVo) {
-        prop.selected = false;
+        prop.compChecked = false;
         this.ref.detectChanges();
     }
 
@@ -170,19 +196,41 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     selectSubGroupAll(subGroup: GroupVo): void {
-        subGroup.propertyVoList.forEach(p => p.selected = true);
+        subGroup.propertyVoList.forEach(p => p.compChecked = true);
         this.ref.detectChanges();
     }
 
     deselectSubGroupAll(subGroup: GroupVo): void {
-        subGroup.propertyVoList.forEach(p => p.selected = false);
+        subGroup.propertyVoList.forEach(p => p.compChecked = false);
         this.ref.detectChanges();
     }
 
-    slideNext(){
+    hasSelect(group: GroupVo): boolean {
+        if (!group.subList || group.subList.length == 0) {
+            return false;
+        }
+        return group.subList.some(s => s.propertyVoList.some(p => p.compChecked));
+    }
+
+    slideNext() {
         this.swiper.swiperRef.slideNext();
     }
-    slidePrev(){
+
+    slidePrev() {
         this.swiper.swiperRef.slidePrev();
+    }
+
+    totalPropCount(group: GroupVo): number {
+        if (!group.subList || group.subList.length == 0) {
+            return 0;
+        }
+        return group.subList.flatMap(s => s.propertyVoList.flatMap(p => p.id)).length;
+    }
+
+    selectPropCount(group: GroupVo): number {
+        if (!group.subList || group.subList.length == 0) {
+            return 0;
+        }
+        return group.subList.flatMap(s => s.propertyVoList.filter(p => p.compChecked).flatMap(p => p.id)).length;
     }
 }

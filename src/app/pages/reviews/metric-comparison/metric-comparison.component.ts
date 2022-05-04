@@ -7,6 +7,7 @@ import {TabType} from "../../../model/enums/tab-type";
 import {ConfigService} from "../../../service/config.service";
 import {PropertyVo} from "../../../model/vo/PropertyVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-metric-comparison',
@@ -51,13 +52,13 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/fee-comparison');
+            this.reviewService.nextStep(AnalysisType.metric);
         });
     }
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/feature-comparison');
+            this.router.navigateByUrl(`/review/metric-selection/${this.reviewService.comparison.id}`);
         })
     }
 

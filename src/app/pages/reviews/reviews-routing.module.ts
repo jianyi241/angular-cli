@@ -8,7 +8,7 @@ import {FeeComparisonComponent} from "./fee-comparison/fee-comparison.component"
 import {AuthActivateGuard} from "../../config/auth-activate-guard";
 import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonSetupComponent} from "./comparison-setup/comparison-setup.component";
-import {BusinessMetricComparisonComponent} from "./business-metric-comparison/business-metric-comparison.component";
+import {MetricSelectionComponent} from "./metric-selection/metric-selection.component";
 
 const routes: Routes = [
     {
@@ -22,12 +22,16 @@ const routes: Routes = [
                 component: ComparisonSetupComponent,
             },
             {
+                path: 'feature-selection/:id',
+                component: FeatureSelectionComponent,
+            },
+            {
                 path: 'feature-comparison/:id',
                 component: FeatureComparisonComponent,
             },
             {
-                path: 'feature-selection/:id',
-                component: FeatureSelectionComponent,
+                path: 'metric-selection/:id',
+                component: MetricSelectionComponent,
             },
             {
                 path: 'metric-comparison/:id',
@@ -37,10 +41,7 @@ const routes: Routes = [
                 path: 'fee-comparison/:id',
                 component: FeeComparisonComponent,
             },
-            {
-                path: 'business-metric-comparison/:id',
-                component: BusinessMetricComparisonComponent,
-            },
+
         ]
     }
 ];

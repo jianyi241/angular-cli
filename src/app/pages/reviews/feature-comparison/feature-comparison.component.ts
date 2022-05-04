@@ -12,6 +12,7 @@ import {ProductVo} from "../../../model/vo/ProductVo";
 import {PropertyInfo} from "../../../model/po/propertyInfo";
 import {ReviewService} from "../../../service/review.service";
 import {Router} from "@angular/router";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -22,8 +23,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     compareData: CompareFeatureVo = new CompareFeatureVo();
     selectProps: Array<{ id: string, essential: boolean }> = new Array<{ id: string, essential: boolean }>();
     currentProdProp: ProductPropInfo = new ProductPropInfo();
+    initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
+    reviewSaveObservable: any;
 
     constructor(private reviewRepository: ReviewRepository,
                 private platformRepository: PlatformRepository,
@@ -46,8 +49,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-       this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
-       this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.initComparisonObservable && this.initComparisonObservable.unsubscribe();
+        this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
+        this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
     }
 
     subscribe(): void {
@@ -55,14 +60,21 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         this.backSubscribe();
     }
 
+    saveSubscribe(): void {
+        this.reviewService.saveObservable.subscribe(() => {
+
+        })
+    }
+
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/metric-comparison');
+            this.reviewService.nextStep(AnalysisType.feature);
         });
     }
+
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/feature-selection');
+            this.router.navigateByUrl(`/review/feature-selection/${this.reviewService.comparison.id}`)
         })
     }
 

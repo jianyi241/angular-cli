@@ -64,7 +64,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewService.saveObservable.subscribe(() => {
+       this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
             let comparison = Commons.deepCopy(this.reviewService.comparison);
             if (this.validSave(comparison)) {
                 return;
@@ -73,13 +73,13 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
                 return;
             }
             this.dealSaveData(comparison);
-            console.log(comparison);
             this.reviewRepository.saveComparison(comparison).subscribe(res => {
                 if (res.statusCode != 200) {
                     this.toastRepository.showDanger(res.msg);
                     return;
                 }
                 Object.assign(this.reviewService.comparison, res.data);
+                this.toastRepository.showSuccess('Save successfully.');
                 this.router.navigateByUrl(`/review/comparison-setup/${this.reviewService.comparison.id}`)
             });
         })
@@ -111,7 +111,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/feature-selection/${this.reviewService.comparison.id}`);
+            this.reviewService.nextStep();
         });
     }
 

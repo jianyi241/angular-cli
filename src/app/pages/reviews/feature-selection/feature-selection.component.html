@@ -3,14 +3,15 @@
         <h2>Step 2 - What features are important for Miracle? <span class="text">Select the features you would like to include in the comparison</span></h2>
     </div>
 
-    <div class="features-swiper" *ngIf="featureForm.groupVoList.length > 0">
+    <div class="features-swiper" *ngIf="featureForm.length > 0">
         <swiper #swiper [config]="config" (slideChange)="slideChange($event)">
             <ng-template swiperSlide [virtualIndex]="groupIndex"
-                *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
+                *ngFor="let group of featureForm; let groupIndex = index">
                 <div class="swiper-head">
                     <!-- <img [src]="group.attachmentVo?.visitUrl" alt="">-->
                     <span class="icon-block icon-teleconference icon-40"></span>
-                    <div class="tip" (click)="selectGroupAll(group)">Select all features</div>
+                    <div class="tip" (click)="selectGroupAll(group)" *ngIf="!hasSelect(group)">Select all features</div>
+                    <div class="tip" (click)="deselectGroupAll(group)" *ngIf="hasSelect(group)">Deselect all features</div>
                     <!-- <div class="tip tx-red">Deselect all features</div> -->
                 </div>
                 <div class="swiper-body">
@@ -25,7 +26,7 @@
                     <!-- red flag-->
                     <div class="swiper-status tx-red">
                         <span class="icon-block icon-flag-red icon-13 xs-mr-8"></span>
-                        <span class="num">3</span>/76 selected
+                        <span class="num">{{selectPropCount(group)}}</span>/{{totalPropCount(group)}} selected
                     </div>
 
                     <p [innerHTML]="group.description"></p>
@@ -38,7 +39,7 @@
                 <span class="icon-block icon-slide-left icon-16"></span>
             </div>
 
-            <ng-container *ngFor="let group of featureForm.groupVoList; let groupIndex = index">
+            <ng-container *ngFor="let group of featureForm; let groupIndex = index">
                 <span class="swiper-dot" [ngClass]="{'active': groupIndex == currentIndex}"></span>
             </ng-container>
 
@@ -76,7 +77,7 @@
                                         <button (click)="selectSubGroupAll(subGroup)">Select all</button>
                                     </div>
                                     <ul>
-                                        <li [hidden]="prop.selected" *ngFor="let prop of subGroup.propertyVoList"
+                                        <li [hidden]="prop.compChecked" *ngFor="let prop of subGroup.propertyVoList"
                                             (click)="selectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
@@ -96,7 +97,7 @@
                                         selected any features yet. Click on one of the
                                         features in LHS column to select.</p>
                                     <ul>
-                                        <li [hidden]="!prop.selected" *ngFor="let prop of subGroup.propertyVoList"
+                                        <li [hidden]="!prop.compChecked" *ngFor="let prop of subGroup.propertyVoList"
                                             (click)="unSelectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
