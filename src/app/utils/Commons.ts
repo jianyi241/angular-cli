@@ -22,7 +22,7 @@ export class Commons {
         }
     }
 
-    public static deepCopy(obj) {
+    public static deepCopy<T>(obj: T): T {
         return JSON.parse(JSON.stringify(obj));
     }
 }
