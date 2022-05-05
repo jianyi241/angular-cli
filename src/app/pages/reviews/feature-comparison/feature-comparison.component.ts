@@ -228,4 +228,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             pComment.close();
         })
     }
+
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.feature.value) + 2;
+    }
 }

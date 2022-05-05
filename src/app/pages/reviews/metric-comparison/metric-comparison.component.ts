@@ -147,4 +147,8 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
             pComment.close();
         })
     }
+
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.metric.value) + 2;
+    }
 }

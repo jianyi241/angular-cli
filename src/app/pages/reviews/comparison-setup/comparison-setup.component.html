@@ -24,7 +24,7 @@
                             <ng-option *ngFor="let user of supplierUsers" [value]="user.id">
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
-                                        <img [src]="user.attachmentVo?.visitUrl"/>
+                                        <img [src]="user.avatar?.visitUrl"/>
                                     </div>
                                     {{configService.fullName(user.firstName, user.lastName)}}
                                 </div>

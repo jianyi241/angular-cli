@@ -250,4 +250,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         }
         return group.subList.flatMap(s => s.propertyVoList.filter(p => p.compChecked).flatMap(p => p.id)).length;
     }
+
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.feature.value) + 2;
+    }
+
 }

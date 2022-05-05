@@ -153,5 +153,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         }
     }
 
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.metric.value) + 2;
+    }
+
 
 }

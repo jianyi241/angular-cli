@@ -22,6 +22,7 @@ import {SupplierUserProductInfo} from "./supplierUserProductInfo";
 export class TeamInfo {
     arn?: string;
     attachmentVo?: Attachment;
+    avatar?: Attachment;
     bdmFlag?: boolean;
     commFlag?: boolean;
     companyId?: string;
