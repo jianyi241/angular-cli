@@ -4,7 +4,7 @@ import {CompareFeatureVo} from "../../../model/vo/compareFeatureVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {PlatformRepository} from "../../../repository/platform-repository";
 import {ImgShowModalComponent} from "../img-show-modal/img-show-modal.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {ScrollService} from "../../../service/scroll.service";
 import {ReviewLayoutComponent} from "../../../common/review-layout/review-layout.component";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
@@ -13,6 +13,12 @@ import {PropertyInfo} from "../../../model/po/propertyInfo";
 import {ReviewService} from "../../../service/review.service";
 import {Router} from "@angular/router";
 import {AnalysisType} from "../../../model/enums/analysis-type";
+import {GroupInfo} from "../../../model/po/groupInfo";
+import {ComparisonProductVo} from "../../../model/vo/comparisonProductVo";
+import {ToastRepository} from "../../../repository/toast-repository";
+import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
+import {SaveService} from "../../../service/save.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -21,8 +27,8 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 })
 export class FeatureComparisonComponent implements OnInit, OnDestroy {
     compareData: CompareFeatureVo = new CompareFeatureVo();
-    selectProps: Array<{ id: string, essential: boolean }> = new Array<{ id: string, essential: boolean }>();
     currentProdProp: ProductPropInfo = new ProductPropInfo();
+    hideRemovePlatformFlag = false;
     initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
@@ -30,11 +36,13 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     constructor(private reviewRepository: ReviewRepository,
                 private platformRepository: PlatformRepository,
+                private toastRepository: ToastRepository,
                 private storage: LocalStorageObServable,
                 private router: Router,
                 private modalService: NgbModal,
                 private reviewService: ReviewService,
                 private scrollService: ScrollService,
+                private saveService: SaveService,
                 public reviewLayoutComponent: ReviewLayoutComponent
     ) {
     }
@@ -42,10 +50,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscribe();
-        this.storage.getItem('select-essential').subscribe(data => {
-            this.selectProps = data || [];
-            this.compareList(this.selectProps.map(p => p.id))
-        })
+        this.compareList();
     }
 
     ngOnDestroy(): void {
@@ -56,12 +61,16 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
+        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+            this.compareList();
+        })
+        this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
     }
 
     saveSubscribe(): void {
-        this.reviewService.saveObservable.subscribe(() => {
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
 
         })
     }
@@ -90,21 +99,22 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         return 'icon-checked-green';
     }
 
-    compareList(props: Array<string>) {
-        this.reviewRepository.compareList(props).subscribe(res => {
+    compareList() {
+        if (!this.reviewService.comparison.id) {
+            return;
+        }
+        this.reviewRepository.compareList(this.reviewService.comparison.id).subscribe(res => {
             this.compareData = Object.assign(this.compareData, res.data);
-            if (!this.selectProps || this.selectProps.length == 0) {
-                return
-            }
             //检查当前项目是否存在uncheck
-            if (this.compareData.productVos && this.compareData.productVos.length > 0) {
-                this.compareData.productVos.forEach(p => {
+            if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
+                let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
+                this.compareData.comparisonProductVoList.forEach(p => {
                     if (p.productPropVoList && p.productPropVoList.length > 0) {
                         let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
                         //对比featureIds 和 productPropIds
                         let idCheck = props.some(id => !prodPropIds.includes(id));
                         if (!idCheck) {
-                            let valueCheck = p.productPropVoList.some(pp => pp.propValue == 'no');
+                            let valueCheck = p.productPropVoList.some(pp => pp.propValue != 'yes');
                             p.checked = !valueCheck;
                         } else {
                             p.checked = !idCheck;
@@ -114,7 +124,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
                     }
                 });
             }
-        })
+        });
     }
 
 
@@ -137,11 +147,85 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     hasEssential(prop: PropertyInfo): boolean {
-        return this.selectProps.find(s => s.id == prop.id)?.essential;
+        // return this.selectProps.find(s => s.id == prop.id)?.essential;
+        return prop.essential;
     }
 
     openPop(id: string, product: ProductVo): void {
         let prodProps = product.productPropVoList;
         this.currentProdProp = prodProps.find(p => p.shPropertyId == id && p.propValue == 'yes');
+    }
+
+    groupMatch(group: GroupInfo, product: ComparisonProductVo): number {
+        let propIds = group.subList.flatMap(s => s.propertyVoList.flatMap(p => p.id));
+        let total = propIds.length;
+        let match = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId)).length;
+        return match == 0 ? 0 : parseFloat((match / total).toFixed(2)) * 100;
+    }
+
+    allMatch(product: ComparisonProductVo): number {
+        let propIds = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
+        let total = propIds.length;
+        let match = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId)).length;
+        return match == 0 ? 0 : parseFloat((match / total).toFixed(2)) * 100;
+    }
+
+    isMainProduct(product: ComparisonProductVo): boolean {
+        return this.reviewService.comparison.mainPlatformId == product.shProductId;
+    }
+
+    hideByFlag(product): boolean {
+        if (this.isMainProduct(product)) {
+            return false;
+        }
+        return !product.showFlag && this.hideRemovePlatformFlag;
+    }
+
+    removePlatform(product: ComparisonProductVo) {
+        product.showFlag = false;
+        product.shComparisonId = this.reviewService.comparison.id;
+        this.reviewRepository.changeProductStatus(product).subscribe(res => {
+            if (res.statusCode != 200) {
+                product.showFlag = true;
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
+    }
+
+    resetPlatform(product: ComparisonProductVo) {
+        product.showFlag = true;
+        product.shComparisonId = this.reviewService.comparison.id
+        this.reviewRepository.changeProductStatus(product).subscribe(res => {
+            if (res.statusCode != 200) {
+                product.showFlag = true;
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
+    }
+
+    getComment(product: ComparisonProductVo, pComment: NgbPopover) {
+        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name = AnalysisType.feature.value);
+        product.comparisonComment = new ComparisonCommentInfo();
+        this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
+            Object.assign(product.comparisonComment, res.data);
+            pComment.open();
+        })
+    }
+
+    saveComment(product: ComparisonProductVo, pComment: NgbPopover) {
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
+            return;
+        }
+        product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
+        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name = AnalysisType.feature.value);
+        product.comparisonComment.shAnalyseId = analyseInfo.id;
+        product.comparisonComment.shProductId = product.shProductId;
+        this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            pComment.close();
+        })
     }
 }

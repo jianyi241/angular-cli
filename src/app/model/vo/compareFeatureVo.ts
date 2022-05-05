@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 import {GroupInfo} from "../po/groupInfo";
-import {ProductVo} from "./ProductVo";
+import {ComparisonProductVo} from "./comparisonProductVo";
 
 
 export class CompareFeatureVo {
     groupVoList?: Array<GroupInfo> = new Array<GroupInfo>();
-    productVos?: Array<ProductVo> = new Array<ProductVo>();
+    comparisonProductVoList?: Array<ComparisonProductVo> = new Array<ComparisonProductVo>();
 }
 

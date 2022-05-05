@@ -13,6 +13,8 @@ import {AnalyseTypeVo} from "../model/vo/analyseTypeVo";
 import {ComparisonVo} from "../model/vo/comparisonVo";
 import {GroupVo} from "../model/vo/groupVo";
 import {ComparisonPropertyInfo} from "../model/po/comparisonPropertyInfo";
+import {ComparisonProductVo} from "../model/vo/comparisonProductVo";
+import {ComparisonCommentInfo} from "../model/po/comparisonCommentInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +25,8 @@ export class ReviewRepository {
 
     }
 
-    compareList(productIds: Array<string>): Observable<HttpResult<CompareFeatureVo>> {
-        return this.http.post<HttpResult<CompareFeatureVo>>(environment.baseURL + `/compare/compareProduct`, productIds);
+    compareList(comparisonId: string): Observable<HttpResult<CompareFeatureVo>> {
+        return this.http.get<HttpResult<CompareFeatureVo>>(environment.baseURL + `/compare/getFeatureTabInfo/${comparisonId}`);
     }
 
     getFeatureGroupAndProperty(comparisonId: string): Observable<HttpResult<Array<GroupVo>>> {
@@ -51,14 +53,24 @@ export class ReviewRepository {
         return this.http.get<HttpResult<Array<TeamInfo>>>(environment.baseURL + '/compare/querySupplierUser');
     }
 
+    getComment(comparisonId: string, analyseId: string, productId: string): Observable<HttpResult<ComparisonCommentInfo>> {
+        return this.http.get<HttpResult<ComparisonCommentInfo>>(environment.baseURL + `/compare/queryComment/${comparisonId}/${analyseId}/${productId}`);
+    }
+
     saveComparison(comparison: ComparisonVo): Observable<HttpResult<ComparisonVo>> {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveOrUpdateComparison`, comparison);
     }
-    ///suitability/compare/changeProductStatus
-    // changeProductStatus():
+
+    saveComment(comparisonComment: ComparisonCommentInfo): Observable<HttpResult<ComparisonVo>> {
+        return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveOrUpdateComment`, comparisonComment);
+    }
 
     ///suitability/compare/saveComparisonProperty
     saveComparisonProperty(comparisonProperties: Array<ComparisonPropertyInfo>): Observable<HttpResult<ComparisonVo>> {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveComparisonProperty`, comparisonProperties);
+    }
+
+    changeProductStatus(product: ComparisonProductVo) {
+        return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/changeProductStatus`, product);
     }
 }
