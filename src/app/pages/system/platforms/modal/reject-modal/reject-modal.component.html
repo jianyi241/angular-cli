@@ -1,0 +1,15 @@
+<div class="reject-modal">
+    <div class="modal-header">
+        <div class="close-btn" (click)="dismiss()">
+            <img src="./assets/img/icon/icon-close-black.svg">
+        </div>
+    </div>
+    <div class="modal-content">
+        <div class="content-title">{{modal.title}}</div>
+        <div class="content-text">{{modal.text}}</div>
+        <div class="btn-group">
+            <button class="btn btn-outline-blue-light xs-ml-24" (click)="dismiss()">{{modal.cancelText}}</button>
+            <button class="btn btn-purple xs-ml-24" (click)="close()">{{modal.confirmText}}</button>
+        </div>
+    </div>
+</div>
