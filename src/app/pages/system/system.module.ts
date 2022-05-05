@@ -59,8 +59,8 @@ import {EditSupplierTeamComponent} from './suppliers/supplier-edit/edit-team/edi
 
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
-import { ComparisonsListComponent } from './advice-practices/comparisons-list/comparisons-list.component';
 import { RejectModalComponent } from './platforms/modal/reject-modal/reject-modal.component';
+import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons-list.component';
 
 @NgModule({
     declarations: [

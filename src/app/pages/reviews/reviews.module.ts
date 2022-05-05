@@ -13,14 +13,14 @@ import {MetricComparisonComponent} from './metric-comparison/metric-comparison.c
 import {FeeComparisonComponent} from './fee-comparison/fee-comparison.component';
 import {FormsModule} from "@angular/forms";
 import {ShowMoreDirective} from "../../directive/show-more.directive";
-import { ComparisonSetupComponent } from './comparison-setup/comparison-setup.component';
+import {ComparisonSetupComponent} from './comparison-setup/comparison-setup.component';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
-import { BusinessMetricComparisonComponent } from './business-metric-comparison/business-metric-comparison.component';
-import { SaveTemplateTipComponent } from './save-template-tip/save-template-tip.component';
+import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
+import {SaveTemplateTipComponent} from './save-template-tip/save-template-tip.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, BusinessMetricComparisonComponent, SaveTemplateTipComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, MetricSelectionComponent, SaveTemplateTipComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

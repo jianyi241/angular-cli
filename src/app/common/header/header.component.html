@@ -5,20 +5,20 @@
         </a>
 
         <div class="menu" *ngIf="currentUserService.isAdminUser()">
-            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
-            <a customLinkActive="active" [link]="['/advice-practices']" [routerLink]="['/advice-practices']">Practices</a>
-            <a customLinkActive="active" [link]="['/supplier']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
+            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
+            <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
+            <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
             <a>News & updates</a>
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
-            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
-            <a>Platform analysis</a>
+            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
+            <a [routerLink]="['/supplier/comparisons-list']" routerLinkActive="active">Platform analysis</a>
             <a>News & Updates</a>
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
-            <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
             <a>Suitability review</a>
             <a>News & Updates</a>
         </div>
@@ -33,18 +33,18 @@
                 </div>
                 <div ngbDropdownMenu aria-labelledby="dropdownPhoneMenu">
                     <ng-container *ngIf="currentUserService.isAdminUser()">
-                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
-                        <a customLinkActive="active" [link]="['/advice-practices']" [routerLink]="['/advice-practices']">Practices</a>
-                        <a customLinkActive="active" [link]="['/supplier']" [routerLink]="['/supplier/supplier-list']">Suppliers</a>
+                        <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
+                        <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
+                        <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
                         <a>News & updates</a>
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isSupplierUser()">
-                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
-                        <a>Platform analysis</a>
+                        <a customLinkActive="active" [link]="['/platform']" [routerLink]="['/platform/product']">Platform profiles</a>
+                        <a [routerLink]="['/supplier/comparisons-list']">Platform analysis</a>
                         <a>News & Updates</a>
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isAdviceUser()">
-                        <a customLinkActive="active" [link]="['/platform']" (click)="chooseType('/platform')">Platform profiles</a>
+                        <a [routerLink]="['/platform/product']">Platform profiles</a>
                         <a>Suitability review</a>
                         <a>News & Updates</a>
                     </ng-container>

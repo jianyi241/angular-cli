@@ -3,6 +3,7 @@ import {ReviewService} from "../../../service/review.service";
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-fee-comparison',
@@ -52,7 +53,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/metric-comparison');
+            this.reviewService.preStep(AnalysisType.fee);
         })
     }
 

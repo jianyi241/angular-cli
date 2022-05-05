@@ -39,7 +39,7 @@ import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
 import {AuthActivateGuard} from "../../config/auth-activate-guard";
 import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
-import {ComparisonsListComponent} from "./advice-practices/comparisons-list/comparisons-list.component";
+import {ComparisonsListComponent} from "./suppliers/comparisons-list/comparisons-list.component";
 
 const routes: Routes = [
     {
@@ -55,6 +55,10 @@ const routes: Routes = [
             {
                 path: 'edit-team/:id/:companyId',
                 component: EditSupplierTeamComponent,
+            },
+            {
+                path: 'comparisons-list',
+                component: ComparisonsListComponent,
             },
             {
                 path: 'supplier-edit',
@@ -228,10 +232,6 @@ const routes: Routes = [
                         component: AdviceInvoicesComponent,
                     },
                 ],
-            },
-            {
-                path: 'comparisons-list',
-                component: ComparisonsListComponent,
             },
         ]
     },

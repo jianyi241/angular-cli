@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ComparisonsListComponent } from './comparisons-list.component';
+import {ComparisonsListComponent} from './comparisons-list.component';
 
 describe('ComparisonsListComponent', () => {
   let component: ComparisonsListComponent;

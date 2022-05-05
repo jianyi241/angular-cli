@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class Commons {
@@ -21,5 +20,9 @@ export class Commons {
         } else {
             return Object.assign({}, t);
         }
+    }
+
+    public static deepCopy<T>(obj: T): T {
+        return JSON.parse(JSON.stringify(obj));
     }
 }
