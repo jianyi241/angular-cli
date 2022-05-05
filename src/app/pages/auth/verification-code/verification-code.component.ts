@@ -33,6 +33,7 @@ export class VerificationCodeComponent implements OnInit {
             if (res.statusCode != 200) {
                 return
             }
+            this.currentTab = res.data.companyType
             this.email = res.data.email;
         });
     }

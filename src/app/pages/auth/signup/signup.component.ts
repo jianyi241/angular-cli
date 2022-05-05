@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
     signup: SignupVo = new SignupVo();
     verification: VerifyCode = new VerifyCode();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
+    supplierRoles: Array<RoleInfo> = new Array<RoleInfo>();
     agree = false;
     checkEmailUnique = false;
     validatorConfig: NgxValidatorConfig = {
@@ -59,6 +60,7 @@ export class SignupComponent implements OnInit {
             }
         })
         this.getPracticeRoles();
+        this.getSupplierRoles()
         this.signup.companyType = 1
     }
 
@@ -70,6 +72,12 @@ export class SignupComponent implements OnInit {
     getPracticeRoles(): void {
         this.adviceRepository.getPracticeRoles().subscribe(res => {
             this.practiceRoles = res.data;
+        })
+    }
+
+    getSupplierRoles(): void {
+        this.userRepository.getSupplierRoles().subscribe(res => {
+            this.supplierRoles = res.data
         })
     }
 
@@ -95,6 +103,7 @@ export class SignupComponent implements OnInit {
             });
             signupModalComponent.componentInstance.signup = this.signup;
             signupModalComponent.componentInstance.practiceRoles = this.practiceRoles;
+            signupModalComponent.componentInstance.supplierRoles = this.supplierRoles;
             signupModalComponent.result.then(res => {
 
             }).catch(res => {

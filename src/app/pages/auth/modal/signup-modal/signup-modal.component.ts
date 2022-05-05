@@ -16,9 +16,7 @@ import {Router} from "@angular/router";
 export class SignupModalComponent implements OnInit {
     signup: SignupVo = new SignupVo();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
-    agree = false;
-    news = false;
-    join = false;
+    supplierRoles: Array<RoleInfo> = new Array<RoleInfo>();
     validatorConfig: NgxValidatorConfig;
 
     constructor(private ngbModal: NgbModal,
@@ -39,6 +37,12 @@ export class SignupModalComponent implements OnInit {
                 },
                 practiceRole: {
                     required: 'Practice role is required.'
+                },
+                supplierName: {
+                    required: 'supplier name is required'
+                },
+                supplierRole: {
+                    required: 'Job title is required'
                 }
             },
             validateOn: 'submit'
@@ -50,15 +54,15 @@ export class SignupModalComponent implements OnInit {
     }
 
     existedModal(): void {
-        if (!this.agree) {
+        if (!this.signup.updateNewsFlag) {
             this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
             return;
         }
-        if (!this.news) {
+        if (!this.signup.commFlag) {
             this.toastRepository.showDanger("Please agree to have marketing information from SuitabilityHub sent to you");
             return;
         }
-        if (!this.join) {
+        if (!this.signup.planFlag) {
             this.toastRepository.showDanger("Please agree to join the research team and be invited to participate in occasional surveys");
             return;
         }

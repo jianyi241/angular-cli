@@ -45,35 +45,35 @@
                     <label class="control-label">
                         <div>Supplier name<span class="label-required">*</span></div>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter your supplier name" name="practiceName"
-                           required [(ngModel)]="signup.practiceName"/>
+                    <input type="text" class="form-control" placeholder="Enter your supplier name" name="supplierName"
+                           required [(ngModel)]="signup.supplierName"/>
                 </div>
                 <div class="form-group form-group-sign xs-mb-32"  *ngIf="signup.companyType === 2">
                     <label class="control-label">
                         <div>Job title<span class="label-required">*</span></div>
                     </label>
                     <ng-select class="select-single" placeholder="Select role"
-                               name="practiceRole" required [(ngModel)]="signup.practiceRoleId"
+                               name="supplierRole" required [(ngModel)]="signup.practiceRoleId"
                                dropdownPosition="bottom">
-                        <ng-option *ngFor="let role of practiceRoles" [value]="role.id">{{role.roleName}}</ng-option>
+                        <ng-option *ngFor="let role of supplierRoles" [value]="role.id">{{role.roleName}}</ng-option>
                     </ng-select>
                 </div>
                 <div class="check-box check-box-purple">
-                    <input type="checkbox" name="agree2" id="agree2" [(ngModel)]="agree"/>
+                    <input type="checkbox" name="agree2" id="agree2" [(ngModel)]="signup.updateNewsFlag"/>
                     <label for="agree2">
                         <p>Send me product updates and news from SuitabilityHub</p>
                     </label>
                 </div>
 
                 <div class="check-box check-box-purple">
-                    <input type="checkbox" name="news" id="news" [(ngModel)]="news"/>
+                    <input type="checkbox" name="news" id="news" [(ngModel)]="signup.commFlag"/>
                     <label for="news">
                         <p>Send me marketing communications from SuitabilityHub</p>
                     </label>
                 </div>
 
                 <div class="check-box check-box-purple xs-mb-32">
-                    <input type="checkbox" name="join" id="join" [(ngModel)]="join"/>
+                    <input type="checkbox" name="join" id="join" [(ngModel)]="signup.planFlag"/>
                     <label for="join">
                         <p>I want to join the research panel and be invited to occasional surveys</p>
                     </label>

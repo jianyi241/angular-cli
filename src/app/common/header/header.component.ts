@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
             windowClass: 'tip-popup-modal',
             centered: true
         });
-        modalRef.componentInstance.title = 'Do you want to log out from Sutability Hub?';
+        modalRef.componentInstance.title = 'Do you want to log out from Suitability Hub?';
         modalRef.componentInstance.info = 'You will always be able to log back in.';
         modalRef.componentInstance.btnText = 'Yes, log me out';
         modalRef.result.then((result) => {

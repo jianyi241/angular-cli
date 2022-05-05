@@ -59,6 +59,7 @@ import {EditSupplierTeamComponent} from './suppliers/supplier-edit/edit-team/edi
 
 import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
+import { RejectModalComponent } from './platforms/modal/reject-modal/reject-modal.component';
 import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons-list.component';
 
 @NgModule({
@@ -112,7 +113,8 @@ import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons
         EditSupplierTeamComponent,
         AdminListComponent,
         AdminDetailComponent,
-        ComparisonsListComponent
+        ComparisonsListComponent,
+        RejectModalComponent
     ],
     imports: [
         CommonModule,

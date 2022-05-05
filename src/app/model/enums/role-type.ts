@@ -1,7 +1,7 @@
 import {EnumIdentity} from "../interfaces/EnumIdentity";
 
 export class RoleType implements EnumIdentity {
-    //type: 1 -> Admin User, 2 -> Supplier User, 3 -> Advice User
+    //type: 1 -> Admin User, 2 -> Advice User, 3 -> Supplier User
     private static AllValues: Array<RoleType> = new Array<RoleType>();
     static readonly AdminUser = new RoleType(1, "Admin User");
     static readonly AdviceUser = new RoleType(2, "Advice User");

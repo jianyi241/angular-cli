@@ -5,4 +5,8 @@ export class SignupVo extends UserInfo{
     confirmPassword?: string;
     practiceName?: string;
     practiceRoleId?: string;
+    supplierName?: string;
+    updateNewsFlag?: boolean = false;
+    commFlag?: boolean = false;
+    planFlag?: boolean = false;
 }
