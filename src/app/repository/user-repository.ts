@@ -7,6 +7,7 @@ import {InviteUser, LoginUser, RestPassword, VerifyCode} from "../model/user";
 import {Authentication} from "../model/vo/authentication";
 import {CurrentUser} from "../model/vo/currentUser";
 import {SignupVo} from "../model/vo/signupVo";
+import {RoleInfo} from "../model/po/roleInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -64,5 +65,9 @@ export class UserRepository {
     // 重新发送邀请邮件
     reSendInviteAdmin(openId: string): Observable<HttpResult<any>> {
         return this.http.get<HttpResult<any>>(environment.baseURL + '/email/resendInvite/' + openId)
+    }
+
+    getSupplierRoles(): Observable<HttpResult<Array<RoleInfo>>> {
+        return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + '/user/v1/queryJobTitleList');
     }
 }
