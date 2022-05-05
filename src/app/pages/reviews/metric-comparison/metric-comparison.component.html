@@ -4,6 +4,22 @@
     <div class="review-content" appTableScroll>
         <div class="sub-head-review">
             <div class="title">Step 3 - Business metric review</div>
+            <div class="filter-content">
+                <div class="switch-button xs-ml-16">
+                    <div class="switch-text" [ngClass]="{'active': !hideRemovePlatformFlag}" (click)="hideRemovePlatformFlag = false">All</div>
+                    <div class="switch-text" [ngClass]="{'active': hideRemovePlatformFlag}" (click)="hideRemovePlatformFlag = true">Hide removed platforms</div>
+                </div>
+
+                <!--            <div class="switch-button xs-ml-16">-->
+                <!--                <div class="switch-text active">All</div>-->
+                <!--                <div class="switch-text">Hide non-essential features</div>-->
+                <!--            </div>-->
+
+                <div class="switch-button xs-ml-16">
+                    <div class="switch-text">All</div>
+                    <div class="switch-text active">Hide common features</div>
+                </div>
+            </div>
         </div>
 
         <div class="table-container">
@@ -17,24 +33,50 @@
                     </div>
                 </th>
 
-                <th class="th-brand bg-light" *ngFor="let product of compareData.productVos">
+                <th class="th-brand bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="th-brand-box">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
                                     <img [src]="product.attachmentVo?.visitUrl"/>
+                                    <label class="label-brand label-brand-orange"
+                                           *ngIf="isMainProduct(product)">Main</label>
                                 </div>
-                                <div class="title">{{product.name}}</div>
+                                <div class="title">{{product.productName}}</div>
                             </div>
 
                             <div class="box-center-right">
                                 <div class="text">Overall</div>
-                                <div class="num">98%</div>
+<!--                                <div class="num">98%</div>-->
                             </div>
                         </div>
 
                         <div class="btn-control-box">
-                            <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
+                            <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
+                                    container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
+                                    (click)="getComment(product, pComment)"
+                                    placement="top auto" [ngbPopover]="popCommentContent">Add comment
+                            </button>
+                            <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
+                                <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
+                                <!-- reset icon-->
+                                <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
+                            </button>
+
+                            <ng-template #popCommentContent>
+                                <div class="comment-popover">
+                                    <div class="title">Add a comment</div>
+
+                                    <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
+
+                                    <div class="comment-footer">
+                                        <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                                (click)="pComment.close()">Cancel
+                                        </button>
+                                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComment(product, pComment)">Save</button>
+                                    </div>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
                 </th>
@@ -49,7 +91,7 @@
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                             </div>
                         </td>
-                        <td *ngFor="let product of compareData.productVos"></td>
+                        <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                     </tr>
                     </tbody>
 
@@ -65,7 +107,7 @@
                                     </div>
                                 </td>
 
-                                <td class="bg-light" *ngFor="let product of compareData.productVos">
+                                <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                     <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                         <div appShowMore>
                                             {{getProductPropValue(prop, product.productPropVoList)}}
@@ -124,7 +166,7 @@
                                     </div>
                                 </td>
                                 <td class="bg-light"></td>
-                                <td class="bg-light" *ngFor="let product of compareData.productVos"></td>
+                                <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                             </tr>
                             </tbody>
                             <ng-container *ngFor="let prop of group.propertyVoList; let propIndex = index">
@@ -138,7 +180,7 @@
                                         </div>
                                     </td>
 
-                                    <td class="bg-light" *ngFor="let product of compareData.productVos">
+                                    <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                             <div appShowMore>
                                                 {{getProductPropValue(prop, product.productPropVoList)}}
@@ -189,10 +231,34 @@
                 <tfoot>
                 <th></th>
 
-                <th class="th-control" *ngFor="let product of compareData.productVos">
+                <th class="th-control" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit">Add comment</button>
+                        <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
+                                [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
+                                (click)="getComment(product,pComment)"
+                                [ngbPopover]="popCommentContent">Add comment
+                        </button>
+                        <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
+                            <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
+                            <!-- reset icon-->
+                            <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
+                        </button>
                     </div>
+
+                    <ng-template #popCommentContent>
+                        <div class="comment-popover">
+                            <div class="title">Add a comment</div>
+
+                            <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
+
+                            <div class="comment-footer">
+                                <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                        (click)="pComment.close()">Cancel
+                                </button>
+                                <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComment(product, pComment)">Save</button>
+                            </div>
+                        </div>
+                    </ng-template>
                 </th>
                 </tfoot>
             </table>

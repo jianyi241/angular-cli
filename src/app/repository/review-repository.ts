@@ -4,7 +4,7 @@ import {HttpResult} from '../model/common/http-result';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {CompareFeatureVo} from "../model/vo/compareFeatureVo";
-import {CompareMetricVo} from "../model/vo/compareMetircVo";
+import {CompareMetricVo, TabVo} from "../model/vo/compareMetircVo";
 import {Page} from "../model/vo/page";
 import {ComparisonInfo} from "../model/po/comparisonInfo";
 import {ComparisonCondition} from "../model/condition/comparisonCondition";
@@ -33,8 +33,12 @@ export class ReviewRepository {
         return this.http.get<HttpResult<Array<GroupVo>>>(environment.baseURL + `/compare/queryFeatureGroupAndProperty/${comparisonId}`);
     }
 
-    getMetricComparison(): Observable<HttpResult<CompareMetricVo>> {
-        return this.http.get<HttpResult<CompareMetricVo>>(environment.baseURL + '/compare/queryStep3TabInfo');
+    getBmGroupAndProperty(comparisonId: string): Observable<HttpResult<Array<TabVo>>> {
+        return this.http.get<HttpResult<Array<TabVo>>>(environment.baseURL + `/compare/queryBmGroupAndProperty/${comparisonId}`);
+    }
+
+    getMetricComparison(comparisonId: string): Observable<HttpResult<CompareMetricVo>> {
+        return this.http.get<HttpResult<CompareMetricVo>>(environment.baseURL + `/compare/queryBmTabInfo/${comparisonId}`);
     }
 
     getComparisonList(condition: ComparisonCondition): Observable<HttpResult<Page<ComparisonInfo>>> {
