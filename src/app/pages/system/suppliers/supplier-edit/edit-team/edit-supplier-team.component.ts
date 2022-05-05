@@ -23,6 +23,7 @@ import {HttpResult} from "../../../../../model/common/http-result";
 export class EditSupplierTeamComponent implements OnInit {
     team: TeamInfo = new TeamInfo();
     supplierRoles: Array<RoleInfo> = new Array<RoleInfo>();
+    jobTitles: Array<RoleInfo> = new Array<RoleInfo>();
     products: Array<ProductAccessVo> = new Array<ProductAccessVo>();
     uploading = false;
     config = {...Constants.EDITOR_CONFIG};
@@ -58,6 +59,7 @@ export class EditSupplierTeamComponent implements OnInit {
         })
         let allProduct = this.getAllProduct();
         this.getSupplierRole();
+        this.getJobTitles();
         obsArr.push(allProduct);
         forkJoin(obsArr).subscribe(res => {
             this.team = res[0]?.data ? Object.assign(this.team, res[0].data) : this.team;
@@ -86,6 +88,12 @@ export class EditSupplierTeamComponent implements OnInit {
         this.supplierRepository.getSupplierRole().subscribe(res => {
             this.supplierRoles = res.data;
         });
+    }
+
+    getJobTitles(): void {
+        this.supplierRepository.getJobTitles().subscribe(res => {
+            this.jobTitles = res.data;
+        })
     }
 
     droppedFile(files: NgxFileDropEntry[]) {
@@ -127,6 +135,10 @@ export class EditSupplierTeamComponent implements OnInit {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
+        if (!this.team.practiceRoleId) {
+            this.toastRepository.showDanger('Job title is required.');
+            return;
+        }
         this.team.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({
             shProductId: p.id
         }));
@@ -138,7 +150,7 @@ export class EditSupplierTeamComponent implements OnInit {
             }
             if (this.team.id) {
                 this.toastRepository.showSuccess('Save Successfully');
-            } else  {
+            } else {
                 this.toastRepository.showSuccess('New user created and welcome email sent');
             }
             this.router.navigateByUrl(`/supplier/edit-team/${res.data.id}/${res.data.companyId}`);

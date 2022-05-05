@@ -3,12 +3,11 @@
     <div class="sub-head sub-head-form">
         <div class="sub-title" [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{configService.fullName(team.firstName, team.lastName)}} <label class="label label-orange xs-ml-8"
-                                                                             *ngIf="team.status">{{team.status}}</label>
+            {{configService.fullName(team.firstName, team.lastName)}} <label class="label label-orange xs-ml-8" *ngIf="team.status">{{team.status}}</label>
         </div>
 
         <div class="btn-control-group">
-            <button class="btn tx-red">Archive Reynaud</button>
+<!--            <button class="btn tx-red">Archive Reynaud</button>-->
             <button class="btn btn-outline-purple-light"
                     [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">Cancel
             </button>
@@ -118,10 +117,8 @@
                     <label class="control-label control-label-custom">
                         <div>Job title<span class="label-required">*</span></div>
                     </label>
-                    <ng-select disabled class="select-single" placeholder="Select job title" dropdownPosition="bottom">
-                        <ng-option>title1</ng-option>
-                        <ng-option>title2</ng-option>
-                        <ng-option>title3</ng-option>
+                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select job title" dropdownPosition="bottom">
+                        <ng-option [value]="title.id" *ngFor="let title of jobTitles">{{title.roleName}}</ng-option>
                     </ng-select>
                 </div>
             </div>
