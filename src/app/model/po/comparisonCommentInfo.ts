@@ -12,19 +12,17 @@
 
 
 /**
- * sh_comparison_product
+ * sh_comparison_comment表
  */
-export class ComparisonProductInfo {
+export class ComparisonCommentInfo {
+    comment?: string;
     createTime?: string;
     createUser?: string;
-    showFlag?: boolean;
     deleteFlag?: boolean;
-    feeFlag?: boolean;
     id?: string;
-    productName?: string;
+    shAnalyseId?: string;
     shComparisonId?: string;
     shProductId?: string;
-    shVersionId?: string;
     updateTime?: string;
     updateUser?: string;
 }

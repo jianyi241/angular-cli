@@ -28,6 +28,7 @@ export class PropertyInfo extends BaseModel {
     moveFlag?: boolean;
     vsFlag?: boolean = true;
     bmFlag?: boolean = true;
+    essential?: boolean;
     /**
      * Normal,Insert,Update,Archive
      */
