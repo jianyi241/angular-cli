@@ -12,6 +12,8 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
+import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 SwiperCore.use([Pagination]);
 
@@ -68,6 +70,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 private storage: LocalStorageObServable,
                 private ref: ChangeDetectorRef,
+                private modalService: NgbModal,
                 private router: Router) {
     }
 
@@ -189,10 +192,24 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     deselectGroupAll(group: GroupVo): void {
-        group.subList.forEach(s => {
-            this.deselectSubGroupAll(s);
+        const modalRef = this.modalService.open(DeselectFeaturesTipComponent, {
+            backdrop: 'static',
+            size: 'small',
+            windowClass: 'tip-popup-modal',
+            centered: true
         });
-        this.ref.detectChanges();
+        modalRef.componentInstance.title = 'Deselect all features?';
+        modalRef.componentInstance.info = `You’ve selected ${this.selectPropCount(group)} features in this group, are you sure to deselect all of them?`;
+        modalRef.componentInstance.btnText = 'Yes, deselect all';
+        modalRef.componentInstance.btnCancelText = 'No, don’t do anything';
+
+        modalRef.result.then((result) => {
+            group.subList.forEach(s => {
+                this.deselectSubGroupAll(s);
+            });
+            this.ref.detectChanges();
+        }, (reason) => {
+        });
     }
 
     selectSubGroupAll(subGroup: GroupVo): void {

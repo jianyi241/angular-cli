@@ -218,7 +218,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         }
         product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
         let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name = AnalysisType.feature.value);
-        product.comparisonComment.shAnalyseId = analyseInfo.id;
+        product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
         product.comparisonComment.shProductId = product.shProductId;
         this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
             if (res.statusCode != 200) {

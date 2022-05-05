@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ReviewService} from "../../service/review.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {SaveTemplateTipComponent} from "../../pages/reviews/save-template-tip/save-template-tip.component";
 import {Constants} from "../../model/constants";
 import {ReviewRepository} from "../../repository/review-repository";
 import {ComparisonVo} from "../../model/vo/comparisonVo";
@@ -22,8 +20,7 @@ export class ReviewHeaderComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 public reviewService: ReviewService,
                 private currentUserService: CurrentUserService,
-                private reviewRepository: ReviewRepository,
-                private modalService: NgbModal) {
+                private reviewRepository: ReviewRepository,) {
         this.reviewService.comparison = new ComparisonVo();
         this.reviewService.comparison.companyId = this.currentUserService.currentUser().companyId;
     }
@@ -59,25 +56,6 @@ export class ReviewHeaderComponent implements OnInit {
     goBack() {
         this.reviewService.back();
     }
-
-    saveTemplate(): void {
-        const modalRef = this.modalService.open(SaveTemplateTipComponent, {
-            backdrop: 'static',
-            size: 'small',
-            windowClass: 'tip-popup-modal',
-            centered: true
-        });
-        modalRef.componentInstance.title = 'Deselect all features?';
-        modalRef.componentInstance.info = 'You’ve selected 3 features in this group, are you sure to deselect all of them?';
-        modalRef.componentInstance.btnText = 'Yes, deselect all';
-        modalRef.componentInstance.btnCancelText = 'No, don’t do anything';
-
-        modalRef.result.then((result) => {
-
-        }, (reason) => {
-        });
-    }
-
 
     getDynamicAnaName(analysis: ComparisonAnalyseInfo): string {
         let analysisType = AnalysisType.parseEnum(analysis.name);
