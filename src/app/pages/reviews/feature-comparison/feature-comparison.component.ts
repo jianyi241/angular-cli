@@ -204,7 +204,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     getComment(product: ComparisonProductVo, pComment: NgbPopover) {
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name = AnalysisType.feature.value);
+        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
         product.comparisonComment = new ComparisonCommentInfo();
         this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
             Object.assign(product.comparisonComment, res.data);
@@ -217,8 +217,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             return;
         }
         product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name = AnalysisType.feature.value);
-        product.comparisonComment.shAnalyseId = analyseInfo.id;
+        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
         product.comparisonComment.shProductId = product.shProductId;
         this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
             if (res.statusCode != 200) {
@@ -227,5 +227,9 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             }
             pComment.close();
         })
+    }
+
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.feature.value) + 2;
     }
 }

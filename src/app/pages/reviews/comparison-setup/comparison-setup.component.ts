@@ -117,7 +117,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl('/review/feature-selection');
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 

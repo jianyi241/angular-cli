@@ -36,4 +36,9 @@ export class SupplierRepository {
     getSupplierRole(): Observable<HttpResult<Array<RoleInfo>>> {
         return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + `/supplier/querySupplierRole`);
     }
+
+    ///user/v1/queryJobTitleList
+    getJobTitles(): Observable<HttpResult<Array<RoleInfo>>> {
+        return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + `/user/v1/queryJobTitleList`);
+    }
 }

@@ -1,10 +1,10 @@
-import {ProductVo} from "./ProductVo";
 import {GroupVo} from "./groupVo";
 import {PropertyVo} from "./PropertyVo";
+import {ComparisonProductVo} from "./comparisonProductVo";
 
 export class CompareMetricVo {
     tabVoList?: Array<TabVo> = new Array<TabVo>();
-    productVos?: Array<ProductVo> = new Array<ProductVo>();
+    comparisonProductVos?: Array<ComparisonProductVo> = new Array<ComparisonProductVo>();
 }
 
 export class TabVo {

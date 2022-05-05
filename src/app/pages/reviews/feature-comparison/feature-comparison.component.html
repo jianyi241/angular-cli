@@ -4,7 +4,7 @@
 <div class="table-main-content">
     <div class="review-content" appTableScroll (scrollEvent)="scrollEvent($event)">
         <div class="sub-head-review">
-            <div class="title">Step 2 - Feature review</div>
+            <div class="title">Step {{getCurrentAnaStep()}} - Feature review</div>
             <div class="filter-content">
                 <div class="switch-button xs-ml-16">
                     <div class="switch-text" [ngClass]="{'active': !hideRemovePlatformFlag}" (click)="hideRemovePlatformFlag = false">All</div>
@@ -179,10 +179,10 @@
                                 (click)="getComment(product,pComment)"
                                 [ngbPopover]="popCommentContent">Add comment
                         </button>
-                        <button class="btn btn-outline-purple-light btn-trash">
-                            <span class="icon-block icon-trash icon-20"></span>
+                        <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
+                            <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
                             <!-- reset icon-->
-                            <!--<span class="icon-block icon-reset-red icon-20"></span>-->
+                            <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
                         </button>
                     </div>
 

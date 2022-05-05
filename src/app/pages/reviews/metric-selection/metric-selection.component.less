@@ -49,13 +49,14 @@
       font-size: 14px;
       line-height: 22px;
       color: #4640DE;
+      cursor: pointer;
     }
   }
 
   .selection-body{
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
     flex-wrap: wrap;
     width: 100%;
     height: auto;
@@ -71,6 +72,7 @@
       border: 1px solid #D6DDEB;
       background: #FFFFFF;
       cursor: pointer;
+      word-break: break-word;
 
       &.selected,&:hover{
         background: #E7F7EB;
@@ -92,6 +94,11 @@
         font-size: 13px;
         line-height: 21px;
         color: #25324B;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }

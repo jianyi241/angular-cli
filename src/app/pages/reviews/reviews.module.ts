@@ -17,10 +17,10 @@ import {ComparisonSetupComponent} from './comparison-setup/comparison-setup.comp
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
-import {SaveTemplateTipComponent} from './save-template-tip/save-template-tip.component';
+import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, MetricSelectionComponent, SaveTemplateTipComponent],
+  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, MetricSelectionComponent, DeselectFeaturesTipComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

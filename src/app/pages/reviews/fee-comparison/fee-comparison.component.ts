@@ -90,4 +90,8 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         }
         this.idpsArr.splice(idpsIndex, 1);
     }
+
+    getCurrentAnaStep(): number {
+        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.fee.value) + 2;
+    }
 }
