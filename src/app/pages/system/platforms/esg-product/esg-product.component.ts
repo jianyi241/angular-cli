@@ -63,6 +63,7 @@ export class EsgProductComponent implements OnInit {
         }
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data || this.version
         });
     }
 

@@ -13,6 +13,10 @@ import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {VersionType} from "../../../../model/enums/version-type";
 import {FocusService} from "../../../../service/focus.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RejectModalComponent} from "../modal/reject-modal/reject-modal.component";
+import {CurrentUserService} from "../../../../service/current-user.service";
+import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 
 @Component({
     selector: 'app-product-layout',
@@ -33,7 +37,11 @@ export class ProductLayoutComponent implements OnInit {
                 private focusService: FocusService,
                 private platformRepository: PlatformRepository,
                 private toastRepository: ToastRepository,
-                private versionRepository: VersionRepository) {
+                private versionRepository: VersionRepository,
+                private ngbModal: NgbModal,
+                public currentUserService: CurrentUserService,
+                private loadingService: NgxLoadingSpinnerService
+    ) {
     }
 
     ngOnInit(): void {
@@ -55,6 +63,7 @@ export class ProductLayoutComponent implements OnInit {
     getVersion(): void {
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data || this.version
         })
     }
 
@@ -70,10 +79,64 @@ export class ProductLayoutComponent implements OnInit {
         });
     }
 
+    showEditButton(type: string) {
+        if (this.currentUserService.isAdminUser()) {
+            if (type === 'reject' || type === 'approve') {
+                return this.version.type === 'Draft' && this.version.versionStatus === this.configService.versionStatus.wait
+            } else if (type === 'edit') {
+                return this.version.type === 'Publish' && this.version.versionStatus === this.configService.versionStatus.normal
+            }
+        } else if (this.currentUserService.isSupplierUser()) {
+            if (type === 'edit') {
+                return this.version.type === 'Publish' && !this.configService.isEditable(this.version.type)
+            } else if (type === 'submit') {
+                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected)
+            }
+        }
+    }
+
+    ifShowTip(type: string) {
+        if (this.currentUserService.isAdminUser()) {
+            return false
+        } else if (this.currentUserService.isSupplierUser()) {
+            if (type === 'frozen') {
+                return this.version.versionStatus === this.configService.versionStatus.frozen && this.version.type !== 'History'
+            } else if (type === 'rejected') {
+                return this.version.versionStatus === this.configService.versionStatus.rejected && this.version.type !== 'History'
+            } else {
+                return false
+            }
+        }
+    }
+
     getModelPublishChangeFlag(): void {
         this.platformRepository.getModelPublishChangeFlag(this.product.id).subscribe(res => {
             this.changeVersion = res.data;
         });
+    }
+
+    updateVersionStatus(status: string): void {
+        const _version = JSON.parse(JSON.stringify(this.version))
+        _version.versionStatus = status
+        if (status === this.configService.versionStatus.frozen) {
+            this.loadingService.show()
+        }
+        this.versionRepository.updateVersionStatus(_version).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'Failed operation')
+                this.loadingService.hide()
+                return
+            }
+            this.version = res.data
+            if (this.version.versionStatus === this.configService.versionStatus.rejected) {
+                this.toastRepository.showDanger('Changes have been rejected.')
+                this.loadingService.hide()
+            } else {
+                this.toastRepository.showSuccess(res.msg || 'Successful operation')
+                this.loadingService.hide()
+            }
+        }, err => {
+        })
     }
 
     editProduct(): void {
@@ -145,6 +208,20 @@ export class ProductLayoutComponent implements OnInit {
             this.version = res.data || this.version;
             this.version.id = res.data?.id || Constants.VERSION;
             this.chooseTab(TabType.changeHistory.name);
+        })
+    }
+
+    rejectUpdate(): void {
+        const modalRef = this.ngbModal.open(RejectModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.updateVersionStatus('Rejected')
+        }, err => {
+            console.log('cancel')
         })
     }
 }

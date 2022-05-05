@@ -6,6 +6,9 @@ import {VersionType} from "../model/enums/version-type";
 import {PracticeStatus} from "../model/enums/practice-status";
 import {UserStatus} from "../model/enums/user-status";
 import {RoleEnum} from "../model/enums/role-enum";
+import {VersionStatus} from "../model/enums/version-status";
+import {CurrentUserService} from "./current-user.service";
+import {Version} from "../model/po/version";
 
 @Injectable({
     providedIn: 'root'
@@ -52,7 +55,16 @@ export class ConfigService {
         businessDevelopmentManager: RoleEnum.BusinessDevelopmentManager.value,
     }
 
-    constructor(private router: Router) {
+    versionStatus = {
+        normal: VersionStatus.Normal.value,
+        wait: VersionStatus.Wait.value,
+        frozen: VersionStatus.Frozen.value,
+        rejected: VersionStatus.Rejected.value,
+    }
+
+    currentVersion: Version = new Version()
+
+    constructor(private router: Router, public currentUserService: CurrentUserService) {
     }
 
     tabTypeList(): Array<TabType> {
@@ -72,8 +84,19 @@ export class ConfigService {
     }
 
     isEditable(versionType: string, status?: string): boolean {
-        if (!status) return versionType === VersionType.Draft.value;
-        return versionType === VersionType.Draft.value && status != 'Archive';
+        if (this.currentUserService.isAdminUser()) {
+            if (!status) return versionType === VersionType.Draft.value;
+            return versionType === VersionType.Draft.value && status != 'Archive';
+        } else if (this.currentUserService.isSupplierUser()){
+            if (!status) {
+                return versionType === VersionType.Draft.value;
+            } else {
+                if (this.currentVersion.versionStatus === this.versionStatus.frozen || this.currentVersion.versionStatus === this.versionStatus.wait) {
+                    return false
+                }
+                return versionType === VersionType.Draft.value && status != 'Archive';
+            }
+        }
     }
 
     showArchiveBtn(versionType: string, flag: boolean): boolean {

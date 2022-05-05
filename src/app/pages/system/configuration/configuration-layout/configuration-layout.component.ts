@@ -20,6 +20,9 @@ import {VersionType} from "../../../../model/enums/version-type";
 export class ConfigurationLayoutComponent implements OnInit {
     version: Version = new Version();
     currentTab: string;
+    pushFlag: boolean;
+    hasApproveCount: number;
+    totalCount: number;
 
     constructor(public configService: ConfigService,
                 private activeRouter: ActivatedRoute,
@@ -48,6 +51,9 @@ export class ConfigurationLayoutComponent implements OnInit {
                 if (this.router.url == '/configuration/configuration-tab') {
                     this.chooseTab(TabType.overview.name);
                 }
+                if (this.version.type === VersionType.Draft.value) {
+                    this.getEditFlag()
+                }
             });
         } else {
             this.versionRepository.supplierVersion().subscribe(res => {
@@ -55,9 +61,11 @@ export class ConfigurationLayoutComponent implements OnInit {
                 this.version.id = res.data?.id || Constants.VERSION;
                 this.version.type = this.version.type || VersionType.Publish.value;
                 this.chooseTab(TabType.overview.name);
+                if (this.version.type === VersionType.Draft.value) {
+                    this.getEditFlag()
+                }
             })
         }
-
     }
 
 
@@ -67,6 +75,7 @@ export class ConfigurationLayoutComponent implements OnInit {
         }
         this.currentTab = this.configService.converterTabToRouter(tab);
         this.router.navigateByUrl(`/configuration/configuration-tab/${this.currentTab}/${this.version.id}`);
+        console.log('version type ', this.version)
     }
 
     editConfig(): void {
@@ -81,8 +90,22 @@ export class ConfigurationLayoutComponent implements OnInit {
             this.version = res.data || this.version;
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
             this.router.navigateByUrl(`/configuration/configuration-tab/${urlSegment.path}/${this.version.id}`)
+            if (this.version.type === VersionType.Draft.value) {
+                this.getEditFlag()
+            }
         });
     }
+
+    getEditFlag(): void {
+        this.configurationRepository.getAllProductPushFlag().subscribe(res => {
+            const {hasApproveCount, pushFlag, total} = res.data
+            this.hasApproveCount = hasApproveCount
+            this.pushFlag = pushFlag
+            this.totalCount = total
+        },err => {
+        })
+    }
+
 
     pushConfig(): void {
         if (this.saveService.saveCheck(environment.baseURL + '/supplier/publish')) {

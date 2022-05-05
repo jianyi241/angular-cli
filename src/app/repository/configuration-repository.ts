@@ -69,4 +69,8 @@ export class ConfigurationRepository {
         return this.http.get<HttpResult<Array<Version>>>(environment.baseURL + `/supplier/getVersionList`);
     }
 
+    getAllProductPushFlag(): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + '/supplier/getAllProductPushFlag');
+    }
+
 }

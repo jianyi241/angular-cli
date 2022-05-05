@@ -10,7 +10,6 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {ProductFormVo} from "../../../../model/vo/productFormVo";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
-
 @Component({
     selector: 'app-overview-product',
     templateUrl: './overview-product.component.html',
@@ -63,6 +62,7 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
         }
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data || this.version
         });
     }
 

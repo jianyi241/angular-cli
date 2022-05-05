@@ -22,8 +22,7 @@ export class VersionRepository {
         return this.http.get<HttpResult<Version>>(environment.baseURL + '/supplier/getVersion');
     }
 
-    // version()
-
-
-
+    updateVersionStatus(version: Version): Observable<HttpResult<Version>> {
+        return this.http.post<HttpResult<Version>>(environment.baseURL + `/supplier/updateVersionStatus`, version);
+    }
 }

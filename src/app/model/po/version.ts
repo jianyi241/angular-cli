@@ -23,4 +23,7 @@ export class Version extends BaseModel{
      */
     type?: string;
     version?: string;
+    versionStatus?: string;
+    modelVersionId?: string;
+    shProductId?: string;
 }
