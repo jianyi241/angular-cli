@@ -3,7 +3,9 @@
     <div class="sub-head sub-head-form">
         <div class="sub-title" [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            {{configService.fullName(team.firstName, team.lastName)}} <label class="label label-orange xs-ml-8" *ngIf="team.status">{{team.status}}</label>
+            {{configService.fullName(team.firstName, team.lastName)}}
+            <label class="label label-green-light" *ngIf="team.status == configService.userStatus.active">Active</label>
+            <label class="label label-orange" *ngIf="team.status == configService.userStatus.pending">Pending</label>
         </div>
 
         <div class="btn-control-group">
@@ -55,7 +57,7 @@
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
-                    <img [src]="team.attachmentVo?.visitUrl"/>
+                    <img [src]="team.attachmentVo?.visitUrl || './assets/img/unassgin.svg'"/>
                 </div>
                 <div class="form-group-right">
                     <div class="upload-file">

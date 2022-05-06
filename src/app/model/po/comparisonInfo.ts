@@ -13,12 +13,15 @@
 
 import {ComparisonAnalyseInfo} from "./comparisonAnalyseInfo";
 import {ComparisonProductInfo} from "./comparisonProductInfo";
+import {Attachment} from "../attachment";
 
 /**
  * sh_comparison表
  */
 export class ComparisonInfo {
     adviserName?: string;
+    attachmentVo?: Attachment;
+    analyse?: string;
     analyseVoList?: Array<ComparisonAnalyseInfo>;
     companyId?: string;
     comparisonProductVoList?: Array<ComparisonProductInfo>;
