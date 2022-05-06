@@ -20,9 +20,17 @@
                             <div>Enter password again<span class="label-required">*</span></div>
                         </label>
                         <input type="password" class="form-control" autocomplete="new-password" name="confirmPassword"
-                               required [(ngModel)]="signup.confirmPassword" placeholder="Enter password again" />
+                               required [pattern]="pwdReg" [(ngModel)]="signup.confirmPassword" placeholder="Enter password again" />
                         <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                     </div>
+<!--                    <div class="tip-error" *ngIf="validateTip === 1">-->
+<!--                        <div class="row">Passwords don't match.</div>-->
+<!--                    </div>-->
+<!--                    <div class="tip-error" *ngIf="validateTip === 2">-->
+<!--                        <div class="row">The password should be at least 8 characters.</div>-->
+<!--                        <div class="row">The password should include both upper case and lower case letters.</div>-->
+<!--                        <div class="row">The password should include at least 1 number.</div>-->
+<!--                    </div>-->
                     <button (ngxFormSubmit)="toSignUp()"
                             class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24" style="margin-top: 36px !important;">Set password
                     </button>

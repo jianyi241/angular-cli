@@ -16,7 +16,8 @@
         </div>
         <div class="col-body">
             <ng-container>
-                <table class="table table-list table-striped">
+                <div class="table-list-wrap">
+                    <table class="table table-list table-striped">
                         <thead>
                         <tr>
                             <th class="max-w-300">
@@ -52,7 +53,7 @@
                             <td>
                                 <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
                                     <div class="avatar-box xs-mr-16">
-                                        <img [src]="(admin.imgUrl)" />
+                                        <img [src]="(admin.avatar?.visitUrl) || './assets/img/unassgin.svg'" />
                                     </div>
                                     <div class="text-ellipsis max-w-300">{{admin.firstName + ' ' + admin.lastName}}</div>
                                 </div>
@@ -78,6 +79,7 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
                 <ngb-pagination [collectionSize]="adminPage.total" [(page)]="adminPage.current" [pageSize]="adminPage.size"
                                 (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
             </ng-container>

@@ -10,6 +10,7 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ActivatedRoute, Router} from "@angular/router";
 import {VerifyCode} from "../../../model/user";
+import {regPwd, pwdReg} from "../../../utils/regular";
 
 @Component({
     selector: 'app-signup',
@@ -23,6 +24,7 @@ export class SignupComponent implements OnInit {
     supplierRoles: Array<RoleInfo> = new Array<RoleInfo>();
     agree = false;
     checkEmailUnique = false;
+    pwdReg = pwdReg
     validatorConfig: NgxValidatorConfig = {
         validationMessages: {
             account: {
@@ -33,12 +35,15 @@ export class SignupComponent implements OnInit {
                 required: 'Password is required.',
             },
             confirmPassword: {
-                required: 'Confirm your password is required.'
+                required: 'Confirm your password is required.',
+                pattern: 'The password should be at least 8 characters.\n' +
+                    'The password should include both upper case and lower case letters.\n' +
+                    'The password should include at least 1 number.'
             }
         },
         validateOn: 'submit'
     };
-    currentTab='Advice practice';
+    currentTab = 'Advice practice';
 
 
     constructor(private ngbModal: NgbModal,
@@ -64,7 +69,7 @@ export class SignupComponent implements OnInit {
         this.signup.companyType = 1
     }
 
-    switchCompanyType(_companyType: number,formValidator): void {
+    switchCompanyType(_companyType: number, formValidator): void {
         formValidator.reset();
         this.signup.companyType = _companyType;
     }
@@ -82,12 +87,12 @@ export class SignupComponent implements OnInit {
     }
 
     signupModal(): void {
-        if (this.signup.confirmPassword != this.signup.password) {
-            this.toastRepository.showDanger("Passwords don't match.");
-            return;
-        }
         if (!this.agree) {
             this.toastRepository.showDanger("Please agree to the Terms of service and Privacy policy.");
+            return;
+        }
+        if (this.signup.confirmPassword != this.signup.password) {
+            this.toastRepository.showDanger("Passwords don't match.");
             return;
         }
         this.userRepository.checkEmailUnique(this.signup.email).subscribe(res => {

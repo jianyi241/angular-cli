@@ -5,8 +5,11 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RestPassword} from '../../../model/user';
 import {ToastRepository} from '../../../repository/toast-repository';
 import {UserRepository} from '../../../repository/user-repository';
-import {PasswordResetSuccessfullyComponent} from "../modal/password-reset-successfully/password-reset-successfully.component";
+import {
+    PasswordResetSuccessfullyComponent
+} from "../modal/password-reset-successfully/password-reset-successfully.component";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
+import {pwdReg} from "../../../utils/regular";
 
 @Component({
     selector: 'app-reset-password',
@@ -16,7 +19,7 @@ import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 export class ResetPasswordComponent implements OnInit {
 
     restPassword: RestPassword = new RestPassword();
-    validateTip: number = 0
+    pwdReg = pwdReg
     validatorConfig: NgxValidatorConfig = {
         validationMessages: {
             password: {
@@ -24,6 +27,9 @@ export class ResetPasswordComponent implements OnInit {
             },
             confirmPassword: {
                 required: 'Enter password is required.',
+                pattern: 'The password should be at least 8 characters.\n' +
+                    'The password should include both upper case and lower case letters.\n' +
+                    'The password should include at least 1 number.'
             }
         },
         validateOn: 'submit'
@@ -47,23 +53,11 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     resetPassword(): void {
-        // if (!this.restPassword.password || !this.restPassword.confirmPassword) {
-        //     this.toastRepository.showDanger('Password is required.');
-        //     return;
-        // }
+        if (!this.restPassword.password || !this.restPassword.confirmPassword) {
+            this.toastRepository.showDanger('Passwords dont match');
+            return;
+        }
         // 正则
-        const pwdReg = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,}).{8,}$/
-        if (this.restPassword.password !== this.restPassword.confirmPassword) {
-            // this.toastRepository.showDanger("Passwords don't match");
-            this.validateTip = 1
-            return;
-        }
-        if (!pwdReg.test(this.restPassword.password)) {
-            this.validateTip = 2
-            console.log('this.showRegTip ===> ', this.validateTip)
-            return;
-        }
-        this.validateTip = 0
         this.spinnerService.show();
         this.userRepository.resetPassword(this.restPassword).subscribe(res => {
             this.spinnerService.hide();

@@ -1,17 +1,23 @@
 .form-group-sign {
     margin-bottom: 0;
 }
-
+.form-group {
+    /deep/ .has-invalid-feedback {
+        white-space: pre-line;
+    }
+}
 .tip-error {
     color: #FF151F;
     margin: 0;
-
     a {
         text-decoration: underline;
         color: #FF151F;
     }
+    > .row {
+        width: 100%;
+        margin: 0;
+    }
 }
-
 .sign-title {
     max-width: 300px;
     margin: 0 auto;

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {VerifyCode} from "../../../model/user";
 import {UserRepository} from "../../../repository/user-repository";
 import {ToastRepository} from "../../../repository/toast-repository";
+import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 
 @Component({
     selector: 'app-verification-code',
@@ -13,6 +14,15 @@ export class VerificationCodeComponent implements OnInit {
     verifyCode: VerifyCode = new VerifyCode();
     email: string;
     currentTab: number = 1;
+    validateTip: number = 0;
+    validatorConfig: NgxValidatorConfig = {
+        validationMessages: {
+            verifyCode: {
+                required: 'Verification Code is required.'
+            }
+        },
+        validateOn: 'submit'
+    };
 
     constructor(private activatedRoute: ActivatedRoute,
                 private userRepository: UserRepository,
@@ -50,15 +60,17 @@ export class VerificationCodeComponent implements OnInit {
     }
 
     verify(): void {
-        if (!this.verifyCode.code) {
-            this.toastRepository.showDanger('Verification code is required.');
-            return;
-        }
+        // if (!this.verifyCode.code) {
+        //     this.toastRepository.showDanger('Verification code is required.');
+        //     return;
+        // }
         this.userRepository.verifyCode(this.verifyCode).subscribe(res => {
             if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
+                this.validateTip = 1
+                // this.toastRepository.showDanger(res.msg);
                 return;
             }
+            this.validateTip = 0
             this.toastRepository.showSuccess('Verification successfully.');
             this.router.navigateByUrl('/login');
         });
