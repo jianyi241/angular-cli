@@ -102,6 +102,9 @@
                 </div>
 
                 <div class="form-group-right">
+                    <label class="control-label control-label-custom">
+                        <div>Would you like to select a main platform?<span class="label-required">*</span></div>
+                    </label>
                     <div class="radio-box-group">
                         <div class="radio-box">
                             <input type="radio" [disabled]="disableAnalyse()"
@@ -156,7 +159,7 @@
                                 </div>
                             </ng-template>
                             <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="(reviewService.comparison.mainPlatformId == product.id) || false">
-                                <div class="select-multiple-item">
+                                <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
                                     <div class="check-item"></div>
                                     {{product.name}}
                                     <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
@@ -186,7 +189,7 @@
                                 </div>
                             </ng-template>
                             <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="reviewService?.comparison.mainPlatformId == product.id">
-                                <div class="select-multiple-item">
+                                <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
                                     <div class="check-item"></div>
                                     {{product.name}}
                                     <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
@@ -203,7 +206,7 @@
                 </div>
             </div>
 
-            <div class="form-group-custom form-group-custom-reset">
+            <!--<div class="form-group-custom form-group-custom-reset">
                 <div class="form-group-left">
                     <label class="control-label">Templates</label>
                     <p class="info"></p>
@@ -232,7 +235,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
 
         </div>

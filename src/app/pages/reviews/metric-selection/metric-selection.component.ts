@@ -24,7 +24,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     reviewBackObservable: any;
     reviewSaveObservable: any;
 
-    constructor(private reviewService: ReviewService,
+    constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
@@ -152,10 +152,5 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
             return selection.propertyVoList.some(p => p.compChecked);
         }
     }
-
-    getCurrentAnaStep(): number {
-        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.metric.value) + 2;
-    }
-
 
 }

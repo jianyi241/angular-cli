@@ -18,9 +18,21 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
 import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
+import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
 @NgModule({
-  declarations: [FeatureComparisonComponent, ReviewDropdownDirective, ImgShowModalComponent, TableScrollDirective, FeatureSelectionComponent, MetricComparisonComponent, FeeComparisonComponent,ShowMoreDirective, ComparisonSetupComponent, MetricSelectionComponent, DeselectFeaturesTipComponent],
+    declarations: [FeatureComparisonComponent,
+        ReviewDropdownDirective,
+        ImgShowModalComponent,
+        TableScrollDirective,
+        FeatureSelectionComponent,
+        MetricComparisonComponent,
+        FeeComparisonComponent,
+        ShowMoreDirective,
+        ComparisonSetupComponent,
+        MetricSelectionComponent,
+        EllipsisDirective,
+        DeselectFeaturesTipComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
@@ -31,9 +43,10 @@ import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-feat
         NgSelectModule,
         CKEditorModule,
     ], exports: [
-    ReviewDropdownDirective,
-    TableScrollDirective,
-    ShowMoreDirective
-  ]
+        ReviewDropdownDirective,
+        TableScrollDirective,
+        ShowMoreDirective
+    ]
 })
-export class ReviewsModule { }
+export class ReviewsModule {
+}

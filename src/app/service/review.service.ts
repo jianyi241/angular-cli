@@ -70,4 +70,11 @@ export class ReviewService {
                 break;
         }
     }
+
+    getCurrentAnaStep(value: string): number {
+        if (this.comparison.analyseVoList && this.comparison.analyseVoList.length > 0) {
+            return this.comparison.analyseVoList.findIndex(a => a.name == value) + 2;
+        }
+    }
+
 }

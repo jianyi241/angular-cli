@@ -31,6 +31,7 @@ import {MessagingService} from './service/messaging.service';
 import {ScrollService} from "./service/scroll.service";
 import {CustomLinkActiveDirective} from './directive/custom-link-active.directive';
 
+
 @NgModule({
     declarations: [
         AppComponent,
