@@ -24,7 +24,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         {name: 'Non-custody solution', value: false},
     ];
 
-    constructor(private reviewService: ReviewService,
+    constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private router: Router) {
@@ -89,9 +89,5 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
             return;
         }
         this.idpsArr.splice(idpsIndex, 1);
-    }
-
-    getCurrentAnaStep(): number {
-        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.fee.value) + 2;
     }
 }

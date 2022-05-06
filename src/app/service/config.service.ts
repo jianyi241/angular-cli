@@ -9,6 +9,7 @@ import {RoleEnum} from "../model/enums/role-enum";
 import {VersionStatus} from "../model/enums/version-status";
 import {CurrentUserService} from "./current-user.service";
 import {Version} from "../model/po/version";
+import {AnalysisType} from "../model/enums/analysis-type";
 
 @Injectable({
     providedIn: 'root'
@@ -60,6 +61,12 @@ export class ConfigService {
         wait: VersionStatus.Wait.value,
         frozen: VersionStatus.Frozen.value,
         rejected: VersionStatus.Rejected.value,
+    }
+
+    analysisType= {
+        feature: AnalysisType.feature.value,
+        metric: AnalysisType.metric.value,
+        fee: AnalysisType.fee.value,
     }
 
     currentVersion: Version = new Version()

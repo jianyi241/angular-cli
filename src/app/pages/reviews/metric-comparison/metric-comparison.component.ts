@@ -28,7 +28,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     reviewBackObservable: any;
     reviewSaveObservable: any;
 
-    constructor(private reviewService: ReviewService,
+    constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
@@ -86,6 +86,14 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         if (!productPropVoList) return '';
         let productProp = productPropVoList.find(pp => pp.shPropertyId == prop.id);
         if (!productProp) return '';
+        // if (prop.type == PropType.longText.value) {
+        //     let $1 = $(productProp.propValue);
+        //     // if (productProp.propValue.length > 100) {
+        //     //     console.log($1);
+        //     // }
+        //     let text = $1.text();
+        //     return text;
+        // }
         return productProp.propValue;
     }
 
@@ -146,9 +154,5 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
             }
             pComment.close();
         })
-    }
-
-    getCurrentAnaStep(): number {
-        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.metric.value) + 2;
     }
 }

@@ -14,6 +14,7 @@ import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
 import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConfigService} from "../../../service/config.service";
 
 SwiperCore.use([Pagination]);
 
@@ -65,7 +66,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     };
 
     constructor(private reviewRepository: ReviewRepository,
-                private reviewService: ReviewService,
+                public reviewService: ReviewService,
+                public configService: ConfigService,
                 private saveService: SaveService,
                 private toastRepository: ToastRepository,
                 private storage: LocalStorageObServable,
@@ -249,10 +251,6 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
             return 0;
         }
         return group.subList.flatMap(s => s.propertyVoList.filter(p => p.compChecked).flatMap(p => p.id)).length;
-    }
-
-    getCurrentAnaStep(): number {
-        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.feature.value) + 2;
     }
 
 }

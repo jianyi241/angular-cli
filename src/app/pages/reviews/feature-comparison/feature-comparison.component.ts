@@ -19,6 +19,7 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
+import {ConfigService} from "../../../service/config.service";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -40,7 +41,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
                 private storage: LocalStorageObServable,
                 private router: Router,
                 private modalService: NgbModal,
-                private reviewService: ReviewService,
+                public reviewService: ReviewService,
+                public configService: ConfigService,
                 private scrollService: ScrollService,
                 private saveService: SaveService,
                 public reviewLayoutComponent: ReviewLayoutComponent
@@ -227,9 +229,5 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             }
             pComment.close();
         })
-    }
-
-    getCurrentAnaStep(): number {
-        return this.reviewService.comparison.analyseVoList.findIndex(a => a.name == AnalysisType.feature.value) + 2;
     }
 }
