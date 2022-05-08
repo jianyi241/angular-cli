@@ -6,29 +6,31 @@
     <div class="admin-right">
         <div class="form">
             <ul class="tab-ul xs-mb-28">
-                <li [ngClass]="{ 'active':currentTab === 1}" (click)="currentTab=1"><a href="javascript:void(0);">Advice practice</a></li>
-                <li [ngClass]="{ 'active':currentTab === 2}" (click)="currentTab=2"><a href="javascript:void(0);">Supplier</a></li>
+                <li [ngClass]="{ 'active':currentTab === 1}"><a href="javascript:void(0);">Advice practice</a></li>
+                <li [ngClass]="{ 'active':currentTab === 2}"><a href="javascript:void(0);">Other</a></li>
             </ul>
 
-            <div class="form-main">
-                <div class="sign-title tx-semi">Thanks Sam, we’ve sent a verification email to
-                    <span>{{this.email}}</span>
-                </div>
-                <div class="sign-sub-title"><span class="text">Enter code below</span></div>
-                <div class="form-group form-group-sign xs-mb-0">
-                    <label class="control-label">
-                        <div>Verification code</div>
-                    </label>
-                    <input type="text" class="form-control" placeholder="Enter 4-digit code"
-                        [(ngModel)]="verifyCode.code" />
-                </div>
-                <p class="tip-error">This verification code is incorrect. Please check and try again. If you’re having
-                    trouble you can chat with us now.</p>
-                <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-68" (click)="verify()">Verify</button>
+            <form #verifyForm="ngForm" name="verifyForm" novalidate [ngxFormValidator]="validatorConfig">
+                <div class="form-main">
+                    <div class="sign-title tx-semi">Thanks Sam, we’ve sent a verification email to
+                        <span>{{this.email}}</span>
+                    </div>
+                    <div class="sign-sub-title"><span class="text">Enter code below</span></div>
+                    <div class="form-group form-group-sign xs-mb-0">
+                        <label class="control-label">
+                            <div>Verification code</div>
+                        </label>
+                        <input type="text" class="form-control" name="verifyCode" required placeholder="Enter 4-digit code"
+                               [(ngModel)]="verifyCode.code" />
+                    </div>
+                    <p class="tip-error" *ngIf="validateTip === 1">This verification code is incorrect. Please check and try again. If you’re having
+                        trouble you can chat with us now.</p>
+                    <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-68" (ngxFormSubmit)="verify()">Verify</button>
 
-                <div class="bottom-tip">Didn’t receive the email? <a href="javascript:void(0);" class="xs-ml-8"
-                        (click)="resend()">Resend</a></div>
-            </div>
+                    <div class="bottom-tip">Didn’t receive the email? <a href="javascript:void(0);" class="xs-ml-8"
+                                                                         (click)="resend()">Resend</a></div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -8,7 +8,8 @@
             <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
             <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
-            <a>News & updates</a>
+            <a [routerLink]="['/configuration/configuration-tab']" routerLinkActive="active">SuitabilityHub configurator</a>
+<!--            <a>News & updates</a>-->
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
@@ -68,10 +69,6 @@
                     <div class="menu-item" [routerLink]="['/admin/list']">
                         <img src="./assets/img/icon/icon-suitabilityhub-users.svg" class="menu-icon"/>
                         <div class="menu-name">SuitabilityHub users</div>
-                    </div>
-                    <div class="menu-item" [routerLink]="['/configuration/configuration-tab']">
-                        <img src="./assets/img/icon/icon-suitabilityhub-configurator.svg" class="menu-icon"/>
-                        <div class="menu-name">SuitabilityHub configurator</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isSupplierUser()">

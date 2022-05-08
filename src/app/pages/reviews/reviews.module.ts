@@ -18,7 +18,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
 import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
-import {EllipsisDirective} from "../../directive/ellipsis.directive";
+// import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
 @NgModule({
     declarations: [FeatureComparisonComponent,
@@ -31,7 +31,7 @@ import {EllipsisDirective} from "../../directive/ellipsis.directive";
         ShowMoreDirective,
         ComparisonSetupComponent,
         MetricSelectionComponent,
-        EllipsisDirective,
+        // EllipsisDirective,
         DeselectFeaturesTipComponent],
     imports: [
         CommonModule,

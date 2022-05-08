@@ -5,6 +5,8 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InviteUser, VerifyCode} from "../../../model/user";
+import {regPwd, pwdReg} from "../../../utils/regular";
+import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 
 @Component({
   selector: 'app-signup-admin',
@@ -15,13 +17,17 @@ export class SignupAdminComponent implements OnInit {
   signup: InviteUser = new InviteUser();
   fullName: string;
   verification: VerifyCode = new VerifyCode();
+  pwdReg = pwdReg
   validatorConfig: NgxValidatorConfig = {
     validationMessages: {
       password: {
         required: 'Password is required.',
       },
       confirmPassword: {
-        required: 'Enter your password is required.'
+        required: 'Enter your password is required.',
+        pattern: 'The password should be at least 8 characters.\n' +
+            'The password should include both upper case and lower case letters.\n' +
+            'The password should include at least 1 number.'
       }
     },
     validateOn: 'submit'
@@ -31,7 +37,8 @@ export class SignupAdminComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private userRepository: UserRepository,
-              private toastRepository: ToastRepository) {
+              private toastRepository: ToastRepository,
+              private spinnerLoading: NgxLoadingSpinnerService) {
   }
 
   ngOnInit(): void {
@@ -48,15 +55,18 @@ export class SignupAdminComponent implements OnInit {
 
   toSignUp():void {
     if (this.signup.confirmPassword != this.signup.password) {
-      this.toastRepository.showDanger("Passwords don't match.");
+      this.toastRepository.showDanger('Passwords dont match');
       return;
     }
+    this.spinnerLoading.show()
     this.userRepository.inviteUser(this.signup).subscribe(res => {
       if (res.statusCode === 200) {
-        this.router.navigateByUrl('')
+        this.router.navigateByUrl('/login')
         this.toastRepository.showSuccess(res.msg || 'Successful operation')
+        this.spinnerLoading.hide()
       } else {
         this.toastRepository.showDanger(res.msg || 'failed operation')
+        this.spinnerLoading.hide()
       }
     })
   }
