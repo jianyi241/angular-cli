@@ -28,6 +28,7 @@ export class ProductLayoutComponent implements OnInit {
     changeVersion: Version;
     changeTabs: Array<{ tabType: number }> = new Array<{ tabType: number }>();
     product: ProductInfo = new ProductInfo();
+    from: string = ''; // fromPage
     supplierSubmitType: string = '';
     currentTab: string;
 
@@ -46,6 +47,9 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(res => {
+            this.from = res.from
+        })
         let versionId = this.activatedRoute.firstChild.snapshot.params[Constants.VERSION];
         this.product.id = this.activatedRoute.firstChild.snapshot.params['productId'];
         this.version.id = versionId;
@@ -119,7 +123,6 @@ export class ProductLayoutComponent implements OnInit {
     getModelPublishChangeFlag(): void {
         this.platformRepository.getModelPublishChangeFlag(this.product.id).subscribe(res => {
             this.changeVersion = res.data;
-            console.log('this.changeVersion ===> ', this.changeVersion)
         });
     }
 
@@ -221,7 +224,7 @@ export class ProductLayoutComponent implements OnInit {
 
     backPage() {
         const versionType = this.version.type
-        if (versionType !== 'History') {
+        if (versionType !== 'History' && this.from !== 'history') {
             this.router.navigateByUrl('/platform/product')
         } else {
             this.backHistory()

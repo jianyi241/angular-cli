@@ -57,7 +57,7 @@ export class ChangeHistoryProductComponent implements OnInit {
         this.route.navigateByUrl('/', {
             skipLocationChange: true
         }).then(() => {
-            this.route.navigate([`/platform/product-tab/overview/${this.product.id}/${version.id}`]);
+            this.route.navigate([`/platform/product-tab/overview/${this.product.id}/${version.id}`],{queryParams: {'from': 'history'}});
         });
     }
 
