@@ -147,7 +147,7 @@
                 <div class="form-group-right">
                     <div class="form-group xs-mb-8">
                         <label class="control-label control-label-custom">
-                            <div>Select up to three platforms to include in non-fee analysis</div>
+                            <div>Select platforms to include in non-fee analysis</div>
                         </label>
                         <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                    (change)="changeNonFee()"
@@ -162,7 +162,7 @@
                                 <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
                                     <div class="check-item"></div>
                                     {{product.name}}
-                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
+<!--                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>-->
                                     <span class="item-status state_yellow" *ngIf="reviewService?.comparison.mainPlatformId == product.id">Main</span>
                                 </div>
                             </ng-option>
@@ -192,7 +192,7 @@
                                 <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
                                     <div class="check-item"></div>
                                     {{product.name}}
-                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>
+<!--                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>-->
                                     <span class="item-status state_yellow" *ngIf="reviewService.comparison.mainPlatformId == product.id">Main</span>
                                 </div>
                             </ng-option>

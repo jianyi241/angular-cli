@@ -191,12 +191,8 @@
                         <label class="control-label control-label-custom">
                             <div>Region</div>
                         </label>
-                        <ng-select disabled class="select-single" placeholder="Select region" dropdownPosition="bottom"
-                                   [(ngModel)]="team.supplierPublicDetailVo.region">
-                            <ng-option>Region1</ng-option>
-                            <ng-option>Region2</ng-option>
-                            <ng-option>Region3</ng-option>
-                        </ng-select>
+                        <input type="text" class="form-control" placeholder="Select region"
+                               [(ngModel)]="team.supplierPublicDetailVo.region"/>
                     </div>
 
                     <div class="form-group">

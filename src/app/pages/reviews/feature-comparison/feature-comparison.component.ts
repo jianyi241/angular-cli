@@ -183,6 +183,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         return !product.showFlag && this.hideRemovePlatformFlag;
     }
 
+    hidClassFlag(product) {
+        return !product.showFlag && product.shProductId != this.reviewService.comparison.mainPlatformId
+    }
+
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
         product.shComparisonId = this.reviewService.comparison.id;
