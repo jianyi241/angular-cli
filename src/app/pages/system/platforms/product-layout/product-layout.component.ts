@@ -90,7 +90,7 @@ export class ProductLayoutComponent implements OnInit {
         } else if (this.currentUserService.isSupplierUser()) {
             if (type === 'edit') {
                 return this.version.type === 'Publish'
-                    // && !this.configService.isEditable(this.version.type)
+                // && !this.configService.isEditable(this.version.type)
             } else if (type === 'submit') {
                 return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'submit'
             } else if (type === 'updateStatus') {
@@ -100,22 +100,26 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     ifShowTip(type: string) {
-        if (this.currentUserService.isAdminUser()) {
+        if (this.version.type === 'History') {
             return false
-        } else if (this.currentUserService.isSupplierUser()) {
+        }
+        if (this.currentUserService.isSupplierUser()) {
             if (type === 'frozen') {
-                return this.version.versionStatus === this.configService.versionStatus.frozen && this.version.type !== 'History'
+                return this.version.versionStatus === this.configService.versionStatus.frozen
             } else if (type === 'rejected') {
-                return this.version.versionStatus === this.configService.versionStatus.rejected && this.version.type !== 'History'
-            } else {
-                return false
+                return this.version.versionStatus === this.configService.versionStatus.rejected
             }
         }
+        if (type === 'oneOrMore') {
+            return this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion
+        }
+        return false
     }
 
     getModelPublishChangeFlag(): void {
         this.platformRepository.getModelPublishChangeFlag(this.product.id).subscribe(res => {
             this.changeVersion = res.data;
+            console.log('this.changeVersion ===> ', this.changeVersion)
         });
     }
 
@@ -161,11 +165,11 @@ export class ProductLayoutComponent implements OnInit {
 
     getProjectButtonFlag() {
         this.platformRepository.getProductButtonFlag({productId: this.product.id}).subscribe(res => {
-            console.log('getProjectButtonFlag ===> ', res.msg)
             this.supplierSubmitType = res.msg
-        },err => {
+        }, err => {
         })
     }
+
     publishProduct(): void {
         if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
             return;
