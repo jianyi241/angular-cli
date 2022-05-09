@@ -76,7 +76,6 @@ export class ConfigurationLayoutComponent implements OnInit {
         }
         this.currentTab = this.configService.converterTabToRouter(tab);
         this.router.navigateByUrl(`/configuration/configuration-tab/${this.currentTab}/${this.version.id}`);
-        console.log('version type ', this.version)
     }
 
     editConfig(): void {
