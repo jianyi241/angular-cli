@@ -21,6 +21,7 @@ export class ConfigurationLayoutComponent implements OnInit {
     version: Version = new Version();
     currentTab: string;
     pushFlag: boolean;
+    titleFlag: boolean;
     hasApproveCount: number;
     totalCount: number;
 
@@ -98,10 +99,11 @@ export class ConfigurationLayoutComponent implements OnInit {
 
     getEditFlag(): void {
         this.configurationRepository.getAllProductPushFlag().subscribe(res => {
-            const {hasApproveCount, pushFlag, total} = res.data
+            const {hasApproveCount, pushFlag, total,titleFlag} = res.data
             this.hasApproveCount = hasApproveCount
             this.pushFlag = pushFlag
             this.totalCount = total
+            this.titleFlag = titleFlag
         },err => {
         })
     }

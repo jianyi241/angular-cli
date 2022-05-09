@@ -74,4 +74,8 @@ export class PlatformRepository {
     saveSubProduct(subProduct: SubProduct): Observable<HttpResult<SubProduct>> {
         return this.http.post<HttpResult<SubProduct>>(environment.baseURL + '/product/saveSubProduct', subProduct);
     }
+
+    getProductButtonFlag({productId}): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/product/getProductButtonFlag/${productId}`)
+    }
 }
