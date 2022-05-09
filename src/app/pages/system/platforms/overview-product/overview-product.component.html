@@ -2,14 +2,19 @@
     <div class="form-group-custom">
         <div class="form-group-left" style="width: 100%;">
             <label class="control-label">Basic information</label>
-            <p class="info">This information will be displayed publicly</p>
+            <p class="info">
+<!--                This information will be displayed publicly-->
+                This is company information that you can update anytime
+            </p>
         </div>
     </div>
 
     <div class="form-group-custom">
         <div class="form-group-left">
             <label class="control-label">Platform logo</label>
-            <p class="info">This image will be shown publicly as company logo.</p>
+            <p class="info">
+                This image will be shown publicly as company logo.
+            </p>
         </div>
         <ng-container *ngIf="overview.propertyVoList.length > 0">
             <app-prop-view [model]="overview.propertyVoList[0]"

@@ -28,6 +28,7 @@ export class ProductLayoutComponent implements OnInit {
     changeVersion: Version;
     changeTabs: Array<{ tabType: number }> = new Array<{ tabType: number }>();
     product: ProductInfo = new ProductInfo();
+    supplierSubmitType: string = '';
     currentTab: string;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -88,9 +89,12 @@ export class ProductLayoutComponent implements OnInit {
             }
         } else if (this.currentUserService.isSupplierUser()) {
             if (type === 'edit') {
-                return this.version.type === 'Publish' && !this.configService.isEditable(this.version.type)
+                return this.version.type === 'Publish'
+                    // && !this.configService.isEditable(this.version.type)
             } else if (type === 'submit') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected)
+                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'submit'
+            } else if (type === 'updateStatus') {
+                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'updateStatus'
             }
         }
     }
@@ -151,9 +155,17 @@ export class ProductLayoutComponent implements OnInit {
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
             this.router.navigateByUrl(`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`)
+            this.getProjectButtonFlag()
         });
     }
 
+    getProjectButtonFlag() {
+        this.platformRepository.getProductButtonFlag({productId: this.product.id}).subscribe(res => {
+            console.log('getProjectButtonFlag ===> ', res.msg)
+            this.supplierSubmitType = res.msg
+        },err => {
+        })
+    }
     publishProduct(): void {
         if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
             return;
@@ -201,6 +213,15 @@ export class ProductLayoutComponent implements OnInit {
 
     getVersionInfo() {
         return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`
+    }
+
+    backPage() {
+        const versionType = this.version.type
+        if (versionType !== 'History') {
+            this.router.navigateByUrl('/platform/product')
+        } else {
+            this.backHistory()
+        }
     }
 
     backHistory() {
