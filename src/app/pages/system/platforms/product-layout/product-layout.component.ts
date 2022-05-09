@@ -154,8 +154,8 @@ export class ProductLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.router.navigateByUrl(`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`)
             this.getProjectButtonFlag()
+            this.router.navigateByUrl(`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`)
         });
     }
 

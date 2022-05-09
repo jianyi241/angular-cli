@@ -24,11 +24,11 @@
                 </div>
             </div>
         </div>
-        <div class="btn-control-group" [hidden]="!pushFlag && titleFlag">
-            <button class="btn btn-purple xs-ml-24" (click)="pushConfig()">Publish</button>
-        </div>
-        <div *ngIf="version.type == 'Publish'">
-            <div class="btn-control-group edit-btn" [hidden]="configService.isEditable(version.type)">
+        <div>
+            <div class="btn-control-group" [hidden]="(!pushFlag && titleFlag) || version.type === 'Publish'">
+                <button class="btn btn-purple xs-ml-24" (click)="pushConfig()">Publish</button>
+            </div>
+            <div class="btn-control-group edit-btn" [hidden]="version.type !== 'Publish' && configService.isEditable(version.type)">
                 <button class="btn btn-config xs-ml-24"  (click)="editConfig()">Edit configurator</button>
             </div>
         </div>
