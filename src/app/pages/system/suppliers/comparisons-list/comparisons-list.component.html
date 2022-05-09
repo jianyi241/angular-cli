@@ -120,10 +120,8 @@
         </table>
         </div>
 
-        <ngb-pagination [collectionSize]="comparisonPage.total" [(page)]="comparisonPage.current" [pageSize]="comparisonPage.size" (pageChange)="pageChange($event)"></ngb-pagination>
-
+        <ngb-pagination *ngIf="comparisonPage.total > 0" [collectionSize]="comparisonPage.total" [(page)]="comparisonPage.current" [pageSize]="comparisonPage.size" (pageChange)="pageChange($event)"></ngb-pagination>
         <div *ngIf="comparisonPage.total == 0" class="empty-text">You don’s have any comparison yet. Click on “Add comparison” to add.</div>
-
     </div>
 </div>
 
