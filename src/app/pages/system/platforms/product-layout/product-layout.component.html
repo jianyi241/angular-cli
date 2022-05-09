@@ -1,5 +1,5 @@
 <div class="main main-form main-form-with-tab"
-     [ngClass]="{'main-form-has-tip': version.type === 'History' || (currentUserService.isSupplierUser() && version.type && changeVersion && version.type !== 'History') || ifShowTip('frozen')  || ifShowTip('rejected')}">
+     [ngClass]="{'main-form-has-tip': version.type === 'History' || (currentUserService.isSupplierUser() && version.type && changeVersion && version.type !== 'History') || ifShowTip('oneOrMore') || ifShowTip('frozen')  || ifShowTip('rejected')}">
 
     <div class="head-tip" *ngIf="version.type === 'History'">
         <div class="head-tip-content">
