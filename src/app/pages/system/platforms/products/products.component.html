@@ -1,67 +1,139 @@
-<div class="main main-form main-form-with-tab">
-    <div class="sub-head sub-head-form">
-        <div class="sub-title">
-            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
-            BT
-        </div>
-
-        <div class="btn-control-group">
-            <!--<button class="btn btn-outline-blue-light xs-ml-24">Archive</button>
-            <button class="btn btn-outline-blue-light xs-ml-24">Save draft</button>
-            <button class="btn btn-outline-blue-light xs-ml-24">Discard draft</button>
-            <button class="btn btn-purple xs-ml-24">Publish</button>
-            <button class="btn btn-outline-danger-light xs-ml-24">Reject</button>
-            <button class="btn btn-purple xs-ml-24">Submit for review</button>-->
-        </div>
-    </div>
-
-    <div class="tab-menu">
-        <div class="tab-text">Overview <span class="line"></span></div>
-        <div class="tab-text">Team (6 of 6) <span class="line"></span></div>
-        <div class="tab-text active">Products <span class="line"></span></div>
-        <div class="tab-text">Billing <span class="line"></span></div>
-        <div class="tab-text">Invoices <span class="line"></span></div>
-    </div>
-
-
-    <div class="table-list-content">
-        <div class="list-content list-head">
-            <div class="list-left">Products</div>
-            <div class="list-center">BDMs</div>
-            <div class="list-right">Actions</div>
-        </div>
-
-        <div class="list-content" *ngFor="let product of products">
-            <div class="list-left">
-                <div class="pic"><img src="{{product.attachmentVo?.visitUrl}}"/></div>
-                <div class="title">{{product.name}}</div>
+<div class="table-layout main">
+    <div class="col-content">
+        <div class="sub-head">
+            <div class="sub-title">
+                Platform profiles
             </div>
-
-            <div class="list-center">
-                <div class="progress-content">
-                    <div class="progress-line">
-                        <div class="bar-percent bg-green" style="width: 30%;"></div>
-                        <div class="bar-percent bg-green-light" style="width: 50%;"></div>
-                        <div class="bar-percent bg-purple-light" style="width: 20%;"></div>
-                    </div>
-
-                    <div class="progress-info">
-                        <span class="tx-semi">3</span> out of 4 <span class="tx-semi">BDMs</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-right">
-<!--                <div class="tip-message">-->
-<!--                    <span class="icon-block icon-warning-blue icon-25 xs-mr-4"></span>-->
-<!--                    Missing data-->
-<!--                </div>-->
-
-                <button class="btn btn-outline-purple-light btn-small" (click)="editProduct(product)">
-                    <span class="icon-block icon-pen icon-20 xs-mr-10"></span>Edit
+            <div class="btn-control-group">
+                <button class="btn btn-purple xs-ml-24">
+                    <img src="assets/img/icon/icon-add.svg">
+                    Add platform
                 </button>
             </div>
         </div>
 
+        <div class="search-wrapper">
+            <div class="search-content w-310">
+                <input type="text" [(ngModel)]="productCondition.keyword" (keydown.enter)="searchList()" placeholder="Search a keyword" class="form-control"/>
+                <span class="icon icon-search icon-16"></span>
+            </div>
+            <div class="filter">
+                Hide archived
+            </div>
+        </div>
+
+        <div class="col-body">
+            <ng-container>
+                <div class="table-list-wrap">
+                    <table class="table table-list table-striped">
+                        <thead>
+                        <tr>
+                            <th class="max-w-300">
+                                <div class="th-cell">
+                                    Platform name
+                                    <sorting-widget (sortChange)="sortList('name', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th style="width:20%;">
+                                <div class="th-cell">
+                                    Supplier
+                                    <sorting-widget (sortChange)="sortList('company', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th style="width:15%;">
+                                <div class="th-cell">
+                                    Last modified at
+                                    <sorting-widget (sortChange)="sortList('update_time', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th style="width:15%;">
+                                <div class="th-cell">
+                                    Status
+                                    <sorting-widget (sortChange)="sortList('status', $event)"></sorting-widget>
+                                </div>
+                            </th>
+                            <th class="edit-th">
+                                <div class="th-cell">Action</div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead class="table-margin">
+                        <tr>
+                            <th colspan="5"></th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="productPage.total > 0">
+                        <tr *ngFor="let product of productPage.records">
+                            <td>
+                                <div class="td-cell td-cell_avatar tx-bold tx-purple">
+                                    <!--                                    <div class="avatar-box xs-mr-16">-->
+                                    <!--                                        <img [src]="(product.platformLogo?.visitUrl) || './assets/img/unassgin.svg'" />-->
+                                    <!--                                    </div>-->
+                                    <div class="text-ellipsis max-w-300">{{product.name}}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-cell tx-bold tx-purple">{{product.companyName}}</div>
+                            </td>
+                            <td>
+                                <div class="td-cell">{{product.updateTime | dateFormat : 'hh:mma DD/MM/YYYY' }}</div>
+                            </td>
+                            <td>
+                                <div *ngIf="product.archived">
+                                    <div class="td-cell">
+                                        <label class="label label-red">Archived</label>
+                                    </div>
+                                </div>
+                                <div *ngIf="!product.archived">
+                                    <div class="td-cell" *ngIf="product.status == 'Active'">
+                                        <label class="label label-green-light">Active</label>
+                                    </div>
+                                    <div class="td-cell" *ngIf="product.status == 'Disabled'">
+                                        <label class="label label-grey">Disabled</label>
+                                    </div>
+                                    <div class="td-cell" *ngIf="product.status == 'Pending'">
+                                        <label class="label label-orange">Pending</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="edit-column">
+                                    <div class="edit-work-status">
+                                        <div class="status-tip normal"
+                                             *ngIf="product.workflowStatus === configService.workflowStatus.dataRequired">
+                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-blue2.svg">
+                                            <span>Data required</span>
+                                        </div>
+                                        <div class="status-tip warning"
+                                             *ngIf="product.workflowStatus === configService.workflowStatus.awaitingApproval">
+                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                            <span>Awaiting approval</span>
+                                        </div>
+                                        <div class="status-tip warning"
+                                             *ngIf="product.workflowStatus === configService.workflowStatus.awaitingPublish">
+                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                            <span>Awaiting publish</span>
+                                        </div>
+                                    </div>
+                                    <div class="edit-btn-group">
+                                        <button class="btn btn-outline-purple-light btn-small" (click)="toView(product.id)">View</button>
+                                        <button class="btn btn-purple-border btn-tiny xs-ml-16"
+                                                (click)="editProduct(product)">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination *ngIf="productPage.total > 0" [collectionSize]="productPage.total"
+                                [(page)]="productPage.current" [pageSize]="productPage.size"
+                                (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
+            </ng-container>
+            <div class="empty-text" *ngIf="productPage.total == 0">This section is empty.
+            </div>
+        </div>
     </div>
 </div>

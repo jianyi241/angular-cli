@@ -40,6 +40,16 @@ import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component'
 import {AuthActivateGuard} from "../../config/auth-activate-guard";
 import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonsListComponent} from "./suppliers/comparisons-list/comparisons-list.component";
+import {ProductsBoxComponent} from "./platforms/products-box/products-box.component";
+import {ProductsBoxDetailComponent} from "./platforms/products-box-detail/products-box-detail.component";
+import {PbdOverviewComponent} from "./platforms/products-box-detail/children/pbd-overview/pbd-overview.component";
+import {
+    PbdInformationComponent
+} from "./platforms/products-box-detail/children/pbd-information/pbd-information.component";
+import {PbdEsgComponent} from "./platforms/products-box-detail/children/pbd-esg/pbd-esg.component";
+import {PbdFeaturesComponent} from "./platforms/products-box-detail/children/pbd-features/pbd-features.component";
+import {PbdFeesRatesComponent} from "./platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component";
+import {PbdFindBdmComponent} from "./platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component";
 
 const routes: Routes = [
     {
@@ -193,6 +203,35 @@ const routes: Routes = [
                         path: 'fees-rates/:productId/:version',
                         component: FeesRatesProductComponent,
                     },
+                ]
+            },
+            {
+                path: 'product-box',
+                component: ProductsBoxComponent,
+            },
+            {
+                path: 'product-box-detail',
+                component: ProductsBoxDetailComponent,
+                children: [
+                    {
+                        path: 'overview/:id',
+                        component: PbdOverviewComponent,
+                    },{
+                        path: 'information',
+                        component: PbdInformationComponent,
+                    },{
+                        path: 'esg',
+                        component: PbdEsgComponent,
+                    },{
+                        path: 'features',
+                        component: PbdFeaturesComponent,
+                    },{
+                        path: 'fees-rates',
+                        component: PbdFeesRatesComponent,
+                    },{
+                        path: 'find-bdm',
+                        component: PbdFindBdmComponent,
+                    }
                 ]
             },
         ]

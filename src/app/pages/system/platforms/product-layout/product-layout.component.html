@@ -1,58 +1,14 @@
 <div class="main main-form main-form-with-tab"
-     [ngClass]="{'main-form-has-tip': version.type === 'History' || ifShowTip('oneOrMore') || ifShowTip('frozen')  || ifShowTip('rejected')}">
+     [ngClass]="{'main-form-has-tip': version.type === 'History' || showTip('oneOrMore') || showTip('frozen')  || showTip('rejected')}">
 
-    <div class="head-tip" *ngIf="version.type === 'History'">
+    <div class="head-tip" [ngClass]="tipInfo().tipCls" *ngIf="tipInfo().show">
         <div class="head-tip-content">
-            <!--            <span class="icon-block icon-arr-left-blue icon-33" (click)="backHistory()"></span>-->
             <div class="tip-content">
-                <div class="title" title="">{{getVersionName()}}</div>
-                <div class="text" title="">{{getVersionInfo()}}</div>
+                <div class="title" [ngClass]="tipInfo().textCls" >{{tipInfo().title}}</div>
+                <div class="text" [ngClass]="tipInfo().textCls" >{{tipInfo().text}}</div>
             </div>
         </div>
     </div>
-
-    <!--    <div *ngIf="currentUserService.isAdminUser()">-->
-    <!--        <div class="head-tip" *ngIf="version.type === 'Publish' && changeVersion">-->
-    <!--            <div class="head-tip-content">-->
-    <!--                <div class="tip-content">-->
-    <!--                    <div class="title" title="">New data submitted.</div>-->
-    <!--                    <div class="text" title="">Profile updated at {{version.updateTime | dateFormat : 'h:mma D MMM YY'}}. Approve or reject changes by clicking the buttons.</div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <div class="head-tip warn-tip" *ngIf="ifShowTip('frozen') && currentUserService.isSupplierUser()">
-        <div class="head-tip-content">
-            <div class="tip-content">
-                <div class="title tx-yellow" title="">The profile is frozen.</div>
-                <div class="text tx-yellow" title="">Profile updated
-                    at {{version.updateTime | dateFormat : 'h:mma D MMM YY'}}. New data pending approval. Contact
-                    SuitabilityHub admin for more details.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="head-tip err-tip" *ngIf="ifShowTip('rejected')  && currentUserService.isSupplierUser()">
-        <div class="head-tip-content">
-            <div class="tip-content">
-                <div class="title tx-red" title="">Data was rejected.</div>
-                <div class="text tx-red" title="">Profile rejected
-                    at{{version.updateTime | dateFormat : 'h:mma D MMM YY'}}.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="head-tip" *ngIf="ifShowTip('oneOrMore')">
-        <div class="head-tip-content">
-            <div class="tip-content">
-                <div class="title" title="">One or more feature fields are added by Suitability Hub admin.</div>
-                <div class="text" title="">Template updated at {{version.updateTime | dateFormat : 'h:mma D MMM YY'}} by
-                    Suitability Hub admin. Click “Edit product” to fill in missing data if there’s any.
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="sub-head sub-head-form">
         <div class="sub-title" (click)="backPage()">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>

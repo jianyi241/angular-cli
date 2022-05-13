@@ -80,7 +80,7 @@
                         </tbody>
                     </table>
                 </div>
-                <ngb-pagination [collectionSize]="adminPage.total" [(page)]="adminPage.current" [pageSize]="adminPage.size"
+                <ngb-pagination *ngIf="adminPage.total > 0" [collectionSize]="adminPage.total" [(page)]="adminPage.current" [pageSize]="adminPage.size"
                                 (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
             </ng-container>
             <div class="empty-text" *ngIf="adminPage.total == 0">This section is empty.

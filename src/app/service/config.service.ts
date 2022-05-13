@@ -10,11 +10,14 @@ import {VersionStatus} from "../model/enums/version-status";
 import {CurrentUserService} from "./current-user.service";
 import {Version} from "../model/po/version";
 import {AnalysisType} from "../model/enums/analysis-type";
+import {WorkFlowsStatus} from "../model/enums/work-flows-status";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigService {
+
+
     tabType = {
         overview: TabType.overview.value,
         information: TabType.information.value,
@@ -63,10 +66,16 @@ export class ConfigService {
         rejected: VersionStatus.Rejected.value,
     }
 
-    analysisType= {
+    analysisType = {
         feature: AnalysisType.feature.value,
         metric: AnalysisType.metric.value,
         fee: AnalysisType.fee.value,
+    }
+
+    workflowStatus = {
+        dataRequired: WorkFlowsStatus.DataRequired.value,
+        awaitingApproval: WorkFlowsStatus.AwaitingApproval.value,
+        awaitingPublish: WorkFlowsStatus.AwaitingPublish.value,
     }
 
     currentVersion: Version = new Version()

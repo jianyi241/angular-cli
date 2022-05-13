@@ -1,0 +1,37 @@
+<div class="table-layout main products-box">
+    <div class="col-content">
+        <div class="sub-head">
+            <div class="title">
+                Platform profiles
+            </div>
+            <div class="btn-control-group">
+                <button class="btn btn-purple  xs-ml-24">
+                    <img src="/assets/img/icon/icon-add.svg" />
+                    Add platform
+                </button>
+            </div>
+        </div>
+        <div class="search-content w-310">
+            <input type="text" [(ngModel)]="productCondition.keyword" (keydown.enter)="getProductList()" placeholder="Search a keyword" class="form-control"/>
+            <span class="icon icon-search icon-16"></span>
+        </div>
+        <div class="col-body">
+            <div class="body-list">
+                <div class="list-item" *ngFor="let item of productList" (click)="toView(item.id)">
+                    <div class="item-cover">
+                        <img [src]="item.platformLogo?.visitUrl" />
+                    </div>
+                    <div class="item-txt">
+                        <div class="txt-title">{{item.name}}</div>
+                        <div class="txt-date">Most recent update: {{item.updateTime | dateFormat : 'DD/MM/YYYY'}}</div>
+                        <div class="txt-status" [ngClass]="{'warning': item.workflowStatus !== 1}">
+                            <img *ngIf="item.workflowStatus === 1" src="/assets/img/icon/icon-warning-blue2.svg">
+                            <img *ngIf="item.workflowStatus === 2" src="/assets/img/icon/icon-warning-yellow.svg">
+                            <span>{{item.workflowStatus === 1 ? 'Missing data' : 'Pending approval'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

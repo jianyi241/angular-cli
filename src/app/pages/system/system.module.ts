@@ -61,6 +61,16 @@ import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
 import { RejectModalComponent } from './platforms/modal/reject-modal/reject-modal.component';
 import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons-list.component';
+import { ProductsBoxComponent } from './platforms/products-box/products-box.component';
+import { ProductsBoxDetailComponent } from './platforms/products-box-detail/products-box-detail.component';
+import { PbdOverviewComponent } from './platforms/products-box-detail/children/pbd-overview/pbd-overview.component';
+import { PbdInformationComponent } from './platforms/products-box-detail/children/pbd-information/pbd-information.component';
+import { PbdEsgComponent } from './platforms/products-box-detail/children/pbd-esg/pbd-esg.component';
+import { PbdFeaturesComponent } from './platforms/products-box-detail/children/pbd-features/pbd-features.component';
+import { PbdFeesRatesComponent } from './platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component';
+import { PbdFindBdmComponent } from './platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { PreviewImageModalComponent } from './platforms/modal/preview-image-modal/preview-image-modal.component';
 
 @NgModule({
     declarations: [
@@ -114,7 +124,16 @@ import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons
         AdminListComponent,
         AdminDetailComponent,
         ComparisonsListComponent,
-        RejectModalComponent
+        RejectModalComponent,
+        ProductsBoxComponent,
+        ProductsBoxDetailComponent,
+        PbdOverviewComponent,
+        PbdInformationComponent,
+        PbdEsgComponent,
+        PbdFeaturesComponent,
+        PbdFeesRatesComponent,
+        PbdFindBdmComponent,
+        PreviewImageModalComponent
     ],
     imports: [
         CommonModule,
@@ -126,6 +145,7 @@ import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons
         NgbModule,
         DragDropModule,
         OwlDateTimeModule,
+        MatTooltipModule,
     ], exports: [
         ToggleClassDirective,
         BackTopDirective,

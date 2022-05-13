@@ -78,6 +78,28 @@ export class ConfigurationLayoutComponent implements OnInit {
         this.router.navigateByUrl(`/configuration/configuration-tab/${this.currentTab}/${this.version.id}`);
     }
 
+    showTip(type: string) {
+        if (type === 'history') {
+            return this.version.type === 'History'
+        }  else if (type === 'frozenParent') {
+            return this.version.type !== 'History'
+        }else if (type === 'frozen') {
+            return this.version.type === 'Draft' && this.titleFlag
+        }
+        return false
+    }
+
+    hiddenEditBtn(type: string) {
+        if (type === 'tipPublishBtn') {
+            return !this.pushFlag
+        } else if (type === 'publishBtn') {
+            return (!this.pushFlag && this.titleFlag) || this.version.type === 'Publish'
+        } else if (type === 'editBtn') {
+            return this.version.type !== 'Publish' && this.configService.isEditable(this.version.type)
+        }
+        return true
+    }
+
     editConfig(): void {
         if (this.saveService.saveCheck(environment.baseURL + `/supplier/editModel`)) {
             return

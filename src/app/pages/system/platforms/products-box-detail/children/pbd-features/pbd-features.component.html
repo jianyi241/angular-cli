@@ -1,0 +1,57 @@
+<div class="form-content">
+    <div class="form-group-custom form-content-column xs-pt-0">
+        <div class="form-column-left">
+            <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
+                <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+                    <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
+                        <ng-container *ngIf="!configService.isArchive(group.status, version.type)">
+                            <ng-template ngbPanelHeader let-opened="opened">
+                                <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
+                                        [title]="group.name">
+                                    <div class="text">{{group.name}}</div>
+                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>
+                                    <span class="icon-block icon-arr-up-purple icon-15"></span>
+                                </button>
+                            </ng-template>
+
+                            <ng-template ngbPanelContent>
+                                <div class="main-sub-menu"
+                                     *ngFor="let subGroupItem of group.subList">
+                                    <div class="sub-title"
+                                         *ngIf="!configService.isArchive(subGroupItem.status, version.type)"
+                                         (click)="chooseSubGroup(subGroupItem)"
+                                         [title]="subGroupItem.name">
+                                        <div class="text">{{subGroupItem.name}}</div>
+                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+        <div class="form-column-right">
+            <div class="list">
+                <div class="item" *ngFor="let item of [1,2,3,4,5]">
+                    <div class="item-title">Online identity verification for AML/CTF purposes
+                        <div class="tooltip-wrapper">
+                            <img  src="assets/img/icon/icon-tooltip.svg" placement="top" [ngbTooltip]="'Tooltip on top'"  class="tooltip-icon" />
+<!--                            <div class="tooltip-box"></div>-->
+                        </div>
+                    </div>
+                    <div class="item-introduce">
+                        Yes. This feature is avaliable.
+                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item)}" (click)="expandItem(item)"/>
+                    </div>
+                    <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item)}">
+                        Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.
+                        <div class="content-image-list">
+                            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0515%2F465567a6j00qadpfz001cc000hs00b4c.jpg&refer=http%3A%2F%2Fdingyue.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655000586&t=768f918967e3926966c182ceae6ce04e" (click)="previewImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0515%2F465567a6j00qadpfz001cc000hs00b4c.jpg&refer=http%3A%2F%2Fdingyue.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655000586&t=768f918967e3926966c182ceae6ce04e')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

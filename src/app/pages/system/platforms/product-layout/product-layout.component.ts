@@ -18,6 +18,14 @@ import {RejectModalComponent} from "../modal/reject-modal/reject-modal.component
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 
+declare type TipInfo = {
+    show: boolean,
+    tipCls: string,
+    textCls: string,
+    title: string,
+    text: string
+}
+
 @Component({
     selector: 'app-product-layout',
     templateUrl: './product-layout.component.html',
@@ -103,7 +111,7 @@ export class ProductLayoutComponent implements OnInit {
         }
     }
 
-    ifShowTip(type: string) {
+    showTip(type: string) {
         if (this.version.type === 'History') {
             return false
         }
@@ -118,6 +126,55 @@ export class ProductLayoutComponent implements OnInit {
             return this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion
         }
         return false
+    }
+
+    tipInfo(): TipInfo {
+        let info: TipInfo = {
+            tipCls: '',
+            textCls: '',
+            title: '',
+            text: '',
+            show: false
+        }
+        if (this.version.type === 'History') {
+            info = {
+                tipCls: '',
+                textCls: '',
+                title: `Release ${moment(this.version.updateTime).format('D MMM YY')}`,
+                text: `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`,
+                show: true
+            }
+        }
+        if (this.currentUserService.isSupplierUser()) {
+            if (this.version.versionStatus === this.configService.versionStatus.frozen) {
+                info = {
+                    tipCls: 'warn-tip',
+                    textCls: 'tx-yellow',
+                    title: `The profile is frozen.`,
+                    text: `Profile updated at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . New data pending approval. Contact SuitabilityHub admin for more details.`,
+                    show: true
+                }
+            } else if (this.version.versionStatus === this.configService.versionStatus.rejected) {
+                info = {
+                    tipCls: 'err-tip',
+                    textCls: 'tx-red',
+                    title: `Data was rejected.`,
+                    text: `Profile rejected at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . `,
+                    show: true
+                }
+            }
+        }
+        if (this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion) {
+            info = {
+                tipCls: '',
+                textCls: '',
+                title: `One or more feature fields are added by Suitability Hub admin.`,
+                text: `Template updated at ${moment(this.version.updateTime).format('h:mma D MMM YY')} by
+                    Suitability Hub admin. Click “Edit product” to fill in missing data if there’s any.`,
+                show: true
+            }
+        }
+        return info
     }
 
     getModelPublishChangeFlag(): void {
@@ -212,14 +269,6 @@ export class ProductLayoutComponent implements OnInit {
 
     isChange(tabType: number): boolean {
         return this.changeTabs.some(c => c.tabType == tabType);
-    }
-
-    getVersionName() {
-        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`
-    }
-
-    getVersionInfo() {
-        return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`
     }
 
     backPage() {

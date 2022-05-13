@@ -11,6 +11,8 @@ import {ProductFormVo} from "../model/vo/productFormVo";
 import {Version} from "../model/po/version";
 import {SubProduct} from "../model/po/subProduct";
 import {ProductAccessVo} from "../model/vo/productAccessVo";
+import {Page} from "../model/vo/page";
+import {ProductCondition} from "../model/condition/product-condition";
 
 @Injectable({
     providedIn: 'root'
@@ -77,5 +79,13 @@ export class PlatformRepository {
 
     getProductButtonFlag({productId}): Observable<HttpResult<any>> {
         return this.http.get<HttpResult<any>>(environment.baseURL + `/product/getProductButtonFlag/${productId}`)
+    }
+
+    getProductsPage(productCondition: ProductCondition): Observable<HttpResult<Page<ProductInfo>>> {
+        return this.http.post<HttpResult<Page<ProductInfo>>>(environment.baseURL + '/product/getPlatformPage', productCondition);
+    }
+
+    getProductList(productCondition: ProductCondition): Observable<HttpResult<Array<ProductInfo>>> {
+        return this.http.post<HttpResult<Array<ProductInfo>>>(environment.baseURL + '/product/getPlatformList', productCondition);
     }
 }
