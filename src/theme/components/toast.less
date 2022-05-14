@@ -2,24 +2,64 @@
 
   .toast {
     position: fixed;
-    top: 78px;
-    left: 0;
+    bottom: 32px;
+    left: 168px;
     z-index: 1080;
-    width: 100% !important;
+    width: calc(100% - 336px) !important;
     max-width: 100% !important;
     height: 66px;
+    border-radius: 12px;
     background-color: #2AC084;
 
-    &.toastTop {
-      top: 0;
+    @media screen and (max-width: 1400px){
+      left: 100px;
+      width: calc(100% - 200px) !important;
     }
 
+    @media screen and (max-width: 1240px){
+      left: 40px;
+      width: calc(100% - 80px) !important;
+    }
+
+    @media screen and (max-width: 940px){
+      left: 20px;
+      width: calc(100% - 40px) !important;
+    }
+
+    //&.toastTop {
+    //  top: 0;
+    //}
+
     &.bg-success {
-      background-color: #2AC084;
+      background-color: #E9F5EE !important;
+
+      .toast-body{
+        color: #219653;
+      }
+
+      .toast-header {
+        .close {
+          span {
+            background-image: url("../../assets/img/icon/icon-cicle-close-green.svg");
+          }
+        }
+      }
     }
 
     &.bg-danger {
-      background-color: #EE0001;
+      background-color: #FDEEEE !important;
+
+      .toast-body{
+        color: #EB5757;
+      }
+
+      .toast-header {
+        .close {
+          span {
+            background-image: url("../../assets/img/icon/icon-cicle-close-red.svg");
+          }
+        }
+      }
     }
 
     .toast-header {
@@ -62,10 +102,9 @@
       justify-content: center;
       align-items: center;
       color: #ffffff;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 21px;
-      letter-spacing: -.1px;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 22px;
       padding: 9px 10px;
     }
   }
