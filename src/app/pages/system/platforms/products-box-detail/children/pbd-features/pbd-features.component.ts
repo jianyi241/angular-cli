@@ -166,12 +166,16 @@ export class PbdFeaturesComponent implements OnInit, OnDestroy {
     this.subGroup = group;
   }
 
-  previewImage(imgUrl: string) {
+  previewImage(imgUrl: string): void {
     const modalRef = this.ngbModal.open(PreviewImageModalComponent, {
       size: 'w644',
       windowClass: 'tip-popup-modal',
       centered: true
     });
     modalRef.componentInstance.imgUrl = imgUrl
+  }
+
+  showPic(val): void {
+
   }
 }

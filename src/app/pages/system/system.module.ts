@@ -71,6 +71,12 @@ import { PbdFeesRatesComponent } from './platforms/products-box-detail/children/
 import { PbdFindBdmComponent } from './platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { PreviewImageModalComponent } from './platforms/modal/preview-image-modal/preview-image-modal.component';
+import {ReviewListComponent} from "./advice-reviews/review-list/review-list.component";
+import { AddClientModalComponent } from './advice-reviews/modal/add-client-modal/add-client-modal.component';
+import {NgxValidatorModule} from "@why520crazy/ngx-validator";
+import { AddClientComponent } from './advice-reviews/add-client/add-client.component';
+import { AcOverviewComponent } from './advice-reviews/add-client/components/ac-overview/ac-overview.component';
+import { AcReviewComponent } from './advice-reviews/add-client/components/ac-review/ac-review.component';
 
 @NgModule({
     declarations: [
@@ -133,7 +139,12 @@ import { PreviewImageModalComponent } from './platforms/modal/preview-image-moda
         PbdFeaturesComponent,
         PbdFeesRatesComponent,
         PbdFindBdmComponent,
-        PreviewImageModalComponent
+        PreviewImageModalComponent,
+        ReviewListComponent,
+        AddClientModalComponent,
+        AddClientComponent,
+        AcOverviewComponent,
+        AcReviewComponent
     ],
     imports: [
         CommonModule,
@@ -146,10 +157,12 @@ import { PreviewImageModalComponent } from './platforms/modal/preview-image-moda
         DragDropModule,
         OwlDateTimeModule,
         MatTooltipModule,
+        NgxValidatorModule,
     ], exports: [
         ToggleClassDirective,
         BackTopDirective,
-        ArrayFilterPipe
+        ArrayFilterPipe,
+        SortingWidgetComponent
     ]
 })
 export class SystemModule {

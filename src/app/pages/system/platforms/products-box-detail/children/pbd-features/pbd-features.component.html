@@ -36,8 +36,19 @@
                 <div class="item" *ngFor="let item of [1,2,3,4,5]">
                     <div class="item-title">Online identity verification for AML/CTF purposes
                         <div class="tooltip-wrapper">
-                            <img  src="assets/img/icon/icon-tooltip.svg" placement="top" [ngbTooltip]="'Tooltip on top'"  class="tooltip-icon" />
-<!--                            <div class="tooltip-box"></div>-->
+                            <ng-template #popContent>
+                                <div class="cell-popover">
+                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                    <div class="info" [innerHTML]="'<p>Tooltip content...</p>'"></div>
+                                    <div class="img-box">
+<!--                                        <img [src]="currentProdProp.attachmentVo?.visitUrl"/>-->
+<!--                                        <div class="btn-expand" (click)="showPic({closePopover:p})"><span-->
+<!--                                                class="icon-block icon-expand icon-20"></span></div>-->
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <img  src="assets/img/icon/icon-tooltip.svg" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
+                                  placement="right auto" [ngbPopover]="popContent" class="tooltip-icon" />
                         </div>
                     </div>
                     <div class="item-introduce">

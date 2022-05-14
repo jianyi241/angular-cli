@@ -24,7 +24,7 @@ export class ProductsComponent implements OnInit {
     ngOnInit(): void {
         this.productCondition.order = {
             asc: true,
-            column: 'update_time'
+            column: 'name'
         }
         this.getProductList();
     }
@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit {
     }
     sortList(column: string,type: number) {
         if (type === 0) {
-            this.productCondition.order = {column: 'update_time', asc: true}
+            this.productCondition.order = {column: 'name', asc: true}
         } else {
             this.productCondition.order = {column, asc: type === 1}
         }

@@ -178,10 +178,13 @@ export class InformationComponent implements OnInit, OnDestroy {
     }
 
     showSectionArchived(): void {
-        this.hideSectionArchive = false;
+        this.hideSectionArchive = !this.hideSectionArchive;
+        if (this.hideSectionArchive === true) {
+            
+        }
     }
 
     showPropArchived(): void {
-        this.hidePropArchive = false;
+        this.hidePropArchive = !this.hidePropArchive;
     }
 }

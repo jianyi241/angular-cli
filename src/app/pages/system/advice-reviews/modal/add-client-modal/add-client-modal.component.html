@@ -1,0 +1,64 @@
+<form name="signupModalForm" #signupModalForm="ngForm" novalidate
+      [ngxFormValidator]="validatorConfig">
+    <div class="modal-main p40">
+        <div class="close-btn">
+            <img src="assets/img/icon/icon-close-black.svg" (click)="close()"/>
+        </div>
+        <div class="modal-header xs-mb-32">
+            <h2 class="modal-title">Add new client</h2>
+            <div class="modal-tip">{{names.length ? 'Fill in the below fields about the new client.' : 'Fill in the below fields about the new client. Note that maximum 6 family members including primary can be added.'}}</div>
+        </div>
+        <div class="modal-body">
+            <div class="form modal-form">
+                <div class="form-two xs-mb-32">
+                    <div class="form-group form-group-sign">
+                        <label class="control-label">
+                            <div>Client first name<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter your first name" name="firstName"
+                               required [(ngModel)]="signup.firstName"/>
+                    </div>
+                    <div class="form-group form-group-sign">
+                        <label class="control-label">
+                            <div>Client surname<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter your last name" name="lastName"
+                               required [(ngModel)]="signup.lastName"/>
+                    </div>
+                </div>
+                <div class="form-some">
+                    <div class="form-some-title">Family member/entity</div>
+                    <div class="form-some-list" *ngIf="names.length">
+                        <div class="form-group form-group-sign" *ngFor="let item of names;let i = index;">
+                            <label class="control-label">
+                                <div>Name</div>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" class="form-control" placeholder="Enter name"
+                                       [ngModelOptions]="{standalone: true}"
+                                       required [(ngModel)]="item.name"/>
+                                <span class="remove-btn tx-red tx-bold" (click)="removeNameInput(i)">Remove</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="empty-row"></div>
+                    <button class="form-some-add-btn btn btn-outline-purple-light" *ngIf="names.length < 6" (click)="addNameInput()">
+                        <img src="assets/img/icon/icon-add-blue.svg" />
+                        Add family member/entity
+                    </button>
+                    <div class="has-invalid-feedback " *ngIf="names.length >= 6">
+                        Maximum 6 family members/entities can be added.
+                    </div>
+                </div>
+                <div class="form-button">
+                    <div class="submit">
+                        <button (ngxFormSubmit)="submitForm();" class="btn btn-purple btn-sign tx-16 btn-block">
+                            Create client
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

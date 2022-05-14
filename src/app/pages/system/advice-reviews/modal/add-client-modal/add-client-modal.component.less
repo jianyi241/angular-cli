@@ -1,0 +1,72 @@
+.modal-main {
+  .close-btn {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    top: 16px;
+    right: 48px;
+    cursor: pointer;
+  }
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    .modal-tip {
+      font-family: 'Epilogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 160%;
+      color: #7C8493;
+      margin-top: 16px;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+  .form-two {
+    display: flex;
+    .form-group {
+      flex: 1;
+      &:last-child {
+        margin-left: 24px;
+      }
+    }
+  }
+  .form-some {
+    margin-bottom: 24px;
+    .form-some-title {
+      font-family: 'Epilogue';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #25324B;
+    }
+    .form-some-list {
+      border-top: 1px solid #D6DDEB;
+      margin-top: 9px;
+    }
+    .empty-row {
+      height: 24px;
+    }
+    .form-group {
+      padding: 16px;
+      background: #F7F7F7;
+      &:not(:last-child) {
+        box-shadow: 0px 1px 0px #D6DDEB;
+      }
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        > .remove-btn {
+          font-family: 'Epilogue';
+          font-size: 12px;
+          line-height: 160%;
+          margin-left: 34px;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

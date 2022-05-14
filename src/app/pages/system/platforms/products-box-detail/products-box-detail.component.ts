@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ConfigService} from "../../../../service/config.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-products-box-detail',
@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 })
 export class ProductsBoxDetailComponent implements OnInit {
 
+  productId: string
   tabs = [
     {
       name: 'Overview',
@@ -35,9 +36,10 @@ export class ProductsBoxDetailComponent implements OnInit {
       path: 'platform/product-box-detail/find-bdm'
     }
   ]
-  constructor(public configService: ConfigService,public router: Router) { }
+  constructor(public configService: ConfigService,public router: Router,private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.productId = this.activatedRoute.firstChild.snapshot.params['id'];
   }
 
   chooseTab(tab) {
@@ -45,6 +47,6 @@ export class ProductsBoxDetailComponent implements OnInit {
     // if (name === 'Fees & rates') {
     //   return
     // }
-    this.router.navigateByUrl(path);
+    this.router.navigateByUrl(`${path}/${this.productId}`);
   }
 }

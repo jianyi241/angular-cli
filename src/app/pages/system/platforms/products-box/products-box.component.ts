@@ -25,6 +25,10 @@ export class ProductsBoxComponent implements OnInit {
 
   getProductList() {
     console.log('search params ', this.productCondition)
+    this.productCondition.order = {
+      asc: true,
+      column: 'name'
+    }
     this.platformRepository.getProductList(this.productCondition).subscribe(res => {
       console.log('res ', res);
       this.productList = res.data
@@ -33,6 +37,6 @@ export class ProductsBoxComponent implements OnInit {
   }
 
   toView(id: string): void {
-    this.router.navigateByUrl(`/platform/product-box-detail/${id}`)
+    this.router.navigateByUrl(`/platform/product-box-detail/overview/${id}`)
   }
 }

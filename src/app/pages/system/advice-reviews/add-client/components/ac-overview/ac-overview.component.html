@@ -1,0 +1,99 @@
+<div class="form-content">
+    <div class="form-group-custom">
+        <div class="form-group-left" style="width: 100%;">
+            <label class="control-label">Basic information</label>
+            <p class="info">
+                Your client information will appear on the Suitability Review. You can update this information anytime
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Primary client</label>
+            <p class="info">
+            </p>
+        </div>
+        <div class="form-group-right">
+            <div class="form-group">
+                <label class="control-label control-label-custom">
+                    <div>First name <span class="label-required">*</span></div>
+                </label>
+                <input type="text" class="form-control"
+                       placeholder="Enter your first name" />
+            </div>
+            <div class="form-group">
+                <label class="control-label control-label-custom">
+                    <div>Last name <span class="label-required">*</span></div>
+                </label>
+                <input type="text" class="form-control"
+                       placeholder="Enter your last name"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label control-label-custom">
+                    <div>Work email<span class="label-required">*</span></div>
+                </label>
+                <input type="text" class="form-control"
+                       placeholder="Enter your work email"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Family members and associated entities</label>
+            <p class="info">
+            </p>
+        </div>
+        <div class="form-group-right">
+            <ng-container *ngIf="fullNames.length">
+                <div class="form-group" *ngFor="let val of fullNames;let i = index" >
+                    <label class="control-label control-label-custom">
+                        <div>Full name <span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control"
+                           placeholder="Enter name" [(ngModel)]="val.name" [ngModelOptions]="{standalone: true}"/>
+                    <button class="btn btn-text-danger btn-outline-purple-light remove-btn" (click)="removeNameInput(i)">Remove</button>
+                </div>
+            </ng-container>
+            <div class="has-invalid-feedback " *ngIf="fullNames.length >= 6">
+                Maximum 6 family members can be added.
+            </div>
+            <button class="form-some-add-btn btn btn-outline-purple-light" *ngIf="fullNames.length < 6" (click)="addNameInput()">
+                <img src="assets/img/icon/icon-add-blue.svg" />
+                Family member
+            </button>
+        </div>
+    </div>
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Client needs</label>
+            <p class="info">Articulate what this client's needs and priorities are when selecting a platform. This will appear on Suitability Reviews</p>
+        </div>
+
+        <div class="form-group-right">
+            <label class="control-label control-label-custom">
+                <div>Description</div>
+            </label>
+            <ckeditor [(ngModel)]="desc" [config]="config"></ckeditor>
+            <div class="tip-info">
+                <span class="info-left">Maximum 3,000 characters</span>
+                <span class="info-right">0 / 3,000</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-custom">
+        <div class="form-group-left">
+            <label class="control-label">Adviser</label>
+            <p class="info"></p>
+        </div>
+
+        <div class="form-group-right">
+            <label class="control-label control-label-custom">
+                <div>Adviser name<span class="label-required">*</span></div>
+            </label>
+            <ng-select class="select-single" [(ngModel)]="adviserName" placeholder="Select adviser" dropdownPosition="bottom">
+                <ng-option *ngFor="let name of adviserNames" [value]="name">{{name}}</ng-option>
+            </ng-select>
+        </div>
+    </div>
+</div>

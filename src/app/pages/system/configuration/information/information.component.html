@@ -3,8 +3,8 @@
         <div class="col-head">
             <div class="title">Sections</div>
             <div class="col-head-right" *ngIf="version.type">
-                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideSectionArchive)"
-                      (click)="showSectionArchived()">Show archived</span>
+                <span class="link-show" *ngIf="version.type != 'Publish'"
+                      (click)="showSectionArchived()">{{hideSectionArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type)"
                       (click)="saveSection()">+ New</span>
             </div>
@@ -32,8 +32,9 @@
                           [hidden]="!configService.isEditable(version.type)"></span>
                     <div class="title" [title]="section.name">{{section.name}}</div>
                     <ng-container *ngIf="version.type">
-                    <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id,$event)"
-                          [hidden]="!configService.isEditable(version.type)"></span>
+                        <span class="label label-red" *ngIf="configService.isArchive(section.status)">Archived</span>
+                        <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id,$event)"
+                              [hidden]="!configService.isEditable(version.type)"></span>
                     </ng-container>
                 </div>
             </div>
@@ -47,8 +48,8 @@
                     <div class="text">Showing 13 in-use items</div>
                 </div>
                 <div class="col-head-right" *ngIf="version.type">
-                    <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hidePropArchive)"
-                          (click)="showPropArchived()">Show archived</span>
+                    <span class="link-show" *ngIf="version.type != 'Publish'"
+                          (click)="showPropArchived()">{{hidePropArchive ? 'Show archived' : 'Hide archived'}}</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
                             (click)="saveProp()"
                             [hidden]="!configService.isEditable(version.type) || !reminder.groupId">+ New

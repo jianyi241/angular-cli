@@ -1,4 +1,5 @@
 import {UserInfo} from "./po/userInfo";
+import {BaseModel} from "./po/baseModel";
 
 export class RestPassword {
     openId: string;
@@ -13,10 +14,14 @@ export class LoginUser {
     accessToken?: string;
 }
 
-export class VerifyCode {
+export class VerifyCode extends BaseModel{
     openId: string;
     token: string;
     code: string;
+    account?: string;
+    status?: string;
+    password?: string;
+    loginTime?: string;
 }
 
 export class InviteUser extends UserInfo {

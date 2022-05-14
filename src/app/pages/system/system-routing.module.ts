@@ -50,6 +50,8 @@ import {PbdEsgComponent} from "./platforms/products-box-detail/children/pbd-esg/
 import {PbdFeaturesComponent} from "./platforms/products-box-detail/children/pbd-features/pbd-features.component";
 import {PbdFeesRatesComponent} from "./platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component";
 import {PbdFindBdmComponent} from "./platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component";
+import {ReviewListComponent} from "./advice-reviews/review-list/review-list.component";
+import {AddClientComponent} from "./advice-reviews/add-client/add-client.component";
 
 const routes: Routes = [
     {
@@ -217,19 +219,19 @@ const routes: Routes = [
                         path: 'overview/:id',
                         component: PbdOverviewComponent,
                     },{
-                        path: 'information',
+                        path: 'information/:id',
                         component: PbdInformationComponent,
                     },{
-                        path: 'esg',
+                        path: 'esg/:id',
                         component: PbdEsgComponent,
                     },{
-                        path: 'features',
+                        path: 'features/:id',
                         component: PbdFeaturesComponent,
                     },{
-                        path: 'fees-rates',
+                        path: 'fees-rates/:id',
                         component: PbdFeesRatesComponent,
                     },{
-                        path: 'find-bdm',
+                        path: 'find-bdm/:id',
                         component: PbdFindBdmComponent,
                     }
                 ]
@@ -272,6 +274,22 @@ const routes: Routes = [
                     },
                 ],
             },
+        ]
+    },
+    {
+        path: 'advice-review',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'review-list/:type',
+                component: ReviewListComponent
+            },
+            {
+                path: 'add-client/:tabName',
+                component: AddClientComponent,
+            }
         ]
     },
     {

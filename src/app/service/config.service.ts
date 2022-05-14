@@ -125,8 +125,8 @@ export class ConfigService {
             case 'Insert':
             case 'Update':
                 return 'bg-blue';
-            case 'Archive':
-                return 'bg-red';
+            // case 'Archive':
+            //     return 'bg-red';
             default:
                 return '';
         }

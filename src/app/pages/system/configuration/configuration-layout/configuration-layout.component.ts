@@ -110,6 +110,7 @@ export class ConfigurationLayoutComponent implements OnInit {
                 return;
             }
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
             this.router.navigateByUrl(`/configuration/configuration-tab/${urlSegment.path}/${this.version.id}`)
             if (this.version.type === VersionType.Draft.value) {
