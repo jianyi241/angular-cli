@@ -10,6 +10,7 @@ export class Constants {
         extraPlugins: 'emoji',
         editorplaceholder: "Description...",
         readOnly: false,
+        contentsCss:['contents.css'],
         toolbarGroups: [
             { name: 'insert', groups: [ 'insert' ] },
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
