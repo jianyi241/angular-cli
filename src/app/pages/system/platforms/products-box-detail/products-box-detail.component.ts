@@ -16,6 +16,7 @@ import PlatformEsg from "../../../../model/po/platformEsg";
 })
 export class ProductsBoxDetailComponent implements OnInit {
 
+
   productId: string
   versionId: string
   platformOverviewInfo: PlatformOverview | PlatformInformation | PlatformEsg = new PlatformOverview()
@@ -60,7 +61,6 @@ export class ProductsBoxDetailComponent implements OnInit {
   ngOnInit(): void {
     this.productId = this.activatedRoute.firstChild.snapshot.params['id'];
     this.versionId = this.activatedRoute.firstChild.snapshot.params['version'];
-    console.log('versionId 111222', this.versionId)
     this.getFreezeData()
   }
 
@@ -80,6 +80,8 @@ export class ProductsBoxDetailComponent implements OnInit {
   }
 
   editProduct() : void{
+    console.log('versionid produtid ' + this.productId)
+    console.log('versionid produtid ' + this.versionId)
     this.router.navigateByUrl(`/platform/product-tab/overview/${this.productId}/${this.versionId || Constants.VERSION}`);
   }
 }

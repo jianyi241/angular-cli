@@ -50,6 +50,6 @@ export class ProductsBoxComponent implements OnInit {
   }
 
   toView(product: ProductInfo): void {
-    this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/${TabType.overview.value}/${product.versionId || Constants.VERSION}`)
+    this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/${product.versionId || Constants.VERSION}/${TabType.overview.value}`)
   }
 }
