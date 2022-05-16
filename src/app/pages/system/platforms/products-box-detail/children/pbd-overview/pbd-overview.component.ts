@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlatformRepository} from "../../../../../../repository/platform-repository";
 import {ActivatedRoute} from "@angular/router";
 import PlatformOverview from "../../../../../../model/po/platformOverview";
-import PlatformInformation from "../../../../../../model/po/platformInformation";
-import PlatformEsg from "../../../../../../model/po/platformEsg";
 
 @Component({
   selector: 'app-pbd-overview',
@@ -14,7 +12,7 @@ export class PbdOverviewComponent implements OnInit {
 
   versionId: string
   productId: string
-  platformOverviewFreezeInfo: PlatformOverview | PlatformInformation | PlatformEsg = new PlatformOverview()
+  platformOverviewFreezeInfo: PlatformOverview = new PlatformOverview()
   constructor(private platformRepository: PlatformRepository,
               private activatedRoute: ActivatedRoute) { }
 
@@ -29,7 +27,7 @@ export class PbdOverviewComponent implements OnInit {
   }
 
   getFreezeData() {
-    this.platformRepository.getPlatformFreezeData(this.productId,1).subscribe(res => {
+    this.platformRepository.getPlatformFreezeData<PlatformOverview>(this.productId,1).subscribe(res => {
       console.log('get freezeData ===> ',res)
       this.platformOverviewFreezeInfo = res.data;
     },err => {})

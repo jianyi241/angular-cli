@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlatformRepository} from "../../../../repository/platform-repository";
@@ -6,8 +6,6 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {Constants} from "../../../../model/constants";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import PlatformOverview from "../../../../model/po/platformOverview";
-import PlatformInformation from "../../../../model/po/platformInformation";
-import PlatformEsg from "../../../../model/po/platformEsg";
 
 @Component({
   selector: 'app-products-box-detail',
@@ -19,7 +17,7 @@ export class ProductsBoxDetailComponent implements OnInit {
 
   productId: string
   versionId: string
-  platformOverviewInfo: PlatformOverview | PlatformInformation | PlatformEsg = new PlatformOverview()
+  platformOverviewInfo: PlatformOverview = new PlatformOverview()
   tabs = [
     {
       name: 'Overview',
