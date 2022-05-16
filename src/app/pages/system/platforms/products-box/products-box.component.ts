@@ -6,6 +6,7 @@ import {ProductInfo} from "../../../../model/po/productInfo";
 import {ConfigService} from "../../../../service/config.service";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {Constants} from "../../../../model/constants";
+import {TabType} from "../../../../model/enums/tab-type";
 
 @Component({
   selector: 'app-products-box',
@@ -49,6 +50,6 @@ export class ProductsBoxComponent implements OnInit {
   }
 
   toView(product: ProductInfo): void {
-    this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/1/${product.versionId || Constants.VERSION}`)
+    this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/${TabType.overview.value}/${product.versionId || Constants.VERSION}`)
   }
 }

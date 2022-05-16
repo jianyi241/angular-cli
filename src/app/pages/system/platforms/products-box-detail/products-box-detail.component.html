@@ -1,19 +1,19 @@
 <div class="main products-box-detail">
-    <div class="banner">
+    <div class="banner" [ngStyle]="{background: 'url('+ platformOverviewInfo.platformBanner?.visitUrl +') center center/cover no-repeat;'}">
         <div class="banner-content">
             <div class="links">
                 <div class="link main-link">
                     <img src="/assets/img/icon/icon-arr-left-white.svg">
-                    BT Panorama
+                    {{platformOverviewInfo.platformName}}
                 </div>
                 <div class="link sub-link">
-                    Go to BT website
+                    Go to {{platformOverviewInfo.platformWebsite}}
                     <img src="/assets/img/icon/icon-arr-right-s-white.svg">
                 </div>
             </div>
             <div class="info">
                 <div class="logo">
-                    <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F30%2F38%2F58107dc178bf4_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654740229&t=0afa42065599d90fb298385f27c362cf" />
+                    <img [src]="platformOverviewInfo.platformLogo?.visitUrl" />
                 </div>
                 <div class="other">
                     <div class="display-items">
@@ -23,7 +23,7 @@
                             </div>
                             <div class="item-right">
                                 <div class="item-label">Launched</div>
-                                <div class="item-value">July 31, 2011</div>
+                                <div class="item-value">{{platformOverviewInfo.dateOfLaunch}}</div>
                             </div>
                         </div><div class="item">
                         <div class="item-left">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="item-right">
                             <div class="item-label">Netflows in last 12 months</div>
-                            <div class="item-value">$40B+</div>
+                            <div class="item-value">{{platformOverviewInfo.netFlows}}</div>
                         </div>
                     </div><div class="item">
                         <div class="item-left">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="item-right">
                             <div class="item-label">FUA</div>
-                            <div class="item-value">$40B+</div>
+                            <div class="item-value">{{platformOverviewInfo.fundsUnder}}</div>
                         </div>
                     </div><div class="item">
                         <div class="item-left">
@@ -47,18 +47,18 @@
                         </div>
                         <div class="item-right">
                             <div class="item-label">Market share by FUA</div>
-                            <div class="item-value">$40B+</div>
+                            <div class="item-value">{{platformOverviewInfo.marketShare}}</div>
                         </div>
                     </div>
                     </div>
                     <div class="btn-group">
                         <button class="btn btn-purple compare-btn">
                             <img src="/assets/img/icon/icon-building-white.svg" />
-                            Compare BT Panorama
+                            Compare {{platformOverviewInfo.platformName}}
                         </button>
                         <button class="btn btn-outline-purple xs-ml-24 edit-btn" *ngIf="!currentUserService.isAdviceUser()" (click)="editProduct()">
                             <img src="/assets/img/icon/icon-edit-white.svg" />
-                            Edit BT Panorama
+                            Edit{{platformOverviewInfo.platformName}}
                         </button>
                     </div>
                 </div>

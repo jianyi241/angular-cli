@@ -3,9 +3,11 @@ import {ConfigService} from "../../../../service/config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlatformRepository} from "../../../../repository/platform-repository";
 import {TabType} from "../../../../model/enums/tab-type";
-import {ProductInfo} from "../../../../model/po/productInfo";
 import {Constants} from "../../../../model/constants";
 import {CurrentUserService} from "../../../../service/current-user.service";
+import PlatformOverview from "../../../../model/po/platformOverview";
+import PlatformInformation from "../../../../model/po/platformInformation";
+import PlatformEsg from "../../../../model/po/platformEsg";
 
 @Component({
   selector: 'app-products-box-detail',
@@ -16,6 +18,7 @@ export class ProductsBoxDetailComponent implements OnInit {
 
   productId: string
   versionId: string
+  platformOverviewInfo: PlatformOverview | PlatformInformation | PlatformEsg = new PlatformOverview()
   tabs = [
     {
       name: 'Overview',
@@ -44,23 +47,27 @@ export class ProductsBoxDetailComponent implements OnInit {
     },
     {
       name: 'Find BDM',
-      path: 'platform/product-box-detail/find-bdm'
+      path: 'platform/product-box-detail/find-bdm',
+      type: 9
     }
   ]
-  constructor(public configService: ConfigService,public router: Router,private activatedRoute: ActivatedRoute,private platformService: PlatformRepository,public currentUserService: CurrentUserService) { }
+  constructor(public configService: ConfigService,
+              public router: Router,
+              private activatedRoute: ActivatedRoute,
+              private platformRepository: PlatformRepository,
+              public currentUserService: CurrentUserService) { }
 
   ngOnInit(): void {
     this.productId = this.activatedRoute.firstChild.snapshot.params['id'];
-    this.activatedRoute.params.subscribe(res => {
-      this.versionId = res['version']
-      console.log('versionId ', this.versionId)
-    })
+    this.versionId = this.activatedRoute.firstChild.snapshot.params['version'];
+    console.log('versionId 111222', this.versionId)
     this.getFreezeData()
   }
 
   getFreezeData() {
-    this.platformService.getPlatformFreezeData(this.productId,1).subscribe(res => {
+    this.platformRepository.getPlatformFreezeData(this.productId,1).subscribe(res => {
       console.log('get freezeData ===> ',res)
+      this.platformOverviewInfo = res.data;
     },err => {})
   }
 
@@ -69,7 +76,7 @@ export class ProductsBoxDetailComponent implements OnInit {
     // if (name === 'Fees & rates') {
     //   return
     // }
-    this.router.navigateByUrl(`${path}/${this.productId}/${type}`);
+    this.router.navigateByUrl(`${path}/${this.productId}/${this.versionId}/${type}`);
   }
 
   editProduct() : void{

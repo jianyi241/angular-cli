@@ -8,6 +8,7 @@ import {ConfigService} from "../../../../service/config.service";
 import {ProductCondition} from "../../../../model/condition/product-condition";
 import {CurrentUser} from "../../../../model/vo/currentUser";
 import {CurrentUserService} from "../../../../service/current-user.service";
+import {TabType} from "../../../../model/enums/tab-type";
 
 @Component({
     selector: 'app-products',
@@ -55,7 +56,7 @@ export class ProductsComponent implements OnInit {
     }
 
     toView(product: ProductInfo) : void{
-        this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/1/${product.versionId || Constants.VERSION}`)
+        this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/${TabType.overview.value}/${product.versionId || Constants.VERSION}`)
     }
 
     editProduct(product: ProductInfo) : void{
