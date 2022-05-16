@@ -1,5 +1,8 @@
 <div class="main products-box-detail">
-    <div class="banner" [ngStyle]="{background: 'url('+ platformOverviewInfo.platformBanner?.visitUrl +') center center/cover no-repeat;'}">
+    <div class="banner">
+        <div class="banner-bg-image">
+            <img [src]="platformOverviewInfo.platformBanner?.visitUrl" />
+        </div>
         <div class="banner-content">
             <div class="links">
                 <div class="link main-link">
@@ -17,7 +20,7 @@
                 </div>
                 <div class="other">
                     <div class="display-items">
-                        <div class="item">
+                        <div class="item" *ngIf="platformOverviewInfo.dateOfLaunch">
                             <div class="item-left">
                                 <img src="/assets/img/icon/icon-platform-fire.svg" />
                             </div>
@@ -25,7 +28,7 @@
                                 <div class="item-label">Launched</div>
                                 <div class="item-value">{{platformOverviewInfo.dateOfLaunch}}</div>
                             </div>
-                        </div><div class="item">
+                        </div><div class="item" *ngIf="platformOverviewInfo.netFlows">
                         <div class="item-left">
                             <img src="/assets/img/icon/icon-platform-statis.svg" />
                         </div>
@@ -33,7 +36,7 @@
                             <div class="item-label">Netflows in last 12 months</div>
                             <div class="item-value">{{platformOverviewInfo.netFlows}}</div>
                         </div>
-                    </div><div class="item">
+                    </div><div class="item" *ngIf="platformOverviewInfo.fundsUnder">
                         <div class="item-left">
                             <img src="/assets/img/icon/icon-platform-dollar.svg" />
                         </div>
@@ -41,7 +44,7 @@
                             <div class="item-label">FUA</div>
                             <div class="item-value">{{platformOverviewInfo.fundsUnder}}</div>
                         </div>
-                    </div><div class="item">
+                    </div><div class="item" *ngIf="platformOverviewInfo.marketShare">
                         <div class="item-left">
                             <img src="/assets/img/icon/icon-platform-persons.svg" />
                         </div>
@@ -52,13 +55,13 @@
                     </div>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-purple compare-btn">
-                            <img src="/assets/img/icon/icon-building-white.svg" />
-                            Compare {{platformOverviewInfo.platformName}}
-                        </button>
-                        <button class="btn btn-outline-purple xs-ml-24 edit-btn" *ngIf="!currentUserService.isAdviceUser()" (click)="editProduct()">
+<!--                        <button class="btn btn-purple compare-btn">-->
+<!--                            <img src="/assets/img/icon/icon-building-white.svg" />-->
+<!--                            Compare {{platformOverviewInfo.platformName}}-->
+<!--                        </button>-->
+                        <button class="btn btn-purple compare-btn" *ngIf="!currentUserService.isAdviceUser()" (click)="editProduct()">
                             <img src="/assets/img/icon/icon-edit-white.svg" />
-                            Edit{{platformOverviewInfo.platformName}}
+                            Edit&nbsp;{{platformOverviewInfo.platformName}}
                         </button>
                     </div>
                 </div>

@@ -13,6 +13,8 @@ import {SubProduct} from "../model/po/subProduct";
 import {ProductAccessVo} from "../model/vo/productAccessVo";
 import {Page} from "../model/vo/page";
 import {ProductCondition} from "../model/condition/product-condition";
+import PlatformView from "../model/po/platformView";
+import PlatformOverview from "../model/po/platformOverview";
 
 @Injectable({
     providedIn: 'root'
@@ -101,7 +103,7 @@ export class PlatformRepository {
         return this.http.get<HttpResult<T>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
     }
 
-    getPlatformViewByTabType(productId: string,tabType: number): Observable<HttpResult<any>> {
-        return this.http.get<HttpResult<any>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
+    getPlatformViewByTabType<T>(productId: string,tabType: number): Observable<HttpResult<PlatformView<T>>> {
+        return this.http.get<HttpResult<PlatformView<T>>>(`${environment.baseURL}/product/getPlatformViewByTabType/${productId}/${tabType}`);
     }
 }

@@ -1,29 +1,8 @@
 <div class="pbd-esg">
     <div class="content-left">
-        <div class="txt txt-market">
-            <div class="txt-title">Social initiatives and policies</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
-                <p>BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</p>
-            </div>
-        </div>
-        <div class="txt txt-history">
-            <div class="txt-title">Environmental initiatives and policies</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
-            </div>
-        </div>
-        <div class="txt txt-ownership">
-            <div class="txt-title">Governance initiatives and policies</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
-            </div>
-        </div>
-        <div class="txt txt-ownership">
-            <div class="txt-title">Governance initiatives and policies</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
-            </div>
+        <div class="txt txt-market" *ngFor="let item of platformViewAllInfo.properties">
+            <div class="txt-title">{{item.propName}}</div>
+            <div class="txt-content" [innerHTML]="item.propValue"></div>
         </div>
     </div>
     <div class="content-right">
@@ -31,19 +10,19 @@
             <div class="info-content">
                 <div class="info-item">
                     <div class="item-label">Diversity targets in place for board</div>
-                    <div class="item-value">No</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.diversityBoard}}</div>
                 </div>
                 <div class="info-item">
                     <div class="item-label">Commitment to reducing Scope 1 and 2 emissions</div>
-                    <div class="item-value">No</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.commitmentEmployees}}</div>
                 </div>
                 <div class="info-item">
                     <div class="item-label">Diversity targets in place for employees</div>
-                    <div class="item-value">No</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.diversityEmployees}}</div>
                 </div>
                 <div class="info-item">
                     <div class="item-label">Percentage of directors who are independent</div>
-                    <div class="item-value">56%</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.percentageOfDirectors}}<span *ngIf="platformViewAllInfo.freezeData?.percentageOfDirectors">%</span></div>
                 </div>
             </div>
         </div>

@@ -20,9 +20,22 @@ import {BaseModel} from "./baseModel";
 export class ProductPropInfo extends BaseModel{
     attachmentId?: string;
     attachmentVo?: Attachment = new Attachment();
+    attachment?: Attachment = new Attachment();
     description?: string;
     propValue?: string;
     shProductId?: string;
     shPropertyId?: string;
+    bmFlag?: boolean;
+    freezeFieldName?: string;
+    moveFlag?: boolean;
+    prodPropDesc?: string;
+    prodPropId?: string;
+    propDesc?: string;
+    propName?: string;
+    status?: string; // Normal,Insert,Update,Archive
+    tabType?: string;
+    type?: string;
+    versionId?: string;
+    vsFlag?: boolean;
 }
 

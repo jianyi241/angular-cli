@@ -9,8 +9,10 @@
             </div>
         </div>
     </div>
-    <div class="head-tip" *ngIf="showTip('frozenParent')" [ngClass]="{'warn':version.type == 'Draft' && titleFlag}">
-        <div class="head-tip-content publish-tip" *ngIf="showTip('frozen')">
+<!--    *ngIf="showTip('frozenParent')" [ngClass]="{'warn':version.type == 'Draft' && titleFlag}"-->
+    <div class="head-tip" >
+<!--         *ngIf="showTip('frozen')"-->
+        <div class="head-tip-content publish-tip">
             <div class="tip-content content-left">
                 <div class="title tx-yellow">The configurator is frozen. </div>
 <!--                <div class="text tx-yellow" [title]="">Configurator updated at 2:34pm 28 Mar 22 by Bailey Hao. The new/updated fields are pending on supplier’s submission</div>-->
@@ -20,7 +22,8 @@
                     <span class="title tx-yellow">{{hasApproveCount}}/{{totalCount}}&nbsp;&nbsp;</span>
                     <span class="text tx-yellow">platforms approved</span>
                 </div>
-                <div class="btn-control-group" [hidden]="hiddenEditBtn('tipPublishBtn')">
+<!--                [hidden]="hiddenEditBtn('tipPublishBtn')"-->
+                <div class="btn-control-group" >
                     <button class="btn btn-purple xs-ml-24" (click)="pushConfig()">Publish</button>
                 </div>
             </div>

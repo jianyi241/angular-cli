@@ -77,6 +77,9 @@ export class ProductLayoutComponent implements OnInit {
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
             this.configService.currentVersion = res.data || this.version;
+            if (this.version.type === VersionType.Draft.value) {
+                this.getProjectButtonFlag()
+            }
         });
     }
 
@@ -222,7 +225,9 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     getProjectButtonFlag() {
+        console.log('getProductButtonFlag ===> ')
         this.platformRepository.getProductButtonFlag({productId: this.product.id}).subscribe(res => {
+            console.log('getProductButtonFlag res ===> ', res)
             this.supplierSubmitType = res.msg
         }, err => {
         })

@@ -1,10 +1,10 @@
 <div class="form-content">
     <div class="form-group-custom form-content-column xs-pt-0">
         <div class="form-column-left">
-            <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
+            <div class="main-menu" *ngIf="groups.length > 0">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
-                    <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
-                        <ng-container *ngIf="!configService.isArchive(group.status, version.type)">
+                    <ngb-panel *ngFor="let group of groups,let i =index " id="ngb-panel-{{i}}">
+                        <ng-container>
                             <ng-template ngbPanelHeader let-opened="opened">
                                 <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
                                         [title]="group.name">
@@ -16,9 +16,8 @@
 
                             <ng-template ngbPanelContent>
                                 <div class="main-sub-menu"
-                                     *ngFor="let subGroupItem of group.subList">
+                                     *ngFor="let subGroupItem of group.subGroups">
                                     <div class="sub-title"
-                                         *ngIf="!configService.isArchive(subGroupItem.status, version.type)"
                                          (click)="chooseSubGroup(subGroupItem)"
                                          [title]="subGroupItem.name">
                                         <div class="text">{{subGroupItem.name}}</div>

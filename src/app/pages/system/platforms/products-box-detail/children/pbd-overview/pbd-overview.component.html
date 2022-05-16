@@ -1,29 +1,20 @@
 <div class="pbd-overview">
     <div class="content-left">
         <div class="txt txt-introduce">
-            <div class="txt-content">
-                <p>BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</p>
-                <p>BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</p>
-                <p>BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</p>
-            </div>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.description"></div>
         </div>
         <div class="txt txt-market">
             <div class="txt-title">Target market</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
-                <p>BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</p>
-            </div>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.targetMarket"></div>
         </div>
         <div class="txt txt-history">
             <div class="txt-title">History</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.history">
             </div>
         </div>
         <div class="txt txt-ownership">
             <div class="txt-title">Ownership structure</div>
-            <div class="txt-content">
-                <p>Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.</p>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.ownership">
             </div>
         </div>
     </div>
@@ -31,12 +22,12 @@
         <div class="summary-info">
             <div class="info-title">In most recent financial year</div>
             <div class="info-txt">
-                <div class="txt-row"><span>13,908</span> clients/members on platform</div>
-                <div class="txt-row"><span>9,081</span>  authorised representative users</div>
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfClients}}</span> clients/members on platform</div>
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfAuthorised}}</span>  authorised representative users</div>
             </div>
             <div class="info-other">
-                <div>Parent company profitable</div>
-                <div>Platform operations profitable</div>
+                <div *ngIf="platformOverviewFreezeInfo.parentCompany==='yes'">Parent company profitable</div>
+                <div *ngIf="platformOverviewFreezeInfo.platformOperations==='yes'">Platform operations profitable</div>
             </div>
         </div>
         <div class="contact-info">
@@ -49,49 +40,49 @@
                     <img src="assets/img/icon/icon-contact-clock.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre operating hours</div>
-                        <div class="item-value">9:00am - 5:00pm Mon-Sat </div>
+                        <div class="item-value">{{platformInformationFreezeInfo.contactCentreHours}}</div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-phone.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre number</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-value">{{platformInformationFreezeInfo.contactCentreNumber}} </div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-mail.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre email address</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedEmail}} </div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-info.svg" class="item-icon" />
                     <div class="item-value-info">
-                        <div class="item-label">Contact centre email address</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-label">Online chat support</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedChat}}</div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-person.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Dedicated support staff for advisers</div>
-                        <div class="item-value">xxxxxxxxxxxxxxx</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedAdvisers}}</div>
                     </div>
                 </div>
-                <div class="info-item">
-                    <img src="assets/img/icon/icon-contact-tea.svg" class="item-icon" />
-                    <div class="item-value-info">
-                        <div class="item-label">Out of hours support</div>
-                        <div class="item-value link">Submit a ticket</div>
-                    </div>
-                </div>
+<!--                <div class="info-item">-->
+<!--                    <img src="assets/img/icon/icon-contact-tea.svg" class="item-icon" />-->
+<!--                    <div class="item-value-info">-->
+<!--                        <div class="item-label">Out of hours support</div>-->
+<!--                        <div class="item-value link">Submit a ticket</div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-address.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Postal address for forms and documents</div>
-                        <div class="item-value">44 Botney Road, Alexandria, 2000, NSW</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.postalAddress}}</div>
                     </div>
                 </div>
                 <div class="info-item">

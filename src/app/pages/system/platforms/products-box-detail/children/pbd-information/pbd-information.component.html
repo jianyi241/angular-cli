@@ -1,16 +1,16 @@
 <div class="pbd-information">
     <div class="content-left">
         <div class="info-list">
-            <div class="list-item" *ngFor="let item of list">
-                <div class="item-name">{{item[0]}}</div>
-                <div class="item-value">{{item[1]}}</div>
+            <div class="list-item" *ngFor="let item of properties">
+                <div class="item-name">{{item.propName}}</div>
+                <div class="item-value" [innerHTML]="item.propValue"></div>
             </div>
         </div>
     </div>
     <div class="content-right">
         <div class="summary-info">
-            <div class="txt-row"><span>0</span> service failures in the last 3 years</div>
-            <div class="txt-row"><span>9</span> lawsuits/regulatory actions in the last 3 years</div>
+            <div class="txt-row"><span>{{platformViewAllInfo.freezeData?.numberOfService}}</span> service failures in the last 3 years</div>
+            <div class="txt-row"><span>{{platformViewAllInfo.freezeData?.numberOfLawsuits}}</span> lawsuits/regulatory actions in the last 3 years</div>
         </div>
         <div class="contact-info">
             <div class="info-top">
@@ -22,49 +22,49 @@
                     <img src="assets/img/icon/icon-contact-clock.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre operating hours</div>
-                        <div class="item-value">9:00am - 5:00pm Mon-Sat </div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.contactCentreHours}}</div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-phone.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre number</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.contactCentreNumber}} </div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-mail.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Contact centre email address</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.dedicatedEmail}} </div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-info.svg" class="item-icon" />
                     <div class="item-value-info">
-                        <div class="item-label">Contact centre email address</div>
-                        <div class="item-value">+44 1245 572 135 </div>
+                        <div class="item-label">Online chat support</div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.dedicatedChat}}</div>
                     </div>
                 </div>
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-person.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Dedicated support staff for advisers</div>
-                        <div class="item-value">xxxxxxxxxxxxxxx</div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.dedicatedAdvisers}}</div>
                     </div>
                 </div>
-                <div class="info-item">
-                    <img src="assets/img/icon/icon-contact-tea.svg" class="item-icon" />
-                    <div class="item-value-info">
-                        <div class="item-label">Out of hours support</div>
-                        <div class="item-value link">Submit a ticket</div>
-                    </div>
-                </div>
+                <!--                <div class="info-item">-->
+                <!--                    <img src="assets/img/icon/icon-contact-tea.svg" class="item-icon" />-->
+                <!--                    <div class="item-value-info">-->
+                <!--                        <div class="item-label">Out of hours support</div>-->
+                <!--                        <div class="item-value link">Submit a ticket</div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="info-item">
                     <img src="assets/img/icon/icon-contact-address.svg" class="item-icon" />
                     <div class="item-value-info">
                         <div class="item-label">Postal address for forms and documents</div>
-                        <div class="item-value">44 Botney Road, Alexandria, 2000, NSW</div>
+                        <div class="item-value">{{platformViewAllInfo.freezeData?.postalAddress}}</div>
                     </div>
                 </div>
                 <div class="info-item">

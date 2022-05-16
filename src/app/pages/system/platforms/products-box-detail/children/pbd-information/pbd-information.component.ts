@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import PlatformInformation from "../../../../../../model/po/platformInformation";
+import PlatformOverview from "../../../../../../model/po/platformOverview";
+import {TabType} from "../../../../../../model/enums/tab-type";
+import {PlatformRepository} from "../../../../../../repository/platform-repository";
+import {ActivatedRoute} from "@angular/router";
+import PlatformView from "../../../../../../model/po/platformView";
+import {ProductPropInfo} from "../../../../../../model/po/productPropInfo";
 
 @Component({
   selector: 'app-pbd-information',
@@ -7,13 +14,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PbdInformationComponent implements OnInit {
 
-  list = [
-    ['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],['pbd-information','FJSIER092JFJSJO'],
-  ]
+  productId: string
+  versionId: string
+  platformViewAllInfo: PlatformView<PlatformInformation> = new PlatformView<PlatformInformation>();
+  properties: Array<ProductPropInfo> = new Array<ProductPropInfo>();
 
-  constructor() { }
+  constructor(private platformRepository: PlatformRepository,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(res => {
+      this.versionId = res['version']
+      this.productId = res['id']
+      this.getAllPlatformView()
+    })
+  }
+
+  getAllPlatformView(): void{
+    console.log('productId ', this.productId, '--- ')
+    this.platformRepository.getPlatformViewByTabType<PlatformInformation>(this.productId, TabType.information.value) .subscribe(res => {
+      this.platformViewAllInfo = res.data
+      let properties = res.data.groups.flatMap(item => {
+        return item.properties
+      })
+      this.properties = properties
+      console.log('properties ===> ', properties)
+      console.log('getAllPlatformView information ===> ', this.platformViewAllInfo)
+    },err => {})
   }
 
 }
