@@ -5,10 +5,10 @@
                 Platform profiles
             </div>
             <div class="btn-control-group">
-                <button class="btn btn-purple xs-ml-24">
-                    <img src="assets/img/icon/icon-add.svg">
-                    Add platform
-                </button>
+<!--                <button class="btn btn-purple xs-ml-24" *ngIf="currentUserService.isSupplierUser()" (click)="addPlatform()">-->
+<!--                    <img src="assets/img/icon/icon-add.svg">-->
+<!--                    Add platform-->
+<!--                </button>-->
             </div>
         </div>
 
@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
                                     <div class="edit-btn-group">
-                                        <button class="btn btn-outline-purple-light btn-small" (click)="toView(product.id)">View</button>
+                                        <button class="btn btn-outline-purple-light btn-small" (click)="toView(product)">View</button>
                                         <button class="btn btn-purple-border btn-tiny xs-ml-16"
                                                 (click)="editProduct(product)">
                                             Edit

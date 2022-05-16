@@ -4,6 +4,8 @@ import {PlatformRepository} from "../../../../repository/platform-repository";
 import {ProductCondition} from "../../../../model/condition/product-condition";
 import {ProductInfo} from "../../../../model/po/productInfo";
 import {ConfigService} from "../../../../service/config.service";
+import {CurrentUserService} from "../../../../service/current-user.service";
+import {Constants} from "../../../../model/constants";
 
 @Component({
   selector: 'app-products-box',
@@ -17,10 +19,20 @@ export class ProductsBoxComponent implements OnInit {
 
   constructor(private router: Router,
               private platformRepository: PlatformRepository,
-              public configService: ConfigService) { }
+              public configService: ConfigService,
+              public currentUserService: CurrentUserService) { }
 
   ngOnInit(): void {
     this.getProductList()
+  }
+
+  addPlatform(): void {
+    console.log('begin add platform')
+    this.platformRepository.addPlatform().subscribe(res => {
+      this.router.navigateByUrl(`/platform/product-tab/overview/${res.data.id}/${Constants.VERSION}`);
+    },err => {
+      console.log(err,'err')
+    })
   }
 
   getProductList() {
@@ -36,7 +48,7 @@ export class ProductsBoxComponent implements OnInit {
     })
   }
 
-  toView(id: string): void {
-    this.router.navigateByUrl(`/platform/product-box-detail/overview/${id}`)
+  toView(product: ProductInfo): void {
+    this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/1/${product.versionId || Constants.VERSION}`)
   }
 }

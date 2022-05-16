@@ -6,6 +6,8 @@ import {Constants} from "../../../../model/constants";
 import {Page} from "../../../../model/vo/page";
 import {ConfigService} from "../../../../service/config.service";
 import {ProductCondition} from "../../../../model/condition/product-condition";
+import {CurrentUser} from "../../../../model/vo/currentUser";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
     selector: 'app-products',
@@ -18,7 +20,8 @@ export class ProductsComponent implements OnInit {
     productPage: Page<ProductInfo> = new Page<ProductInfo>();
     constructor(private router: Router,
                 private platformRepository: PlatformRepository,
-                public configService: ConfigService) {
+                public configService: ConfigService,
+                public currentUserService: CurrentUserService) {
     }
 
     ngOnInit(): void {
@@ -29,17 +32,16 @@ export class ProductsComponent implements OnInit {
         this.getProductList();
     }
 
-
-    getProductList() {
+    getProductList(): void{
         this.platformRepository.getProductsPage(this.productCondition).subscribe(res => {
             this.productPage = res.data;
         },err => {})
     }
-    pageChange(current: number) {
+    pageChange(current: number): void {
         this.productCondition.current = current
         this.getProductList()
     }
-    sortList(column: string,type: number) {
+    sortList(column: string,type: number): void {
         if (type === 0) {
             this.productCondition.order = {column: 'name', asc: true}
         } else {
@@ -47,16 +49,16 @@ export class ProductsComponent implements OnInit {
         }
         this.getProductList()
     }
-    searchList() {
+    searchList() : void{
         this.productCondition.current = 1
         this.getProductList()
     }
 
-    toView(id: string) {
-        this.router.navigateByUrl(`/platform/product-box-detail/overview/${id}`)
+    toView(product: ProductInfo) : void{
+        this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/1/${product.versionId || Constants.VERSION}`)
     }
 
-    editProduct(product: ProductInfo) {
+    editProduct(product: ProductInfo) : void{
         this.router.navigateByUrl(`/platform/product-tab/overview/${product.id}/${product.versionId || Constants.VERSION}`);
     }
 }

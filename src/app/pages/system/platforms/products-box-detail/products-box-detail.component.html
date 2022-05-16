@@ -56,10 +56,10 @@
                             <img src="/assets/img/icon/icon-building-white.svg" />
                             Compare BT Panorama
                         </button>
-<!--                        <button class="btn btn-outline-purple xs-ml-24 edit-btn">-->
-<!--                            <img src="/assets/img/icon/icon-edit-white.svg" />-->
-<!--                            Edit BT Panorama-->
-<!--                        </button>-->
+                        <button class="btn btn-outline-purple xs-ml-24 edit-btn" *ngIf="!currentUserService.isAdviceUser()" (click)="editProduct()">
+                            <img src="/assets/img/icon/icon-edit-white.svg" />
+                            Edit BT Panorama
+                        </button>
                     </div>
                 </div>
             </div>

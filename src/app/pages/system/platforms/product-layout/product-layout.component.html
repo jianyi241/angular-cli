@@ -32,11 +32,8 @@
                 <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"
                         (click)="editProduct()">Edit Product
                 </button>
-                <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('updateStatus')"
-                        (click)="updateVersionStatus('Wait')">Submit for review
-                </button>
-                <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('submit')" (click)="publishProduct()">
-                    Submit for review
+                <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('submit')"
+                        (click)="publishOrUpdateStatus()">Submit for review
                 </button>
             </div>
         </div>

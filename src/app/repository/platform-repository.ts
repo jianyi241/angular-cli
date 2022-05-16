@@ -88,4 +88,16 @@ export class PlatformRepository {
     getProductList(productCondition: ProductCondition): Observable<HttpResult<Array<ProductInfo>>> {
         return this.http.post<HttpResult<Array<ProductInfo>>>(environment.baseURL + '/product/getPlatformList', productCondition);
     }
+
+    addPlatform(): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/product/createPlatform',{});
+    }
+
+    getPlatformFreezeData(productId: string,tabType: number): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
+    }
+
+    getPlatformViewByTabType(productId: string,tabType: number): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
+    }
 }

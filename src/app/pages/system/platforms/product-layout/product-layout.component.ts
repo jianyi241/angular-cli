@@ -104,9 +104,7 @@ export class ProductLayoutComponent implements OnInit {
                 return this.version.type === 'Publish'
                 // && !this.configService.isEditable(this.version.type)
             } else if (type === 'submit') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'submit'
-            } else if (type === 'updateStatus') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'updateStatus'
+                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected)
             }
         }
     }
@@ -230,6 +228,14 @@ export class ProductLayoutComponent implements OnInit {
         })
     }
 
+    publishOrUpdateStatus(): void {
+        if (this.supplierSubmitType === 'updateStatus') {
+            this.updateVersionStatus('Wait')
+        } else if (this.supplierSubmitType === 'submit') {
+            this.publishProduct()
+        }
+    }
+
     publishProduct(): void {
         if (this.saveService.saveCheck(environment.baseURL + `/product/publish/${this.product.id}`)) {
             return;
@@ -253,11 +259,15 @@ export class ProductLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.router.navigateByUrl(`/`, {
-                skipLocationChange: true
-            }).then(r => {
-                this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
-            })
+            if (this.currentUserService.isSupplierUser()) {
+                console.log('add submit res ===> ', res)
+            } else {
+                this.router.navigateByUrl(`/`, {
+                    skipLocationChange: true
+                }).then(r => {
+                    this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
+                })
+            }
         })
     }
 
@@ -282,7 +292,11 @@ export class ProductLayoutComponent implements OnInit {
     backPage() {
         const versionType = this.version.type
         if (versionType !== 'History' && this.from !== 'history') {
-            this.router.navigateByUrl('/platform/product')
+            if (this.currentUserService.isAdminUser()) {
+                this.router.navigateByUrl('/platform/product')
+            } else {
+                this.router.navigateByUrl('/platform/product-box')
+            }
         } else {
             this.backHistory()
         }

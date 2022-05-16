@@ -216,22 +216,22 @@ const routes: Routes = [
                 component: ProductsBoxDetailComponent,
                 children: [
                     {
-                        path: 'overview/:id',
+                        path: 'overview/:id/:version/:type',
                         component: PbdOverviewComponent,
                     },{
-                        path: 'information/:id',
+                        path: 'information/:id/:version/:type',
                         component: PbdInformationComponent,
                     },{
-                        path: 'esg/:id',
+                        path: 'esg/:id/:version/:type',
                         component: PbdEsgComponent,
                     },{
-                        path: 'features/:id',
+                        path: 'features/:id/:version/:type',
                         component: PbdFeaturesComponent,
                     },{
-                        path: 'fees-rates/:id',
+                        path: 'fees-rates/:id/:version/:type',
                         component: PbdFeesRatesComponent,
                     },{
-                        path: 'find-bdm/:id',
+                        path: 'find-bdm/:id/:version/:type',
                         component: PbdFindBdmComponent,
                     }
                 ]

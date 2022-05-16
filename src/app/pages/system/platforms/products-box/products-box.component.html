@@ -5,8 +5,8 @@
                 Platform profiles
             </div>
             <div class="btn-control-group">
-                <button class="btn btn-purple  xs-ml-24">
-                    <img src="/assets/img/icon/icon-add.svg" />
+                <button class="btn btn-purple xs-ml-24" *ngIf="currentUserService.isSupplierUser()" (click)="addPlatform()">
+                    <img src="assets/img/icon/icon-add.svg">
                     Add platform
                 </button>
             </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-body">
             <div class="body-list">
-                <div class="list-item" *ngFor="let item of productList" (click)="toView(item.id)">
+                <div class="list-item" *ngFor="let item of productList" (click)="toView(item)">
                     <div class="item-cover">
                         <img [src]="item.platformLogo?.visitUrl" />
                     </div>
