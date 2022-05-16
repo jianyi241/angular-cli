@@ -1,21 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ConfigService} from "../../../../service/config.service";
-import {PlatformRepository} from "../../../../repository/platform-repository";
-import {Constants} from "../../../../model/constants";
-import {VersionRepository} from "../../../../repository/version-repository";
-import {Version} from "../../../../model/po/version";
-import {TabType} from "../../../../model/enums/tab-type";
-import {ProductInfo} from "../../../../model/po/productInfo";
-import {ToastRepository} from "../../../../repository/toast-repository";
-import * as moment from "moment";
-import {SaveService} from "../../../../service/save.service";
-import {environment} from "../../../../../environments/environment";
-import {VersionType} from "../../../../model/enums/version-type";
-import {FocusService} from "../../../../service/focus.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RejectModalComponent} from "../modal/reject-modal/reject-modal.component";
-import {CurrentUserService} from "../../../../service/current-user.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfigService} from '../../../../service/config.service';
+import {PlatformRepository} from '../../../../repository/platform-repository';
+import {Constants} from '../../../../model/constants';
+import {VersionRepository} from '../../../../repository/version-repository';
+import {Version} from '../../../../model/po/version';
+import {TabType} from '../../../../model/enums/tab-type';
+import {ProductInfo} from '../../../../model/po/productInfo';
+import {ToastRepository} from '../../../../repository/toast-repository';
+import * as moment from 'moment';
+import {SaveService} from '../../../../service/save.service';
+import {environment} from '../../../../../environments/environment';
+import {VersionType} from '../../../../model/enums/version-type';
+import {FocusService} from '../../../../service/focus.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RejectModalComponent} from '../modal/reject-modal/reject-modal.component';
+import {CurrentUserService} from '../../../../service/current-user.service';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 
 declare type TipInfo = {
@@ -36,8 +36,8 @@ export class ProductLayoutComponent implements OnInit {
     changeVersion: Version;
     changeTabs: Array<{ tabType: number }> = new Array<{ tabType: number }>();
     product: ProductInfo = new ProductInfo();
-    from: string = ''; // fromPage
-    supplierSubmitType: string = '';
+    from = ''; // fromPage
+    supplierSubmitType = '';
     currentTab: string;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -56,10 +56,10 @@ export class ProductLayoutComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(res => {
-            this.from = res.from
-        })
-        let versionId = this.activatedRoute.firstChild.snapshot.params[Constants.VERSION];
-        this.product.id = this.activatedRoute.firstChild.snapshot.params['productId'];
+            this.from = res.from;
+        });
+        const versionId = this.activatedRoute.firstChild.snapshot.params[Constants.VERSION];
+        this.product.id = this.activatedRoute.firstChild.snapshot.params.productId;
         this.version.id = versionId;
         this.getProduct();
         if (versionId != Constants.VERSION) {
@@ -69,21 +69,21 @@ export class ProductLayoutComponent implements OnInit {
         }
         this.getModelPublishChangeFlag();
         this.getChangeTabs();
-        let url = this.activatedRoute.firstChild?.snapshot?.url;
+        const url = this.activatedRoute.firstChild?.snapshot?.url;
         this.currentTab = url && url.length > 0 ? url[0].path : undefined;
     }
 
     getVersion(): void {
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
-            this.configService.currentVersion = res.data || this.version
-        })
+            this.configService.currentVersion = res.data || this.version;
+        });
     }
 
     getProduct(): void {
         this.platformRepository.productDetail(this.product.id).subscribe(res => {
             this.product = res.data || this.product;
-        })
+        });
     }
 
     getChangeTabs(): void {
@@ -269,6 +269,14 @@ export class ProductLayoutComponent implements OnInit {
 
     isChange(tabType: number): boolean {
         return this.changeTabs.some(c => c.tabType == tabType);
+    }
+
+    getVersionName() {
+        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`;
+    }
+
+    getVersionInfo() {
+        return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`;
     }
 
     backPage() {
