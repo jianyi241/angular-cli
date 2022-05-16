@@ -32,13 +32,13 @@
         </div>
         <div class="form-column-right">
             <div class="list">
-                <div class="item" *ngFor="let item of [1,2,3,4,5]">
-                    <div class="item-title">Online identity verification for AML/CTF purposes
+                <div class="item" *ngFor="let item of propertiesList">
+                    <div class="item-title">{{item.propName}}
                         <div class="tooltip-wrapper">
                             <ng-template #popContent>
                                 <div class="cell-popover">
                                     <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                    <div class="info" [innerHTML]="'<p>Tooltip content...</p>'"></div>
+                                    <div class="info" [innerHTML]="item.propDesc"></div>
                                     <div class="img-box">
 <!--                                        <img [src]="currentProdProp.attachmentVo?.visitUrl"/>-->
 <!--                                        <div class="btn-expand" (click)="showPic({closePopover:p})"><span-->
@@ -52,12 +52,17 @@
                     </div>
                     <div class="item-introduce">
                         Yes. This feature is avaliable.
-                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item)}" (click)="expandItem(item)"/>
+                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}" (click)="expandItem(item)"/>
                     </div>
-                    <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item)}">
-                        Nomad is part of the Information Technology Industry. We believe travellers want to experience real life and meet local people. Nomad has 30 total employees across all of its locations and generates $1.50 million in sales.
+                    <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}">
+                        <div [innerHTML]="item.prodPropDesc"></div>
                         <div class="content-image-list">
-                            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0515%2F465567a6j00qadpfz001cc000hs00b4c.jpg&refer=http%3A%2F%2Fdingyue.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655000586&t=768f918967e3926966c182ceae6ce04e" (click)="previewImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0515%2F465567a6j00qadpfz001cc000hs00b4c.jpg&refer=http%3A%2F%2Fdingyue.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655000586&t=768f918967e3926966c182ceae6ce04e')" />
+                            <div class="image-wrapper">
+                                <div class="max-btn" (click)="previewImage(item.attachment?.visitUrl)">
+                                    <img src="assets/img/icon/icon-expand.svg" />
+                                </div>
+                                <img [src]="item.attachment?.visitUrl" />
+                            </div>
                         </div>
                     </div>
                 </div>

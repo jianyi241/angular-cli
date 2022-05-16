@@ -85,9 +85,35 @@
         overflow: hidden;
         max-height: 0;
         > .content-image-list {
-          > img {
+          > .image-wrapper {
+            position: relative;
             height: 172px;
+            width: 275px;
             cursor: pointer;
+            margin: 0 11px 11px 0;
+            &:hover {
+              > .max-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+            > .max-btn {
+              display: none;
+              position: absolute;
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%,-50%);
+              background: #4640DE;
+              cursor: pointer;
+            }
+            > img {
+              width: 100%;
+              height: 100%;
+            }
           }
         }
         &.expand {

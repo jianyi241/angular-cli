@@ -1,12 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlatformRepository} from "../../../../../../repository/platform-repository";
-import {ProductInfo} from "../../../../../../model/po/productInfo";
-import {Constants} from "../../../../../../model/constants";
 import {ToastRepository} from "../../../../../../repository/toast-repository";
 import {ConfigService} from "../../../../../../service/config.service";
-import {Version} from "../../../../../../model/po/version";
-import {ProductFormVo} from "../../../../../../model/vo/productFormVo";
 import {VersionRepository} from "../../../../../../repository/version-repository";
 import {FileRepository} from "../../../../../../repository/file-repository";
 import {PropStatus} from "../../../../../../model/enums/prop-status";
@@ -17,6 +13,7 @@ import PlatformView from "../../../../../../model/po/platformView";
 import PlatformInformation from "../../../../../../model/po/platformInformation";
 import {TabType} from "../../../../../../model/enums/tab-type";
 import {Group} from "../../../../../../model/po/platformView";
+import {ProductPropInfo} from "../../../../../../model/po/productPropInfo";
 
 @Component({
   selector: 'app-pbd-features',
@@ -25,7 +22,7 @@ import {Group} from "../../../../../../model/po/platformView";
 })
 export class PbdFeaturesComponent implements OnInit, OnDestroy {
   subGroup: Group = new Group();
-  alreadyExpandList: Array<number> = []
+  alreadyExpandList: Array<string> = []
 
   constructor(private route: Router,
               private activatedRoute: ActivatedRoute,
@@ -54,22 +51,26 @@ export class PbdFeaturesComponent implements OnInit, OnDestroy {
   versionId: string
   platformViewAllInfo: PlatformView<PlatformInformation> = new PlatformView<PlatformInformation>();
   groups: Array<Group> = new Array<Group>();
+  propertiesList: Array<ProductPropInfo> = new Array<ProductPropInfo>();
 
   getAllPlatformView(): void{
     console.log('productId ', this.productId, '--- ')
     this.platformRepository.getPlatformViewByTabType<PlatformInformation>(this.productId, TabType.features.value) .subscribe(res => {
       this.platformViewAllInfo = res.data
       this.groups = res.data.groups
+      let list = this.groups[0].subGroups[0].properties
+      this.propertiesList = list
+      this.alreadyExpandList = [this.propertiesList[0].shPropertyId]
       console.log('this.groups  features ===> ', this.groups )
     },err => {})
   }
 
-  expandItem(item: number): void {
-    const idx = this.alreadyExpandList.indexOf(item)
+  expandItem(item: ProductPropInfo): void {
+    const idx = this.alreadyExpandList.indexOf(item.shPropertyId)
     if (idx !== -1) {
       this.alreadyExpandList.splice(idx,1)
     } else {
-      this.alreadyExpandList.push(item)
+      this.alreadyExpandList.push(item.shPropertyId)
     }
   }
 
@@ -96,6 +97,13 @@ export class PbdFeaturesComponent implements OnInit, OnDestroy {
   chooseSubGroup(group: Group) {
     console.log('group ', group)
     this.subGroup = group;
+    this.propertiesList = group.properties
+    if (!this.propertiesList || this.propertiesList.length === 0) {
+      this.alreadyExpandList = []
+    } else {
+      this.alreadyExpandList = [this.propertiesList[0].shPropertyId]
+    }
+    console.log('properties ', this.propertiesList)
   }
 
   previewImage(imgUrl: string): void {

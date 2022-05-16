@@ -62,7 +62,14 @@ export class ProductsBoxDetailComponent implements OnInit {
     this.getFreezeData()
   }
 
-  getFreezeData() {
+  back(): void {
+    this.router.navigateByUrl('/platform/product-box')
+  }
+  toWebSite(website: string): void {
+    window.open(website,'_blank');
+  }
+
+  getFreezeData(): void {
     this.platformRepository.getPlatformFreezeData(this.productId,1).subscribe(res => {
       console.log('get freezeData ===> ',res)
       this.platformOverviewInfo = res.data;

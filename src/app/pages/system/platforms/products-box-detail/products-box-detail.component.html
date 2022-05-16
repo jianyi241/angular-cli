@@ -5,11 +5,11 @@
         </div>
         <div class="banner-content">
             <div class="links">
-                <div class="link main-link">
+                <div class="link main-link" (click)="back()">
                     <img src="/assets/img/icon/icon-arr-left-white.svg">
                     {{platformOverviewInfo.platformName}}
                 </div>
-                <div class="link sub-link">
+                <div class="link sub-link" (click)="toWebSite(platformOverviewInfo.platformWebsite)">
                     Go to {{platformOverviewInfo.platformWebsite}}
                     <img src="/assets/img/icon/icon-arr-right-s-white.svg">
                 </div>
