@@ -9,7 +9,7 @@
                                 <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
                                         [title]="group.name">
                                     <div class="text">{{group.name}}</div>
-                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>
+<!--                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>-->
                                     <span class="icon-block icon-arr-up-purple icon-15"></span>
                                 </button>
                             </ng-template>
@@ -21,7 +21,7 @@
                                          (click)="chooseSubGroup(subGroupItem)"
                                          [title]="subGroupItem.name">
                                         <div class="text">{{subGroupItem.name}}</div>
-                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>
+<!--                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>-->
                                     </div>
                                 </div>
                             </ng-template>
