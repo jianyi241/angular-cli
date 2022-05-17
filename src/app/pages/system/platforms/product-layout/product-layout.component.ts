@@ -149,25 +149,25 @@ export class ProductLayoutComponent implements OnInit {
                 show: true
             }
         }
-        if (this.currentUserService.isSupplierUser()) {
-            if (this.version.versionStatus === this.configService.versionStatus.frozen) {
-                info = {
-                    tipCls: 'warn-tip',
-                    textCls: 'tx-yellow',
-                    title: `The profile is frozen.`,
-                    text: `Profile updated at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . New data pending approval. Contact SuitabilityHub admin for more details.`,
-                    show: true
-                }
-            } else if (this.version.versionStatus === this.configService.versionStatus.rejected) {
-                info = {
-                    tipCls: 'err-tip',
-                    textCls: 'tx-red',
-                    title: `Data was rejected.`,
-                    text: `Profile rejected at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . `,
-                    show: true
-                }
-            }
-        }
+        // if (this.currentUserService.isSupplierUser()) {
+        //     if (this.version.versionStatus === this.configService.versionStatus.frozen) {
+        //         info = {
+        //             tipCls: 'warn-tip',
+        //             textCls: 'tx-yellow',
+        //             title: `The profile is frozen.`,
+        //             text: `Profile updated at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . New data pending approval. Contact SuitabilityHub admin for more details.`,
+        //             show: true
+        //         }
+        //     } else if (this.version.versionStatus === this.configService.versionStatus.rejected) {
+        //         info = {
+        //             tipCls: 'err-tip',
+        //             textCls: 'tx-red',
+        //             title: `Data was rejected.`,
+        //             text: `Profile rejected at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . `,
+        //             show: true
+        //         }
+        //     }
+        // }
         if (this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion) {
             info = {
                 tipCls: '',

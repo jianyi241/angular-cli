@@ -55,6 +55,7 @@ export class ConfigurationLayoutComponent implements OnInit {
         if (versionId && versionId != Constants.VERSION) {
             this.versionRepository.versionById(versionId).subscribe(res => {
                 this.version = res.data || this.version;
+                this.configService.currentVersion = res.data
                 if (this.router.url == '/configuration/configuration-tab') {
                     this.chooseTab(TabType.overview.name);
                 }
@@ -67,6 +68,7 @@ export class ConfigurationLayoutComponent implements OnInit {
     getVersionNoParams(): void {
         this.versionRepository.supplierVersion().subscribe(res => {
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data
             this.version.id = res.data?.id || Constants.VERSION;
             this.version.type = this.version.type || VersionType.Publish.value;
             this.chooseTab(TabType.overview.name);
@@ -180,6 +182,8 @@ export class ConfigurationLayoutComponent implements OnInit {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'Failed operation')
             } else {
+                this.version = res.data
+                this.configService.currentVersion = res.data
                 this.toastRepository.showSuccess(res.msg || 'Successful operation')
             }
         }, err => {
@@ -196,6 +200,7 @@ export class ConfigurationLayoutComponent implements OnInit {
                 return;
             }
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
             this.router.navigateByUrl(`/`, {
                 skipLocationChange: true
@@ -216,6 +221,7 @@ export class ConfigurationLayoutComponent implements OnInit {
     backHistory() {
         this.versionRepository.supplierVersion().subscribe(res => {
             this.version = res.data || this.version;
+            this.configService.currentVersion = res.data
             this.version.id = res.data?.id || Constants.VERSION;
             this.chooseTab(TabType.changeHistory.name);
         })

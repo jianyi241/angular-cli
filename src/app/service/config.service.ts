@@ -126,6 +126,11 @@ export class ConfigService {
         return versionType != VersionType.Publish.value && flag;
     }
 
+    isWaitPublish(): boolean {
+        return  this.currentVersion.versionStatus === VersionStatus.WaitPublish.value
+    }
+
+
     getClassByStatus(value: string, versionType: string): string {
         if (versionType === VersionType.Publish.value) return '';
         switch (value) {

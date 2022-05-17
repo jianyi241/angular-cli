@@ -2,7 +2,7 @@
     <div class="col-content col-content-1">
         <div class="col-head">
             <div class="title">Group</div>
-            <div class="col-head-right" *ngIf="version.type">
+            <div class="col-head-right" *ngIf="version.type && !configService.isWaitPublish()">
                 <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideGroupArchive)"
                       (click)="showGroupArchived()">Show archived</span>
                 <span class="link-new" (click)="saveGroup()"
