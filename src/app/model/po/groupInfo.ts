@@ -34,6 +34,7 @@ export class GroupInfo extends BaseModel{
      */
     tabType?: number;
     moveFlag?: boolean;
+    readOnly?: boolean;
     attachmentVo: Attachment = new Attachment();
 }
 

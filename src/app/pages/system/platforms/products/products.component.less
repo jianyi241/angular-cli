@@ -1,4 +1,41 @@
-.table-layout {
+.head-fixed{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  padding:78px 168px 0;
+  background-color: #ffffff;
+
+  @media screen and (max-width: 1400px){
+    padding:78px 100px 0;
+  }
+
+  @media screen and (max-width: 1240px){
+    padding:78px 40px 0;
+  }
+
+  @media screen and (max-width: 940px){
+    padding:78px 20px 0;
+    height: auto;
+  }
+}
+
+.table-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin:24px 0;
+}
+
+.main-with-search{
+  position: static;
+  width: 100%;
+  height: auto;
+  padding-top:253px;
+}
+
+
+.main {
   .sub-head {
     .title {
       display: flex;
@@ -24,10 +61,6 @@
       cursor: pointer;
     }
   }
-  .col-content {
-    width: 100%;
-    height: 100%;
-
     .col-head {
       display: block;
       height: auto;
@@ -36,7 +69,7 @@
 
     }
 
-    .col-body {
+    .table-responsive {
       height: calc(100% - 225px);
       .edit-th {
         display: flex;
@@ -90,5 +123,4 @@
         }
       }
     }
-  }
 }

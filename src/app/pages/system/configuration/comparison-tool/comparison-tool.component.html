@@ -2,11 +2,11 @@
     <div class="col-content col-content-1">
         <div class="col-head">
             <div class="title">Group</div>
-            <div class="col-head-right" *ngIf="version.type && !configService.isWaitPublish()">
+            <div class="col-head-right" *ngIf="version.type">
                 <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideGroupArchive)"
                       (click)="showGroupArchived()">Show archived</span>
                 <span class="link-new" (click)="saveGroup()"
-                      [hidden]="!configService.isEditable(version.type)">+ New</span>
+                      [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()">+ New</span>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             <div class="col-head-right" *ngIf="version.type">
                 <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideSubGroupArchive)"
                       (click)="showSubGroupArchived()">Show archived</span>
-                <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId"
+                <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId || configService.isWaitPublish()"
                       (click)="saveSubGroup()">+ New</span>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <span class="link-show xs-mr-21" *ngIf="configService.showArchiveBtn(version.type, hidePropArchive)"
                       (click)="showPropArchived()">Show archived</span>
                 <button class="btn btn-outline-purple-light tx-13 tx-semi"
-                        [hidden]="!configService.isEditable(version.type) || !reminder.subGroupId" (click)="saveProp()">
+                        [hidden]="!configService.isEditable(version.type) || !reminder.subGroupId || configService.isWaitPublish()" (click)="saveProp()">
                     + New
                 </button>
             </div>

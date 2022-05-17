@@ -111,12 +111,12 @@ export class ConfigService {
             if (!status) return versionType === VersionType.Draft.value;
             return versionType === VersionType.Draft.value && status != 'Archive';
         } else if (this.currentUserService.isSupplierUser()){
+            if (this.currentVersion.versionStatus === this.versionStatus.wait || this.currentVersion.versionStatus === this.versionStatus.waitPublish) {
+                return false
+            }
             if (!status) {
                 return versionType === VersionType.Draft.value;
             } else {
-                if (this.currentVersion.versionStatus === this.versionStatus.frozen || this.currentVersion.versionStatus === this.versionStatus.wait) {
-                    return false
-                }
                 return versionType === VersionType.Draft.value && status != 'Archive';
             }
         }

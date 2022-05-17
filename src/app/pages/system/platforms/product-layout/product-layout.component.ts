@@ -69,7 +69,7 @@ export class ProductLayoutComponent implements OnInit {
         } else {
             this.version.type = VersionType.Publish.value;
         }
-        this.getModelPublishChangeFlag();
+        // this.getModelPublishChangeFlag(); // 暂不用
         this.getChangeTabs();
         const url = this.activatedRoute.firstChild?.snapshot?.url;
         this.currentTab = url && url.length > 0 ? url[0].path : undefined;
@@ -149,6 +149,17 @@ export class ProductLayoutComponent implements OnInit {
                 show: true
             }
         }
+        if (this.currentUserService.isAdminUser()) {
+            if (this.version.versionStatus === VersionStatus.Wait.value){
+                info = {
+                    tipCls: '',
+                    textCls: '',
+                    title: `New data submitted.`,
+                    text: `Profile updated at ${moment(this.version.updateTime).format('h:mma D MMM YY')}. Approve or reject changes by clicking the buttons.`,
+                    show: true
+                }
+            }
+        }
         // if (this.currentUserService.isSupplierUser()) {
         //     if (this.version.versionStatus === this.configService.versionStatus.frozen) {
         //         info = {
@@ -200,6 +211,7 @@ export class ProductLayoutComponent implements OnInit {
                 return
             }
             this.version = res.data
+            this.configService.currentVersion = res.data
             if (this.version.versionStatus === this.configService.versionStatus.rejected) {
                 this.toastRepository.showDanger('Changes have been rejected.')
                 this.loadingService.hide()
@@ -222,7 +234,7 @@ export class ProductLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.getProjectButtonFlag()
+            // this.getProjectButtonFlag()
             this.router.navigateByUrl(`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`)
         });
     }

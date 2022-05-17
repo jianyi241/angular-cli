@@ -22,8 +22,8 @@
         <div class="summary-info">
             <div class="info-title">In most recent financial year</div>
             <div class="info-txt">
-                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfClients}}</span> clients/members on platform</div>
-                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfAuthorised}}</span>  authorised representative users</div>
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfClients || 0}}</span> clients/members on platform</div>
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfAuthorised || 0}}</span>  authorised representative users</div>
             </div>
             <div class="info-other">
                 <div *ngIf="platformOverviewFreezeInfo.parentCompany==='yes'">Parent company profitable</div>

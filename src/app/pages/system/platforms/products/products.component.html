@@ -1,14 +1,10 @@
-<div class="table-layout main">
-    <div class="col-content">
+<div class="main main-with-search">
+    <div class="head-fixed">
         <div class="sub-head">
             <div class="sub-title">
                 Platform profiles
             </div>
             <div class="btn-control-group">
-<!--                <button class="btn btn-purple xs-ml-24" *ngIf="currentUserService.isSupplierUser()" (click)="addPlatform()">-->
-<!--                    <img src="assets/img/icon/icon-add.svg">-->
-<!--                    Add platform-->
-<!--                </button>-->
             </div>
         </div>
 
@@ -21,118 +17,118 @@
                 Hide archived
             </div>
         </div>
+    </div>
 
-        <div class="col-body">
-            <ng-container>
-                <div class="table-list-wrap">
-                    <table class="table table-list table-striped">
-                        <thead>
-                        <tr>
-                            <th class="max-w-300">
-                                <div class="th-cell">
-                                    Platform name
-                                    <sorting-widget (sortChange)="sortList('name', $event)"></sorting-widget>
+    <div class="table-responsive">
+        <ng-container>
+            <div class="table-list-wrap">
+                <table class="table table-list table-striped">
+                    <thead>
+                    <tr>
+                        <th class="max-w-300">
+                            <div class="th-cell">
+                                Platform name
+                                <sorting-widget (sortChange)="sortList('name', $event)"></sorting-widget>
+                            </div>
+                        </th>
+                        <th style="width:20%;">
+                            <div class="th-cell">
+                                Supplier
+                                <sorting-widget (sortChange)="sortList('company', $event)"></sorting-widget>
+                            </div>
+                        </th>
+                        <th style="width:15%;">
+                            <div class="th-cell">
+                                Last modified at
+                                <sorting-widget (sortChange)="sortList('update_time', $event)"></sorting-widget>
+                            </div>
+                        </th>
+                        <th style="width:15%;">
+                            <div class="th-cell">
+                                Status
+                            </div>
+                        </th>
+                        <th class="edit-th">
+                            <div class="th-cell">Action</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <thead class="table-margin">
+                    <tr>
+                        <th colspan="5"></th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="productPage.total > 0">
+                    <tr *ngFor="let product of productPage.records">
+                        <td>
+                            <div class="td-cell td-cell_avatar tx-bold tx-purple">
+                                <!--                                    <div class="avatar-box xs-mr-16">-->
+                                <!--                                        <img [src]="(product.platformLogo?.visitUrl) || './assets/img/unassgin.svg'" />-->
+                                <!--                                    </div>-->
+                                <div class="text-ellipsis max-w-300">{{product.name}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-cell tx-bold tx-purple">{{product.companyName}}</div>
+                        </td>
+                        <td>
+                            <div class="td-cell">{{product.updateTime | dateFormat : 'hh:mma DD/MM/YYYY' }}</div>
+                        </td>
+                        <td>
+                            <div *ngIf="product.archived">
+                                <div class="td-cell">
+                                    <label class="label label-red">Archived</label>
                                 </div>
-                            </th>
-                            <th style="width:20%;">
-                                <div class="th-cell">
-                                    Supplier
-                                    <sorting-widget (sortChange)="sortList('company', $event)"></sorting-widget>
+                            </div>
+                            <div *ngIf="!product.archived">
+                                <div class="td-cell" *ngIf="product.status == 'Active'">
+                                    <label class="label label-green">Active</label>
                                 </div>
-                            </th>
-                            <th style="width:15%;">
-                                <div class="th-cell">
-                                    Last modified at
-                                    <sorting-widget (sortChange)="sortList('update_time', $event)"></sorting-widget>
+                                <div class="td-cell" *ngIf="product.status == 'Disabled'">
+                                    <label class="label label-grey">Disabled</label>
                                 </div>
-                            </th>
-                            <th style="width:15%;">
-                                <div class="th-cell">
-                                    Status
+                                <div class="td-cell" *ngIf="product.status == 'Pending'">
+                                    <label class="label label-orange">Pending</label>
                                 </div>
-                            </th>
-                            <th class="edit-th">
-                                <div class="th-cell">Action</div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <thead class="table-margin">
-                        <tr>
-                            <th colspan="5"></th>
-                        </tr>
-                        </thead>
-                        <tbody *ngIf="productPage.total > 0">
-                        <tr *ngFor="let product of productPage.records">
-                            <td>
-                                <div class="td-cell td-cell_avatar tx-bold tx-purple">
-                                    <!--                                    <div class="avatar-box xs-mr-16">-->
-                                    <!--                                        <img [src]="(product.platformLogo?.visitUrl) || './assets/img/unassgin.svg'" />-->
-                                    <!--                                    </div>-->
-                                    <div class="text-ellipsis max-w-300">{{product.name}}</div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="td-cell tx-bold tx-purple">{{product.companyName}}</div>
-                            </td>
-                            <td>
-                                <div class="td-cell">{{product.updateTime | dateFormat : 'hh:mma DD/MM/YYYY' }}</div>
-                            </td>
-                            <td>
-                                <div *ngIf="product.archived">
-                                    <div class="td-cell">
-                                        <label class="label label-red">Archived</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="edit-column">
+                                <div class="edit-work-status">
+                                    <div class="status-tip normal"
+                                         *ngIf="product.workflowStatus === configService.workflowStatus.dataRequired">
+                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-blue2.svg">
+                                        <span>Data required</span>
+                                    </div>
+                                    <div class="status-tip warning"
+                                         *ngIf="product.workflowStatus === configService.workflowStatus.awaitingApproval">
+                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                        <span>Pending approval</span>
+                                    </div>
+                                    <div class="status-tip warning"
+                                         *ngIf="product.workflowStatus === configService.workflowStatus.awaitingPublish">
+                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                        <span>Pending publish</span>
                                     </div>
                                 </div>
-                                <div *ngIf="!product.archived">
-                                    <div class="td-cell" *ngIf="product.status == 'Active'">
-                                        <label class="label label-green">Active</label>
-                                    </div>
-                                    <div class="td-cell" *ngIf="product.status == 'Disabled'">
-                                        <label class="label label-grey">Disabled</label>
-                                    </div>
-                                    <div class="td-cell" *ngIf="product.status == 'Pending'">
-                                        <label class="label label-orange">Pending</label>
-                                    </div>
+                                <div class="edit-btn-group">
+                                    <button class="btn btn-outline-purple-light btn-small" (click)="toView(product)">View</button>
+                                    <button class="btn btn-purple-border btn-tiny xs-ml-16"
+                                            (click)="editProduct(product)">
+                                        Edit
+                                    </button>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="edit-column">
-                                    <div class="edit-work-status">
-                                        <div class="status-tip normal"
-                                             *ngIf="product.workflowStatus === configService.workflowStatus.dataRequired">
-                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-blue2.svg">
-                                            <span>Data required</span>
-                                        </div>
-                                        <div class="status-tip warning"
-                                             *ngIf="product.workflowStatus === configService.workflowStatus.awaitingApproval">
-                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
-                                            <span>Awaiting approval</span>
-                                        </div>
-                                        <div class="status-tip warning"
-                                             *ngIf="product.workflowStatus === configService.workflowStatus.awaitingPublish">
-                                            <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
-                                            <span>Awaiting publish</span>
-                                        </div>
-                                    </div>
-                                    <div class="edit-btn-group">
-                                        <button class="btn btn-outline-purple-light btn-small" (click)="toView(product)">View</button>
-                                        <button class="btn btn-purple-border btn-tiny xs-ml-16"
-                                                (click)="editProduct(product)">
-                                            Edit
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <ngb-pagination *ngIf="productPage.total > 0" [collectionSize]="productPage.total"
-                                [(page)]="productPage.current" [pageSize]="productPage.size"
-                                (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
-            </ng-container>
-            <div class="empty-text" *ngIf="productPage.total == 0">This section is empty.
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
+            <ngb-pagination *ngIf="productPage.total > 0" [collectionSize]="productPage.total"
+                            [(page)]="productPage.current" [pageSize]="productPage.size"
+                            (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
+        </ng-container>
+        <div class="empty-text" *ngIf="productPage.total == 0">This section is empty.
         </div>
     </div>
 </div>

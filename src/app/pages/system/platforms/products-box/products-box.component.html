@@ -25,9 +25,18 @@
                         <div class="txt-title">{{item.name}}</div>
                         <div class="txt-date">Most recent update: {{item.updateTime | dateFormat : 'DD/MM/YYYY'}}</div>
                         <div class="txt-status" *ngIf="item.workflowStatus" [ngClass]="{'warning': item.workflowStatus !== configService.workflowStatus.dataRequired}">
-                            <img *ngIf="item.workflowStatus === configService.workflowStatus.dataRequired" src="/assets/img/icon/icon-warning-blue2.svg">
-                            <img *ngIf="item.workflowStatus === configService.workflowStatus.awaitingPublish" src="/assets/img/icon/icon-warning-yellow.svg">
-                            <span>{{item.workflowStatus === configService.workflowStatus.dataRequired ? 'Missing data' : 'Pending approval'}}</span>
+                            <div *ngIf="item.workflowStatus === configService.workflowStatus.dataRequired">
+                                <img src="/assets/img/icon/icon-warning-blue2.svg">
+                                <span>Data required</span>
+                            </div>
+                            <div *ngIf="item.workflowStatus === configService.workflowStatus.awaitingApproval">
+                                <img  src="/assets/img/icon/icon-warning-yellow.svg">
+                                <span>Pending approval</span>
+                            </div>
+                            <div *ngIf="item.workflowStatus === configService.workflowStatus.awaitingPublish">
+                                <img  src="/assets/img/icon/icon-warning-yellow.svg">
+                                <span>Pending publish</span>
+                            </div>
                         </div>
                     </div>
                 </div>

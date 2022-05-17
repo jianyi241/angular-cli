@@ -6,12 +6,12 @@
                     <div class="title">ESG</div>
                     <div class="text">Showing 13 in-use items</div>
                 </div>
-                <div class="col-head-right" *ngIf="version.type && !configService.isWaitPublish()">
+                <div class="col-head-right" *ngIf="version.type">
                     <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideArchive)"
                           (click)="showArchived()">Show archived</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
                             (click)="save()"
-                            [hidden]="!configService.isEditable(version.type)">+ New
+                            [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()">+ New
                     </button>
                 </div>
 
@@ -43,7 +43,7 @@
                             [hidden]="configService.isEditable(version.type)">View
                     </button>
                     <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                            [hidden]="!configService.isEditable(version.type)">
+                            [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
                         <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                     </button>
                 </ng-container>
@@ -69,7 +69,7 @@
                                 [hidden]="configService.isEditable(version.type)">View
                         </button>
                         <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                                [hidden]="!configService.isEditable(version.type)">
+                                [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
                             <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                         </button>
                     </ng-container>
