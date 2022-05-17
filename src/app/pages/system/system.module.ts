@@ -77,6 +77,7 @@ import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import { AddClientComponent } from './advice-reviews/add-client/add-client.component';
 import { AcOverviewComponent } from './advice-reviews/add-client/components/ac-overview/ac-overview.component';
 import { AcReviewComponent } from './advice-reviews/add-client/components/ac-review/ac-review.component';
+import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
 
 @NgModule({
     declarations: [
@@ -144,7 +145,8 @@ import { AcReviewComponent } from './advice-reviews/add-client/components/ac-rev
         AddClientModalComponent,
         AddClientComponent,
         AcOverviewComponent,
-        AcReviewComponent
+        AcReviewComponent,
+        ConfirmModalComponent
     ],
     imports: [
         CommonModule,

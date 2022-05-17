@@ -11,6 +11,10 @@ import {Constants} from "../../../../model/constants";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {VersionType} from "../../../../model/enums/version-type";
+import {VersionStatus} from "../../../../model/enums/version-status";
+import {PlatformRepository} from "../../../../repository/platform-repository";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
 
 @Component({
     selector: 'app-configuration-layout',
@@ -30,8 +34,10 @@ export class ConfigurationLayoutComponent implements OnInit {
                 private saveService: SaveService,
                 private versionRepository: VersionRepository,
                 private configurationRepository: ConfigurationRepository,
+                private platformRepository: PlatformRepository,
                 private toastRepository: ToastRepository,
-                private router: Router) {
+                private router: Router,
+                private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
@@ -52,23 +58,31 @@ export class ConfigurationLayoutComponent implements OnInit {
                 if (this.router.url == '/configuration/configuration-tab') {
                     this.chooseTab(TabType.overview.name);
                 }
-                if (this.version.type === VersionType.Draft.value) {
-                    this.getEditFlag()
-                }
             });
         } else {
-            this.versionRepository.supplierVersion().subscribe(res => {
-                this.version = res.data || this.version;
-                this.version.id = res.data?.id || Constants.VERSION;
-                this.version.type = this.version.type || VersionType.Publish.value;
-                this.chooseTab(TabType.overview.name);
-                if (this.version.type === VersionType.Draft.value) {
-                    this.getEditFlag()
-                }
-            })
+            this.getVersionNoParams()
         }
     }
 
+    getVersionNoParams(): void {
+        this.versionRepository.supplierVersion().subscribe(res => {
+            this.version = res.data || this.version;
+            this.version.id = res.data?.id || Constants.VERSION;
+            this.version.type = this.version.type || VersionType.Publish.value;
+            this.chooseTab(TabType.overview.name);
+        })
+    }
+
+    showButtons(type: number): boolean {
+        if (type === 1) {
+            return this.version.type ===  VersionType.Publish.value
+        } else if (type === 2) {
+            return this.version.type ===  VersionType.Draft.value && VersionStatus.Normal.value === this.version.versionStatus
+        } else if (type === 3) {
+            return this.version.type === VersionType.Draft.value && VersionStatus.WaitPublish.value === this.version.versionStatus
+        }
+        return false
+    }
 
     chooseTab(tab: string): void {
         if (tab == TabType.feesAndRates.name) {
@@ -130,6 +144,47 @@ export class ConfigurationLayoutComponent implements OnInit {
         })
     }
 
+    discardConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal.title = 'Are you sure to discard draft?'
+        modalRef.componentInstance.modal.text = 'Discarding draft will delete all the changes you made. Are you sure?'
+        modalRef.componentInstance.modal.cancelText = 'No, do nothing'
+        modalRef.componentInstance.modal.confirmText = 'Yes, discard all changes'
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.editDiscardDraft()
+        }, err => {
+            console.log('cancel')
+        })
+    }
+
+    editDiscardDraft(): void {
+        this.versionRepository.discard(this.version.id).subscribe(res => {
+            if (res.statusCode === 200) {
+                this.getVersionNoParams()
+            } else {
+                this.toastRepository.showDanger(res.msg || 'Failed operation')
+            }
+        }, err => {
+        })
+    }
+
+    pushSupplier(): void {
+        let version = JSON.parse(JSON.stringify(this.version))
+        version.versionStatus = VersionStatus.WaitPublish.value
+        this.versionRepository.updateVersionStatus(version).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'Failed operation')
+            } else {
+                this.toastRepository.showSuccess(res.msg || 'Successful operation')
+            }
+        }, err => {
+        })
+    }
 
     pushConfig(): void {
         if (this.saveService.saveCheck(environment.baseURL + '/supplier/publish')) {

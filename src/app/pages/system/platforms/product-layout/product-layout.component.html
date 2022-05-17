@@ -17,23 +17,28 @@
 
         <div class="btn-control-group"
              *ngIf="version.type && currentTab != 'change-history' && version.type != 'History'">
-            <!--            <button class="btn text-danger">Archive</button>-->
             <div *ngIf="currentUserService.isAdminUser()">
-                <button class="btn tx-red xs-ml-24" *ngIf="showEditButton('reject')" (click)="rejectUpdate()">Reject
-                </button>
                 <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"
                         (click)="editProduct()">Edit
                 </button>
+                <button class="btn tx-red xs-ml-24" *ngIf="showEditButton('reject')" (click)="rejectConfirm()">Reject
+                </button>
                 <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('approve')"
-                        (click)="updateVersionStatus('Frozen')">Approve
+                        (click)="updateVersionStatus(configService.versionStatus.waitPublish)">Approve
+                </button>
+                <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('publish')"
+                        (click)="publishProduct()">Publish
                 </button>
             </div>
             <div *ngIf="currentUserService.isSupplierUser()">
                 <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"
                         (click)="editProduct()">Edit Product
                 </button>
+                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('discard')"
+                        (click)="discardConfirm()">Discard draft
+                </button>
                 <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('submit')"
-                        (click)="publishOrUpdateStatus()">Submit for review
+                        (click)="supplierSubmitConfirm()">Submit for review
                 </button>
             </div>
         </div>

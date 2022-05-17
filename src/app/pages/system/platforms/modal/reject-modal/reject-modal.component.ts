@@ -9,9 +9,9 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class RejectModalComponent implements OnInit {
   modal: any = {
     title: 'Reject the updates?',
-    text: 'Rejecting the updates will discard all changes. Are you sure?',
+    text: 'Are you sure?',
     cancelText: 'No, don’t do anything',
-    confirmText: 'Yes, reject and discard changes'
+    confirmText: 'Yes, reject changes'
   }
   constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) { }
 

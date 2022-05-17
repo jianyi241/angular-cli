@@ -62,8 +62,15 @@ export class ConfigService {
     versionStatus = {
         normal: VersionStatus.Normal.value,
         wait: VersionStatus.Wait.value,
+        waitPublish: VersionStatus.WaitPublish.value,
         frozen: VersionStatus.Frozen.value,
         rejected: VersionStatus.Rejected.value,
+    }
+
+    versionType = {
+        publish: VersionType.Publish.value,
+        draft: VersionType.Draft.value,
+        history: VersionType.History.value
     }
 
     analysisType = {

@@ -17,6 +17,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RejectModalComponent} from '../modal/reject-modal/reject-modal.component';
 import {CurrentUserService} from '../../../../service/current-user.service';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
+import {VersionStatus} from "../../../../model/enums/version-status";
+import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
 
 declare type TipInfo = {
     show: boolean,
@@ -98,16 +100,17 @@ export class ProductLayoutComponent implements OnInit {
     showEditButton(type: string) {
         if (this.currentUserService.isAdminUser()) {
             if (type === 'reject' || type === 'approve') {
-                return this.version.type === 'Draft' && this.version.versionStatus === this.configService.versionStatus.wait
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
+            }  else if (type === 'publish') {
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
             }
         } else if (this.currentUserService.isSupplierUser()) {
             if (type === 'edit') {
-                return this.version.type === 'Publish'
-                // && !this.configService.isEditable(this.version.type)
-            } else if (type === 'submit') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected)
+                return this.version.type === VersionType.Publish.value
+            } else if (type === 'submit' || type === 'discard') {
+                return this.version.type === VersionType.Draft.value && (this.version.versionStatus === VersionStatus.Normal.value || this.version.versionStatus === VersionStatus.Rejected.value)
             }
         }
     }
@@ -201,7 +204,7 @@ export class ProductLayoutComponent implements OnInit {
                 this.toastRepository.showDanger('Changes have been rejected.')
                 this.loadingService.hide()
             } else {
-                this.toastRepository.showSuccess(res.msg || 'Successful operation')
+                this.toastRepository.showSuccess('Changes have been approved.')
                 this.loadingService.hide()
             }
         }, err => {
@@ -233,12 +236,24 @@ export class ProductLayoutComponent implements OnInit {
         })
     }
 
-    publishOrUpdateStatus(): void {
-        if (this.supplierSubmitType === 'updateStatus') {
-            this.updateVersionStatus('Wait')
-        } else if (this.supplierSubmitType === 'submit') {
-            this.publishProduct()
+    supplierSubmitConfirm() {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal = {
+            title: 'Are you sure to submit?',
+            text: 'Submitting the changes will freeze the platform profile. You will not be able to make changes while the platform is in review with us. ',
+            cancelText: 'No, do nothing',
+            confirmText: 'Yes, submit and freeze'
         }
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.updateVersionStatus(VersionStatus.Wait.value)
+        }, err => {
+            console.log('cancel')
+        })
     }
 
     publishProduct(): void {
@@ -286,14 +301,6 @@ export class ProductLayoutComponent implements OnInit {
         return this.changeTabs.some(c => c.tabType == tabType);
     }
 
-    getVersionName() {
-        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`;
-    }
-
-    getVersionInfo() {
-        return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`;
-    }
-
     backPage() {
         const versionType = this.version.type
         if (versionType !== 'History' && this.from !== 'history') {
@@ -315,7 +322,7 @@ export class ProductLayoutComponent implements OnInit {
         })
     }
 
-    rejectUpdate(): void {
+    rejectConfirm(): void {
         const modalRef = this.ngbModal.open(RejectModalComponent, {
             size: 'w644',
             windowClass: 'tip-popup-modal',
@@ -323,9 +330,45 @@ export class ProductLayoutComponent implements OnInit {
         });
         modalRef.result.then(res => {
             console.log('confirm')
-            this.updateVersionStatus('Rejected')
+            this.updateVersionStatus(VersionStatus.Rejected.value)
         }, err => {
             console.log('cancel')
+        })
+    }
+
+    discardConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal.title = 'Are you sure to discard draft?'
+        modalRef.componentInstance.modal.text = 'Discarding draft will delete all the changes you made. Are you sure?'
+        modalRef.componentInstance.modal.cancelText = 'No, do nothing'
+        modalRef.componentInstance.modal.confirmText = 'Yes, discard all changes'
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.editDiscardDraft()
+        }, err => {
+            console.log('cancel')
+        })
+    }
+    editDiscardDraft(): void {
+        this.versionRepository.discard(this.version.id).subscribe(res => {
+            if (res.statusCode === 200) {
+                this.getVersionNoParams()
+            } else {
+                this.toastRepository.showDanger(res.msg || 'Failed operation')
+            }
+        }, err => {
+        })
+    }
+    getVersionNoParams(): void {
+        this.versionRepository.supplierVersion().subscribe(res => {
+            this.version = res.data || this.version;
+            this.version.id = res.data?.id || Constants.VERSION;
+            this.version.type = this.version.type || VersionType.Publish.value;
+            this.chooseTab(TabType.overview.name);
         })
     }
 }

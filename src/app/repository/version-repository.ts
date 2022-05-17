@@ -25,4 +25,8 @@ export class VersionRepository {
     updateVersionStatus(version: Version): Observable<HttpResult<Version>> {
         return this.http.post<HttpResult<Version>>(environment.baseURL + `/supplier/updateVersionStatus`, version);
     }
+
+    discard(versionId: string): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + `/supplier/discard/${versionId}`, {});
+    }
 }

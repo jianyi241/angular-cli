@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlatformRepository} from "../../../../../../repository/platform-repository";
 import {ToastRepository} from "../../../../../../repository/toast-repository";
@@ -20,7 +20,12 @@ import {ProductPropInfo} from "../../../../../../model/po/productPropInfo";
   templateUrl: './pbd-features.component.html',
   styleUrls: ['./pbd-features.component.less']
 })
-export class PbdFeaturesComponent implements OnInit, OnDestroy {
+export class PbdFeaturesComponent implements OnInit {
+  productId: string
+  versionId: string
+  platformViewAllInfo: PlatformView<PlatformInformation> = new PlatformView<PlatformInformation>();
+  groups: Array<Group> = new Array<Group>();
+  propertiesList: Array<ProductPropInfo> = new Array<ProductPropInfo>();
   subGroup: Group = new Group();
   alreadyExpandList: Array<string> = []
 
@@ -32,12 +37,8 @@ export class PbdFeaturesComponent implements OnInit, OnDestroy {
               private versionRepository: VersionRepository,
               private fileRepository: FileRepository,
               private platformRepository: PlatformRepository,
-              private ngbModal: NgbModal,) {
+              private ngbModal: NgbModal) {
   }
-
-  ngOnDestroy(): void {
-        throw new Error('Method not implemented.');
-    }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(res => {
@@ -46,12 +47,6 @@ export class PbdFeaturesComponent implements OnInit, OnDestroy {
       this.getAllPlatformView()
     })
   }
-
-  productId: string
-  versionId: string
-  platformViewAllInfo: PlatformView<PlatformInformation> = new PlatformView<PlatformInformation>();
-  groups: Array<Group> = new Array<Group>();
-  propertiesList: Array<ProductPropInfo> = new Array<ProductPropInfo>();
 
   getAllPlatformView(): void{
     console.log('productId ', this.productId, '--- ')
