@@ -6,6 +6,7 @@ import {TabType} from '../../../../model/enums/tab-type';
 import {Constants} from '../../../../model/constants';
 import {CurrentUserService} from '../../../../service/current-user.service';
 import PlatformOverview from '../../../../model/po/platformOverview';
+import {ProductInfo} from '../../../../model/po/productInfo';
 
 @Component({
     selector: 'app-products-box-detail',
@@ -17,6 +18,7 @@ export class ProductsBoxDetailComponent implements OnInit {
 
     productId: string;
     versionId: string;
+    product: ProductInfo = new ProductInfo();
     platformOverviewInfo: PlatformOverview = new PlatformOverview();
     tabs = [
         {
@@ -61,6 +63,7 @@ export class ProductsBoxDetailComponent implements OnInit {
     ngOnInit(): void {
         this.productId = this.activatedRoute.firstChild.snapshot.params['id'];
         this.versionId = this.activatedRoute.firstChild.snapshot.params['version'];
+        this.getProduct();
         this.getFreezeData();
     }
 
@@ -95,6 +98,12 @@ export class ProductsBoxDetailComponent implements OnInit {
         });
     }
 
+    getProduct(): void {
+        this.platformRepository.productDetail(this.productId).subscribe(res => {
+            this.product = res.data || this.product;
+        });
+    }
+
     chooseTab(tab) {
         const {path, name, type} = tab;
         // if (name === 'Fees & rates') {
@@ -107,5 +116,17 @@ export class ProductsBoxDetailComponent implements OnInit {
         console.log('versionid produtid ' + this.productId);
         console.log('versionid produtid ' + this.versionId);
         this.router.navigateByUrl(`/platform/product-tab/overview/${this.productId}/${this.versionId || Constants.VERSION}`);
+    }
+
+    canEdit(): boolean {
+        if (this.currentUserService.isAdminUser()) {
+            return true;
+        }
+        if (this.currentUserService.isAdviceUser()) {
+            return false;
+        }
+        if (this.currentUserService.isSupplierUser()) {
+            return this.currentUserService.currentUser().companyId == this.product.companyId;
+        }
     }
 }

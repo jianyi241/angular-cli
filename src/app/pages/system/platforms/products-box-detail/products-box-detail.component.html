@@ -59,7 +59,7 @@
 <!--                            <img src="/assets/img/icon/icon-building-white.svg" />-->
 <!--                            Compare {{platformOverviewInfo.platformName}}-->
 <!--                        </button>-->
-                        <button class="btn btn-purple compare-btn" *ngIf="!currentUserService.isAdviceUser()" (click)="editProduct()">
+                        <button class="btn btn-purple compare-btn" *ngIf="canEdit()" (click)="editProduct()">
                             <img src="/assets/img/icon/icon-edit-white.svg" />
                             Edit&nbsp;{{platformOverviewInfo.platformName}}
                         </button>
