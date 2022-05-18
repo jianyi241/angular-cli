@@ -1,0 +1,138 @@
+.pbd-information {
+  display: flex;
+  > .content-left {
+    flex: 1;
+    padding-right: 32px;
+    > .info-list {
+      display: flex;
+      flex-direction: column;
+      > .list-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        font-family: 'Epilogue';
+        font-size: 13px;
+        font-style: normal;
+        line-height: 160%;
+        cursor: pointer;
+        &:hover {
+        }
+        &:nth-child(even) {
+          background: #F8F8FD;
+        }
+        &:nth-child(odd) {
+          background: #FFFFFF;
+        }
+        > .item-name {
+          font-weight: 400;
+          color: #515B6F;
+        }
+        > .item-value {
+          font-weight: 600;
+          color: #25324B;
+        }
+      }
+    }
+  }
+  > .content-right {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 362px;
+    > .summary-info {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Epilogue';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 160%;
+      color: #25324B;
+      > .txt-row {
+        background: #F8F8FD;
+        padding: 16px;
+        margin-bottom: 4px;
+        span {
+          font-size: 16px;
+          font-weight: bold;
+          color: #000000;
+          margin-right: 4px;
+        }
+      }
+    }
+    > .contact-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px 24px 24px;
+      background: #FFFFFF;
+      border: 1px solid #D6DDEB;
+      margin-top: 20px;
+      > .info-top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > .title {
+          font-family: 'ClashDisplay';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 120%;
+          font-feature-settings: 'cv11' on;
+          color: #25324B;
+        }
+        > .link {
+          font-family: 'Epilogue';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 160%;
+          color: #4640DE;
+          cursor: pointer;
+        }
+      }
+      > .info-content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        > .info-item {
+          display: flex;
+          align-items: flex-start;
+          > .item-icon {
+            margin-right: 16px;
+          }
+          > .item-value-info {
+            ont-family: 'Epilogue';
+            font-style: normal;
+            font-weight: 400;
+            margin-bottom: 16px;
+            > .item-label {
+              font-size: 13px;
+              line-height: 160%;
+              display: flex;
+              align-items: center;
+              color: #7C8493;
+            }
+            > .item-value {
+              font-size: 14px;
+              line-height: 160%;
+              display: flex;
+              align-items: center;
+              color: #25324B;
+              &.link {
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 160%;
+                color: #4640DE;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

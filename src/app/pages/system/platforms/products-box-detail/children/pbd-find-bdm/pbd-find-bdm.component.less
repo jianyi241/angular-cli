@@ -1,0 +1,111 @@
+.fees-rates {
+  > .tip {
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 200px;
+    text-align: center;
+    color: #25324B;
+  }
+}
+.pbd-find-bdm > .list{
+  width: calc(100% + 24px);
+  display: flex;
+  flex-wrap: wrap;
+  > .item {
+    flex-basis: calc((100% - (24px * 3)) / 3);
+    min-height: 248px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 24px;
+    background: #FFFFFF;
+    border: 1px solid #D6DDEB;
+    border-radius: 4px;
+    margin-right: 24px;
+    margin-bottom: 24px;
+    > .item-top {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > .item-top-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-family: 'Epilogue';
+        font-style: normal;
+        font-weight: 400;
+        min-height: 108px;
+        > .item-introduce > .name {
+          font-family: 'Clash Display';
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 160%;
+          color: #25324B;
+        }
+        > .item-introduce > .introduce {
+          font-size: 12px;
+          line-height: 160%;
+          color: #7C8493;
+          > a {
+            color: #4640de;
+            font-weight: 600;
+          }
+        }
+        > .item-contact > .phone-num {
+          font-size: 14px;
+          line-height: 160%;
+          color: #25324B;
+        }
+        > .item-contact > .mail {
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 160%;
+          color: #4640DE;
+        }
+      }
+      > .item-top-right {
+        position: relative;
+        flex-basis: 84px;
+        height: 84px;
+        > img {
+          width: 84px;
+          height: 84px;
+        }
+        > .bio {
+          position: absolute;
+          height: 15px;
+          padding: 0 8px;
+          font-family: 'Epilogue';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          text-align: center;
+          color: #4640DE;
+          background: #E9EBFD;
+          border-radius: 7.5px;
+          top: 75px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    }
+    > .item-bottom {
+      font-family: 'Epilogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      > .bottom-info > .info-label {
+        line-height: 160%;
+        color: #7C8493;
+      }
+      > .bottom-info > .info-value {
+        line-height: 160%;
+        color: #25324B;
+      }
+    }
+  }
+}

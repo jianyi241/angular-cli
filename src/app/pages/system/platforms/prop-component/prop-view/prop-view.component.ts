@@ -22,6 +22,8 @@ export class PropViewComponent implements OnInit {
     tabType: number;
     @Input()
     prop_class: string;
+    @Input()
+    required: boolean = false;
     @Output()
     prop_change = new EventEmitter<PropertyVo>();
 

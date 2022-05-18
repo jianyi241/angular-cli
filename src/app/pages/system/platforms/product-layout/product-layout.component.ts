@@ -1,22 +1,32 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ConfigService} from "../../../../service/config.service";
-import {PlatformRepository} from "../../../../repository/platform-repository";
-import {Constants} from "../../../../model/constants";
-import {VersionRepository} from "../../../../repository/version-repository";
-import {Version} from "../../../../model/po/version";
-import {TabType} from "../../../../model/enums/tab-type";
-import {ProductInfo} from "../../../../model/po/productInfo";
-import {ToastRepository} from "../../../../repository/toast-repository";
-import * as moment from "moment";
-import {SaveService} from "../../../../service/save.service";
-import {environment} from "../../../../../environments/environment";
-import {VersionType} from "../../../../model/enums/version-type";
-import {FocusService} from "../../../../service/focus.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RejectModalComponent} from "../modal/reject-modal/reject-modal.component";
-import {CurrentUserService} from "../../../../service/current-user.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfigService} from '../../../../service/config.service';
+import {PlatformRepository} from '../../../../repository/platform-repository';
+import {Constants} from '../../../../model/constants';
+import {VersionRepository} from '../../../../repository/version-repository';
+import {Version} from '../../../../model/po/version';
+import {TabType} from '../../../../model/enums/tab-type';
+import {ProductInfo} from '../../../../model/po/productInfo';
+import {ToastRepository} from '../../../../repository/toast-repository';
+import * as moment from 'moment';
+import {SaveService} from '../../../../service/save.service';
+import {environment} from '../../../../../environments/environment';
+import {VersionType} from '../../../../model/enums/version-type';
+import {FocusService} from '../../../../service/focus.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RejectModalComponent} from '../modal/reject-modal/reject-modal.component';
+import {CurrentUserService} from '../../../../service/current-user.service';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
+import {VersionStatus} from "../../../../model/enums/version-status";
+import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
+
+declare type TipInfo = {
+    show: boolean,
+    tipCls: string,
+    textCls: string,
+    title: string,
+    text: string
+}
 
 @Component({
     selector: 'app-product-layout',
@@ -28,8 +38,8 @@ export class ProductLayoutComponent implements OnInit {
     changeVersion: Version;
     changeTabs: Array<{ tabType: number }> = new Array<{ tabType: number }>();
     product: ProductInfo = new ProductInfo();
-    from: string = ''; // fromPage
-    supplierSubmitType: string = '';
+    from = ''; // fromPage
+    supplierSubmitType = '';
     currentTab: string;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -48,10 +58,10 @@ export class ProductLayoutComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(res => {
-            this.from = res.from
-        })
-        let versionId = this.activatedRoute.firstChild.snapshot.params[Constants.VERSION];
-        this.product.id = this.activatedRoute.firstChild.snapshot.params['productId'];
+            this.from = res.from;
+        });
+        const versionId = this.activatedRoute.firstChild.snapshot.params[Constants.VERSION];
+        this.product.id = this.activatedRoute.firstChild.snapshot.params.productId;
         this.version.id = versionId;
         this.getProduct();
         if (versionId != Constants.VERSION) {
@@ -61,21 +71,24 @@ export class ProductLayoutComponent implements OnInit {
         }
         this.getModelPublishChangeFlag();
         this.getChangeTabs();
-        let url = this.activatedRoute.firstChild?.snapshot?.url;
+        const url = this.activatedRoute.firstChild?.snapshot?.url;
         this.currentTab = url && url.length > 0 ? url[0].path : undefined;
     }
 
     getVersion(): void {
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
-            this.configService.currentVersion = res.data || this.version
-        })
+            this.configService.currentVersion = res.data || this.version;
+            if (this.version.type === VersionType.Draft.value) {
+                this.getProjectButtonFlag()
+            }
+        });
     }
 
     getProduct(): void {
         this.platformRepository.productDetail(this.product.id).subscribe(res => {
             this.product = res.data || this.product;
-        })
+        });
     }
 
     getChangeTabs(): void {
@@ -87,23 +100,22 @@ export class ProductLayoutComponent implements OnInit {
     showEditButton(type: string) {
         if (this.currentUserService.isAdminUser()) {
             if (type === 'reject' || type === 'approve') {
-                return this.version.type === 'Draft' && this.version.versionStatus === this.configService.versionStatus.wait
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
+            }  else if (type === 'publish') {
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value && this.version.publishPlatformFlag
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
             }
         } else if (this.currentUserService.isSupplierUser()) {
             if (type === 'edit') {
-                return this.version.type === 'Publish'
-                // && !this.configService.isEditable(this.version.type)
-            } else if (type === 'submit') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'submit'
-            } else if (type === 'updateStatus') {
-                return this.version.type === 'Draft' && (this.version.versionStatus === this.configService.versionStatus.normal || this.version.versionStatus === this.configService.versionStatus.rejected) && this.supplierSubmitType === 'updateStatus'
+                return this.version.type === VersionType.Publish.value
+            } else if (type === 'submit' || type === 'discard') {
+                return this.version.type === VersionType.Draft.value && (this.version.versionStatus === VersionStatus.Normal.value || this.version.versionStatus === VersionStatus.Rejected.value)
             }
         }
     }
 
-    ifShowTip(type: string) {
+    showTip(type: string) {
         if (this.version.type === 'History') {
             return false
         }
@@ -118,6 +130,66 @@ export class ProductLayoutComponent implements OnInit {
             return this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion
         }
         return false
+    }
+
+    tipInfo(): TipInfo {
+        let info: TipInfo = {
+            tipCls: '',
+            textCls: '',
+            title: '',
+            text: '',
+            show: false
+        }
+        if (this.version.type === 'History') {
+            info = {
+                tipCls: '',
+                textCls: '',
+                title: `Release ${moment(this.version.updateTime).format('D MMM YY')}`,
+                text: `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`,
+                show: true
+            }
+        }
+        if (this.currentUserService.isAdminUser()) {
+            if (this.version.versionStatus === VersionStatus.Wait.value){
+                info = {
+                    tipCls: '',
+                    textCls: '',
+                    title: `New data submitted.`,
+                    text: `Profile updated at ${moment(this.version.updateTime).format('h:mma D MMM YY')}. Approve or reject changes by clicking the buttons.`,
+                    show: true
+                }
+            }
+        }
+        // if (this.currentUserService.isSupplierUser()) {
+        //     if (this.version.versionStatus === this.configService.versionStatus.frozen) {
+        //         info = {
+        //             tipCls: 'warn-tip',
+        //             textCls: 'tx-yellow',
+        //             title: `The profile is frozen.`,
+        //             text: `Profile updated at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . New data pending approval. Contact SuitabilityHub admin for more details.`,
+        //             show: true
+        //         }
+        //     } else if (this.version.versionStatus === this.configService.versionStatus.rejected) {
+        //         info = {
+        //             tipCls: 'err-tip',
+        //             textCls: 'tx-red',
+        //             title: `Data was rejected.`,
+        //             text: `Profile rejected at  ${moment(this.version.updateTime).format('h:mma D MMM YY')} . `,
+        //             show: true
+        //         }
+        //     }
+        // }
+        if (this.version.type && this.version.versionStatus !== this.configService.versionStatus.rejected && this.version.versionStatus !== this.configService.versionStatus.frozen && this.changeVersion) {
+            info = {
+                tipCls: '',
+                textCls: '',
+                title: `One or more feature fields are added by Suitability Hub admin.`,
+                text: `Template updated at ${moment(this.version.updateTime).format('h:mma D MMM YY')} by
+                    Suitability Hub admin. Click “Edit product” to fill in missing data if there’s any.`,
+                show: true
+            }
+        }
+        return info
     }
 
     getModelPublishChangeFlag(): void {
@@ -139,11 +211,12 @@ export class ProductLayoutComponent implements OnInit {
                 return
             }
             this.version = res.data
+            this.configService.currentVersion = res.data
             if (this.version.versionStatus === this.configService.versionStatus.rejected) {
                 this.toastRepository.showDanger('Changes have been rejected.')
                 this.loadingService.hide()
             } else {
-                this.toastRepository.showSuccess(res.msg || 'Successful operation')
+                this.toastRepository.showSuccess('Changes have been approved.')
                 this.loadingService.hide()
             }
         }, err => {
@@ -161,15 +234,37 @@ export class ProductLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.getProjectButtonFlag()
+            // this.getProjectButtonFlag()
             this.router.navigateByUrl(`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`)
         });
     }
 
     getProjectButtonFlag() {
+        console.log('getProductButtonFlag ===> ')
         this.platformRepository.getProductButtonFlag({productId: this.product.id}).subscribe(res => {
+            console.log('getProductButtonFlag res ===> ', res)
             this.supplierSubmitType = res.msg
         }, err => {
+        })
+    }
+
+    supplierSubmitConfirm() {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal = {
+            title: 'Are you sure to submit?',
+            text: 'Submitting the changes will freeze the platform profile. You will not be able to make changes while the platform is in review with us. ',
+            cancelText: 'No, do nothing',
+            confirmText: 'Yes, submit and freeze'
+        }
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.updateVersionStatus(VersionStatus.Wait.value)
+        }, err => {
+            console.log('cancel')
         })
     }
 
@@ -196,11 +291,15 @@ export class ProductLayoutComponent implements OnInit {
             }
             this.version = res.data || this.version;
             let urlSegment = this.activatedRoute.firstChild.snapshot.url[0];
-            this.router.navigateByUrl(`/`, {
-                skipLocationChange: true
-            }).then(r => {
-                this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
-            })
+            if (this.currentUserService.isSupplierUser()) {
+                console.log('add submit res ===> ', res)
+            } else {
+                this.router.navigateByUrl(`/`, {
+                    skipLocationChange: true
+                }).then(r => {
+                    this.router.navigate([`/platform/product-tab/${urlSegment.path}/${this.product.id}/${this.version.id}`])
+                })
+            }
         })
     }
 
@@ -214,18 +313,14 @@ export class ProductLayoutComponent implements OnInit {
         return this.changeTabs.some(c => c.tabType == tabType);
     }
 
-    getVersionName() {
-        return `Release ${moment(this.version.updateTime).format('D MMM YY')}`
-    }
-
-    getVersionInfo() {
-        return `Submitted ${moment(this.version.updateTime).format('h:mma D MMM YY')} by Recep Peker`
-    }
-
     backPage() {
         const versionType = this.version.type
         if (versionType !== 'History' && this.from !== 'history') {
-            this.router.navigateByUrl('/platform/product')
+            if (this.currentUserService.isAdminUser()) {
+                this.router.navigateByUrl('/platform/product')
+            } else {
+                this.router.navigateByUrl('/platform/product-box')
+            }
         } else {
             this.backHistory()
         }
@@ -239,7 +334,7 @@ export class ProductLayoutComponent implements OnInit {
         })
     }
 
-    rejectUpdate(): void {
+    rejectConfirm(): void {
         const modalRef = this.ngbModal.open(RejectModalComponent, {
             size: 'w644',
             windowClass: 'tip-popup-modal',
@@ -247,9 +342,46 @@ export class ProductLayoutComponent implements OnInit {
         });
         modalRef.result.then(res => {
             console.log('confirm')
-            this.updateVersionStatus('Rejected')
+            this.updateVersionStatus(VersionStatus.Rejected.value)
         }, err => {
             console.log('cancel')
+        })
+    }
+
+    discardConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal.title = 'Are you sure to discard draft?'
+        modalRef.componentInstance.modal.text = 'Discarding draft will delete all the changes you made. Are you sure?'
+        modalRef.componentInstance.modal.cancelText = 'No, do nothing'
+        modalRef.componentInstance.modal.confirmText = 'Yes, discard all changes'
+        modalRef.result.then(res => {
+            console.log('confirm')
+            this.editDiscardDraft()
+        }, err => {
+            console.log('cancel')
+        })
+    }
+    editDiscardDraft(): void {
+        this.versionRepository.discard(this.version.id).subscribe(res => {
+            if (res.statusCode === 200) {
+                // this.getVersionNoParams()
+                this.router.navigateByUrl(`/platform/product-box-detail/overview/${res.data.id}/${res.data.versionId}}/${TabType.overview.value}`)
+            } else {
+                this.toastRepository.showDanger(res.msg || 'Failed operation')
+            }
+        }, err => {
+        })
+    }
+    getVersionNoParams(): void {
+        this.versionRepository.supplierVersion().subscribe(res => {
+            this.version = res.data || this.version;
+            this.version.id = res.data?.id || Constants.VERSION;
+            this.version.type = this.version.type || VersionType.Publish.value;
+            this.chooseTab(TabType.overview.name);
         })
     }
 }

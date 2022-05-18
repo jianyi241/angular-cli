@@ -25,6 +25,8 @@ export class LongTextComponent implements OnInit {
     change: EventEmitter<PropertyVo>;
     @Input()
     prop_class: string;
+    @Input()
+    required: boolean;
 
     constructor(private focusService: FocusService) {
 

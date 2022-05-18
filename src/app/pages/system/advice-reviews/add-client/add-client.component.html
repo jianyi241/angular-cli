@@ -1,0 +1,29 @@
+<!--''-->
+<div class="main main-form-with-tab main-form">
+
+    <div class="sub-head sub-head-form">
+        <div class="sub-title" (click)="backPage()">
+            <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
+            Jerome Bell
+        </div>
+
+        <div class="btn-control-group">
+<!--            <ng-container *ngIf="has()">-->
+                <button class="btn text-danger" (click)="onArchive()">Disable Jerome</button>
+<!--            </ng-container>-->
+            <button class="btn btn-purple xs-ml-24" (click)="save()">
+                <img src="assets/img/icon/icon-add.svg" />
+                Start Suitability Review
+            </button>
+        </div>
+    </div>
+
+    <div class="tab-menu">
+        <div class="tab-text" *ngFor="let item of tabs" [routerLink]="[item.path]"
+             routerLinkActive="active">{{item.name}} <span class="line"></span>
+        </div>
+    </div>
+
+    <app-ac-overview *ngIf="name === 'Overview'"></app-ac-overview>
+    <app-ac-review *ngIf="name === 'Reviews'"></app-ac-review>
+</div>

@@ -7,6 +7,7 @@ import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {ExistedModalComponent} from "../existed-modal/existed-modal.component";
 import {Router} from "@angular/router";
+import {tsCreateElement} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
 
 @Component({
     selector: 'app-signup-modal',
@@ -75,8 +76,10 @@ export class SignupModalComponent implements OnInit {
                         windowClass: 'password-modal',
                         centered: true
                     });
-                    existedModalComponent.result.then(res => {
+                    existedModalComponent.result.then(modalRes => {
+                        window.open(`mailto:https://${res.data.account}`,'_blank')
                     }).catch(err => {
+                        console.log('error ', err)
                     })
                     return;
                 }

@@ -1,0 +1,36 @@
+<div class="table-layout">
+    <div class="col-content">
+        <div class="col-body">
+            <ng-container>
+                <div class="list-cell-large"
+                     *ngFor="let review of list">
+                    <div class="list-content">
+                        <div class="info info-title">
+                            <div class="title">{{review.name}}</div>
+                        </div>
+                        <div class="info info-avatar">
+                            <div class="avatar">
+                                <img [src]="review.visitUrl" />
+                            </div>
+                            <div class="txt">
+                                <div class="txt-name">{{review.fullName}}</div>
+                                <div class="txt-date">{{review.updateTime}}</div>
+                            </div>
+                        </div>
+                        <div class="info info-status">
+                            <span class="label status-green" *ngIf="review.status === 1">Approved</span>
+                            <span class="label status-blue" *ngIf="review.status === 2">In progress</span>
+                            <span class="label status-yellow" *ngIf="review.status === 3">Pending approval</span>
+                            <span class="label status-red" *ngIf="review.status === 4">Archived</span>
+                        </div>
+                    </div>
+                    <div class="info info-edit">
+                        <button class="btn btn-outline-purple-light btn-small">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

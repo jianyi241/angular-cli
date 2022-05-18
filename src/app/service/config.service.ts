@@ -10,11 +10,14 @@ import {VersionStatus} from "../model/enums/version-status";
 import {CurrentUserService} from "./current-user.service";
 import {Version} from "../model/po/version";
 import {AnalysisType} from "../model/enums/analysis-type";
+import {WorkFlowsStatus} from "../model/enums/work-flows-status";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigService {
+
+
     tabType = {
         overview: TabType.overview.value,
         information: TabType.information.value,
@@ -59,14 +62,27 @@ export class ConfigService {
     versionStatus = {
         normal: VersionStatus.Normal.value,
         wait: VersionStatus.Wait.value,
+        waitPublish: VersionStatus.WaitPublish.value,
         frozen: VersionStatus.Frozen.value,
         rejected: VersionStatus.Rejected.value,
     }
 
-    analysisType= {
+    versionType = {
+        publish: VersionType.Publish.value,
+        draft: VersionType.Draft.value,
+        history: VersionType.History.value
+    }
+
+    analysisType = {
         feature: AnalysisType.feature.value,
         metric: AnalysisType.metric.value,
         fee: AnalysisType.fee.value,
+    }
+
+    workflowStatus = {
+        dataRequired: WorkFlowsStatus.DataRequired.value,
+        awaitingApproval: WorkFlowsStatus.AwaitingApproval.value,
+        awaitingPublish: WorkFlowsStatus.AwaitingPublish.value,
     }
 
     currentVersion: Version = new Version()
@@ -95,12 +111,12 @@ export class ConfigService {
             if (!status) return versionType === VersionType.Draft.value;
             return versionType === VersionType.Draft.value && status != 'Archive';
         } else if (this.currentUserService.isSupplierUser()){
+            if (this.currentVersion.versionStatus === this.versionStatus.wait || this.currentVersion.versionStatus === this.versionStatus.waitPublish) {
+                return false
+            }
             if (!status) {
                 return versionType === VersionType.Draft.value;
             } else {
-                if (this.currentVersion.versionStatus === this.versionStatus.frozen || this.currentVersion.versionStatus === this.versionStatus.wait) {
-                    return false
-                }
                 return versionType === VersionType.Draft.value && status != 'Archive';
             }
         }
@@ -110,14 +126,19 @@ export class ConfigService {
         return versionType != VersionType.Publish.value && flag;
     }
 
+    isWaitPublish(): boolean {
+        return  this.currentVersion.versionStatus === VersionStatus.WaitPublish.value
+    }
+
+
     getClassByStatus(value: string, versionType: string): string {
         if (versionType === VersionType.Publish.value) return '';
         switch (value) {
             case 'Insert':
             case 'Update':
                 return 'bg-blue';
-            case 'Archive':
-                return 'bg-red';
+            // case 'Archive':
+            //     return 'bg-red';
             default:
                 return '';
         }

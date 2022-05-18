@@ -1,0 +1,103 @@
+<div class="pbd-overview">
+    <div class="content-left">
+        <div class="txt txt-introduce">
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.description"></div>
+        </div>
+        <div class="txt txt-market">
+            <div class="txt-title">Target market</div>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.targetMarket"></div>
+        </div>
+        <div class="txt txt-history">
+            <div class="txt-title">History</div>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.history">
+            </div>
+        </div>
+        <div class="txt txt-ownership">
+            <div class="txt-title">Ownership structure</div>
+            <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.ownership">
+            </div>
+        </div>
+        <div class="txt txt-dynamic" *ngFor="let prop of platformViewAllInfo.properties">
+            <div class="txt-title">{{prop.propName}}</div>
+            <div class="txt-content" [innerHTML]="prop.propValue">
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="summary-info">
+            <div class="info-title">In most recent financial year</div>
+            <div class="info-txt">
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfClients || 0}}</span> clients/members on platform</div>
+                <div class="txt-row"><span>{{platformOverviewFreezeInfo.numberOfAuthorised || 0}}</span>  authorised representative users</div>
+            </div>
+            <div class="info-other">
+                <div *ngIf="platformOverviewFreezeInfo.parentCompany==='yes'">Parent company profitable</div>
+                <div *ngIf="platformOverviewFreezeInfo.platformOperations==='yes'">Platform operations profitable</div>
+            </div>
+        </div>
+        <div class="contact-info">
+            <div class="info-top">
+                <div class="title">Contact centre</div>
+                <div class="link">View SLAs</div>
+            </div>
+            <div class="info-content">
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-clock.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Contact centre operating hours</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.contactCentreHours}}</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-phone.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Contact centre number</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.contactCentreNumber}} </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-mail.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Contact centre email address</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedEmail}} </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-info.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Online chat support</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedChat}}</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-person.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Dedicated support staff for advisers</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.dedicatedAdvisers}}</div>
+                    </div>
+                </div>
+<!--                <div class="info-item">-->
+<!--                    <img src="assets/img/icon/icon-contact-tea.svg" class="item-icon" />-->
+<!--                    <div class="item-value-info">-->
+<!--                        <div class="item-label">Out of hours support</div>-->
+<!--                        <div class="item-value link">Submit a ticket</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-address.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Postal address for forms and documents</div>
+                        <div class="item-value">{{platformInformationFreezeInfo.postalAddress}}</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="assets/img/icon/icon-contact-address.svg" class="item-icon" />
+                    <div class="item-value-info">
+                        <div class="item-label">Service level agreement</div>
+                        <div class="item-value">BT Panorama is a new wealth experience that gives you one dedicated place to access all the information you need to stay in control of your investments, SMSF, super and insurance. BT Panorama has been designed to be simple to use and to be flexible, so you can manage your wealth, your way.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

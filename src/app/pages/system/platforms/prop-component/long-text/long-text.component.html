@@ -1,6 +1,6 @@
 <div class="form-group">
     <label class="control-label control-label-custom {{prop_class}}">{{prop.name}}
-<!--        <span class="label-required">*</span>-->
+        <span class="label-required" *ngIf="required">*</span>
         <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
     </label>
     <ckeditor (blur)="blur()" (focus)="focus()" [readOnly]="!editable" [(ngModel)]="prop.productPropVo.propValue" [config]="config"></ckeditor>

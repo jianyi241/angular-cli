@@ -66,7 +66,7 @@
                                     <p class="sub-title">{{subGroup.name}}</p>
                                     <p [innerHTML]="subGroup.description"></p>
                                 </div>
-                                <div class="btn-right">Collapse all {{subGroup.propertyVoList.length}} features <span
+                                <div class="btn-right">{{acc.isExpanded('ngb-panel-' +subGroupIndex) ? 'Collapse all' : 'Show all'}} {{subGroup.propertyVoList.length}} features <span
                                         class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
                                 </div>
                             </div>

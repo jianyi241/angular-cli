@@ -1,0 +1,147 @@
+.pbd-overview {
+  display: flex;
+  > .content-left {
+    flex: 1;
+    padding-right: 32px;
+    .txt{
+      &:not(:last-child) {
+        border-bottom: 1px solid #D6DDEB;
+      }
+      &:not(:first-child) {
+        padding-top: 16px;
+      }
+      > .txt-title {
+        font-family: 'Epilogue';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #25324B;
+        margin-bottom: 10px;
+      }
+      > .txt-content {
+          font-family: 'Epilogue';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 160%;
+          display: flex;
+          align-items: center;
+          color: #515B6F;
+          white-space: normal;
+          word-break: break-all;
+      }
+    }
+  }
+  > .content-right {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 362px;
+    > .summary-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+      flex-basis: 203px;
+      background: #F8F8FD;
+      margin-bottom: 24px;
+      font-family: 'Epilogue';
+      font-style: normal;
+      > .info-title {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 160%;
+        color: #515B6F;
+      }
+      > .info-txt {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 160%;
+        color: #25324B;
+        margin-top: 8px;
+        span {
+          font-weight: bold;
+          color: #000000;
+        }
+      }
+      > .info-other {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 160%;
+        color: #25324B;
+        margin-top: 24px;
+      }
+    }
+    > .contact-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px 24px 24px;
+      background: #FFFFFF;
+      border: 1px solid #D6DDEB;
+      > .info-top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > .title {
+          font-family: 'ClashDisplay';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 120%;
+          font-feature-settings: 'cv11' on;
+          color: #25324B;
+        }
+        > .link {
+          font-family: 'Epilogue';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 160%;
+          color: #4640DE;
+          cursor: pointer;
+        }
+      }
+      > .info-content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        > .info-item {
+          display: flex;
+          align-items: flex-start;
+          > .item-icon {
+            margin-right: 16px;
+          }
+          > .item-value-info {
+            ont-family: 'Epilogue';
+            font-style: normal;
+            font-weight: 400;
+            margin-bottom: 16px;
+            > .item-label {
+              font-size: 13px;
+              line-height: 160%;
+              display: flex;
+              align-items: center;
+              color: #7C8493;
+            }
+            > .item-value {
+              font-size: 14px;
+              line-height: 160%;
+              display: flex;
+              align-items: center;
+              color: #25324B;
+              &.link {
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 160%;
+                color: #4640DE;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <div class="head-layout">
     <div class="head-left">
-        <a href="#" class="logo">
+        <a href="javascript:;" class="logo">
             <img src="./assets/img/logo_white.png"/>
         </a>
 
@@ -13,14 +13,15 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
-            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
+            <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/supplier/comparisons-list']" routerLinkActive="active">Platform analysis</a>
             <a>News & Updates</a>
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
-            <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
-            <a>Suitability review</a>
+            <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
+            <a routerLinkActive="active">Suitability review</a>
+<!--            [routerLink]="['/advice-review/review-list/review']" -->
             <a>News & Updates</a>
         </div>
 
@@ -40,12 +41,12 @@
                         <a>News & updates</a>
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isSupplierUser()">
-                        <a customLinkActive="active" [link]="['/platform']" [routerLink]="['/platform/product']">Platform profiles</a>
+                        <a customLinkActive="active" [link]="['/platform']" [routerLink]="['/platform/product-box']">Platform profiles</a>
                         <a [routerLink]="['/supplier/comparisons-list']">Platform analysis</a>
                         <a>News & Updates</a>
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isAdviceUser()">
-                        <a [routerLink]="['/platform/product']">Platform profiles</a>
+                        <a [routerLink]="['/platform/product-box']">Platform profiles</a>
                         <a>Suitability review</a>
                         <a>News & Updates</a>
                     </ng-container>

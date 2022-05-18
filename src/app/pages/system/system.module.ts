@@ -61,6 +61,23 @@ import {AdminListComponent} from './admin/admin-list/admin-list.component';
 import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component';
 import { RejectModalComponent } from './platforms/modal/reject-modal/reject-modal.component';
 import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons-list.component';
+import { ProductsBoxComponent } from './platforms/products-box/products-box.component';
+import { ProductsBoxDetailComponent } from './platforms/products-box-detail/products-box-detail.component';
+import { PbdOverviewComponent } from './platforms/products-box-detail/children/pbd-overview/pbd-overview.component';
+import { PbdInformationComponent } from './platforms/products-box-detail/children/pbd-information/pbd-information.component';
+import { PbdEsgComponent } from './platforms/products-box-detail/children/pbd-esg/pbd-esg.component';
+import { PbdFeaturesComponent } from './platforms/products-box-detail/children/pbd-features/pbd-features.component';
+import { PbdFeesRatesComponent } from './platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component';
+import { PbdFindBdmComponent } from './platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { PreviewImageModalComponent } from './platforms/modal/preview-image-modal/preview-image-modal.component';
+import {ReviewListComponent} from "./advice-reviews/review-list/review-list.component";
+import { AddClientModalComponent } from './advice-reviews/modal/add-client-modal/add-client-modal.component';
+import {NgxValidatorModule} from "@why520crazy/ngx-validator";
+import { AddClientComponent } from './advice-reviews/add-client/add-client.component';
+import { AcOverviewComponent } from './advice-reviews/add-client/components/ac-overview/ac-overview.component';
+import { AcReviewComponent } from './advice-reviews/add-client/components/ac-review/ac-review.component';
+import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
 
 @NgModule({
     declarations: [
@@ -114,7 +131,22 @@ import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons
         AdminListComponent,
         AdminDetailComponent,
         ComparisonsListComponent,
-        RejectModalComponent
+        RejectModalComponent,
+        ProductsBoxComponent,
+        ProductsBoxDetailComponent,
+        PbdOverviewComponent,
+        PbdInformationComponent,
+        PbdEsgComponent,
+        PbdFeaturesComponent,
+        PbdFeesRatesComponent,
+        PbdFindBdmComponent,
+        PreviewImageModalComponent,
+        ReviewListComponent,
+        AddClientModalComponent,
+        AddClientComponent,
+        AcOverviewComponent,
+        AcReviewComponent,
+        ConfirmModalComponent
     ],
     imports: [
         CommonModule,
@@ -126,10 +158,13 @@ import {ComparisonsListComponent} from './suppliers/comparisons-list/comparisons
         NgbModule,
         DragDropModule,
         OwlDateTimeModule,
+        MatTooltipModule,
+        NgxValidatorModule,
     ], exports: [
         ToggleClassDirective,
         BackTopDirective,
-        ArrayFilterPipe
+        ArrayFilterPipe,
+        SortingWidgetComponent
     ]
 })
 export class SystemModule {

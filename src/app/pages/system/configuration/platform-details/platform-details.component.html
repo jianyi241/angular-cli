@@ -4,24 +4,23 @@
             <div class="col-head-top">
                 <div>
                     <div class="title">Platform details</div>
-                    <div class="text">Showing 13 in-use items</div>
+<!--                    <div class="text">Showing 13 in-use items</div>-->
                 </div>
 
                 <div class="col-head-right" *ngIf="version.type">
                     <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideArchive)"
                           (click)="showArchived()">Show archived</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
-                            [hidden]="!configService.isEditable(version.type)" (click)="save()">+ New
+                            [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()" (click)="save()">+ New
                     </button>
                 </div>
             </div>
 
-            <div class="search-content w-310">
-                <input type="text" placeholder="Search a keyword" class="form-control"/>
-                <span class="icon icon-search icon-16"></span>
-            </div>
+<!--            <div class="search-content w-310">-->
+<!--                <input type="text" placeholder="Search a keyword" class="form-control"/>-->
+<!--                <span class="icon icon-search icon-16"></span>-->
+<!--            </div>-->
         </div>
-
         <div class="col-body">
             <div class="empty-text" *ngIf="emptyList()">This section is empty. Click on “Edit configurator” to add
                 items.
@@ -34,8 +33,10 @@
                             <div class="title">{{prop.name}}</div>
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
-                        <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
-                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                        <div class="info info-edit">
+                            <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                            <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                        </div>
                     </div>
                     <ng-container *ngIf="version.type">
                         <button class="btn btn-outline-purple-light btn-small"
@@ -64,8 +65,10 @@
                             <div class="title">{{prop.name}}</div>
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
-                        <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
-                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                        <div class="info info-edit">
+                            <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                            <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                        </div>
                     </div>
                     <ng-container *ngIf="version.type">
                         <button class="btn btn-outline-purple-light btn-small"

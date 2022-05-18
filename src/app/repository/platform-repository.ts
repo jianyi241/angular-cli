@@ -11,6 +11,10 @@ import {ProductFormVo} from "../model/vo/productFormVo";
 import {Version} from "../model/po/version";
 import {SubProduct} from "../model/po/subProduct";
 import {ProductAccessVo} from "../model/vo/productAccessVo";
+import {Page} from "../model/vo/page";
+import {ProductCondition} from "../model/condition/product-condition";
+import PlatformView from "../model/po/platformView";
+import PlatformOverview from "../model/po/platformOverview";
 
 @Injectable({
     providedIn: 'root'
@@ -77,5 +81,29 @@ export class PlatformRepository {
 
     getProductButtonFlag({productId}): Observable<HttpResult<any>> {
         return this.http.get<HttpResult<any>>(environment.baseURL + `/product/getProductButtonFlag/${productId}`)
+    }
+
+    getProductsPage(productCondition: ProductCondition): Observable<HttpResult<Page<ProductInfo>>> {
+        return this.http.post<HttpResult<Page<ProductInfo>>>(environment.baseURL + '/product/getPlatformPage', productCondition);
+    }
+
+    getProductList(productCondition: ProductCondition): Observable<HttpResult<Array<ProductInfo>>> {
+        return this.http.post<HttpResult<Array<ProductInfo>>>(environment.baseURL + '/product/getPlatformList', productCondition);
+    }
+
+    addPlatform(): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/product/createPlatform',{});
+    }
+
+    // getPlatformFreezeData(productId: string,tabType: number): Observable<HttpResult<PlatformOverview | PlatformInformation | PlatformEsg>> {
+    //     return this.http.get<HttpResult<PlatformOverview | PlatformInformation | PlatformEsg>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
+    // }
+
+    getPlatformFreezeData<T>(productId: string,tabType: number): Observable<HttpResult<T>> {
+        return this.http.get<HttpResult<T>>(`${environment.baseURL}/product/getPlatformFreezeData/${productId}/${tabType}`);
+    }
+
+    getPlatformViewByTabType<T>(productId: string,tabType: number): Observable<HttpResult<PlatformView<T>>> {
+        return this.http.get<HttpResult<PlatformView<T>>>(`${environment.baseURL}/product/getPlatformViewByTabType/${productId}/${tabType}`);
     }
 }

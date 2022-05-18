@@ -1,0 +1,52 @@
+.preview-image-modal {
+  width: auto;
+  height: 470px;
+  box-sizing: border-box;
+  //padding: 56px 32px;
+  .modal-header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: none;
+    > .close-btn {
+      width: 34px;
+      height: 34px;
+    }
+  }
+  .modal-content {
+    padding: 0 32px;
+    > .content-title {
+      color: #25324B;
+      font-family: 'ClashDisplay';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 120%;
+      font-feature-settings: 'cv11' on;
+    }
+    > .content-text {
+      font-family: 'Epilogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 160%;
+      color: #7C8493;
+      margin-top: 16px;
+    }
+    > .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      > button {
+        font-size: 14px;
+        flex: 0 0 278px;
+        height: 50px;
+        margin-left: 0 !important;
+        &.cancel-btn {
+          border-color: #cbcbf5;
+        }
+      }
+    }
+  }
+}

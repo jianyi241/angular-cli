@@ -1,0 +1,83 @@
+<div class="main products-box-detail">
+    <div class="banner">
+        <div class="banner-bg-image" *ngIf="platformOverviewInfo.platformBanner?.visitUrl">
+            <img [src]="platformOverviewInfo.platformBanner?.visitUrl" />
+        </div>
+        <div class="banner-content">
+            <div class="links">
+                <div class="link main-link" (click)="back()">
+                    <img src="./assets/img/icon/icon-arr-left-white.svg">
+                    {{platformOverviewInfo.platformName}}
+                </div>
+                <div class="link sub-link" (click)="toWebSite(platformOverviewInfo.platformWebsite)">
+                    Go to Website
+                    <img src="./assets/img/icon/icon-arr-right-s-white.svg">
+                </div>
+            </div>
+            <div class="info">
+                <div class="logo" *ngIf="platformOverviewInfo.platformLogo?.visitUrl">
+                    <img [src]="platformOverviewInfo.platformLogo?.visitUrl" />
+                </div>
+                <div class="other">
+                    <div class="display-items">
+                        <div class="item" *ngIf="platformOverviewInfo.dateOfLaunch">
+                            <div class="item-left">
+                                <img src="./assets/img/icon/icon-platform-fire.svg" />
+                            </div>
+                            <div class="item-right">
+                                <div class="item-label">Launched</div>
+                                <div class="item-value">{{platformOverviewInfo.dateOfLaunch}}</div>
+                            </div>
+                        </div><div class="item" *ngIf="platformOverviewInfo.netFlows">
+                        <div class="item-left">
+                            <img src="./assets/img/icon/icon-platform-statis.svg" />
+                        </div>
+                        <div class="item-right">
+                            <div class="item-label">Netflows in last 12 months</div>
+                            <div class="item-value">{{platformOverviewInfo.netFlows}}</div>
+                        </div>
+                    </div><div class="item" *ngIf="platformOverviewInfo.fundsUnder">
+                        <div class="item-left">
+                            <img src="./assets/img/icon/icon-platform-dollar.svg" />
+                        </div>
+                        <div class="item-right">
+                            <div class="item-label">FUA</div>
+                            <div class="item-value">{{platformOverviewInfo.fundsUnder}}</div>
+                        </div>
+                    </div><div class="item" *ngIf="platformOverviewInfo.marketShare">
+                        <div class="item-left">
+                            <img src="./assets/img/icon/icon-platform-persons.svg" />
+                        </div>
+                        <div class="item-right">
+                            <div class="item-label">Market share by FUA</div>
+                            <div class="item-value">{{platformOverviewInfo.marketShare}}</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="btn-group">
+<!--                        <button class="btn btn-purple compare-btn">-->
+<!--                            <img src="./assets/img/icon/icon-building-white.svg" />-->
+<!--                            Compare {{platformOverviewInfo.platformName}}-->
+<!--                        </button>-->
+                        <button class="btn btn-purple compare-btn" *ngIf="canEdit()" (click)="editProductInfo()">
+                            <img src="./assets/img/icon/icon-edit-white.svg" />
+                            Edit&nbsp;{{platformOverviewInfo.platformName}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title">Product details</div>
+    <div class="tab-menu">
+        <div class="tab-text {{configService.activeMatch(tab.path)}}"
+             (click)="chooseTab(tab)"
+             *ngFor="let tab of tabs">
+            {{tab.name}}
+            <span class="line"></span>
+        </div>
+    </div>
+    <div class="children-view">
+        <router-outlet></router-outlet>
+    </div>
+</div>

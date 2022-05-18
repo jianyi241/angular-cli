@@ -1,12 +1,14 @@
 <short-text [change]="prop_change" [prop]="model" [index]="index"
             [prop_class]="prop_class"
             [editable]="editable"
+            [required]="required"
             [tabType]="tabType"
             *ngIf="type == configService.propType.shortText"></short-text>
 <integer [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
          [index]="index"
          *ngIf="type == configService.propType.integer"></integer>
 <long-text [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"
+           [required]="required"
            [index]="index"
            *ngIf="type == configService.propType.longText"></long-text>
 <boolean [tabType]="tabType" [prop_class]="prop_class" [editable]="editable" [change]="prop_change" [prop]="model"

@@ -40,6 +40,18 @@ import {AdminDetailComponent} from './admin/admin-detail/admin-detail.component'
 import {AuthActivateGuard} from "../../config/auth-activate-guard";
 import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonsListComponent} from "./suppliers/comparisons-list/comparisons-list.component";
+import {ProductsBoxComponent} from "./platforms/products-box/products-box.component";
+import {ProductsBoxDetailComponent} from "./platforms/products-box-detail/products-box-detail.component";
+import {PbdOverviewComponent} from "./platforms/products-box-detail/children/pbd-overview/pbd-overview.component";
+import {
+    PbdInformationComponent
+} from "./platforms/products-box-detail/children/pbd-information/pbd-information.component";
+import {PbdEsgComponent} from "./platforms/products-box-detail/children/pbd-esg/pbd-esg.component";
+import {PbdFeaturesComponent} from "./platforms/products-box-detail/children/pbd-features/pbd-features.component";
+import {PbdFeesRatesComponent} from "./platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component";
+import {PbdFindBdmComponent} from "./platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component";
+import {ReviewListComponent} from "./advice-reviews/review-list/review-list.component";
+import {AddClientComponent} from "./advice-reviews/add-client/add-client.component";
 
 const routes: Routes = [
     {
@@ -195,6 +207,35 @@ const routes: Routes = [
                     },
                 ]
             },
+            {
+                path: 'product-box',
+                component: ProductsBoxComponent,
+            },
+            {
+                path: 'product-box-detail',
+                component: ProductsBoxDetailComponent,
+                children: [
+                    {
+                        path: 'overview/:id/:version/:type',
+                        component: PbdOverviewComponent,
+                    },{
+                        path: 'information/:id/:version/:type',
+                        component: PbdInformationComponent,
+                    },{
+                        path: 'esg/:id/:version/:type',
+                        component: PbdEsgComponent,
+                    },{
+                        path: 'features/:id/:version/:type',
+                        component: PbdFeaturesComponent,
+                    },{
+                        path: 'fees-rates/:id/:version/:type',
+                        component: PbdFeesRatesComponent,
+                    },{
+                        path: 'find-bdm/:id/:version/:type',
+                        component: PbdFindBdmComponent,
+                    }
+                ]
+            },
         ]
     },
     {
@@ -233,6 +274,22 @@ const routes: Routes = [
                     },
                 ],
             },
+        ]
+    },
+    {
+        path: 'advice-review',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'review-list/:type',
+                component: ReviewListComponent
+            },
+            {
+                path: 'add-client/:tabName',
+                component: AddClientComponent,
+            }
         ]
     },
     {

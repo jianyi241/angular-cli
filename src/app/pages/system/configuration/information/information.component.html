@@ -3,9 +3,9 @@
         <div class="col-head">
             <div class="title">Sections</div>
             <div class="col-head-right" *ngIf="version.type">
-                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideSectionArchive)"
-                      (click)="showSectionArchived()">Show archived</span>
-                <span class="link-new" [hidden]="!configService.isEditable(version.type)"
+                <span class="link-show" *ngIf="version.type != 'Publish'"
+                      (click)="showSectionArchived()">{{hideSectionArchive ? 'Show archived' : 'Hide archived'}}</span>
+                <span class="link-new" [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
                       (click)="saveSection()">+ New</span>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <div class="title" [title]="section.name">{{section.name}}</div>
                 <ng-container *ngIf="version.type">
                 <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id, $event)"
-                      [hidden]="!configService.isEditable(version.type)"></span>
+                      [hidden]="!configService.isEditable(version.type) || section.readOnly || configService.isWaitPublish()"></span>
                 </ng-container>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropSections($event)">
@@ -32,8 +32,9 @@
                           [hidden]="!configService.isEditable(version.type)"></span>
                     <div class="title" [title]="section.name">{{section.name}}</div>
                     <ng-container *ngIf="version.type">
-                    <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id,$event)"
-                          [hidden]="!configService.isEditable(version.type)"></span>
+                        <span class="label label-red" *ngIf="configService.isArchive(section.status)">Archived</span>
+                        <span class="icon-block icon-edit icon-20" (click)="saveSection(section.id,$event)"
+                              [hidden]="!configService.isEditable(version.type) || section.readOnly || configService.isWaitPublish()"></span>
                     </ng-container>
                 </div>
             </div>
@@ -44,22 +45,22 @@
             <div class="col-head-top">
                 <div>
                     <div class="title">Business information</div>
-                    <div class="text">Showing 13 in-use items</div>
+<!--                    <div class="text">Showing 13 in-use items</div>-->
                 </div>
                 <div class="col-head-right" *ngIf="version.type">
-                    <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hidePropArchive)"
-                          (click)="showPropArchived()">Show archived</span>
+                    <span class="link-show" *ngIf="version.type != 'Publish'"
+                          (click)="showPropArchived()">{{hidePropArchive ? 'Show archived' : 'Hide archived'}}</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
                             (click)="saveProp()"
-                            [hidden]="!configService.isEditable(version.type) || !reminder.groupId">+ New
+                            [hidden]="!configService.isEditable(version.type) || !reminder.groupId || configService.isWaitPublish()">+ New
                     </button>
                 </div>
             </div>
 
-            <div class="search-content w-310">
-                <input type="text" placeholder="Search a keyword" class="form-control"/>
-                <span class="icon icon-search icon-16"></span>
-            </div>
+<!--            <div class="search-content w-310">-->
+<!--                <input type="text" placeholder="Search a keyword" class="form-control"/>-->
+<!--                <span class="icon icon-search icon-16"></span>-->
+<!--            </div>-->
         </div>
 
         <div class="col-body">
@@ -83,7 +84,7 @@
                     </button>
                     <button class="btn btn-outline-purple-light btn-small"
                             (click)="saveProp(prop.id)"
-                            [hidden]="!configService.isEditable(version.type)">
+                            [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">+ New ">
                         <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                     </button>
                 </ng-container>
@@ -110,7 +111,7 @@
                         </button>
                         <button class="btn btn-outline-purple-light btn-small"
                                 (click)="saveProp(prop.id)"
-                                [hidden]="!configService.isEditable(version.type)">
+                                [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
                             <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                         </button>
                     </ng-container>

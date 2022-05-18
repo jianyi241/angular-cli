@@ -18,12 +18,16 @@ import {BaseModel} from "./baseModel";
  * sh_product表
  */
 export class ProductInfo extends BaseModel{
+    archived?: boolean; // 是否归档
+    companyId?: string;
+    companyName?: string; // supplierName
     attachmentId?: string;
-    attachmentVo?: Attachment = new Attachment();
+    platformLogo?: Attachment = new Attachment();
     description?: string;
     name?: string;
+    status?: string;
     versionId?: string;
-
+    workflowStatus?: number; // 1: Data required, 2: Awaiting approval, 3: Awaiting publish
 
 }
 

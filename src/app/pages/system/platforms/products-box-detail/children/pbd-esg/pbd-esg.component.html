@@ -1,0 +1,30 @@
+<div class="pbd-esg">
+    <div class="content-left">
+        <div class="txt txt-market" *ngFor="let item of platformViewAllInfo.properties">
+            <div class="txt-title">{{item.propName}}</div>
+            <div class="txt-content" [innerHTML]="item.propValue"></div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="contact-info">
+            <div class="info-content">
+                <div class="info-item">
+                    <div class="item-label">Diversity targets in place for board</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.diversityBoard}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="item-label">Commitment to reducing Scope 1 and 2 emissions</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.commitmentEmployees}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="item-label">Diversity targets in place for employees</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.diversityEmployees}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="item-label">Percentage of directors who are independent</div>
+                    <div class="item-value">{{platformViewAllInfo.freezeData?.percentageOfDirectors}}<span *ngIf="platformViewAllInfo.freezeData?.percentageOfDirectors">%</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

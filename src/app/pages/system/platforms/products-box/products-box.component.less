@@ -1,0 +1,91 @@
+.main {
+  position: relative;
+  .sub-head {
+    .title {
+      display: flex;
+      align-items: center;
+      color: #4640DE;
+      font-family: 'ClashDisplay';
+      font-weight: 700;
+      font-size: 32px;
+    }
+  }
+  .search-content {
+    margin: 24px 0;
+  }
+  .col-content {
+    width: 100%;
+    height: 100%;
+
+    .col-head {
+      display: block;
+      height: auto;
+      padding-top:24px;
+      border-bottom: none;
+    }
+
+    .col-body {
+      //overflow: hidden;
+      .body-list {
+        width: calc(100% + 24px);
+        display: flex;
+        flex-wrap: wrap;
+        > .list-item {
+          flex-basis: calc((100% - (24px * 3)) / 3 );
+          min-height: 115px;
+          display: flex;
+          margin-bottom: 24px;
+          margin-right: 24px;
+          padding: 24px;
+          background: #FFFFFF;
+          border: 1px solid #D6DDEB;
+          box-sizing: border-box;
+          cursor: pointer;
+          > .item-cover {
+            flex: 0 0 67px;
+            height: 67px;
+            > img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          > .item-txt {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 16px;
+            > .txt-title {
+              font-family: 'ClashDisplay';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 20px;
+              line-height: 120%;
+              font-feature-settings: 'cv11' on;
+              color: #4640DE;
+            }
+            > .txt-date {
+              font-family: 'Epilogue';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 13px;
+              line-height: 160%;
+              align-items: center;
+              color: #7C8493;
+            }
+            > .txt-status {
+              font-family: 'Epilogue';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 13px;
+              line-height: 160%;
+              color: #26A4FF;
+              &.warning {
+                color: #EDA114;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

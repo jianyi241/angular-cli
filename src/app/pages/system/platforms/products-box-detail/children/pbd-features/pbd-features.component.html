@@ -1,0 +1,72 @@
+<div class="form-content">
+    <div class="form-group-custom form-content-column xs-pt-0">
+        <div class="form-column-left">
+            <div class="main-menu" *ngIf="groups.length > 0">
+                <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+                    <ngb-panel *ngFor="let group of groups,let i =index " id="ngb-panel-{{i}}">
+                        <ng-container>
+                            <ng-template ngbPanelHeader let-opened="opened">
+                                <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
+                                        [title]="group.name">
+                                    <div class="text">{{group.name}}</div>
+<!--                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>-->
+                                    <span class="icon-block icon-arr-up-purple icon-15"></span>
+                                </button>
+                            </ng-template>
+
+                            <ng-template ngbPanelContent>
+                                <div class="main-sub-menu"
+                                     *ngFor="let subGroupItem of group.subGroups">
+                                    <div class="sub-title"
+                                         (click)="chooseSubGroup(subGroupItem)"
+                                         [title]="subGroupItem.name">
+                                        <div class="text">{{subGroupItem.name}}</div>
+<!--                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>-->
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+        <div class="form-column-right">
+            <div class="list">
+                <div class="item" *ngFor="let item of propertiesList">
+                    <div class="item-title">{{item.propName}}
+                        <div class="tooltip-wrapper">
+                            <ng-template #popContent>
+                                <div class="cell-popover">
+                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                    <div class="info" [innerHTML]="item.propDesc"></div>
+                                    <div class="img-box">
+<!--                                        <img [src]="currentProdProp.attachmentVo?.visitUrl"/>-->
+<!--                                        <div class="btn-expand" (click)="showPic({closePopover:p})"><span-->
+<!--                                                class="icon-block icon-expand icon-20"></span></div>-->
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <img  src="assets/img/icon/icon-tooltip.svg" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
+                                  placement="right auto" [ngbPopover]="popContent" class="tooltip-icon" />
+                        </div>
+                    </div>
+                    <div class="item-introduce">
+                        Yes. This feature is avaliable.
+                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}" (click)="expandItem(item)"/>
+                    </div>
+                    <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}">
+                        <div [innerHTML]="item.prodPropDesc"></div>
+                        <div class="content-image-list">
+                            <div class="image-wrapper" *ngIf="item.attachment?.visitUrl">
+                                <div class="max-btn" (click)="previewImage(item.attachment?.visitUrl)">
+                                    <img src="assets/img/icon/icon-expand.svg" />
+                                </div>
+                                <img [src]="item.attachment?.visitUrl" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
