@@ -18,7 +18,7 @@
         <div class="col-body">
             <div class="body-list">
                 <div class="list-item" *ngFor="let item of productList" (click)="toView(item)">
-                    <div class="item-cover">
+                    <div class="item-cover" *ngIf="item.platformLogo?.visitUrl">
                         <img [src]="item.platformLogo?.visitUrl" />
                     </div>
                     <div class="item-txt">

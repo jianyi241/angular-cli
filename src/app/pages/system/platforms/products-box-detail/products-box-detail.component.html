@@ -1,6 +1,6 @@
 <div class="main products-box-detail">
     <div class="banner">
-        <div class="banner-bg-image">
+        <div class="banner-bg-image" *ngIf="platformOverviewInfo.platformBanner?.visitUrl">
             <img [src]="platformOverviewInfo.platformBanner?.visitUrl" />
         </div>
         <div class="banner-content">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="info">
-                <div class="logo">
+                <div class="logo" *ngIf="platformOverviewInfo.platformLogo?.visitUrl">
                     <img [src]="platformOverviewInfo.platformLogo?.visitUrl" />
                 </div>
                 <div class="other">
