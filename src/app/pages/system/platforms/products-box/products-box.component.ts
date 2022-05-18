@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {PlatformRepository} from "../../../../repository/platform-repository";
 import {ProductCondition} from "../../../../model/condition/product-condition";
@@ -43,7 +43,7 @@ export class ProductsBoxComponent implements OnInit {
   getProductList() {
     this.productCondition.order = {
       asc: true,
-      column: 'name'
+      column: 'platform_name'
     }
     this.platformRepository.getProductList(this.productCondition).subscribe(res => {
       console.log('res ', res);
