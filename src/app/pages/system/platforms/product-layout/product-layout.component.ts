@@ -69,7 +69,7 @@ export class ProductLayoutComponent implements OnInit {
         } else {
             this.version.type = VersionType.Publish.value;
         }
-        // this.getModelPublishChangeFlag(); // 暂不用
+        this.getModelPublishChangeFlag();
         this.getChangeTabs();
         const url = this.activatedRoute.firstChild?.snapshot?.url;
         this.currentTab = url && url.length > 0 ? url[0].path : undefined;
