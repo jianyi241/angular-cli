@@ -17,6 +17,11 @@
             <div class="txt-content" [innerHTML]="platformViewAllInfo.freezeData?.ownership">
             </div>
         </div>
+        <div class="txt txt-dynamic" *ngFor="let prop of platformViewAllInfo.properties">
+            <div class="txt-title">{{prop.propName}}</div>
+            <div class="txt-content" [innerHTML]="prop.propValue">
+            </div>
+        </div>
     </div>
     <div class="content-right">
         <div class="summary-info">

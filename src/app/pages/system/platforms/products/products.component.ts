@@ -8,6 +8,9 @@ import {ConfigService} from "../../../../service/config.service";
 import {ProductCondition} from "../../../../model/condition/product-condition";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {TabType} from "../../../../model/enums/tab-type";
+import {SaveService} from '../../../../service/save.service';
+import {ToastRepository} from "../../../../repository/toast-repository";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'app-products',
@@ -18,10 +21,13 @@ export class ProductsComponent implements OnInit {
     productCondition: ProductCondition =new ProductCondition(1,10);
     products: Array<ProductInfo> = new Array<ProductInfo>();
     productPage: Page<ProductInfo> = new Page<ProductInfo>();
+
     constructor(private router: Router,
                 private platformRepository: PlatformRepository,
                 public configService: ConfigService,
-                public currentUserService: CurrentUserService) {
+                public currentUserService: CurrentUserService,
+                private saveService: SaveService,
+                private toastRepository: ToastRepository) {
     }
 
     ngOnInit(): void {
@@ -61,4 +67,19 @@ export class ProductsComponent implements OnInit {
     editProduct(product: ProductInfo) : void{
         this.router.navigateByUrl(`/platform/product-tab/overview/${product.id}/${product.versionId || Constants.VERSION}`);
     }
+
+    editProductInfo(product: ProductInfo): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/product/editProduct/${product.id}`)) {
+            return;
+        }
+        this.platformRepository.editProduct(product.id).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            // this.getProjectButtonFlag()
+            this.router.navigateByUrl(`/platform/product-tab/overview/${product.id}/${res.data.id}`)
+        });
+    }
+
 }

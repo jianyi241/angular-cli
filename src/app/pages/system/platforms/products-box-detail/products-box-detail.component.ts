@@ -7,6 +7,9 @@ import {Constants} from '../../../../model/constants';
 import {CurrentUserService} from '../../../../service/current-user.service';
 import PlatformOverview from '../../../../model/po/platformOverview';
 import {ProductInfo} from '../../../../model/po/productInfo';
+import {environment} from "../../../../../environments/environment";
+import {SaveService} from '../../../../service/save.service';
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-products-box-detail',
@@ -57,7 +60,9 @@ export class ProductsBoxDetailComponent implements OnInit {
                 public router: Router,
                 private activatedRoute: ActivatedRoute,
                 private platformRepository: PlatformRepository,
-                public currentUserService: CurrentUserService) {
+                public currentUserService: CurrentUserService,
+                private saveService: SaveService,
+                private toastRepository: ToastRepository) {
     }
 
     ngOnInit(): void {
@@ -116,6 +121,19 @@ export class ProductsBoxDetailComponent implements OnInit {
         console.log('versionid produtid ' + this.productId);
         console.log('versionid produtid ' + this.versionId);
         this.router.navigateByUrl(`/platform/product-tab/overview/${this.productId}/${this.versionId || Constants.VERSION}`);
+    }
+
+    editProductInfo(): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/product/editProduct/${this.product.id}`)) {
+            return;
+        }
+        this.platformRepository.editProduct(this.product.id).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.router.navigateByUrl(`/platform/product-tab/overview/${this.product.id}/${res.data.id}`)
+        });
     }
 
     canEdit(): boolean {

@@ -7,7 +7,9 @@ import {ConfigService} from "../../../../service/config.service";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {Constants} from "../../../../model/constants";
 import {TabType} from "../../../../model/enums/tab-type";
-
+import {environment} from "../../../../../environments/environment";
+import {SaveService} from '../../../../service/save.service';
+import {ToastRepository} from "../../../../repository/toast-repository";
 @Component({
   selector: 'app-products-box',
   templateUrl: './products-box.component.html',
@@ -21,7 +23,9 @@ export class ProductsBoxComponent implements OnInit {
   constructor(private router: Router,
               private platformRepository: PlatformRepository,
               public configService: ConfigService,
-              public currentUserService: CurrentUserService) { }
+              public currentUserService: CurrentUserService,
+              private saveService: SaveService,
+              private toastRepository: ToastRepository) { }
 
   ngOnInit(): void {
     this.getProductList()
@@ -29,10 +33,27 @@ export class ProductsBoxComponent implements OnInit {
 
   addPlatform(): void {
     this.platformRepository.addPlatform().subscribe(res => {
-      this.router.navigateByUrl(`/platform/product-tab/overview/${res.data.id}/${Constants.VERSION}`);
+      // this.router.navigateByUrl(`/platform/product-tab/overview/${res.data.id}/${Constants.VERSION}`);
+      if (res.statusCode === 200) {
+        this.editProductInfo(res.data.id);
+      }
     },err => {
       console.log(err,'err')
     })
+  }
+
+  editProductInfo(productId: string): void {
+    if (this.saveService.saveCheck(environment.baseURL + `/product/editProduct/${productId}`)) {
+      return;
+    }
+    this.platformRepository.editProduct(productId).subscribe(res => {
+      if (res.statusCode != 200) {
+        this.toastRepository.showDanger(res.msg);
+        return;
+      }
+      // this.getProjectButtonFlag()
+      this.router.navigateByUrl(`/platform/product-tab/overview/${productId}/${res.data.id}`)
+    });
   }
 
   searchList() {

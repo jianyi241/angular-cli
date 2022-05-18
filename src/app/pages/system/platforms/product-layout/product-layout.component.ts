@@ -368,7 +368,8 @@ export class ProductLayoutComponent implements OnInit {
     editDiscardDraft(): void {
         this.versionRepository.discard(this.version.id).subscribe(res => {
             if (res.statusCode === 200) {
-                this.getVersionNoParams()
+                // this.getVersionNoParams()
+                this.router.navigateByUrl(`/platform/product-box-detail/overview/${res.data.id}/${res.data.versionId}}/${TabType.overview.value}`)
             } else {
                 this.toastRepository.showDanger(res.msg || 'Failed operation')
             }

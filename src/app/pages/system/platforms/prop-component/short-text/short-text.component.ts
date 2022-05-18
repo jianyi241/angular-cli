@@ -21,6 +21,8 @@ export class ShortTextComponent implements OnInit {
     @Input()
     prop_class: string;
     @Input()
+    required: boolean;
+    @Input()
     change: EventEmitter<PropertyVo>;
 
     constructor(private focusService: FocusService) {

@@ -10,4 +10,5 @@ export class PropertyVo extends PropertyInfo {
     essential: boolean = false;
     attachmentVo?: Attachment = new Attachment();
     productPropVo?: ProductPropInfo = new ProductPropInfo();
+    freezeFieldName?: string;
 }
