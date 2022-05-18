@@ -57,7 +57,7 @@
                     <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}">
                         <div [innerHTML]="item.prodPropDesc"></div>
                         <div class="content-image-list">
-                            <div class="image-wrapper">
+                            <div class="image-wrapper" *ngIf="item.attachment?.visitUrl">
                                 <div class="max-btn" (click)="previewImage(item.attachment?.visitUrl)">
                                     <img src="assets/img/icon/icon-expand.svg" />
                                 </div>

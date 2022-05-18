@@ -15,6 +15,7 @@ import {VersionStatus} from "../../../../model/enums/version-status";
 import {PlatformRepository} from "../../../../repository/platform-repository";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
+import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
 
 @Component({
     selector: 'app-configuration-layout',
@@ -37,7 +38,8 @@ export class ConfigurationLayoutComponent implements OnInit {
                 private platformRepository: PlatformRepository,
                 private toastRepository: ToastRepository,
                 private router: Router,
-                private ngbModal: NgbModal) {
+                private ngbModal: NgbModal,
+                private spinnerService: NgxLoadingSpinnerService) {
     }
 
     ngOnInit(): void {
@@ -194,14 +196,17 @@ export class ConfigurationLayoutComponent implements OnInit {
         if (this.saveService.saveCheck(environment.baseURL + '/supplier/publish')) {
             return
         }
+        this.spinnerService.show()
         this.configurationRepository.pushConfig().subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
+                this.spinnerService.hide()
                 return;
             }
             this.version = res.data || this.version;
             this.configService.currentVersion = res.data
             let urlSegment = this.activeRouter.firstChild.snapshot.url[0];
+            this.spinnerService.hide()
             this.router.navigateByUrl(`/`, {
                 skipLocationChange: true
             }).then(r => {
