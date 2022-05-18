@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="search-content w-310">
-            <input type="text" [(ngModel)]="productCondition.keyword" (keydown.enter)="getProductList()" placeholder="Search a keyword" class="form-control"/>
-            <span class="icon icon-search icon-16"></span>
+            <input type="text" [(ngModel)]="productCondition.keyword" (blur)="searchList()"  (keydown.enter)="searchList()" placeholder="Search a keyword" class="form-control"/>
+            <span class="icon icon-search icon-16" (click)="searchList()"></span>
         </div>
         <div class="col-body">
             <div class="body-list">

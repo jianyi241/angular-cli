@@ -28,7 +28,6 @@ export class ProductsBoxComponent implements OnInit {
   }
 
   addPlatform(): void {
-    console.log('begin add platform')
     this.platformRepository.addPlatform().subscribe(res => {
       this.router.navigateByUrl(`/platform/product-tab/overview/${res.data.id}/${Constants.VERSION}`);
     },err => {
@@ -36,8 +35,12 @@ export class ProductsBoxComponent implements OnInit {
     })
   }
 
+  searchList() {
+    this.productCondition.current = 1
+    this.getProductList()
+  }
+
   getProductList() {
-    console.log('search params ', this.productCondition)
     this.productCondition.order = {
       asc: true,
       column: 'name'
