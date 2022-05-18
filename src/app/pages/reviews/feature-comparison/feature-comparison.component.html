@@ -17,8 +17,8 @@
                 <!--            </div>-->
 
                 <div class="switch-button xs-ml-16">
-                    <div class="switch-text">All</div>
-                    <div class="switch-text active">Hide common features</div>
+                    <div class="switch-text" [ngClass]="{'active': !hideCommonPropFlag}" (click)="hideCommonPropFlag = false">All</div>
+                    <div class="switch-text" [ngClass]="{'active': hideCommonPropFlag}" (click)="hideCommonPropFlag = true">Hide common features</div>
                 </div>
             </div>
         </div>
@@ -121,6 +121,7 @@
                                      [content-tag]="'tbody'" [panel]="panelContent"
                                      [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
                                     {{subGroup.name}}
+                                    ({{subGroup.propertyVoList.length}} / {{subGroup.totalPropCount}})
                                     <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                                 </div>
                             </td>
@@ -131,7 +132,7 @@
                         </tbody>
                         <ng-container>
                             <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
-                            <tr *ngFor="let prop of subGroup.propertyVoList">
+                            <tr [hidden]=" hideCommon(prop)" *ngFor="let prop of subGroup.propertyVoList">
                                 <td>
                                     <div class="content-title" [ngClass]="{'bg-red': hasEssential(prop)}"
                                          [title]="prop.name">

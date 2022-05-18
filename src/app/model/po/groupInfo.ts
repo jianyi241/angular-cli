@@ -36,5 +36,6 @@ export class GroupInfo extends BaseModel{
     moveFlag?: boolean;
     readOnly?: boolean;
     attachmentVo: Attachment = new Attachment();
+    totalPropCount?: number;
 }
 

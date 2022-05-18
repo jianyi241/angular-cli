@@ -13,7 +13,7 @@ import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
 import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
 
 SwiperCore.use([Pagination]);
@@ -252,5 +252,4 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         }
         return group.subList.flatMap(s => s.propertyVoList.filter(p => p.compChecked).flatMap(p => p.id)).length;
     }
-
 }

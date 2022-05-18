@@ -30,6 +30,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     compareData: CompareFeatureVo = new CompareFeatureVo();
     currentProdProp: ProductPropInfo = new ProductPropInfo();
     hideRemovePlatformFlag = false;
+    hideCommonPropFlag = false;
     initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
@@ -187,6 +188,16 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         return !product.showFlag && product.shProductId != this.reviewService.comparison.mainPlatformId
     }
 
+    hideCommon(prop: PropertyInfo): boolean {
+        let products = this.compareData.comparisonProductVoList;
+        let propProds = products.flatMap(p => p.productPropVoList);
+        if (propProds.length == 0) {
+            return false;
+        }
+        let some = propProds.some(p => p.shPropertyId != prop.id || (p.propValue == 'no' || !p.propValue));
+        return !some && this.hideCommonPropFlag;
+    }
+
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
         product.shComparisonId = this.reviewService.comparison.id;
@@ -234,4 +245,6 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             pComment.close();
         })
     }
+
+
 }
