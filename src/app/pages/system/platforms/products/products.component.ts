@@ -6,7 +6,6 @@ import {Constants} from "../../../../model/constants";
 import {Page} from "../../../../model/vo/page";
 import {ConfigService} from "../../../../service/config.service";
 import {ProductCondition} from "../../../../model/condition/product-condition";
-import {CurrentUser} from "../../../../model/vo/currentUser";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {TabType} from "../../../../model/enums/tab-type";
 
@@ -28,7 +27,7 @@ export class ProductsComponent implements OnInit {
     ngOnInit(): void {
         this.productCondition.order = {
             asc: true,
-            column: 'name'
+            column: 'platform_name'
         }
         this.getProductList();
     }
@@ -44,7 +43,7 @@ export class ProductsComponent implements OnInit {
     }
     sortList(column: string,type: number): void {
         if (type === 0) {
-            this.productCondition.order = {column: 'name', asc: true}
+            this.productCondition.order = {column: 'platform_name', asc: true}
         } else {
             this.productCondition.order = {column, asc: type === 1}
         }
