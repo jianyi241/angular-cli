@@ -26,4 +26,5 @@ export class Version extends BaseModel{
     versionStatus?: string;
     modelVersionId?: string;
     shProductId?: string;
+    publishPlatformFlag?: boolean;
 }
