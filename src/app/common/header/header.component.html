@@ -15,13 +15,13 @@
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/supplier/comparisons-list']" routerLinkActive="active">Platform analysis</a>
+            <a [routerLink]="['/advice-review/review-list/review']" routerLinkActive="active">Suitability review</a>
             <a>News & Updates</a>
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
-            <a routerLinkActive="active">Suitability review</a>
-<!--            [routerLink]="['/advice-review/review-list/review']"-->
+            <a [routerLink]="['/advice-review/review-list/review']" routerLinkActive="active">Suitability review</a>
             <a>News & Updates</a>
         </div>
 

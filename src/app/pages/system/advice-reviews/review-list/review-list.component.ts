@@ -53,34 +53,7 @@ export class ReviewListComponent implements OnInit {
   }
 
   sortList(column: string, sortType: number): void {
-    return;
-    // sortType 0.normal 1.asc 2.desc
-    let newList: Array<any> = []
-    if (sortType === 1) {
-      newList = this.adminPage.records.sort((a,b) => {
-        const prev = a[column]
-        const next = b[column]
-        if (Number(prev)) {
-          return prev - next
-        } else {
-          return prev.toString().length  - next.toString().length
-        }
-      })
-    } else if (sortType === 2) {
-      newList = this.adminPage.records.sort((a,b) => {
-        const prev = a[column]
-        const next = b[column]
-        if (Number(prev)) {
-          return next - prev
-        } else {
-          return next.toString().length - prev.toString().length
-        }
-      })
-    } else {
-      this.getSuppliesList()
-      return
-    }
-    this.adminPage.records = newList
+
   }
 
   addFunc(): void {

@@ -63,7 +63,7 @@
                         <td>
                             <div class="td-cell td-cell_avatar tx-bold tx-purple">
                                 <!--                                    <div class="avatar-box xs-mr-16">-->
-                                <!--                                        <img [src]="(product.platformLogo?.visitUrl) || './assets/img/unassgin.svg'" />-->
+                                <!--                                        <img [src]="(product.platformLogo?.visitUrl) || '../assets/img/unassgin.svg'" />-->
                                 <!--                                    </div>-->
                                 <div class="text-ellipsis max-w-300">{{product.name}}</div>
                             </div>
@@ -97,17 +97,17 @@
                                 <div class="edit-work-status">
                                     <div class="status-tip normal"
                                          *ngIf="product.workflowStatus === configService.workflowStatus.dataRequired">
-                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-blue2.svg">
+                                        <img _ngcontent-any-c242="" src="./assets/img/icon/icon-warning-blue2.svg">
                                         <span>Data required</span>
                                     </div>
                                     <div class="status-tip warning"
                                          *ngIf="product.workflowStatus === configService.workflowStatus.awaitingApproval">
-                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                        <img _ngcontent-any-c242="" src="./assets/img/icon/icon-warning-yellow.svg">
                                         <span>Pending approval</span>
                                     </div>
                                     <div class="status-tip warning"
                                          *ngIf="product.workflowStatus === configService.workflowStatus.awaitingPublish">
-                                        <img _ngcontent-any-c242="" src="/assets/img/icon/icon-warning-yellow.svg">
+                                        <img _ngcontent-any-c242="" src="./assets/img/icon/icon-warning-yellow.svg">
                                         <span>Pending publish</span>
                                     </div>
                                 </div>

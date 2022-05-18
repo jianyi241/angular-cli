@@ -6,12 +6,12 @@
         <div class="banner-content">
             <div class="links">
                 <div class="link main-link" (click)="back()">
-                    <img src="/assets/img/icon/icon-arr-left-white.svg">
+                    <img src="./assets/img/icon/icon-arr-left-white.svg">
                     {{platformOverviewInfo.platformName}}
                 </div>
                 <div class="link sub-link" (click)="toWebSite(platformOverviewInfo.platformWebsite)">
                     Go to Website
-                    <img src="/assets/img/icon/icon-arr-right-s-white.svg">
+                    <img src="./assets/img/icon/icon-arr-right-s-white.svg">
                 </div>
             </div>
             <div class="info">
@@ -22,7 +22,7 @@
                     <div class="display-items">
                         <div class="item" *ngIf="platformOverviewInfo.dateOfLaunch">
                             <div class="item-left">
-                                <img src="/assets/img/icon/icon-platform-fire.svg" />
+                                <img src="./assets/img/icon/icon-platform-fire.svg" />
                             </div>
                             <div class="item-right">
                                 <div class="item-label">Launched</div>
@@ -30,7 +30,7 @@
                             </div>
                         </div><div class="item" *ngIf="platformOverviewInfo.netFlows">
                         <div class="item-left">
-                            <img src="/assets/img/icon/icon-platform-statis.svg" />
+                            <img src="./assets/img/icon/icon-platform-statis.svg" />
                         </div>
                         <div class="item-right">
                             <div class="item-label">Netflows in last 12 months</div>
@@ -38,7 +38,7 @@
                         </div>
                     </div><div class="item" *ngIf="platformOverviewInfo.fundsUnder">
                         <div class="item-left">
-                            <img src="/assets/img/icon/icon-platform-dollar.svg" />
+                            <img src="./assets/img/icon/icon-platform-dollar.svg" />
                         </div>
                         <div class="item-right">
                             <div class="item-label">FUA</div>
@@ -46,7 +46,7 @@
                         </div>
                     </div><div class="item" *ngIf="platformOverviewInfo.marketShare">
                         <div class="item-left">
-                            <img src="/assets/img/icon/icon-platform-persons.svg" />
+                            <img src="./assets/img/icon/icon-platform-persons.svg" />
                         </div>
                         <div class="item-right">
                             <div class="item-label">Market share by FUA</div>
@@ -56,11 +56,11 @@
                     </div>
                     <div class="btn-group">
 <!--                        <button class="btn btn-purple compare-btn">-->
-<!--                            <img src="/assets/img/icon/icon-building-white.svg" />-->
+<!--                            <img src="./assets/img/icon/icon-building-white.svg" />-->
 <!--                            Compare {{platformOverviewInfo.platformName}}-->
 <!--                        </button>-->
                         <button class="btn btn-purple compare-btn" *ngIf="canEdit()" (click)="editProduct()">
-                            <img src="/assets/img/icon/icon-edit-white.svg" />
+                            <img src="./assets/img/icon/icon-edit-white.svg" />
                             Edit&nbsp;{{platformOverviewInfo.platformName}}
                         </button>
                     </div>
