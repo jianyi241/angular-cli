@@ -33,7 +33,8 @@ export class IntegerComponent implements OnInit {
 
     blur(): void {
         this.focusService.deleteFocus();
-        this.prop.productPropVo.propValue = this.prop.productPropVo.propValue || '';
+        let propValue = this.prop.productPropVo.propValue;
+        this.prop.productPropVo.propValue = Number.isNaN(propValue) ? '' : propValue;
         this.change.emit(this.prop);
     }
 
