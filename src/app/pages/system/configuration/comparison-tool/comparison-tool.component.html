@@ -3,8 +3,8 @@
         <div class="col-head">
             <div class="title">Group</div>
             <div class="col-head-right" *ngIf="version.type">
-                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideGroupArchive)"
-                      (click)="showGroupArchived()">Show archived</span>
+                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, true)"
+                      (click)="showGroupArchived()">{{hideGroupArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <span class="link-new" (click)="saveGroup()"
                       [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()">+ New</span>
             </div>
@@ -29,10 +29,15 @@
                     <span class="icon-block icon-line icon-24"
                           [hidden]="!configService.isEditable(version.type)"></span>
                     <div class="title" [title]="group.name">{{group.name}}</div>
-                    <ng-container *ngIf="version.type">
-                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)"
-                              (click)="saveGroup(group)"></span>
-                    </ng-container>
+                    <div class="list-edit_status left-edit" *ngIf="version.type">
+                        <div class="status">
+                            <span class="label label-red" *ngIf="configService.isArchive(group.status)">Archived</span>
+                        </div>
+                        <div class="edit">
+                            <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)"
+                                  (click)="saveGroup(group)"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,8 +47,8 @@
         <div class="col-head xs-pl-16">
             <div class="title">Sub-group</div>
             <div class="col-head-right" *ngIf="version.type">
-                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideSubGroupArchive)"
-                      (click)="showSubGroupArchived()">Show archived</span>
+                <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, true)"
+                      (click)="showSubGroupArchived()">{{hideSubGroupArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId || configService.isWaitPublish()"
                       (click)="saveSubGroup()">+ New</span>
             </div>
@@ -58,10 +63,15 @@
                  *ngFor="let subGroup of subGroups">
                 <span class="icon-block icon-line icon-24" [hidden]="!configService.isEditable(version.type)"></span>
                 <div class="title" [title]="subGroup.name">{{subGroup.name}}</div>
-                <ng-container *ngIf="version.type">
-                <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)"
-                      (click)="saveSubGroup(subGroup)"></span>
-                </ng-container>
+                <div class="list-edit_status left-edit" *ngIf="version.type">
+                    <div class="status">
+                        <span class="label label-red" *ngIf="configService.isArchive(subGroup.status)">Archived</span>
+                    </div>
+                    <div class="edit">
+                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)"
+                              (click)="saveSubGroup(subGroup)"></span>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -73,8 +83,8 @@
                 <span class="icon icon-search icon-16"></span>
             </div>
             <div class="col-head-right" *ngIf="version.type">
-                <span class="link-show xs-mr-21" *ngIf="configService.showArchiveBtn(version.type, hidePropArchive)"
-                      (click)="showPropArchived()">Show archived</span>
+                <span class="link-show xs-mr-21" *ngIf="configService.showArchiveBtn(version.type, true)"
+                      (click)="showPropArchived()">{{hidePropArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <button class="btn btn-outline-purple-light tx-13 tx-semi"
                         [hidden]="!configService.isEditable(version.type) || !reminder.subGroupId || configService.isWaitPublish()" (click)="saveProp()">
                     + New

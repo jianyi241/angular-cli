@@ -114,7 +114,7 @@ export class EsgComponent implements OnInit, OnDestroy {
     }
 
     showArchived(): void {
-        this.hideArchive = false;
+        this.hideArchive = !this.hideArchive;
     }
 
 }

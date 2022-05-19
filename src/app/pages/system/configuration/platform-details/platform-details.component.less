@@ -1,4 +1,13 @@
-
+.list-edit_status {
+  display: flex;
+  > .status {
+    display: flex;
+    margin-right: 40px;
+    > .label {
+      margin-left: 15px;
+    }
+  }
+}
 .table-layout {
   .col-content {
     width: 100%;
@@ -16,14 +25,6 @@
       .list-content {
         .info {
           flex: 1;
-          &.info-edit {
-            display: flex;
-            flex: 0 0 260px;
-            flex-direction: row-reverse;
-            > .label {
-              margin-right: 15px !important;
-            }
-          }
         }
       }
     }

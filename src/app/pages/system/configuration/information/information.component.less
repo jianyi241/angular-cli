@@ -1,4 +1,27 @@
 .table-layout {
+
+  .list-cell {
+    justify-content: space-between;
+    .left-edit {
+      .status {
+        margin-right: 20px;
+      }
+      > .edit {
+        position: relative;
+        padding-right: 30px;
+      }
+    }
+  }
+  .list-edit_status {
+    display: flex;
+    > .status {
+      display: flex;
+      margin-right: 40px;
+      > .label {
+        margin-left: 15px;
+      }
+    }
+  }
   .col-content {
     &.col-content-1 {
       width: 28%;
