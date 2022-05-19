@@ -26,6 +26,7 @@ export class EditGroupComponent implements OnInit {
     group: GroupInfo = new GroupInfo();
     currentTab: number;
     uploading = false;
+    editType = 'update'
     config = {...Constants.EDITOR_CONFIG};
 
     constructor(private route: Router,
@@ -68,11 +69,22 @@ export class EditGroupComponent implements OnInit {
         }
     }
 
+    readOnly() {
+        if (this.editType === 'add') {
+            return false
+        } else if (this.editType === 'edit') {
+            return !this.configService.isEditable(this.version.type, this.group.status)
+        } else if (this.editType === 'view') {
+            return true
+        }
+    }
+
     parseRouteParam(): void {
         this.activatedRoute.params.subscribe(params => {
             this.version.id = params[Constants.VERSION];
             this.currentTab = parseInt(params['tab']);
             this.group.id = params['id'] == Constants.NON_ID ? '' : params['id'];
+            this.editType = params['type']
         })
     }
 

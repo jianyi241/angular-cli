@@ -1,5 +1,5 @@
 .table-layout {
-
+  height: calc(100% - 76px);
   .list-cell {
     justify-content: space-between;
     .left-edit {
@@ -7,8 +7,19 @@
         margin-right: 20px;
       }
       > .edit {
+        display: flex;
+        align-items: center;
         position: relative;
-        padding-right: 30px;
+        padding-right: 15px;
+        > .icon-edit {
+          position:relative;
+          top: auto;
+          right: auto;
+          margin-top: auto;
+        }
+        > span {
+          margin-left: 20px;
+        }
       }
     }
   }

@@ -107,7 +107,7 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             {
-                path: 'edit-group/:tab/:id/:version',
+                path: 'edit-group/:tab/:id/:version/:type',
                 component: EditGroupComponent,
             },
             {

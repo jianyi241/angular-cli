@@ -128,10 +128,10 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
         });
     }
 
-    saveGroup(group?: GroupInfo): void {
+    saveGroup(group?: GroupInfo, type?: string): void {
         this.reminder.groupId = group?.id;
         this.storage.setItem<Reminder>('reminder' + TabType.features.value, this.reminder);
-        this.route.navigateByUrl(`/configuration/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}`)
+        this.route.navigateByUrl(`/configuration/edit-group/${TabType.features.value}/${(group?.id) || Constants.NON_ID}/${this.version.id}/${type}`)
     }
 
     saveSubGroup(subGroup?: GroupInfo) {
