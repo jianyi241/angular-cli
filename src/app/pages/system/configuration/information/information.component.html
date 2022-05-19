@@ -37,10 +37,10 @@
                         </div>
                         <div class="edit">
                             <span class="tx-purple tx-bold"
-                                  [hidden]="!section.readOnly"
+                                  [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
                                   (click)="saveSection(section.id, $event, 'view')">View
                             </span>
-                            <span class="icon-edit icon-20" (click)="saveSection(section.id,$event,'edit')"
+                            <span class="icon-edit icon-20" (click)="saveSection(section.id,$event,'update')"
                                   [hidden]="!configService.isEditable(version.type) || section.readOnly || configService.isWaitPublish()"></span>
                         </div>
                     </div>

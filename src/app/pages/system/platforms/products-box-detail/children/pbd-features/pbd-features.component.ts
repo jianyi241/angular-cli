@@ -103,7 +103,7 @@ export class PbdFeaturesComponent implements OnInit {
 
   previewImage(imgUrl: string): void {
     const modalRef = this.ngbModal.open(PreviewImageModalComponent, {
-      size: 'w644',
+      size: 'lg',
       windowClass: 'tip-popup-modal',
       centered: true
     });

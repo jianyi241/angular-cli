@@ -24,7 +24,7 @@ export class EditPropComponent implements OnInit {
     version: Version = new Version();
     prop: PropertyInfo = new PropertyInfo();
     config = {...Constants.EDITOR_CONFIG};
-
+    editType = '';
     currentTab: number;
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -88,6 +88,10 @@ export class EditPropComponent implements OnInit {
             this.currentTab = parseInt(params['tab']);
             this.prop.shGroupId = params['groupId'] == Constants.NON_ID ? '': params['groupId'];
             this.prop.id = params['id'] == Constants.NON_ID ? '' : params['id'];
+        })
+        this.activatedRoute.queryParams.subscribe(query => {
+            console.log('edit prop query params ===> ', query)
+            this.editType = query['type']
         })
     }
 

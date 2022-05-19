@@ -20,6 +20,8 @@ export class BooleanComponent implements OnInit {
     @Input()
     prop_class: string;
     @Input()
+    required: boolean;
+    @Input()
     change: EventEmitter<PropertyVo>;
 
     constructor() {

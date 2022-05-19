@@ -22,6 +22,8 @@ export class IntegerComponent implements OnInit {
     prop_class: string;
     @Input()
     change: EventEmitter<PropertyVo>;
+    @Input()
+    required: boolean;
 
     constructor(private focusService: FocusService) {
     }

@@ -25,6 +25,8 @@ export class AttachmentComponent implements OnInit {
     @Input()
     change: EventEmitter<PropertyVo>;
     uploading = false;
+    @Input()
+    required: boolean;
 
     constructor(private toastRepository: ToastRepository, private fileRepository: FileRepository) {
     }

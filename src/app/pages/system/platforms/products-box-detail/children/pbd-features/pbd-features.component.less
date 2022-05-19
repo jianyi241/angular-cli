@@ -34,29 +34,10 @@
         > .tooltip-wrapper {
           margin-left: 4px;
           cursor: pointer;
-          /deep/ .theme-tooltip {
-            .tooltip-inner {
-              background-color: #F7F7F7;
-              font-size: 14px;
-              font-family: 'Epilogue';
-              font-style: normal;
-              font-weight: 400;
-              line-height: 160%;
-              color: #515B6F;
-              //border: 1px solid #E3E3E3;
-              border-radius: 5px;
-            }
-            &.bs-tooltip-end .arrow::before {
-              border-right-color: #F7F7F7;
-            }
-            &.bs-tooltip-start .arrow::before {
-              border-left-color: #F7F7F7;
-            }
-            &.bs-tooltip-top .arrow::before {
-              border-top-color: #F7F7F7;
-            }
-            &.bs-tooltip-bottom .arrow::before {
-              border-bottom-color: #F7F7F7;
+          .cell-popover {
+            padding: 24px 22px 12px;
+            .info {
+              padding: 0;
             }
           }
         }

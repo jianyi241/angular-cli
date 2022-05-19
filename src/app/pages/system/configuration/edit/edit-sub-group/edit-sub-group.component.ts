@@ -25,6 +25,7 @@ export class EditSubGroupComponent implements OnInit {
     subGroup: GroupInfo = new GroupInfo();
     config = {...Constants.EDITOR_CONFIG};
     currentTab: number;
+    editType?: string;
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -49,6 +50,16 @@ export class EditSubGroupComponent implements OnInit {
         this.parent();
     }
 
+    readOnly() {
+        if (this.editType === 'add') {
+            return false
+        } else if (this.editType === 'update') {
+            return !this.configService.isEditable(this.version.type, this.subGroup.status)
+        } else if (this.editType === 'view') {
+            return true
+        }
+    }
+
     goBack(): void {
         let tabType = TabType.parseEnum(this.currentTab);
         let tab = this.configService.converterTabToRouter(tabType.name);
@@ -61,6 +72,7 @@ export class EditSubGroupComponent implements OnInit {
             this.currentTab = parseInt(params['tab']);
             this.subGroup.parentId = params['parentId'] == Constants.NON_ID ? '' : params['parentId'];
             this.subGroup.id = params['id'] == Constants.NON_ID ? '' : params['id'];
+            this.editType = params['type']
         })
     }
 

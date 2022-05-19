@@ -34,8 +34,12 @@
                             <span class="label label-red" *ngIf="configService.isArchive(group.status)">Archived</span>
                         </div>
                         <div class="edit">
+                            <span class="tx-purple tx-bold"
+                                  [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
+                                  (click)="saveGroup(group, 'view')">View
+                            </span>
                             <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type) || group.readOnly || configService.isWaitPublish()"
-                                  (click)="saveGroup(group,'edit')"></span>
+                                  (click)="saveGroup(group,'update')"></span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +54,7 @@
                 <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, true)"
                       (click)="showSubGroupArchived()">{{hideSubGroupArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type) || !reminder.groupId || configService.isWaitPublish()"
-                      (click)="saveSubGroup()">+ New</span>
+                      (click)="saveSubGroup(null,'add')">+ New</span>
             </div>
         </div>
 
@@ -68,8 +72,12 @@
                         <span class="label label-red" *ngIf="configService.isArchive(subGroup.status)">Archived</span>
                     </div>
                     <div class="edit">
-                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type)"
-                              (click)="saveSubGroup(subGroup)"></span>
+                        <span class="tx-purple tx-bold"
+                              [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
+                              (click)="saveSubGroup(subGroup, 'view')">View
+                            </span>
+                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
+                              (click)="saveSubGroup(subGroup,'update')"></span>
                     </div>
                     </div>
             </div>
@@ -112,10 +120,10 @@
                 </div>
                 <ng-container *ngIf="version.type">
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop)">View
+                            [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)" (click)="saveProp(prop, 'view')">View
                     </button>
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="!configService.isEditable(version.type)"
+                            [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
                             (click)="saveProp(prop)">
                         <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                     </button>

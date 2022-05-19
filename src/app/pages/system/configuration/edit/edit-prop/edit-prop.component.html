@@ -29,7 +29,7 @@
 
             <div class="form-group-right">
                 <input type="text" placeholder="Name" [maxLength]="100"
-                       [disabled]="!configService.isEditable(version.type, prop.status) || prop.readOnly"
+                       [disabled]="!configService.isEditable(version.type, prop.status) || prop.readOnly || editType === 'view'"
                        [(ngModel)]="prop.name" class="form-control"/>
                 <p class="tip-info">Maximum 100 characters</p>
             </div>
@@ -45,7 +45,7 @@
 
             <div class="form-group-right">
                 <ckeditor [(ngModel)]="prop.description"
-                          [readOnly]="!configService.isEditable(version.type, prop.status) || prop.readOnly"
+                          [readOnly]="!configService.isEditable(version.type, prop.status) || prop.readOnly || editType === 'view'"
                           [config]="config"></ckeditor>
                 <!--                <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
             </div>
