@@ -216,14 +216,14 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     showGroupArchived(): void {
-        this.hideGroupArchive = false;
+        this.hideGroupArchive = !this.hideGroupArchive;
     }
 
     showSubGroupArchived(): void {
-        this.hideSubGroupArchive = false;
+        this.hideSubGroupArchive = !this.hideSubGroupArchive;
     }
 
     showPropArchived(): void {
-        this.hidePropArchive = false;
+        this.hidePropArchive = !this.hidePropArchive;
     }
 }

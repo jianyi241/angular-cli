@@ -7,8 +7,8 @@
 <!--                    <div class="text">Showing 13 in-use items</div>-->
                 </div>
                 <div class="col-head-right" *ngIf="version.type">
-                    <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, hideArchive)"
-                          (click)="showArchived()">Show archived</span>
+                    <span class="link-show" *ngIf="configService.showArchiveBtn(version.type, true)"
+                          (click)="showArchived()">{{hideArchive ? 'Show archived' : 'Hide archived'}}</span>
                     <button class="btn btn-outline-purple-light tx-13 tx-semi"
                             (click)="save()"
                             [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()">+ New
@@ -35,18 +35,23 @@
                         <div class="title">{{prop.name}}</div>
                         <div class="text">{{configService.getPropType(prop.type)}}</div>
                     </div>
-                    <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
-                    <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+
                 </div>
-                <ng-container *ngIf="version.type">
-                    <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                            [hidden]="configService.isEditable(version.type)">View
-                    </button>
-                    <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                            [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
-                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                    </button>
-                </ng-container>
+                <div class="list-edit_status">
+                    <div class="status">
+                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                        <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                    </div>
+                    <div class="edit" *ngIf="version.type">
+                        <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
+                                [hidden]="configService.isEditable(version.type)">View
+                        </button>
+                        <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
+                                [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                        </button>
+                    </div>
+                </div>
             </div>
             <div cdkDropList (cdkDropListDropped)="dropProps($event)">
                 <div class="list-cell-large {{configService.getClassByStatus(prop.status, version.type)}}"
@@ -61,18 +66,22 @@
                             <div class="title">{{prop.name}}</div>
                             <div class="text">{{configService.getPropType(prop.type)}}</div>
                         </div>
-                        <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
-                        <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
                     </div>
-                    <ng-container *ngIf="version.type">
-                        <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                                [hidden]="configService.isEditable(version.type)">View
-                        </button>
-                        <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                                [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
-                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                        </button>
-                    </ng-container>
+                    <div class="list-edit_status">
+                        <div class="status">
+                            <span class="label label-red" *ngIf="configService.isArchive(prop.status)">Archived</span>
+                            <span class="label label-green" *ngIf="prop.bmFlag">Business Metric</span>
+                        </div>
+                        <div class="edit" *ngIf="version.type">
+                            <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
+                                    [hidden]="configService.isEditable(version.type)">View
+                            </button>
+                            <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
+                                    [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
+                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
