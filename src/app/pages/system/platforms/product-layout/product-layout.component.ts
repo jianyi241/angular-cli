@@ -185,7 +185,7 @@ export class ProductLayoutComponent implements OnInit {
                 textCls: '',
                 title: `One or more feature fields are added by Suitability Hub admin.`,
                 text: `Template updated at ${moment(this.version.updateTime).format('h:mma D MMM YY')} by
-                    Suitability Hub admin. Click “Edit product” to fill in missing data if there’s any.`,
+                    SuitabilityHub admin. Click “Edit product” to fill in missing data if there’s any.`,
                 show: true
             }
         }
