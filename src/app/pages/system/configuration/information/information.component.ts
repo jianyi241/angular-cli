@@ -147,10 +147,10 @@ export class InformationComponent implements OnInit, OnDestroy {
         this.route.navigateByUrl(`/configuration/edit-prop/${TabType.information.value}/${id || Constants.NON_ID}/${this.reminder.groupId}/${this.version.id}`);
     }
 
-    saveSection(id?: string, event?: any): void {
+    saveSection(id?: string, event?: any,type?: string): void {
         event && event.stopPropagation();
         this.storageReminder('groupId', id);
-        this.route.navigateByUrl(`/configuration/edit-group/${TabType.information.value}/${id || Constants.NON_ID}/${this.version.id}`);
+        this.route.navigateByUrl(`/configuration/edit-group/${TabType.information.value}/${id || Constants.NON_ID}/${this.version.id}/${type}`);
     }
 
     chooseSection(id: string) {
@@ -180,7 +180,7 @@ export class InformationComponent implements OnInit, OnDestroy {
     showSectionArchived(): void {
         this.hideSectionArchive = !this.hideSectionArchive;
         if (this.hideSectionArchive === true) {
-            
+
         }
     }
 

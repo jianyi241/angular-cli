@@ -1,4 +1,3 @@
-
 .table-layout {
   .list-edit_status {
     display: flex;
@@ -11,17 +10,27 @@
     }
   }
   .col-content {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
+    padding: 16px 0;
 
     .col-head {
       display: block;
-      height: auto;
-      padding-top:24px;
+      flex: 0 0 42px;
+      margin-top: 8px;
       border-bottom: none;
     }
 
     .col-body {
-      height: calc(100% - 230px);
+      flex: 1;
+
+      .list-content {
+        .info {
+          flex: 1;
+        }
+      }
     }
   }
 }

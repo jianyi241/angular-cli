@@ -6,7 +6,7 @@
                 <span class="link-show" *ngIf="version.type != 'Publish'"
                       (click)="showSectionArchived()">{{hideSectionArchive ? 'Show archived' : 'Hide archived'}}</span>
                 <span class="link-new" [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
-                      (click)="saveSection()">+ New</span>
+                      (click)="saveSection(null,$event, 'add')">+ New</span>
             </div>
         </div>
 
@@ -36,7 +36,11 @@
                             <span class="label label-red" *ngIf="configService.isArchive(section.status)">Archived</span>
                         </div>
                         <div class="edit">
-                            <span class="icon-edit icon-20" (click)="saveSection(section.id,$event)"
+                            <span class="tx-purple tx-bold"
+                                  [hidden]="!section.readOnly"
+                                  (click)="saveSection(section.id, $event, 'view')">View
+                            </span>
+                            <span class="icon-edit icon-20" (click)="saveSection(section.id,$event,'edit')"
                                   [hidden]="!configService.isEditable(version.type) || section.readOnly || configService.isWaitPublish()"></span>
                         </div>
                     </div>

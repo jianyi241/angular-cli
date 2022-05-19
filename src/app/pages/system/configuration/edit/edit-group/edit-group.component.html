@@ -4,8 +4,8 @@
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
             <div class="text-ellipsis">{{group.name}}</div>
         </div>
-        <ng-container *ngIf="version.type">
-            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, group.status)">
+        <ng-container *ngIf="version.type && !readOnly()">
+            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, group.status) || group.readOnly">
                 <button class="btn btn-text-danger" (click)="archive()" *ngIf="group.id && group.moveFlag">Archive
                 </button>
                 <button class="btn btn-purple"
@@ -23,7 +23,7 @@
 
             <div class="form-group-right">
                 <input type="text" placeholder="Name"
-                       [disabled]="!configService.isEditable(version.type, group.status)"
+                       [disabled]="readOnly()"
                        [(ngModel)]="group.name" [maxlength]="100" class="form-control"/>
                 <p class="tip-info">Maximum 100 characters</p>
             </div>
@@ -38,7 +38,7 @@
 
             <div class="form-group-right">
                 <ckeditor [(ngModel)]="group.description"
-                          [readOnly]="!configService.isEditable(version.type, group.status)"
+                          [readOnly]="readOnly()"
                           [config]="config"></ckeditor>
                 <!--                <p class="tip-info">Maximum 500 characters <span>{{group.description?.length || 0}} / 500</span></p>-->
             </div>
@@ -56,7 +56,7 @@
                 <div class="form-group-right">
                     <div class="upload-file">
                         <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedFile($event)"
-                                       [disabled]="!configService.isEditable(version.type, group.status)"
+                                       [disabled]="readOnly()"
                                        [multiple]="false" [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
@@ -72,7 +72,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
