@@ -32,19 +32,30 @@
     align-items: center;
     height: 43px;
     margin: 24px 0;
+    > .search-edit-wrapper {
+      flex: 0 0 310px;
+    }
     > .edit-content {
+      flex: 1;
       display: flex;
       align-items: center;
-      .filter {
-        color: #4640DE;
-        font-family: 'ClashDisplay';
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        margin-right: 37px;
-      }
-      .switch-button {
-        margin-right: 33px;
+      justify-content: space-between;
+      margin-left: 16px;
+      > .edit-content-left {}
+      > .edit-content-right {
+        display: flex;
+        align-items: center;
+        .filter {
+          color: #4640DE;
+          font-family: 'ClashDisplay';
+          font-weight: 600;
+          font-size: 16px;
+          cursor: pointer;
+          margin-right: 37px;
+        }
+        .switch-button {
+          margin-right: 33px;
+        }
       }
     }
   }
@@ -58,16 +69,5 @@
          padding: 0;
        }
      }
-      .label {
-        &.tx-blue {
-          background: rgba(38, 164, 255, 0.1);
-        }
-        &.tx-green {
-          background: rgba(33, 150, 83, 0.1);
-        }
-        &.tx-red {
-          background: rgba(235, 87, 87, 0.1);
-      }
-    }
   }
 }
