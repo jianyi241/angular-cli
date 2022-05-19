@@ -183,4 +183,13 @@ export class ConfigService {
     fullName(firstName: string, lastName: string) {
         return [firstName, lastName].join(' ');
     }
+
+    editViewBtn(versionStatus: string, tabType: number,readyOnly: boolean=false) {
+        if (tabType === TabType.features.value) {
+            return this.currentVersion.versionStatus !== VersionStatus.WaitPublish.value
+        } else if (tabType === TabType.information.value) {
+            return this.currentVersion.versionStatus !== VersionStatus.WaitPublish.value || !readyOnly
+        }
+        return true
+    }
 }

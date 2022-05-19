@@ -111,7 +111,7 @@ const routes: Routes = [
                 component: EditGroupComponent,
             },
             {
-                path: 'edit-sub-group/:tab/:id/:parentId/:version',
+                path: 'edit-sub-group/:tab/:id/:parentId/:version/:type',
                 component: EditSubGroupComponent,
             },
             {

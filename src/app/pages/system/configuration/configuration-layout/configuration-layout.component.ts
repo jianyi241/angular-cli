@@ -186,7 +186,8 @@ export class ConfigurationLayoutComponent implements OnInit {
             } else {
                 this.version = res.data
                 this.configService.currentVersion = res.data
-                this.toastRepository.showSuccess(res.msg || 'Successful operation')
+                console.log('new version ', this.version)
+                this.toastRepository.showSuccess('Save successfully.')
             }
         }, err => {
         })

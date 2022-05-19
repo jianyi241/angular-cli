@@ -1,4 +1,8 @@
-<label class="control-label control-label-custom {{prop_class}}" *ngIf="!prop.readOnly">{{prop.name}}
+<label class="control-label control-label-custom {{prop_class}}" *ngIf="!prop.readOnly">
+    <div class="label-name">
+        {{prop.name}}
+        <span class="label-required" *ngIf="required">*</span>
+    </div>
     <label class="label label-green" *ngIf="prop.bmFlag">Business Metric</label>
 </label>
 <div class="form-upload-file" [ngClass]="{'form-blue': prop_class == 'tx-blue', 'form-red': prop_class == 'tx-red'}">

@@ -25,6 +25,8 @@ export class DateComponent implements OnInit {
     @Input()
     change: EventEmitter<PropertyVo>;
     date: Date;
+    @Input()
+    required: boolean;
 
     constructor(private focusService: FocusService) {
     }

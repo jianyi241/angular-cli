@@ -72,7 +72,7 @@ export class EditGroupComponent implements OnInit {
     readOnly() {
         if (this.editType === 'add') {
             return false
-        } else if (this.editType === 'edit') {
+        } else if (this.editType === 'update') {
             return !this.configService.isEditable(this.version.type, this.group.status)
         } else if (this.editType === 'view') {
             return true

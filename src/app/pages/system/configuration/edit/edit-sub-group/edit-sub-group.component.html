@@ -4,7 +4,7 @@
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
             <div class="text-ellipsis">{{subGroup.name}}</div>
         </div>
-        <ng-container *ngIf="version.type">
+        <ng-container *ngIf="version.type && !readOnly()">
             <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, subGroup.status)">
                 <button class="btn btn-text-danger" (click)="archive()" *ngIf="subGroup.id && subGroup.moveFlag">
                     Archive
@@ -23,7 +23,7 @@
 
             <div class="form-group-right">
                 <input type="text" placeholder="Name"
-                       [disabled]="!configService.isEditable(version.type, subGroup.status)"
+                       [disabled]="readOnly()"
                        [maxlength]="100" [(ngModel)]="subGroup.name" class="form-control"/>
                 <p class="tip-info">Maximum 100 characters</p>
             </div>
@@ -38,7 +38,7 @@
 
             <div class="form-group-right">
                 <ckeditor [(ngModel)]="subGroup.description"
-                          [readOnly]="!configService.isEditable(version.type, subGroup.status)"
+                          [readOnly]="readOnly()"
                           [config]="config"></ckeditor>
                 <!--            <p class="tip-info">Maximum 500 characters <span>0 / 500</span></p>-->
             </div>

@@ -102,7 +102,7 @@ export class ProductLayoutComponent implements OnInit {
             if (type === 'reject' || type === 'approve') {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
             }  else if (type === 'publish') {
-                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value && this.version.publishPlatformFlag
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
             }
@@ -216,7 +216,7 @@ export class ProductLayoutComponent implements OnInit {
                 this.toastRepository.showDanger('Changes have been rejected.')
                 this.loadingService.hide()
             } else {
-                this.toastRepository.showSuccess('Changes have been approved.')
+                this.toastRepository.showSuccess('Save successfully.')
                 this.loadingService.hide()
             }
         }, err => {
@@ -304,6 +304,7 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     chooseTab(tab: string): void {
+        if (tab === TabType.feesAndRates.name) return
         this.currentTab = this.configService.converterTabToRouter(tab);
         this.router.navigateByUrl(`/platform/product-tab/${this.currentTab}/${this.product.id}/${this.version.id}`);
     }
