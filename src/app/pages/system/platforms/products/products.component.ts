@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit {
     }
     sortList(column: string,type: number): void {
         if (type === 0) {
-            this.productCondition.order = {column: 'platform_name', asc: false}
+            this.productCondition.order = {column: 'platform_name', asc: true}
         } else {
             this.productCondition.order = {column, asc: type === 1}
         }
