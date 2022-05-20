@@ -10,6 +10,7 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {environment} from "../../../../../environments/environment";
 import {SaveService} from '../../../../service/save.service';
 import {ToastRepository} from "../../../../repository/toast-repository";
+
 @Component({
   selector: 'app-products-box',
   templateUrl: './products-box.component.html',

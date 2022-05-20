@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit(): void {
         this.productCondition.order = {
-            asc: false,
+            asc: true,
             column: 'platform_name'
         }
         this.getProductList();
