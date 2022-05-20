@@ -20,8 +20,8 @@ export class DueRepository {
     }
 
     // 获取due看板
-    getBoard(condition: DueCondition): Observable<HttpResult<Map<string, Array<DueListVo>>>> {
-        return this.http.post<HttpResult<Map<string, Array<DueListVo>>>>(environment.baseURL + '/due/board/', condition);
+    getBoard(condition: DueCondition): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/due/board/', condition);
     }
 
     // 获取due看板

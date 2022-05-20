@@ -28,7 +28,6 @@ export class ReviewTableComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.condition.archived = false;
         this.init();
     }
 
@@ -83,10 +82,12 @@ export class ReviewTableComponent implements OnInit {
 
     unarchive(due: DueListVo) {
         due.archived = false;
+        this.save(due);
     }
 
     archive(due: DueListVo) {
         due.archived = true
+        this.save(due);
     }
 
     save(due: DueListVo): void {
