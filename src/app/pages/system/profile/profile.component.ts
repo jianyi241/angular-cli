@@ -11,6 +11,8 @@ import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../repository/file-repository";
 import {Constants} from "../../../model/constants";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
+import {Router} from "@angular/router";
+import {AdminRepository} from "../../../repository/admin-repository";
 
 @Component({
     selector: 'app-profile',
@@ -22,6 +24,7 @@ export class ProfileComponent implements OnInit {
     accountRoles: Array<RoleInfo> = new Array<RoleInfo>();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
     uploading = false;
+    config = {...Constants.EDITOR_CONFIG};
 
     constructor(public currentUserService: CurrentUserService,
                 private saveService: SaveService,
@@ -29,7 +32,9 @@ export class ProfileComponent implements OnInit {
                 private fileRepository: FileRepository,
                 private userRepository: UserRepository,
                 private toastRepository: ToastRepository,
-                private adviceRepository: AdviceRepository) {
+                private adviceRepository: AdviceRepository,
+                private adminRepository: AdminRepository,
+                private router: Router) {
         this.currentUser = {...this.currentUserService.currentUser()}
     }
 
@@ -37,6 +42,8 @@ export class ProfileComponent implements OnInit {
         if (!this.currentUserService.isAdminUser()) {
             this.getAccountRoles();
             this.getPracticeRoles();
+        } else {
+            this.getAdminRoles();
         }
     }
 
@@ -46,10 +53,20 @@ export class ProfileComponent implements OnInit {
         })
     }
 
+    getAdminRoles(): void {
+        this.adminRepository.getAdminRoles().subscribe(res => {
+            this.accountRoles = res.data;
+        })
+    }
+
     getPracticeRoles(): void {
         this.adviceRepository.getPracticeRoles().subscribe(res => {
             this.practiceRoles = res.data;
         })
+    }
+
+    toForgot(): void {
+        this.router.navigate(['/forgot'],{queryParams: {email: this.currentUser.email}})
     }
 
     fullName(): string {

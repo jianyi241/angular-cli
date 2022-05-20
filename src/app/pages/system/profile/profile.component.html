@@ -3,17 +3,17 @@
     <div class="sub-head sub-head-form">
         <div class="sub-title">{{fullName()}}</div>
 
-        <div class="btn-control-group" >
+        <div class="btn-control-group">
             <button class="btn btn-purple xs-ml-24" (click)="saveProfile()">Save</button>
         </div>
     </div>
 
-    <div class="tab-menu">
-        <div class="tab-text active">
-            My Profile
-            <span class="line"></span>
-        </div>
-    </div>
+    <!--    <div class="tab-menu">-->
+    <!--        <div class="tab-text active">-->
+    <!--            My Profile-->
+    <!--            <span class="line"></span>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
     <div class="form-content">
@@ -27,7 +27,10 @@
         <div class="form-group-custom">
             <div class="form-group-left">
                 <label class="control-label">Profile photo</label>
-                <p class="info">This helps your fellow team members recognise you</p>
+                <p class="info" *ngIf="currentUserService.isAdminUser()">This image will be shown publicly as your
+                    profile picture. It will help everyone recognise you</p>
+                <p class="info" *ngIf="!currentUserService.isAdminUser()">This helps your fellow team members recognise
+                    you</p>
             </div>
             <div class="form-upload-file">
                 <div class="upload-file-show">
@@ -56,51 +59,81 @@
         <div class="form-group-custom">
             <div class="form-group-left">
                 <label class="control-label">Personal details</label>
-                <p class="info"></p>
+                <p class="info">This information is not shared publicly on SuitabilityHub</p>
             </div>
 
             <div class="form-group-right">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="control-label control-label-custom"><div>First name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" [(ngModel)]="currentUser.firstName" placeholder="Enter your first name"/>
+                            <label class="control-label control-label-custom">
+                                <div>First name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" [(ngModel)]="currentUser.firstName"
+                                   placeholder="Enter your first name"/>
                         </div>
                     </div>
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="control-label control-label-custom"><div>Last name <span class="label-required">*</span></div></label>
-                            <input type="text" class="form-control" [(ngModel)]="currentUser.lastName" placeholder="Enter your last name"/>
+                            <label class="control-label control-label-custom">
+                                <div>Last name <span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" [(ngModel)]="currentUser.lastName"
+                                   placeholder="Enter your last name"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label control-label-custom"><div>Email<span class="label-required">*</span></div></label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email" placeholder="Enter your email"/>
+                    <label class="control-label control-label-custom">
+                        <div>{{currentUserService.isAdviceUser() ? 'Email' : 'Work email'}}<span class="label-required">*</span>
+                        </div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           [placeholder]="currentUserService.isAdviceUser() ? 'Enter your email' : 'Enter your work email'"/>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label control-label-custom"><div>Contact Number</div></label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.mobile" placeholder="Enter your contact number"/>
+                    <label class="control-label control-label-custom">
+                        <div>Job title<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter you job title" />
+                </div>
+
+                <div class="form-group" *ngIf="currentUserService.isSupplierUser()">
+                    <label class="control-label control-label-custom">
+                        <div>Contact Number</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.mobile"
+                           placeholder="Enter your contact number"/>
                 </div>
 
                 <div class="form-group" *ngIf="currentUserService.isAdviceUser()">
                     <label class="control-label control-label-custom">Practice role</label>
-                    <ng-select class="select-single" [(ngModel)]="currentUser.practiceRoleId" placeholder="Select role" dropdownPosition="bottom">
-                        <ng-option *ngFor="let practiceRole of practiceRoles" [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>
+                    <ng-select class="select-single" [(ngModel)]="currentUser.practiceRoleId" placeholder="Select role"
+                               dropdownPosition="bottom">
+                        <ng-option *ngFor="let practiceRole of practiceRoles"
+                                   [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>
                     </ng-select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" *ngIf="!currentUserService.isAdminUser() && !currentUserService.isSupplierUser()">
                     <label class="control-label control-label-custom">ARN (Authorised Representative Number)</label>
                     <input type="text" class="form-control" placeholder="Enter ARN" [(ngModel)]="currentUser.arn"/>
+                </div>
+                <div class="form-group">
+                    <div class="label-wrapper">
+                        <label class="control-label control-label-custom">Password</label>
+                        <a href="javascript:;" (click)="toForgot()" class="tx-bold tx-purple">Reset password</a>
+                    </div>
+                    <input type="password" class="form-control" value="xxxxxxxxxx" disabled/>
                 </div>
             </div>
         </div>
 
-        <div class="form-group-custom" *ngIf="currentUserService.isAdviceUser()">
+        <div class="form-group-custom" *ngIf="currentUserService.isAdviceUser() || currentUserService.isAdminUser()">
             <div class="form-group-left">
                 <label class="control-label">Account type</label>
                 <p class="info">Update your account type</p>
@@ -109,8 +142,12 @@
             <div class="form-group-right">
 
                 <div class="form-group">
-                    <div class="radio-box radio-box-top-2" *ngFor="let accountType of accountRoles; let roleIndex = index">
-                        <input type="radio" [value]="accountType.id" [(ngModel)]="currentUser.adviceRoleId" name="accountType" id="accountType-{{roleIndex}}"/>
+                    <div class="radio-box radio-box-top-2"
+                         *ngFor="let accountType of accountRoles; let roleIndex = index">
+                        <input type="radio"
+                               [disabled]="currentUserService.isAdminUser() || currentUserService.isAdviceUser()"
+                               [value]="accountType.id" [(ngModel)]="currentUser.adviceRoleId" name="accountType"
+                               id="accountType-{{roleIndex}}"/>
                         <label for="accountType-{{roleIndex}}">
                             {{accountType.roleName}}
                             <div class="info">{{accountType.roleDesc}}</div>
@@ -120,16 +157,103 @@
             </div>
         </div>
 
-        <div class="form-group-custom">
+        <div class="form-group-custom" *ngIf="currentUserService.isSupplierUser()">
+            <div class="form-group-left">
+                <label class="control-label">Associated products</label>
+                <p class="info">Choose which of your products should feature this BDM's contact details</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple xs-mb-32">
+                        <input type="checkbox" disabled name="bt1" id="bt1" [(ngModel)]="currentUser.planFlag"/>
+                        <label for="bt1">
+                            <p>BT Panorama</p>
+                        </label>
+                    </div>
+                    <div class="check-box check-box-purple xs-mb-32">
+                        <input type="checkbox" disabled name="bt2" id="bt2" [(ngModel)]="currentUser.planFlag"/>
+                        <label for="bt2">
+                            <p>BT Asgard</p>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group-custom" *ngIf="currentUserService.isSupplierUser()">
+            <div class="form-group-left">
+                <label class="control-label">Public details</label>
+                <p class="info">This information will be shared publicly on SuitabilityHub</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="showFindBDM" id="showFindBDM" />
+                        <label for="showFindBDM">
+                            <p style="font-weight: 400;">Show this user's details on the "Find a BDM" page</p>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Public contact number</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter public contact number" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Preferred contact hours</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter preferred contact hours" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Public email</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter public email" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>LinkedIn profile URL</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter linkedIn profile URL" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Region</div>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
+                           placeholder="Enter region" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Biography</div>
+                    </label>
+                    <ckeditor [config]="config"></ckeditor>
+                    <div class="tip-info">
+                        <span class="info-left">Maximum 3,000 characters</span>
+                        <span class="info-right">0 / 3,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group-custom" *ngIf="!currentUserService.isAdminUser()">
             <div class="form-group-left">
                 <label class="control-label">Account owner</label>
-                <p class="info">Update your account type</p>
+                <p class="info">Update your account owner</p>
             </div>
 
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Transfer account ownership</label>
-                    <input type="text" class="form-control" placeholder="Enter an email address of another team member below"/>
+                    <input type="text" class="form-control"
+                           placeholder="Enter an email address of another team member below"/>
                 </div>
 
                 <div class="form-group">
@@ -139,32 +263,61 @@
             </div>
         </div>
 
-        <div class="form-group-custom">
+<!--        <div class="form-group-custom">-->
+<!--            <div class="form-group-left">-->
+<!--                <label class="control-label">Communication preferences</label>-->
+<!--                <p class="info"></p>-->
+<!--            </div>-->
+
+<!--            <div class="form-group-right">-->
+<!--                <div class="form-group">-->
+<!--                    <div class="radio-box radio-box-top-2">-->
+<!--                        <input type="radio" name="CommunicationPreferences" id="likeToReceive" [value]="true"-->
+<!--                               [(ngModel)]="currentUser.receiveNewsFlag"/>-->
+<!--                        <label for="likeToReceive">-->
+<!--                            I want like to receive periodic updates and news from SuitabilityHub-->
+<!--                        </label>-->
+<!--                    </div>-->
+
+<!--                    <div class="radio-box radio-box-top-2">-->
+<!--                        <input type="radio" name="CommunicationPreferences" id="DoNotToreceive" [value]="false"-->
+<!--                               [(ngModel)]="currentUser.receiveNewsFlag"/>-->
+<!--                        <label for="DoNotToreceive">-->
+<!--                            I don’t want to receive periodic updates and news from SuitabilityHub-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group-custom" *ngIf="!currentUserService.isAdminUser()">
             <div class="form-group-left">
                 <label class="control-label">Communication preferences</label>
                 <p class="info"></p>
             </div>
 
             <div class="form-group-right">
-
                 <div class="form-group">
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" name="CommunicationPreferences" id="likeToReceive" [value]="true" [(ngModel)]="currentUser.receiveNewsFlag"/>
-                        <label for="likeToReceive">
-                            I want like to receive periodic updates and news from SuitabilityHub
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="agree2" id="agree2" [(ngModel)]="currentUser.updateNewsFlag"/>
+                        <label for="agree2">
+                            <p>Send me product updates and news from SuitabilityHub</p>
+                        </label>
+                    </div>
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="news" id="news" [(ngModel)]="currentUser.commFlag"/>
+                        <label for="news">
+                            <p>Send me marketing communications from SuitabilityHub</p>
                         </label>
                     </div>
 
-                    <div class="radio-box radio-box-top-2">
-                        <input type="radio" name="CommunicationPreferences" id="DoNotToreceive" [value]="false" [(ngModel)]="currentUser.receiveNewsFlag"/>
-                        <label for="DoNotToreceive">
-                            I don’t want to receive periodic updates and news from SuitabilityHub
+                    <div class="check-box check-box-purple xs-mb-32">
+                        <input type="checkbox" name="join" id="join" [(ngModel)]="currentUser.planFlag"/>
+                        <label for="join">
+                            <p>I want to join the research panel and be invited to occasional surveys</p>
                         </label>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>

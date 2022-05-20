@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastRepository} from '../../../repository/toast-repository';
@@ -28,10 +28,16 @@ export class ForgotComponent implements OnInit {
         private spinnerService: NgxLoadingSpinnerService,
         private userRepository: UserRepository,
         private toastRepository: ToastRepository,
-        private ngbModal: NgbModal) {
+        private ngbModal: NgbModal,
+        private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(query => {
+            if (query['email']) {
+                this.account = query['email']
+            }
+        })
     }
 
     sendForgotEmail(): void {

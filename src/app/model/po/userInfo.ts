@@ -24,6 +24,9 @@ export class UserInfo extends BaseModel{
     practiceId?: string;
     receiveNewsFlag?: boolean;
     arn?: string;
-    companyType?: number // 企业类型 1:practice,2:supplier
+    companyType?: number; // 企业类型 1:practice,2:supplier
+    updateNewsFlag?:boolean;
+    commFlag?: boolean;
+    planFlag?: boolean;
 }
 
