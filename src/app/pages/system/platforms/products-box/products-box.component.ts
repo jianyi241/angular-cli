@@ -29,7 +29,7 @@ export class ProductsBoxComponent implements OnInit {
               private toastRepository: ToastRepository) { }
 
   ngOnInit(): void {
-    // this.getProductList()
+    this.getProductList()
   }
 
   addPlatform(): void {
