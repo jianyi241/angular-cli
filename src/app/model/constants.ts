@@ -1,3 +1,5 @@
+import {environment} from '../../environments/environment';
+
 export class Constants {
     static readonly NON_ID = '0'
     static readonly VERSION = 'version';
@@ -10,7 +12,7 @@ export class Constants {
         extraPlugins: 'emoji',
         editorplaceholder: "Description...",
         readOnly: false,
-        contentsCss:['../../assets/css/contents.css'],
+        contentsCss:[`${environment.websiteURL}/assets/css/contents.css`],
         toolbarGroups: [
             { name: 'insert', groups: [ 'insert' ] },
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },

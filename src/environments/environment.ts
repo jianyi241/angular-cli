@@ -1,9 +1,10 @@
 export const environment = {
   production: false,
-  baseURL: 'http://54.206.175.12/suitability-api-staging',
+  baseURL: 'http://localhost:8080/suitability',
   arcadeAuth: {
-    clientId: '88ebd822-8fe2-4b45-9d00-09b18f314b38'
-  }
+    clientId: '2112b8b7-37ff-4831-929d-d411895f8a71'
+  },
+  websiteURL: "http://localhost:4200"
 };
 // const base = 'http://54.206.175.12/suitability-api-test'
 // const wangBase = 'http://192.168.8.135:8080/suitability' // 汪颖亮
