@@ -16,7 +16,7 @@
             <span class="icon icon-search icon-16" (click)="searchList()"></span>
         </div>
         <div class="col-body">
-            <div class="body-list">
+            <div class="body-list" *ngIf="productList.length > 0">
                 <div class="list-item" *ngFor="let item of productList" (click)="toView(item)">
                     <div class="item-cover" *ngIf="item.platformLogo?.visitUrl">
                         <img [src]="item.platformLogo?.visitUrl" />
@@ -40,6 +40,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="empty-text" *ngIf="productList.length == 0">This section is empty. {{currentUserService.isSupplierUser() ? 'Click on "Add platform" to add items.' : ''}}
             </div>
         </div>
     </div>
