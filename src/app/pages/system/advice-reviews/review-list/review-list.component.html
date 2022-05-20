@@ -1,40 +1,50 @@
 <div class="main main-with-search">
     <div class="head-fixed">
-       <div class="sub-head">
+        <div class="sub-head">
             <div class="title">
                 Suitability reviews
             </div>
 
         </div>
-       <div class="search-edit-wrapper">
-           <div class="search-content w-310">
-               <input type="text" placeholder="Search client/review name" class="form-control"/>
-               <span class="icon icon-search icon-16"></span>
-           </div>
-           <div class="edit-content">
-             <div class="edit-content-left">
-               <div class="switch-button">
-                 <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'listView'}" (click)="switchTable('listView', 'review')">List view</div>
-                 <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'kanbanBoard'}" (click)="switchTable('kanbanBoard', 'review')">Kanban board</div>
-               </div>
-             </div>
-               <div class="edit-content-right">
-                 <div class="filter">
-                   Hide archived
-                 </div>
-                 <div class="switch-button">
-                   <div class="switch-text" [ngClass]="{'active': currentSwitch == 'review'}" (click)="switchTable('review')">Reviews</div>
-                   <div class="switch-text" [ngClass]="{'active': currentSwitch == 'client'}" (click)="switchTable('client')">Clients</div>
-                 </div>
-                 <div class="btn-control-group">
-                   <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="addFunc()">
-                     <img src="assets/img/icon/icon-add.svg">
-                     {{currentSwitch === 'review' ? 'New Suitability Review' : 'New client'}}
-                   </button>
-                 </div>
-               </div>
-           </div>
-       </div>
+        <div class="search-edit-wrapper">
+            <div class="search-content w-310">
+                <input type="text" placeholder="Search client/review name" class="form-control"/>
+                <span class="icon icon-search icon-16"></span>
+            </div>
+            <div class="edit-content">
+                <div class="edit-content-left">
+                    <div class="switch-button" *ngIf="currentSwitch == 'review'">
+                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'listView'}"
+                             (click)="switchTable('listView', 'review')">List view
+                        </div>
+                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'kanbanBoard'}"
+                             (click)="switchTable('kanbanBoard', 'review')">Kanban board
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-content-right">
+                    <div class="filter">
+                        Hide archived
+                    </div>
+                    <div class="switch-button">
+                        <div class="switch-text" [ngClass]="{'active': currentSwitch == 'review'}"
+                             (click)="switchTable('review')">
+                            Reviews
+                        </div>
+                        <div class="switch-text" [ngClass]="{'active': currentSwitch == 'client'}"
+                             (click)="switchTable('client')">
+                            Clients
+                        </div>
+                    </div>
+                    <div class="btn-control-group">
+                        <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="addFunc()">
+                            <img src="assets/img/icon/icon-add.svg">
+                            {{currentSwitch === 'review' ? 'New Suitability Review' : 'New client'}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <app-review-table *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'listView'"></app-review-table>
     <app-kanban-board *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'kanbanBoard'"></app-kanban-board>
