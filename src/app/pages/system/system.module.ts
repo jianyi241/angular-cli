@@ -78,6 +78,9 @@ import { AddClientComponent } from './advice-reviews/add-client/add-client.compo
 import { AcOverviewComponent } from './advice-reviews/add-client/components/ac-overview/ac-overview.component';
 import { AcReviewComponent } from './advice-reviews/add-client/components/ac-review/ac-review.component';
 import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
+import { ReviewTableComponent } from './advice-reviews/review-list/components/review-table/review-table.component';
+import { ClientTableComponent } from './advice-reviews/review-list/components/client-table/client-table.component';
+import { KanbanBoardComponent } from './advice-reviews/review-list/components/kanban-board/kanban-board.component';
 
 @NgModule({
     declarations: [
@@ -146,7 +149,10 @@ import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.compo
         AddClientComponent,
         AcOverviewComponent,
         AcReviewComponent,
-        ConfirmModalComponent
+        ConfirmModalComponent,
+        ReviewTableComponent,
+        ClientTableComponent,
+        KanbanBoardComponent
     ],
     imports: [
         CommonModule,

@@ -19,6 +19,7 @@ export class ReviewListComponent implements OnInit {
   adminPage: Page<any> = new Page<any>();
   condition: Condition = new Condition(1,10)
   currentSwitch: string = 'review'
+  currentReviewSwitch: string = 'listView'
   constructor(private router: Router,
               private adminRepository: AdminRepository,
               public configService: ConfigService,
@@ -43,7 +44,11 @@ export class ReviewListComponent implements OnInit {
     this.getSuppliesList()
   }
 
-  switchTable(val: string): void {
+  switchTable(val: string, type: string = 'client'): void {
+    if (type === 'review') {
+      this.currentReviewSwitch = val
+      return
+    }
     this.currentSwitch = val
   }
   getSuppliesList(): void {
