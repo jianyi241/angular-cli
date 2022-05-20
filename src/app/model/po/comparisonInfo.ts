@@ -41,5 +41,10 @@ export class ComparisonInfo {
     updateUser?: string;
     userId?: string;
     userName?: string;
+    templateId?: string;
+    archived?: boolean;
+    type?: string;
+    clientId?: string;
+    status?: string;
 }
 

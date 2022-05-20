@@ -11,6 +11,7 @@ import {CurrentUserService} from "./current-user.service";
 import {Version} from "../model/po/version";
 import {AnalysisType} from "../model/enums/analysis-type";
 import {WorkFlowsStatus} from "../model/enums/work-flows-status";
+import {ComparisonStatus} from "../model/enums/comparison-status";
 
 @Injectable({
     providedIn: 'root'
@@ -83,6 +84,11 @@ export class ConfigService {
         dataRequired: WorkFlowsStatus.DataRequired.value,
         awaitingApproval: WorkFlowsStatus.AwaitingApproval.value,
         awaitingPublish: WorkFlowsStatus.AwaitingPublish.value,
+    }
+
+    comparisonStatus = {
+        inProgress: ComparisonStatus.InProgress.value,
+        completed: ComparisonStatus.Completed.value,
     }
 
     currentVersion: Version = new Version()
