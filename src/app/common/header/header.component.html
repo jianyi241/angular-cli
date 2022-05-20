@@ -37,7 +37,6 @@
                         <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
                         <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
                         <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
-                        <a>News & updates</a>
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isSupplierUser()">
                         <a customLinkActive="active" [link]="['/platform']" [routerLink]="['/platform/product-box']">Platform profiles</a>
@@ -46,8 +45,7 @@
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isAdviceUser()">
                         <a [routerLink]="['/platform/product-box']">Platform profiles</a>
-                        <a>Suitability review</a>
-                        <a>News & Updates</a>
+                        <a [routerLink]="['/advice-review/review-list/review']" routerLinkActive="active">Suitability review</a>
                     </ng-container>
                 </div>
             </div>
@@ -74,13 +72,13 @@
                 <ng-container *ngIf="currentUserService.isSupplierUser()">
                     <div class="menu-item" [routerLink]="['/supplier/supplier-edit/overview/' + currentUserService.currentUser().companyId]">
                         <img src="./assets/img/icon/icon-company.svg" class="menu-icon"/>
-                        <div class="menu-name">Manage company</div>
+                        <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isAdviceUser()">
                     <div class="menu-item" [routerLink]="['/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId]">
                         <img src="./assets/img/icon/icon-company.svg" class="menu-icon" />
-                        <div class="menu-name">Manage practice</div>
+                        <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>
                 <div class="menu-item" (click)="logOut()">
