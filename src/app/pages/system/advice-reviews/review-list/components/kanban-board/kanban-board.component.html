@@ -15,7 +15,7 @@
             <div class="item-review-name">{{item.name}}</div>
             <div class="item-adviser-info">
               <div class="adviser-avatar">
-                <img src="./assets/img/icon/icon-contact-mail.svg" />
+                <img [src]="item.userAvatar?.visitUrl" />
               </div>
               <div class="txt adviser-name">{{item.username}}</div>|
               <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
@@ -25,11 +25,11 @@
                 <img src="./assets/img/icon/icon-eye-purple.svg" />
                 View
               </button>
-              <button class="btn btn-outline-purple-light icon-btn">
-                <img src="./assets/img/icon/icon-copy-purple.svg" />
-              </button>
-              <button class="btn btn-outline-purple-light icon-btn">
+              <button *ngIf="!item.archived" (click)="archive(item)" class="btn btn-outline-purple-light icon-btn">
                 <img src="./assets/img/icon/icon-delete-red.svg" />
+              </button>
+              <button *ngIf="item.archived" (click)="unarchive(item)" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
+                <img src="./assets/img/icon/icon-refresh-blur.svg">
               </button>
             </div>
           </div>
@@ -50,7 +50,7 @@
           <div class="item-review-name">{{item.name}}</div>
           <div class="item-adviser-info">
             <div class="adviser-avatar">
-              <img src="./assets/img/icon/icon-contact-mail.svg" />
+              <img [src]="item.userAvatar?.visitUrl" />
             </div>
             <div class="txt adviser-name">{{item.username}}</div>|
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
@@ -60,11 +60,11 @@
               <img src="./assets/img/icon/icon-eye-purple.svg" />
               View
             </button>
-            <button class="btn btn-outline-purple-light icon-btn">
-              <img src="./assets/img/icon/icon-copy-purple.svg" />
-            </button>
-            <button class="btn btn-outline-purple-light icon-btn">
+            <button *ngIf="!item.archived" (click)="archive(item)" class="btn btn-outline-purple-light icon-btn">
               <img src="./assets/img/icon/icon-delete-red.svg" />
+            </button>
+            <button *ngIf="item.archived" (click)="unarchive(item)" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
+              <img src="./assets/img/icon/icon-refresh-blur.svg">
             </button>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <div class="item-review-name">{{item.name}}</div>
           <div class="item-adviser-info">
             <div class="adviser-avatar">
-              <img src="./assets/img/icon/icon-contact-mail.svg" />
+              <img [src]="item.userAvatar?.visitUrl" />
             </div>
             <div class="txt adviser-name">{{item.username}}</div>|
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
@@ -95,11 +95,11 @@
               <img src="./assets/img/icon/icon-eye-purple.svg" />
               View
             </button>
-            <button class="btn btn-outline-purple-light icon-btn">
-              <img src="./assets/img/icon/icon-copy-purple.svg" />
-            </button>
-            <button class="btn btn-outline-purple-light icon-btn">
+            <button *ngIf="!item.archived" (click)="archive(item)" class="btn btn-outline-purple-light icon-btn">
               <img src="./assets/img/icon/icon-delete-red.svg" />
+            </button>
+            <button *ngIf="item.archived" (click)="unarchive(item)" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
+              <img src="./assets/img/icon/icon-refresh-blur.svg">
             </button>
           </div>
         </div>

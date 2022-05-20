@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {AddClientModalComponent} from "../modal/add-client-modal/add-client-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DueRepository} from "../../../../repository/due-repository";
+import {DueRepository} from '../../../../repository/due-repository';
 
 
 @Component({

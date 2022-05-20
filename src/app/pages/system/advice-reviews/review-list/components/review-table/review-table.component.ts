@@ -44,11 +44,6 @@ export class ReviewTableComponent implements OnInit {
         });
     }
 
-    switchTable(val: string): void {
-        this.currentSwitch = val
-    }
-
-
     sortList(column: string, sortType: number): void {
 
     }
