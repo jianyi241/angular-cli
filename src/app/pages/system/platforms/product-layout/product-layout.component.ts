@@ -102,7 +102,7 @@ export class ProductLayoutComponent implements OnInit {
             if (type === 'reject' || type === 'approve') {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
             }  else if (type === 'publish') {
-                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value
+                return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value && this.version.publishPlatformFlag
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
             }
