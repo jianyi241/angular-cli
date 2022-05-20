@@ -1,86 +1,100 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Page} from "../../../../../../model/vo/page";
-import {Condition} from "../../../../../../model/condition";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AdminRepository} from "../../../../../../repository/admin-repository";
+import {Router} from "@angular/router";
 import {ConfigService} from "../../../../../../service/config.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddClientModalComponent} from "../../../modal/add-client-modal/add-client-modal.component";
+import {DueRepository} from "../../../../../../repository/due-repository";
+import {DueListVo} from "../../../../../../model/vo/dueListVo";
+import {DueCondition} from "../../../../../../model/condition/due-condition";
+import {ToastRepository} from "../../../../../../repository/toast-repository";
 
 @Component({
-  selector: 'app-review-table',
-  templateUrl: './review-table.component.html',
-  styleUrls: ['./review-table.component.less']
+    selector: 'app-review-table',
+    templateUrl: './review-table.component.html',
+    styleUrls: ['./review-table.component.less']
 })
 export class ReviewTableComponent implements OnInit {
 
-  routerSubscription: any;
-  activatedRouteSubscription: any;
-  adminPage: Page<any> = new Page<any>();
-  condition: Condition = new Condition(1,10)
-  currentSwitch: string = 'review'
-  constructor(private router: Router,
-              private adminRepository: AdminRepository,
-              public configService: ConfigService,
-              private ngbModal: NgbModal,
-              private activatedRoute: ActivatedRoute) {
-  }
+    duePage: Page<DueListVo> = new Page<DueListVo>();
+    condition: DueCondition = new DueCondition(1, 10);
+    currentSwitch: string = 'review'
 
-  ngOnInit(): void {
-    this.init();
-  }
-
-  ngOnDestroy(): void {
-    this.routerSubscription && this.routerSubscription.unsubscribe();
-    this.activatedRouteSubscription && this.activatedRouteSubscription.unsubscribe();
-  }
-
-  init(): void {
-    this.activatedRoute.params.subscribe(res => {
-      console.log('res ', res)
-      this.currentSwitch = res.type
-    })
-    this.getSuppliesList()
-  }
-
-  switchTable(val: string): void {
-    this.currentSwitch = val
-  }
-  getSuppliesList(): void {
-    this.adminRepository.getAdminInfoList(this.condition).subscribe(res => {
-      this.adminPage = res.data
-    },err => {})
-  }
-
-  sortList(column: string, sortType: number): void {
-
-  }
-
-  addFunc(): void {
-    if (this.currentSwitch === 'review') {
-      this.toDetail()
-    } else {
-      this.router.navigateByUrl('/advice-review/add-client/Overview')
+    constructor(private router: Router,
+                private dueRepository: DueRepository,
+                private toastRepository: ToastRepository,
+                public configService: ConfigService,
+                private ngbModal: NgbModal) {
     }
-  }
 
-  toDetail(): void {
-    // this.router.navigateByUrl(`/admin/detail/${type}/${id || Constants.NON_ID}`)
-    this.showAddClientModal()
-  }
+    ngOnInit(): void {
+        this.condition.archived = false;
+        this.init();
+    }
 
-  pageChange(current: number) {
-    this.condition.current = current
-    this.getSuppliesList()
-  }
+    ngOnDestroy(): void {
+    }
 
-  showAddClientModal() :void{
-    const modal = this.ngbModal.open(AddClientModalComponent, {
-      size: 'w644',
-      windowClass: 'tip-popup-modal',
-      centered: true
-    })
-    // modal.componentInstance.
-  }
+    init(): void {
+        this.getDuePage();
+    }
 
+    getDuePage(): void {
+        this.dueRepository.getPage(this.condition).subscribe(res => {
+            Object.assign(this.duePage, res.data);
+        });
+    }
+
+    switchTable(val: string): void {
+        this.currentSwitch = val
+    }
+
+
+    sortList(column: string, sortType: number): void {
+
+    }
+
+    addFunc(): void {
+        if (this.currentSwitch === 'review') {
+            this.toDetail()
+        } else {
+            this.router.navigateByUrl('/advice-review/add-client/Overview')
+        }
+    }
+
+    toDetail(): void {
+        // this.router.navigateByUrl(`/admin/detail/${type}/${id || Constants.NON_ID}`)
+        this.showAddClientModal()
+    }
+
+    pageChange(current: number) {
+        this.condition.current = current
+        this.getDuePage();
+    }
+
+    showAddClientModal(): void {
+        const modal = this.ngbModal.open(AddClientModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        })
+        // modal.componentInstance.
+    }
+
+    unarchive(due: DueListVo) {
+        due.archived = false;
+    }
+
+    archive(due: DueListVo) {
+        due.archived = true
+    }
+
+    save(due: DueListVo): void {
+        this.dueRepository.save(due).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+        })
+    }
 }
