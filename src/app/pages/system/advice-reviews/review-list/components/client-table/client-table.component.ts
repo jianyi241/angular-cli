@@ -68,7 +68,7 @@ export class ClientTableComponent implements OnInit {
 
     pageChange(current: number) {
         this.condition.current = current
-        this.getSuppliesList()
+        this.getPage();
     }
 
     showAddClientModal(): void {
