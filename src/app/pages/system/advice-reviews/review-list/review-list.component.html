@@ -8,7 +8,10 @@
         </div>
         <div class="search-edit-wrapper">
             <div class="search-content w-310">
-                <input type="text" placeholder="Search client/review name" class="form-control"/>
+                <input type="text" *ngIf="currentSwitch == 'review'" (keydown.enter)="searchReview()"
+                       [(ngModel)]="reviewKeyword" placeholder="Search client/review name" class="form-control"/>
+                <input type="text" *ngIf="currentSwitch == 'client'" (keydown.enter)="searchClient()"
+                       [(ngModel)]="clientKeyword" placeholder="Search client" class="form-control"/>
                 <span class="icon icon-search icon-16"></span>
             </div>
             <div class="edit-content">
@@ -23,8 +26,8 @@
                     </div>
                 </div>
                 <div class="edit-content-right">
-                    <div class="filter">
-                        Hide archived
+                    <div class="filter" (click)="toggleArchived()" *ngIf="currentReviewSwitch != 'kanbanBoard'">
+                        {{showArchived ? 'Hide archived' : 'Show archived'}}
                     </div>
                     <div class="switch-button">
                         <div class="switch-text" [ngClass]="{'active': currentSwitch == 'review'}"

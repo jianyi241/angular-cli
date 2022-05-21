@@ -8,6 +8,8 @@ import {DueRepository} from "../../../../../../repository/due-repository";
 import {DueListVo} from "../../../../../../model/vo/dueListVo";
 import {DueCondition} from "../../../../../../model/condition/due-condition";
 import {ToastRepository} from "../../../../../../repository/toast-repository";
+import {DueService} from "../../../../../../service/due.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-review-table',
@@ -19,19 +21,33 @@ export class ReviewTableComponent implements OnInit {
     duePage: Page<DueListVo> = new Page<DueListVo>();
     condition: DueCondition = new DueCondition(1, 10);
     currentSwitch: string = 'review'
+    searchSub: Subscription;
+    archivedSub: Subscription;
 
     constructor(private router: Router,
                 private dueRepository: DueRepository,
                 private toastRepository: ToastRepository,
                 public configService: ConfigService,
+                private dueService: DueService,
                 private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
         this.init();
+        this.searchSub = this.dueService.reviewObservable(data => {
+            this.condition.keyword = data;
+            this.getDuePage();
+        });
+
+        this.archivedSub = this.dueService.archivedObservable(data => {
+            this.condition.archived = data ? null : data;
+            this.getDuePage();
+        })
     }
 
     ngOnDestroy(): void {
+        this.searchSub && this.searchSub.unsubscribe();
+        this.archivedSub && this.archivedSub.unsubscribe();
     }
 
     init(): void {
