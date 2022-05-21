@@ -7,7 +7,7 @@
           <th>
             <div class="th-cell">
               Name of client
-              <sorting-widget (sortChange)="sortList('lastName', $event)"></sorting-widget>
+              <sorting-widget></sorting-widget>
             </div>
           </th>
           <th>
@@ -35,42 +35,39 @@
           <th colspan="5"></th>
         </tr>
         </thead>
-        <tbody *ngIf="adminPage.total > 0">
-        <tr *ngFor="let admin of adminPage.records">
+        <tbody *ngIf="clientPage.total > 0">
+        <tr *ngFor="let client of clientPage.records">
           <td>
             <div class="td-cell td-cell_avatar tx-bold">
-              <div class="text-ellipsis max-w-200">{{admin.firstName + ' ' + admin.lastName}}</div>
+              <div class="text-ellipsis max-w-200">{{client.firstName + ' ' + client.lastName}}</div>
             </div>
           </td>
           <td>
-            <div class="td-cell tx-bold tx-purple">{{admin.accountType}}</div>
+            <div class="td-cell tx-bold tx-purple">{{client.totalDue}}</div>
           </td>
           <td>
             <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
               <div class="avatar-box xs-mr-16">
-                <img [src]="(admin.avatar?.visitUrl) || './assets/img/unassgin.svg'" />
+                <img [src]="(client.userAvatar?.visitUrl) || './assets/img/unassgin.svg'" />
               </div>
-              <div class="text-ellipsis">{{admin.firstName + ' ' + admin.lastName}}</div>
+              <div class="text-ellipsis">{{client.username}}</div>
             </div>
           </td>
           <td>
-            <div class="td-cell">{{admin.accountType}}</div>
-          </td>
-          <td>
-            <div class="td-cell" *ngIf="admin.status == configService.userStatus.active">
-              <label class="label tx-blue">In progress</label>
+            <div class="td-cell" *ngIf="!client.archived">
+              <label class="label tx-blue">Active</label>
             </div>
-            <div class="td-cell" *ngIf="admin.status == configService.userStatus.pending">
+            <div class="td-cell" *ngIf="client.archived">
               <label class="label tx-red">Archived</label>
             </div>
           </td>
           <td class="text-left edit">
             <div class="edit-btn-group">
-              <button class="btn btn-purple-border btn-tiny xs-ml-16" style="margin-left: 0 !important;" (click)="toDetail()">View</button>
-              <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
+              <button  class="btn btn-purple-border btn-tiny xs-ml-16" style="margin-left: 0 !important;" (click)="toDetail()">View</button>
+              <button *ngIf="!client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
                 <img src="./assets/img/icon/icon-delete-red.svg">
               </button>
-              <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
+              <button *ngIf="client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
                 <img src="./assets/img/icon/icon-refresh-blur.svg">
               </button>
             </div>
@@ -79,9 +76,9 @@
         </tbody>
       </table>
     </div>
-    <ngb-pagination *ngIf="adminPage.total > 0" [collectionSize]="adminPage.total" [(page)]="adminPage.current" [pageSize]="adminPage.size"
+    <ngb-pagination *ngIf="clientPage.total > 0" [collectionSize]="clientPage.total" [(page)]="clientPage.current" [pageSize]="clientPage.size"
                     (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
   </ng-container>
-  <div class="empty-text" *ngIf="adminPage.total == 0">This section is empty.
+  <div class="empty-text" *ngIf="clientPage.total == 0">This section is empty.
   </div>
 </div>

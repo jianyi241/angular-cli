@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {AddClientModalComponent} from "../modal/add-client-modal/add-client-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -20,6 +20,7 @@ export class ReviewListComponent implements OnInit {
     showArchived = true;
 
     constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 private dueRepository: DueRepository,
                 public configService: ConfigService,
                 private dueService: DueService,
@@ -27,6 +28,14 @@ export class ReviewListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.params.subscribe(res => {
+            if (res.type != 'client') {
+                this.currentSwitch = 'review';
+                this.currentReviewSwitch = res.type;
+            } else {
+                this.currentSwitch = res.type;
+            }
+        })
     }
 
     ngOnDestroy(): void {
@@ -35,13 +44,10 @@ export class ReviewListComponent implements OnInit {
 
     switchTable(val: string, type: string = 'client'): void {
         if (type === 'review') {
-            this.currentReviewSwitch = val
+            this.router.navigateByUrl(`/advice-review/review-list/${val}`);
         } else {
-            this.currentSwitch = val
+            this.router.navigateByUrl(`/advice-review/review-list/${type}`);
         }
-        this.reviewKeyword = "";
-        this.clientKeyword = "";
-        this.showArchived = true;
     }
 
     addFunc(): void {
@@ -72,7 +78,7 @@ export class ReviewListComponent implements OnInit {
     }
 
     searchClient() {
-        this.dueService.reviewSearch(this.clientKeyword);
+        this.dueService.clientSearch(this.clientKeyword);
     }
 
     toggleArchived() {

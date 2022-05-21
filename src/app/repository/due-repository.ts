@@ -21,7 +21,7 @@ export class DueRepository {
 
     // 获取due看板
     getBoard(condition: DueCondition): Observable<HttpResult<any>> {
-        return this.http.post<HttpResult<any>>(environment.baseURL + '/due/board/', condition);
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/due/board', condition);
     }
 
     // 获取due看板

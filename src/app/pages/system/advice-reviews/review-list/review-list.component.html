@@ -17,21 +17,21 @@
             <div class="edit-content">
                 <div class="edit-content-left">
                     <div class="switch-button" *ngIf="currentSwitch == 'review'">
-                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'listView'}"
-                             (click)="switchTable('listView', 'review')">List view
+                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'list-view'}"
+                             (click)="switchTable('list-view', 'review')">List view
                         </div>
-                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'kanbanBoard'}"
-                             (click)="switchTable('kanbanBoard', 'review')">Kanban board
+                        <div class="switch-text" [ngClass]="{'active': currentReviewSwitch == 'kanban-board'}"
+                             (click)="switchTable('kanban-board', 'review')">Kanban board
                         </div>
                     </div>
                 </div>
                 <div class="edit-content-right">
-                    <div class="filter" (click)="toggleArchived()" *ngIf="currentReviewSwitch != 'kanbanBoard'">
+                    <div class="filter" (click)="toggleArchived()" *ngIf="currentReviewSwitch != 'kanban-board' || currentSwitch != 'client'">
                         {{showArchived ? 'Hide archived' : 'Show archived'}}
                     </div>
                     <div class="switch-button">
                         <div class="switch-text" [ngClass]="{'active': currentSwitch == 'review'}"
-                             (click)="switchTable('review')">
+                             (click)="switchTable('list-view','review')">
                             Reviews
                         </div>
                         <div class="switch-text" [ngClass]="{'active': currentSwitch == 'client'}"
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <app-review-table *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'listView'"></app-review-table>
-    <app-kanban-board *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'kanbanBoard'"></app-kanban-board>
+    <app-review-table *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'list-view'"></app-review-table>
+    <app-kanban-board *ngIf="currentSwitch === 'review' && currentReviewSwitch === 'kanban-board'"></app-kanban-board>
     <app-client-table *ngIf="currentSwitch === 'client'"></app-client-table>
 </div>
