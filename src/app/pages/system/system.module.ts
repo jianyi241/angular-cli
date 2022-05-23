@@ -81,6 +81,7 @@ import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.compo
 import { ReviewTableComponent } from './advice-reviews/review-list/components/review-table/review-table.component';
 import { ClientTableComponent } from './advice-reviews/review-list/components/client-table/client-table.component';
 import { KanbanBoardComponent } from './advice-reviews/review-list/components/kanban-board/kanban-board.component';
+import { DisableModalComponent } from './advice-reviews/modal/disable-modal/disable-modal.component';
 
 @NgModule({
     declarations: [
@@ -152,7 +153,8 @@ import { KanbanBoardComponent } from './advice-reviews/review-list/components/ka
         ConfirmModalComponent,
         ReviewTableComponent,
         ClientTableComponent,
-        KanbanBoardComponent
+        KanbanBoardComponent,
+        DisableModalComponent
     ],
     imports: [
         CommonModule,

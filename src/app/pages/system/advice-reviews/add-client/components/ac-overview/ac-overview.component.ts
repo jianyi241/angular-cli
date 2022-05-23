@@ -11,6 +11,10 @@ import {UserRepository} from "../../../../../../repository/user-repository";
 import { RoleEnum } from "../../../../../../model/enums/role-enum";
 import {UserInfo} from "../../../../../../model/po/userInfo";
 import {ClientRepository} from "../../../../../../repository/client-repository";
+import {RejectModalComponent} from "../../../../platforms/modal/reject-modal/reject-modal.component";
+import {VersionStatus} from "../../../../../../model/enums/version-status";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DisableModalComponent} from "../../../modal/disable-modal/disable-modal.component";
 
 @Component({
   selector: 'app-ac-overview',
@@ -34,7 +38,8 @@ export class AcOverviewComponent implements OnInit {
               public configService: ConfigService,
               private toastRepository: ToastRepository,
               private userRepository: UserRepository,
-              private clientRepository: ClientRepository) {
+              private clientRepository: ClientRepository,
+              private ngbModal: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -103,7 +108,23 @@ export class AcOverviewComponent implements OnInit {
 
   updateStatus(status: string) {
     this.client.status = status
-    this.save()
+    if (status === 'Disable') {
+      this.disableConfig()
+    }
+  }
+
+  disableConfig(): void {
+    const modalRef = this.ngbModal.open(DisableModalComponent, {
+      size: 'w644',
+      windowClass: 'tip-popup-modal',
+      centered: true
+    });
+    modalRef.result.then(res => {
+      console.log('confirm')
+      this.save()
+    }, err => {
+      console.log('cancel')
+    })
   }
 
   parseRouterParam(): void {
