@@ -54,7 +54,7 @@ export class ReviewListComponent implements OnInit {
         if (this.currentSwitch === 'review') {
             this.router.navigateByUrl(`/due/due-setup/${Constants.NON_ID}`)
         } else {
-            this.router.navigateByUrl(`/advice-review/add-client/Overview/${Constants.NON_ID}`)
+            this.router.navigateByUrl(`/advice-review/add-client/overview/${Constants.NON_ID}`)
         }
     }
 

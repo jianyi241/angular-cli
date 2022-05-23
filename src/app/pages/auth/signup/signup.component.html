@@ -1,79 +1,118 @@
 <div class="admin-wrapper">
     <div class="admin-left">
-        <img src="./assets/img/logo_white.png" class="logo" />
+        <img src="./assets/img/logo_white.png" class="logo"/>
     </div>
     <div class="admin-right">
         <form #signupForm="ngForm" name="signupForm" novalidate [ngxFormValidator]="validatorConfig">
             <div class="form">
                 <ul class="tab-ul">
-                    <li [ngClass]="[signup.companyType === 1 ? 'active' : '']" (click)="switchCompanyType(1,signupForm)"><a href="javascript:void(0);">Advice practice</a></li>
-                    <li [ngClass]="[signup.companyType === 2 ? 'active' : '']" (click)="switchCompanyType(2,signupForm)"><a href="javascript:void(0);">Other</a></li>
+                    <li [ngClass]="[signup.companyType === 1 ? 'active' : '']"
+                        (click)="switchCompanyType(1,signupForm)"><a href="javascript:void(0);">Advice practice</a></li>
+                    <li [ngClass]="[signup.companyType === 2 ? 'active' : '']"
+                        (click)="switchCompanyType(2,signupForm)"><a href="javascript:void(0);">Other</a></li>
                 </ul>
                 <div class="form-main">
                     <div class="sign-title">Sign up with your work email</div>
-                    <div class="form-group form-group-sign xs-mt-24">
-                        <label class="control-label">
-                            <div>Work email<span class="label-required">*</span></div>
-                        </label>
-                        <input type="text" class="form-control" name="account" required placeholder="Enter your work email"
-                            email [(ngModel)]="signup.email" />
-                    </div>
-<!--                    <p class="tip-error" *ngIf="signup.companyType === 1">Please use your work email, we don’t accept personal email addresses </p>-->
-<!--                    <p class="tip-error" *ngIf="signup.companyType === 2">Oops, this email does not look like an adviser address. Please contact us for assistance </p>-->
-                    <p class="tip-error" *ngIf="checkEmailUnique">This email already exists. Please <a
-                            [routerLink]="[ '/login' ]">log in</a>
-                        to continue.</p>
-                    <div class="form-group form-group-sign password-input xs-mt-24">
-                        <label class="control-label">
-                            <div>Password<span class="label-required">*</span></div>
-                        </label>
-                        <input type="password" class="form-control" name="password" required autocomplete="new-password"
-                            [(ngModel)]="signup.password" placeholder="Enter password" />
-                        <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
-                    </div>
+                    <div *ngIf="signup.companyType === 1">
+                        <div class="form-group form-group-sign xs-mt-24">
+                            <label class="control-label">
+                                <div>Work email<span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" name="account" required
+                                   placeholder="Enter your work email"
+                                   email [(ngModel)]="signup.email"/>
+                        </div>
+                        <!--                    <p class="tip-error" *ngIf="signup.companyType === 1">Please use your work email, we don’t accept personal email addresses </p>-->
+                        <!--                    <p class="tip-error" *ngIf="signup.companyType === 2">Oops, this email does not look like an adviser address. Please contact us for assistance </p>-->
+                        <!--                    <p class="tip-error" *ngIf="checkEmailUnique">This email already exists. Please <a-->
+                        <!--                            [routerLink]="[ '/login' ]">log in</a>-->
+                        <!--                        to continue.</p>-->
+                        <div class="form-group form-group-sign password-input xs-mt-24">
+                            <label class="control-label">
+                                <div>Password<span class="label-required">*</span></div>
+                            </label>
+                            <input type="password" class="form-control" name="password" required
+                                   autocomplete="new-password"
+                                   [(ngModel)]="signup.password" placeholder="Enter password"/>
+                            <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
+                        </div>
 
-                    <div class="form-group form-group-sign password-input xs-mt-24">
-                        <label class="control-label">
-                            <div>Confirm your password<span class="label-required">*</span></div>
-                        </label>
-                        <input type="password" class="form-control" autocomplete="new-password" name="confirmPassword"
-                            required [pattern]="pwdReg" [(ngModel)]="signup.confirmPassword" placeholder="Enter password again" />
-                        <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
+                        <div class="form-group form-group-sign password-input xs-mt-24">
+                            <label class="control-label">
+                                <div>Confirm your password<span class="label-required">*</span></div>
+                            </label>
+                            <input type="password" class="form-control" autocomplete="new-password"
+                                   name="confirmPassword"
+                                   required [pattern]="pwdReg" [(ngModel)]="signup.confirmPassword"
+                                   placeholder="Enter password again"/>
+                            <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
+                        </div>
                     </div>
-<!--                    <div class="tip-error" *ngIf="validateTip === 1">-->
-<!--                        <div class="row">Passwords don't match.</div>-->
-<!--                    </div>-->
-<!--                    <div class="tip-error" *ngIf="validateTip === 2">-->
-<!--                        <div class="row">The password should be at least 8 characters.</div>-->
-<!--                        <div class="row">The password should include both upper case and lower case letters.</div>-->
-<!--                        <div class="row">The password should include at least 1 number.</div>-->
-<!--                    </div>-->
-<!--                    <ng-container  *ngIf="signup.companyType === 1">-->
-<!--                        <div class="form-group-sign xs-mt-24 xs-mb-4">-->
-<!--                            <label class="control-label">-->
-<!--                                <div>Your password must contain:</div>-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <ul>-->
-<!--                            <li>• at least eight characters</li>-->
-<!--                            <li>• both upper case and lower case letters</li>-->
-<!--                            <li>• at least one number</li>-->
-<!--                        </ul>-->
-<!--                    </ng-container>-->
+                    <!--                    <div class="tip-error" *ngIf="validateTip === 1">-->
+                    <!--                        <div class="row">Passwords don't match.</div>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="tip-error" *ngIf="validateTip === 2">-->
+                    <!--                        <div class="row">The password should be at least 8 characters.</div>-->
+                    <!--                        <div class="row">The password should include both upper case and lower case letters.</div>-->
+                    <!--                        <div class="row">The password should include at least 1 number.</div>-->
+                    <!--                    </div>-->
+                    <!--                    <ng-container  *ngIf="signup.companyType === 1">-->
+                    <!--                        <div class="form-group-sign xs-mt-24 xs-mb-4">-->
+                    <!--                            <label class="control-label">-->
+                    <!--                                <div>Your password must contain:</div>-->
+                    <!--                            </label>-->
+                    <!--                        </div>-->
+                    <!--                        <ul>-->
+                    <!--                            <li>• at least eight characters</li>-->
+                    <!--                            <li>• both upper case and lower case letters</li>-->
+                    <!--                            <li>• at least one number</li>-->
+                    <!--                        </ul>-->
+                    <!--                    </ng-container>-->
+                    <div *ngIf="signup.companyType === 2">
+                        <div class="form-group form-group-sign xs-mt-24">
+                            <label class="control-label">
+                                <div>Name<span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" name="account" required
+                                   placeholder="Enter your name"
+                                   [(ngModel)]="signup.email"/>
+                        </div>
+                        <div class="form-group form-group-sign xs-mt-24">
+                            <label class="control-label">
+                                <div>Email<span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" name="account" required placeholder="Enter email"
+                                   [(ngModel)]="signup.email"/>
+                        </div>
+                        <div class="form-group form-group-sign xs-mt-24">
+                            <label class="control-label">
+                                <div>Phone number<span class="label-required">*</span></div>
+                            </label>
+                            <input type="text" class="form-control" name="account" required
+                                   placeholder="Enter phone number"
+                                   [(ngModel)]="signup.email"/>
+                        </div>
+                        <div class="form-group form-group-sign xs-mt-24">
+                            <label class="control-label">
+                                <div>Message<span class="label-required">*</span></div>
+                            </label>
+                            <textarea class="form-control xs-mb-16" [rows]="3" name="account" required placeholder="Enter message"></textarea>
+                        </div>
+                    </div>
 
                     <div class="check-box check-box-purple xs-mt-24 xs-mb-0">
-                        <input type="checkbox" name="agree" id="agree" [(ngModel)]="agree" />
+                        <input type="checkbox" name="agree" id="agree" [(ngModel)]="agree"/>
                         <label for="agree">
                             <p>I agree to the <a href="javascript:void(0);">Terms of
-                                    service</a>
+                                service</a>
                                 and <a href="javascript:void(0);">Privacy policy.</a></p>
                         </label>
                     </div>
                     <button (ngxFormSubmit)="signupModal()"
-                        class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24">Continue
+                            class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24">Continue
                     </button>
                     <div class="bottom-tip">Already have an account? <a [routerLink]="['../login']"
-                            href="javascript:void(0);">Login</a></div>
+                                                                        href="javascript:void(0);">Login</a></div>
                 </div>
             </div>
         </form>

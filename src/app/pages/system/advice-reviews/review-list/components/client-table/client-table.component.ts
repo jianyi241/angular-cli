@@ -58,7 +58,7 @@ export class ClientTableComponent implements OnInit {
     }
 
     toDetail(id: string): void {
-        this.router.navigateByUrl(`/advice-review/add-client/Overview/${id}`)
+        this.router.navigateByUrl(`/advice-review/add-client/overview/${id}`)
         // this.showAddClientModal()
     }
 

@@ -8,7 +8,7 @@
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger" *ngIf="editType !== 'add'" (click)="updateStatus('Disable')">Disable Jerome</button>
+            <button class="btn text-danger" *ngIf="editType !== 'add'" (click)="updateStatus('Disable')">Disable {{clientName}}</button>
             <button class="btn btn-purple xs-ml-24" (click)="save()">
                 Save
             </button>
@@ -25,6 +25,6 @@
         </div>
     </div>
 
-    <app-ac-overview *ngIf="currentTab === 'Overview'" [clientId]="clientId" #clientOverview></app-ac-overview>
-    <app-ac-review *ngIf="currentTab === 'Reviews'" [clientId]="clientId" ></app-ac-review>
+    <app-ac-overview *ngIf="currentTab === 'overview'" [clientId]="clientId" #clientOverview></app-ac-overview>
+    <app-ac-review *ngIf="currentTab === 'reviews'" [clientId]="clientId" ></app-ac-review>
 </div>

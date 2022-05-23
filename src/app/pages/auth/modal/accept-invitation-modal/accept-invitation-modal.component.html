@@ -1,5 +1,5 @@
 <form name="inviteForm" #inviteForm="ngForm" novalidate
-    [ngxFormValidator]="validatorConfig">
+      [ngxFormValidator]="validatorConfig">
     <div class="modal-main invitation  p40">
         <div class="modal-header">
             <h2 class="modal-title">Hi {{fullName()}}, almost done!</h2>
@@ -12,57 +12,57 @@
                         <div>First name<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" name="firstName" required
-                        [(ngModel)]="inviteUser.firstName" />
+                           [(ngModel)]="inviteUser.firstName"/>
                 </div>
                 <div class="form-group form-group-sign">
                     <label class="control-label">
                         <div>Last name<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" name="lastName" required
-                        [(ngModel)]="inviteUser.lastName" />
+                           [(ngModel)]="inviteUser.lastName"/>
                 </div>
                 <div class="form-group form-group-sign form-disabled xs-mb-32">
                     <label class="control-label">
                         <div>Practice name<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" disabled name="practiceName"
-                        [(ngModel)]="inviteUser.practiceName" />
+                           [(ngModel)]="inviteUser.practiceName"/>
                 </div>
                 <div class="form-group form-group-sign form-disabled xs-mb-32">
                     <label class="control-label">
                         <div>Email address<span class="label-required">*</span></div>
                     </label>
-                    <input type="text" class="form-control" disabled name="email" [(ngModel)]="inviteUser.email" />
+                    <input type="text" class="form-control" disabled name="email" [(ngModel)]="inviteUser.email"/>
                 </div>
                 <div class="form-group form-group-sign">
                     <label class="control-label">
                         <div>Contact number (optional)</div>
                     </label>
                     <input type="text" class="form-control" name="mobile" placeholder="Enter your contact number"
-                        [(ngModel)]="inviteUser.mobile" />
+                           [(ngModel)]="inviteUser.mobile"/>
                 </div>
                 <div class="form-group form-group-sign password-input">
                     <label class="control-label">
                         <div>Password</div>
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password" name="password"
-                        required autocomplete="new-password" [(ngModel)]="inviteUser.password" />
+                           required autocomplete="new-password" [(ngModel)]="inviteUser.password"/>
                     <span class="icon-block icon-eye-on icon-16"
-                        appTogglePwd></span>
+                          appTogglePwd></span>
                 </div>
                 <div class="form-group form-group-sign password-input">
                     <label class="control-label">
                         <div>Enter password again</div>
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password again"
-                        autocomplete="new-password" name="confirmPassword" required
-                        [(ngModel)]="inviteUser.confirmPassword" />
+                           autocomplete="new-password" name="confirmPassword" required
+                           [(ngModel)]="inviteUser.confirmPassword"/>
                     <span class="icon-block icon-eye-on icon-16"
-                        appTogglePwd></span>
+                          appTogglePwd></span>
                 </div>
                 <!-- <p class="password-strength">Your password is <span>strong</span></p> -->
                 <div class="check-box check-box-purple">
-                    <input type="checkbox" name="agree2" id="agree2" [(ngModel)]="agree" />
+                    <input type="checkbox" name="agree2" id="agree2" [(ngModel)]="agree"/>
                     <label for="agree2">
                         <p>I have read and agree to the<a href="javascript:void(0);">Terms of service</a> and <a
                                 href="javascript:void(0);">Privacy policy.</a></p>
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="check-box check-box-purple xs-mb-32">
-                    <input type="checkbox" name="news" id="news" [(ngModel)]="news" />
+                    <input type="checkbox" name="news" id="news" [(ngModel)]="news"/>
                     <label for="news">
                         <p>Send me relevant news and updates </p>
                     </label>
@@ -90,16 +90,18 @@
                         <label class="control-label">
                             <div>First name<span class="label-required">*</span></div>
                         </label>
-                        <input type="text" class="form-control" name="firstName" placeholder="Enter your first name" required
-                               [(ngModel)]="inviteUser.firstName" />
+                        <input type="text" class="form-control" name="firstName" placeholder="Enter your first name"
+                               required
+                               [(ngModel)]="inviteUser.firstName"/>
                     </div>
 
                     <div class="form-group form-group-sign">
                         <label class="control-label">
                             <div>Last name<span class="label-required">*</span></div>
                         </label>
-                        <input type="text" class="form-control" name="lastName" placeholder="Enter your last name" required
-                               [(ngModel)]="inviteUser.lastName" />
+                        <input type="text" class="form-control" name="lastName" placeholder="Enter your last name"
+                               required
+                               [(ngModel)]="inviteUser.lastName"/>
                     </div>
                 </div>
 
@@ -107,14 +109,31 @@
                     <label class="control-label">
                         <div>Email address<span class="label-required">*</span></div>
                     </label>
-                    <input type="text" class="form-control" disabled name="email"  placeholder="Enter your email address" [(ngModel)]="inviteUser.email" />
+                    <input type="text" class="form-control" disabled name="email" placeholder="Enter your email address"
+                           [(ngModel)]="inviteUser.email"/>
                 </div>
-
+                <div class="form-group form-group-sign xs-mb-32" *ngIf="inviteUser.companyType === 2">
+                    <label class="control-label">
+                        <div>Job title<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your job title" name="jobTitle"
+                           required [(ngModel)]="inviteUser.supplierName"/>
+                </div>
+                <div class="form-group form-group-sign xs-mb-32" *ngIf="inviteUser.companyType === 2">
+                    <label class="control-label">
+                        <div>Contact number
+                            Business Metric Enter your contact number
+                        </div>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your contact number" name="supplierName"
+                           required [(ngModel)]="inviteUser.supplierName"/>
+                </div>
                 <div class="form-group form-group-sign password-input">
                     <label class="control-label">
                         <div>Password</div>
                     </label>
-                    <input type="password" class="form-control" placeholder="Enter your password" name="password" [(ngModel)]="inviteUser.password"/>
+                    <input type="password" class="form-control" placeholder="Enter your password" name="password"
+                           [(ngModel)]="inviteUser.password"/>
                     <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                 </div>
 
@@ -124,10 +143,38 @@
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password again"
                            autocomplete="new-password" name="confirmPassword" required
-                           [(ngModel)]="inviteUser.confirmPassword"  />
+                           [(ngModel)]="inviteUser.confirmPassword"/>
                     <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                 </div>
+                <div *ngIf="inviteUser.companyType === 2">
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="agree2" [(ngModel)]="inviteUser.bdmFlag"/>
+                        <label for="agree2">
+                            <p>I have read and agree to the <span class="tx-bold tx-purple">Terms & Conditions</span>
+                                and <span class="tx-bold tx-purple">Privacy Policy</span></p>
+                        </label>
+                    </div>
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="agree2" [(ngModel)]="inviteUser.updateNewsFlag"/>
+                        <label for="agree2">
+                            <p>Send me product updates and news from SuitabilityHub</p>
+                        </label>
+                    </div>
 
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="news" [(ngModel)]="inviteUser.commFlag"/>
+                        <label for="news">
+                            <p>Send me marketing communications from SuitabilityHub</p>
+                        </label>
+                    </div>
+
+                    <div class="check-box check-box-purple xs-mb-32">
+                        <input type="checkbox" name="join" id="join" [(ngModel)]="inviteUser.planFlag"/>
+                        <label for="join">
+                            <p>I want to join the research panel and be invited to occasional surveys</p>
+                        </label>
+                    </div>
+                </div>
                 <div class="check-box check-box-purple">
                     <input type="checkbox" name="agree3" id="agree3" [(ngModel)]="agree"/>
                     <label for="agree3">
@@ -138,7 +185,8 @@
 
                 <div class="form-button xs-mt-32">
                     <div class="submit">
-                        <button class="btn btn-purple btn-sign tx-16 btn-block" (ngxFormSubmit)="invite()">Complete</button>
+                        <button class="btn btn-purple btn-sign tx-16 btn-block" (ngxFormSubmit)="invite()">Complete
+                        </button>
                     </div>
                 </div>
             </div>
