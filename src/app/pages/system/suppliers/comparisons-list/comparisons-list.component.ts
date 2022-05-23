@@ -6,6 +6,9 @@ import {Page} from "../../../../model/vo/page";
 import {ComparisonInfo} from "../../../../model/po/comparisonInfo";
 import {Router} from "@angular/router";
 import {Constants} from "../../../../model/constants";
+import {ConfigService} from "../../../../service/config.service";
+import {ComparisonVo} from "../../../../model/vo/comparisonVo";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-comparisons-list',
@@ -18,7 +21,9 @@ export class ComparisonsListComponent implements OnInit {
     page = 4;
 
     constructor(private reviewRepository: ReviewRepository,
+                private toastRepository: ToastRepository,
                 private router: Router,
+                public configService: ConfigService,
                 private currentUserService: CurrentUserService) {
         this.condition.companyId = this.currentUserService.currentUser().companyId;
     }
@@ -41,5 +46,27 @@ export class ComparisonsListComponent implements OnInit {
 
     save(comparison?: ComparisonInfo) {
         this.router.navigateByUrl(`/review/comparison-setup/${comparison?.id || Constants.NON_ID}`)
+    }
+
+    archive(comparison: ComparisonInfo) {
+        comparison.archived = true;
+        this.saveSample(comparison);
+    }
+
+    unarchive(comparison: ComparisonInfo) {
+        comparison.archived = false;
+        this.saveSample(comparison);
+    }
+
+
+    private saveSample(comparison: ComparisonInfo) {
+        let vo = new ComparisonVo();
+        Object.assign(vo, comparison);
+        this.reviewRepository.saveComparison(vo).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+        });
     }
 }

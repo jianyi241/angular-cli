@@ -22,9 +22,9 @@ export class ComparisonInfo {
     adviserName?: string;
     attachmentVo?: Attachment;
     analyse?: string;
-    analyseVoList?: Array<ComparisonAnalyseInfo>;
+    analyseVoList?: Array<ComparisonAnalyseInfo> = new Array<ComparisonAnalyseInfo>();
     companyId?: string;
-    comparisonProductVoList?: Array<ComparisonProductInfo>;
+    comparisonProductVoList?: Array<ComparisonProductInfo> = new Array<ComparisonProductInfo>();
     copyId?: string;
     createTime?: string;
     createUser?: string;
