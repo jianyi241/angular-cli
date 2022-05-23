@@ -5,7 +5,7 @@ import {AddClientModalComponent} from "../modal/add-client-modal/add-client-moda
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DueRepository} from '../../../../repository/due-repository';
 import {DueService} from "../../../../service/due.service";
-
+import {Constants} from "../../../../model/constants";
 
 @Component({
     selector: 'app-review-list',
@@ -54,7 +54,7 @@ export class ReviewListComponent implements OnInit {
         if (this.currentSwitch === 'review') {
             this.toDetail()
         } else {
-            this.router.navigateByUrl('/advice-review/add-client/Overview')
+            this.router.navigateByUrl(`/advice-review/add-client/Overview/${Constants.NON_ID}`)
         }
     }
 

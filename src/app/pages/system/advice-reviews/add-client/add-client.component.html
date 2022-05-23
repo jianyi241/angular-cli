@@ -8,7 +8,10 @@
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger" >Disable Jerome</button>
+            <button class="btn text-danger" *ngIf="editType !== 'add'" (click)="updateStatus('Disable')">Disable Jerome</button>
+            <button class="btn btn-purple xs-ml-24" (click)="save()">
+                Save
+            </button>
             <button class="btn btn-purple xs-ml-24">
                 <img src="assets/img/icon/icon-add.svg" />
                 Start Suitability Review
@@ -17,11 +20,11 @@
     </div>
 
     <div class="tab-menu">
-        <div class="tab-text" *ngFor="let item of tabs" [routerLink]="[item.path]"
+        <div class="tab-text" *ngFor="let item of tabs" [routerLink]="item.path+'/'+clientId"
              routerLinkActive="active">{{item.name}} <span class="line"></span>
         </div>
     </div>
 
-    <app-ac-overview *ngIf="name === 'Overview'"></app-ac-overview>
-    <app-ac-review *ngIf="name === 'Reviews'"></app-ac-review>
+    <app-ac-overview *ngIf="currentTab === 'Overview'" [clientId]="clientId" #clientOverview></app-ac-overview>
+    <app-ac-review *ngIf="currentTab === 'Reviews'" [clientId]="clientId" ></app-ac-review>
 </div>

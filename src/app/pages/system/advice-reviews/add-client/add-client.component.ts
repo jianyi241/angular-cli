@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SaveService} from "../../../../service/save.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,6 +7,8 @@ import {ToastRepository} from "../../../../repository/toast-repository";
 import {PracticeService} from "../../../../service/practice.service";
 import {AdviceRepository} from "../../../../repository/advice-repository";
 import {PracticeInfo} from "../../../../model/po/practiceInfo";
+import {AcOverviewComponent} from "./components/ac-overview/ac-overview.component";
+import {Constants} from "../../../../model/constants";
 
 @Component({
   selector: 'app-add-client',
@@ -14,15 +16,13 @@ import {PracticeInfo} from "../../../../model/po/practiceInfo";
   styleUrls: ['./add-client.component.less']
 })
 export class AddClientComponent implements OnInit {
-  name = 'Overview'
+  currentTab = 'Overview'
+  editType: string
+  clientId: string
   tabs = [
     {
       name: 'Overview',
       path: '/advice-review/add-client/Overview'
-    },
-    {
-      name: 'Reviews',
-      path: '/advice-review/add-client/Reviews'
     }
   ]
 
@@ -39,7 +39,18 @@ export class AddClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(res => {
-      this.name = res.tabName
+      console.log('params ', res)
+      this.currentTab = res.tabName
+      this.clientId = res.id
+      if (this.clientId === Constants.NON_ID) {
+        this.editType = 'add'
+      } else {
+        this.editType = 'update'
+        this.tabs.push({
+          name: 'Reviews',
+          path: '/advice-review/add-client/Reviews'
+        })
+      }
     })
   }
 
@@ -47,7 +58,17 @@ export class AddClientComponent implements OnInit {
     this.practiceService.practice = null;
   }
 
-  backPage() {
+  @ViewChild('clientOverview')clientOverview: AcOverviewComponent
+  save(): void {
+    console.log('get client object')
+    this.clientOverview.save()
+  }
+
+  updateStatus(status: string) {
+    this.clientOverview.updateStatus(status);
+  }
+
+  backPage(): void {
     this.router.navigateByUrl('/advice-review/review-list/client')
   }
 }
