@@ -1,15 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DueService} from "../../../service/due.service";
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
-import {DueService} from "../../../service/due.service";
 
 @Component({
-    selector: 'app-fee-comparison',
-    templateUrl: './fee-comparison.component.html',
-    styleUrls: ['./fee-comparison.component.less']
+    selector: 'app-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.less']
 })
-export class FeeComparisonComponent implements OnInit, OnDestroy {
+export class SummaryComponent implements OnInit {
+
     reviewNextObservable: any;
     reviewBackObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
@@ -46,13 +47,13 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/due/summary/${this.dueService.due.id}`);
+            // this.router.navigateByUrl(`/due/summary/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/due/metric-comparison/${this.dueService.due.id}`);
+            this.router.navigateByUrl(`/due/fee-comparison/${this.dueService.due.id}`);
         })
     }
 
@@ -89,4 +90,5 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         }
         this.idpsArr.splice(idpsIndex, 1);
     }
+
 }

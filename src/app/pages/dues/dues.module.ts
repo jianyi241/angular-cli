@@ -18,6 +18,7 @@ import {ReviewsModule} from "../reviews/reviews.module";
 import {SaveTemplateTipModalComponent} from "./save-template-tip-modal/save-template-tip-modal.component";
 import {SaveTemplateModalComponent} from "./save-template-modal/save-template-modal.component";
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
+import {SummaryComponent} from './summary/summary.component';
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -31,7 +32,8 @@ import {NgxValidatorModule} from "@why520crazy/ngx-validator";
         SaveTemplateTipModalComponent,
         SaveTemplateModalComponent,
         // EllipsisDirective,
-        DeselectFeaturesTipComponent],
+        DeselectFeaturesTipComponent,
+        SummaryComponent],
     imports: [
         CommonModule,
         DuesRoutingModule,

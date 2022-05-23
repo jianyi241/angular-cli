@@ -7,6 +7,9 @@ import {CurrentUserService} from "../../service/current-user.service";
 import {ComparisonAnalyseInfo} from "../../model/po/comparisonAnalyseInfo";
 import {AnalysisType} from "../../model/enums/analysis-type";
 import {DueService} from "../../service/due.service";
+import {Commons} from "../../utils/Commons";
+import {ComparisonStatus} from "../../model/enums/comparison-status";
+import {ToastRepository} from "../../repository/toast-repository";
 
 @Component({
     selector: 'app-due-header',
@@ -16,8 +19,9 @@ import {DueService} from "../../service/due.service";
 export class DueHeaderComponent implements OnInit {
     public isScrollFixed: boolean;
 
-    constructor(private router: Router,
+    constructor(public router: Router,
                 private activatedRoute: ActivatedRoute,
+                private toastRepository: ToastRepository,
                 public dueService: DueService,
                 private currentUserService: CurrentUserService,
                 private reviewRepository: ReviewRepository,) {
@@ -63,5 +67,17 @@ export class DueHeaderComponent implements OnInit {
 
     saveTemplate() {
         this.dueService.templateSave();
+    }
+
+    complete() {
+        let copy = Commons.deepCopy(this.dueService.due);
+        copy.status = ComparisonStatus.Completed.value;
+        this.reviewRepository.saveDue(copy).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess("Save successfully.")
+        })
     }
 }
