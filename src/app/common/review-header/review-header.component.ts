@@ -7,6 +7,9 @@ import {ComparisonVo} from "../../model/vo/comparisonVo";
 import {CurrentUserService} from "../../service/current-user.service";
 import {ComparisonAnalyseInfo} from "../../model/po/comparisonAnalyseInfo";
 import {AnalysisType} from "../../model/enums/analysis-type";
+import {Commons} from "../../utils/Commons";
+import {ComparisonStatus} from "../../model/enums/comparison-status";
+import {ToastRepository} from "../../repository/toast-repository";
 
 @Component({
     selector: 'app-review-header',
@@ -18,6 +21,7 @@ export class ReviewHeaderComponent implements OnInit {
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
+                private toastRepository: ToastRepository,
                 public reviewService: ReviewService,
                 private currentUserService: CurrentUserService,
                 private reviewRepository: ReviewRepository,) {
@@ -69,5 +73,17 @@ export class ReviewHeaderComponent implements OnInit {
 
     totalDynamicAna(): number {
         return this.reviewService.comparison.analyseVoList.length + 2;
+    }
+
+    complete() {
+        let copy = Commons.deepCopy(this.reviewService.comparison);
+        copy.status = ComparisonStatus.Completed.value;
+        this.reviewRepository.saveComparison(copy).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess("Save successfully.")
+        })
     }
 }

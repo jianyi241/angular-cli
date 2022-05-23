@@ -19,6 +19,7 @@ import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
 import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
+import {SummaryComponent} from "./summary/summary.component";
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -33,6 +34,7 @@ import {NgxValidatorModule} from "@why520crazy/ngx-validator";
         ShowMoreDirective,
         ComparisonSetupComponent,
         MetricSelectionComponent,
+        SummaryComponent,
         // EllipsisDirective,
         DeselectFeaturesTipComponent],
     imports: [

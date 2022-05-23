@@ -9,6 +9,7 @@ import {AuthActivateGuard} from "../../config/auth-activate-guard";
 import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonSetupComponent} from "./comparison-setup/comparison-setup.component";
 import {MetricSelectionComponent} from "./metric-selection/metric-selection.component";
+import {SummaryComponent} from "./summary/summary.component";
 
 const routes: Routes = [
     {
@@ -41,7 +42,10 @@ const routes: Routes = [
                 path: 'fee-comparison/:id',
                 component: FeeComparisonComponent,
             },
-
+            {
+                path: 'summary/:id',
+                component: SummaryComponent,
+            },
         ]
     }
 ];

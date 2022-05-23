@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ReviewService} from "../../../service/review.service";
+import {Component, OnInit} from '@angular/core';
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
-import {AnalysisType} from "../../../model/enums/analysis-type";
+import {ReviewService} from "../../../service/review.service";
 
 @Component({
-    selector: 'app-fee-comparison',
-    templateUrl: './fee-comparison.component.html',
-    styleUrls: ['./fee-comparison.component.less']
+    selector: 'app-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.less']
 })
-export class FeeComparisonComponent implements OnInit, OnDestroy {
+export class SummaryComponent implements OnInit {
+
     reviewNextObservable: any;
     reviewBackObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
@@ -47,13 +47,13 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/summary/${this.reviewService.comparison.id}`);
+            // this.router.navigateByUrl(`/due/summary/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.fee);
+            this.router.navigateByUrl(`/review/fee-comparison/${this.reviewService.comparison.id}`);
         })
     }
 
@@ -90,4 +90,5 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         }
         this.idpsArr.splice(idpsIndex, 1);
     }
+
 }
