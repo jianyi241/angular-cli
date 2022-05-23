@@ -60,4 +60,8 @@ export class DueHeaderComponent implements OnInit {
     totalDynamicAna(): number {
         return this.dueService.due.analyseVoList.length + 2;
     }
+
+    saveTemplate() {
+        this.dueService.templateSave();
+    }
 }

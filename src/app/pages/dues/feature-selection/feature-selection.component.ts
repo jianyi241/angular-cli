@@ -15,6 +15,8 @@ import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-fea
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
 import {DueService} from "../../../service/due.service";
+import {SaveTemplateModalComponent} from "../save-template-modal/save-template-modal.component";
+import {TemplatePropertyInfo} from "../../../model/po/templatePropertyInfo";
 
 SwiperCore.use([Pagination]);
 
@@ -32,6 +34,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    saveTemplateObservable: any;
     currentIndex: number = 0;
     config = {
         spaceBetween: 8,
@@ -85,6 +88,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.saveTemplateObservable && this.saveTemplateObservable.unsubscribe();
     }
 
 
@@ -100,6 +104,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.saveTemplateSubscribe();
     }
 
     saveSubscribe(): void {
@@ -149,6 +154,25 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
             this.router.navigateByUrl(`/due/due-setup/${this.dueService.due.id}`);
         })
+    }
+
+    saveTemplateSubscribe(): void {
+        this.saveTemplateObservable = this.dueService.templateObservable.subscribe(() => {
+            let groups = this.featureForm;
+            let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
+            if (this.validSave(props)) {
+                return;
+            }
+            let templateProps = props.map(p => {
+                let prop = new TemplatePropertyInfo();
+                prop.essential = p.essential;
+                prop.propertyId = p.id;
+                prop.versionId = this.dueService.due.modelVersionId
+                return prop;
+            });
+            let saveTemplateModalRef = this.modalService.open(SaveTemplateModalComponent);
+            saveTemplateModalRef.componentInstance.templateProps = templateProps;
+        });
     }
 
     getFeatureSelection(): void {

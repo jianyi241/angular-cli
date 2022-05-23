@@ -65,7 +65,7 @@ export class DueSetupComponent implements OnInit, OnDestroy {
             if (this.validSave(comparison)) {
                 return;
             }
-            if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
+            if (this.saveService.saveCheck(environment.baseURL + `/due/save`)) {
                 return;
             }
             this.dealSaveData(comparison);
@@ -96,6 +96,8 @@ export class DueSetupComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
+
+
 
     validSave(comparison: ComparisonVo): boolean {
         if (!comparison.userId) {

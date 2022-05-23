@@ -1,5 +1,4 @@
-<form #saveTemplateForm="ngForm" novalidate name="loginForm"
-      [ngxFormValidator]="validatorConfig">
+<form>
     <div class="modal-main p40">
         <span class="icon-block icon-close-black icon-34" (click)="dismiss()"></span>
         <div class="modal-header modal-header-reset xs-mb-32">
@@ -24,7 +23,7 @@
 
                 <div class="form-button">
                     <div class="submit">
-                        <button class="btn btn-purple btn-sign tx-16 btn-block" (ngxFormSubmit)="saveTemplate()">
+                        <button class="btn btn-purple btn-sign tx-16 btn-block" (click)="saveTemplate()">
                             Save the template
                         </button>
                     </div>

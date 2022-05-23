@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SaveTemplateModalComponent } from './save-template-modal.component';
+import {SaveTemplateModalComponent} from './save-template-modal.component';
 
 describe('SaveTemplateModalComponent', () => {
   let component: SaveTemplateModalComponent;

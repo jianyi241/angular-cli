@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SaveTemplateTipModalComponent } from './save-template-tip-modal.component';
+import {SaveTemplateTipModalComponent} from './save-template-tip-modal.component';
 
 describe('SaveTemplateTipModalComponent', () => {
   let component: SaveTemplateTipModalComponent;

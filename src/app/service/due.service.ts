@@ -21,6 +21,8 @@ export class DueService {
     backObservable = this.backSubject.asObservable();
     private initComparisonSubject = new Subject<object>();
     initComparisonObservable = this.initComparisonSubject.asObservable();
+    private templateSubject = new Subject<object>();
+    templateObservable = this.templateSubject.asObservable();
     due: ComparisonVo;
 
     constructor(private router: Router) {
@@ -66,6 +68,10 @@ export class DueService {
 
     back(): void {
         this.backSubject.next();
+    }
+
+    templateSave(): void {
+        this.templateSubject.next();
     }
 
     initNotify(): void {
