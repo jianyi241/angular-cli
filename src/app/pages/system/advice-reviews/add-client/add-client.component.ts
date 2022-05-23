@@ -11,64 +11,65 @@ import {AcOverviewComponent} from "./components/ac-overview/ac-overview.componen
 import {Constants} from "../../../../model/constants";
 
 @Component({
-  selector: 'app-add-client',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.less']
+    selector: 'app-add-client',
+    templateUrl: './add-client.component.html',
+    styleUrls: ['./add-client.component.less']
 })
 export class AddClientComponent implements OnInit {
-  currentTab = 'Overview'
-  editType: string
-  clientId: string
-  tabs = [
-    {
-      name: 'Overview',
-      path: '/advice-review/add-client/Overview'
+    currentTab = 'Overview'
+    editType: string
+    clientId: string
+    tabs = [
+        {
+            name: 'Overview',
+            path: '/advice-review/add-client/Overview'
+        }
+    ]
+
+    constructor(private modalService: NgbModal,
+                private saveService: SaveService,
+                private activatedRoute: ActivatedRoute,
+                public currentUserService: CurrentUserService,
+                private toastRepository: ToastRepository,
+                public practiceService: PracticeService,
+                private router: Router,
+                private adviceRepository: AdviceRepository) {
+        this.practiceService.practice = new PracticeInfo();
     }
-  ]
 
-  constructor(private modalService: NgbModal,
-              private saveService: SaveService,
-              private activatedRoute: ActivatedRoute,
-              public currentUserService: CurrentUserService,
-              private toastRepository: ToastRepository,
-              public practiceService: PracticeService,
-              private router: Router,
-              private adviceRepository: AdviceRepository) {
-    this.practiceService.practice = new PracticeInfo();
-  }
-
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe(res => {
-      console.log('params ', res)
-      this.currentTab = res.tabName
-      this.clientId = res.id
-      if (this.clientId === Constants.NON_ID) {
-        this.editType = 'add'
-      } else {
-        this.editType = 'update'
-        this.tabs.push({
-          name: 'Reviews',
-          path: '/advice-review/add-client/Reviews'
+    ngOnInit(): void {
+        this.activatedRoute.params.subscribe(res => {
+            console.log('params ', res)
+            this.currentTab = res.tabName
+            this.clientId = res.id
+            if (this.clientId === Constants.NON_ID) {
+                this.editType = 'add'
+            } else {
+                this.editType = 'update'
+                this.tabs.push({
+                    name: 'Reviews',
+                    path: '/advice-review/add-client/Reviews'
+                })
+            }
         })
-      }
-    })
-  }
+    }
 
-  ngOnDestroy(): void {
-    this.practiceService.practice = null;
-  }
+    ngOnDestroy(): void {
+        this.practiceService.practice = null;
+    }
 
-  @ViewChild('clientOverview')clientOverview: AcOverviewComponent
-  save(): void {
-    console.log('get client object')
-    this.clientOverview.save()
-  }
+    @ViewChild('clientOverview') clientOverview: AcOverviewComponent
 
-  updateStatus(status: string) {
-    this.clientOverview.updateStatus(status);
-  }
+    save(): void {
+        console.log('get client object')
+        this.clientOverview.save()
+    }
 
-  backPage(): void {
-    this.router.navigateByUrl('/advice-review/review-list/client')
-  }
+    updateStatus(status: string) {
+        this.clientOverview.updateStatus(status);
+    }
+
+    backPage(): void {
+        this.router.navigateByUrl('/advice-review/review-list/client')
+    }
 }
