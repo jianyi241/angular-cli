@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SaveService} from "../../../../service/save.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -15,7 +15,7 @@ import {ClientRepository} from "../../../../repository/client-repository";
     templateUrl: './add-client.component.html',
     styleUrls: ['./add-client.component.less']
 })
-export class AddClientComponent implements OnInit, AfterViewInit {
+export class AddClientComponent implements OnInit {
     currentTab = 'overview'
     editType: string
     clientId: string
@@ -57,14 +57,9 @@ export class AddClientComponent implements OnInit, AfterViewInit {
                 ]
             } else {
                 this.editType = 'update'
+                this.getClientName()
             }
         })
-    }
-
-    ngAfterViewInit(): void{
-        if (this.editType === 'update') {
-            this.getClientName()
-        }
     }
 
     ngOnDestroy(): void {
@@ -72,7 +67,6 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     }
 
     save(): void {
-        console.log('get client object')
         this.clientOverview.save()
     }
 

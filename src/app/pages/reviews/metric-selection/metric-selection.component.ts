@@ -55,42 +55,47 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     saveSubscribe(): void {
         this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-            let props: Array<PropertyVo> = [];
-            this.metricSelections.forEach(selection => {
-                if (selection.tabType == TabType.information.value) {
-                    props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
-                } else {
-                    props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
-                }
-            })
-            if (this.validSave(props)) {
-                return;
-            }
-            if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
-                return;
-            }
-            let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
-            let comparisonProps = props.map(p => {
-                let prop = new ComparisonPropertyInfo();
-                prop.essential = p.essential;
-                prop.shPropertyId = p.id;
-                prop.shAnalyseId = analyseInfo.shAnalyseId;
-                prop.shComparisonId = this.reviewService.comparison.id;
-                return prop;
-            });
-            this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
-                if (res.statusCode != 200) {
-                    this.toastRepository.showDanger(res.msg);
-                    return;
-                }
-                this.toastRepository.showSuccess('Save successfully.');
-            });
+            this.save();
         })
+    }
+
+    private save(callback?: () => void) {
+        let props: Array<PropertyVo> = [];
+        this.metricSelections.forEach(selection => {
+            if (selection.tabType == TabType.information.value) {
+                props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
+            } else {
+                props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
+            }
+        })
+        if (this.validSave(props)) {
+            return;
+        }
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+            return;
+        }
+        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        let comparisonProps = props.map(p => {
+            let prop = new ComparisonPropertyInfo();
+            prop.essential = p.essential;
+            prop.shPropertyId = p.id;
+            prop.shAnalyseId = analyseInfo.shAnalyseId;
+            prop.shComparisonId = this.reviewService.comparison.id;
+            return prop;
+        });
+        this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('Save successfully.');
+            callback && callback();
+        });
     }
 
     validSave(props: Array<PropertyVo>): boolean {
         if (props.length == 0) {
-            this.toastRepository.showDanger('Please select feature.');
+            this.toastRepository.showDanger('Please select business metric.');
             return true;
         }
         return false;
@@ -98,7 +103,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
+            this.save(() => {
+                this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
+            })
         });
     }
 
@@ -117,8 +124,6 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
             this.metricSelections = res.data || this.metricSelections;
         });
     }
-
-
 
 
     getSelectionName(selection: TabVo): string {

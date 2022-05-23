@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Page} from "../../../../../../model/vo/page";
-import {Condition} from "../../../../../../model/condition";
 import {Router} from "@angular/router";
 import {ConfigService} from "../../../../../../service/config.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddClientModalComponent} from "../../../modal/add-client-modal/add-client-modal.component";
 import {ClientRepository} from "../../../../../../repository/client-repository";
 import {ClientCondition} from "../../../../../../model/condition/client-condition";
 import {ClientListVo} from "../../../../../../model/vo/clientListVo";
 import {DueService} from "../../../../../../service/due.service";
 import {Subscription} from "rxjs";
+import {ToastRepository} from "../../../../../../repository/toast-repository";
 
 @Component({
     selector: 'app-client-table',
@@ -25,6 +24,7 @@ export class ClientTableComponent implements OnInit {
 
     constructor(private router: Router,
                 private clientRepository: ClientRepository,
+                private toastRepository: ToastRepository,
                 public configService: ConfigService,
                 public dueService: DueService,
                 private ngbModal: NgbModal) {
@@ -67,11 +67,22 @@ export class ClientTableComponent implements OnInit {
         this.getPage();
     }
 
-    showAddClientModal(): void {
-        const modal = this.ngbModal.open(AddClientModalComponent, {
-            size: 'w644',
-            windowClass: 'tip-popup-modal',
-            centered: true
+    unarchive(client: ClientListVo) {
+        client.archived = false;
+        this.save(client);
+    }
+
+    archive(client: ClientListVo) {
+        client.archived = true
+        this.save(client);
+    }
+
+    save(client: ClientListVo) {
+        this.clientRepository.save(client).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
         })
     }
 }

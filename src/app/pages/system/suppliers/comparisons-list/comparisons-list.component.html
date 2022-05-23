@@ -23,7 +23,7 @@
     <div class="table-responsive">
         <div class="table-list-wrap">
             <table class="table table-list table-list-custom table-striped">
-            <thead>
+                <thead>
                 <tr>
                     <th>
                         <div class="th-cell">
@@ -65,17 +65,19 @@
                         </div>
                     </th>
 
-                    <th class="text-center"><div class="th-cell">Action</div></th>
+                    <th class="text-center">
+                        <div class="th-cell">Action</div>
+                    </th>
                 </tr>
-            </thead>
+                </thead>
 
-            <thead class="table-margin">
+                <thead class="table-margin">
                 <tr>
                     <th colspan="8"></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody *ngIf="comparisonPage.total > 0">
+                <tbody *ngIf="comparisonPage.total > 0">
                 <tr *ngFor="let comparison of comparisonPage.records">
                     <td>
                         <div class="td-cell max-w-212 tx-bold" [title]="comparison.name">{{comparison.name}}</div>
@@ -104,25 +106,41 @@
 
                     <td>
                         <div class="td-cell">
-                            <label class="label label-green xs-pl-16 xs-pr-16">Completed</label>
-<!--                            <label class="label label-purple xs-pl-16 xs-pr-16">In progress</label>-->
-<!--                            <label class="label label-red xs-pl-16 xs-pr-16">Archived</label>-->
+                            <ng-container *ngIf="!comparison.archived">
+                                <label class="label label-green xs-pl-16 xs-pr-16"
+                                       *ngIf="comparison.status == configService.comparisonStatus.completed">Completed</label>
+                                <label class="label label-blue xs-pl-16 xs-pr-16"
+                                       *ngIf="comparison.status == configService.comparisonStatus.inProgress">In
+                                    progress</label>
+                            </ng-container>
+                            <label class="label label-red xs-pl-16 xs-pr-16"
+                                   *ngIf="comparison.archived">Archived</label>
                         </div>
                     </td>
 
                     <td class="text-center">
                         <button class="btn btn-purple-border btn-tiny xs-ml-12" (click)="save(comparison)">View</button>
-<!--                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-copy icon-20"></span></button>-->
-<!--                        <button class="btn btn-outline-purple-light btn-icon xs-ml-12"><span class="icon-block icon-trash icon-20"></span></button>-->
+                        <button *ngIf="!comparison.archived" (click)="archive(comparison)"
+                                class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
+                            <img src="./assets/img/icon/icon-delete-red.svg">
+                        </button>
+                        <button *ngIf="comparison.archived" (click)="unarchive(comparison)"
+                                class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
+                            <img src="./assets/img/icon/icon-refresh-blur.svg">
+                        </button>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </div>
 
-        <ngb-pagination *ngIf="comparisonPage.total > 0" [collectionSize]="comparisonPage.total" [(page)]="comparisonPage.current" [pageSize]="comparisonPage.size" (pageChange)="pageChange($event)"></ngb-pagination>
+        <ngb-pagination *ngIf="comparisonPage.total > 0" [collectionSize]="comparisonPage.total"
+                        [(page)]="comparisonPage.current" [pageSize]="comparisonPage.size"
+                        (pageChange)="pageChange($event)"></ngb-pagination>
 
-        <div *ngIf="comparisonPage.total == 0" class="empty-text">You don’s have any comparison yet. Click on “Add comparison” to add.</div>
+        <div *ngIf="comparisonPage.total == 0" class="empty-text">You don’s have any comparison yet. Click on “Add
+            comparison” to add.
+        </div>
 
     </div>
 </div>

@@ -95,7 +95,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     validSave(props: Array<PropertyVo>): boolean {
         if (props.length == 0) {
-            this.toastRepository.showDanger('Please select feature.');
+            this.toastRepository.showDanger('Please select business metric.');
             return true;
         }
         return false;
