@@ -19,7 +19,7 @@
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
-            <a [routerLink]="['/advice-review/review-list/review']" routerLinkActive="active">Suitability review</a>
+            <a [routerLink]="['/advice-review/review-list/list-view']" routerLinkActive="active">Suitability review</a>
         </div>
 
         <div class="phone-menu">
@@ -43,7 +43,7 @@
                     </ng-container>
                     <ng-container *ngIf="currentUserService.isAdviceUser()">
                         <a [routerLink]="['/platform/product-box']">Platform profiles</a>
-                        <a [routerLink]="['/advice-review/review-list/review']" routerLinkActive="active">Suitability review</a>
+                        <a [routerLink]="['/advice-review/review-list/list-view']" routerLinkActive="active">Suitability review</a>
                     </ng-container>
                 </div>
             </div>

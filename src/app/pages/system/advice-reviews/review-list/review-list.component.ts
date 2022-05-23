@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigService} from "../../../../service/config.service";
 import {AddClientModalComponent} from "../modal/add-client-modal/add-client-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DueRepository} from "../../../../repository/due-repository";
+import {DueRepository} from '../../../../repository/due-repository';
+import {DueService} from "../../../../service/due.service";
 
 
 @Component({
@@ -14,29 +15,39 @@ import {DueRepository} from "../../../../repository/due-repository";
 export class ReviewListComponent implements OnInit {
     currentSwitch: string = 'review'
     currentReviewSwitch: string = 'listView'
+    reviewKeyword: string = "";
+    clientKeyword: string = "";
+    showArchived = true;
 
     constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 private dueRepository: DueRepository,
                 public configService: ConfigService,
+                private dueService: DueService,
                 private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
-        this.init();
+        this.activatedRoute.params.subscribe(res => {
+            if (res.type != 'client') {
+                this.currentSwitch = 'review';
+                this.currentReviewSwitch = res.type;
+            } else {
+                this.currentSwitch = res.type;
+            }
+        })
     }
 
     ngOnDestroy(): void {
     }
 
-    init(): void {
-    }
 
     switchTable(val: string, type: string = 'client'): void {
         if (type === 'review') {
-            this.currentReviewSwitch = val
-            return
+            this.router.navigateByUrl(`/advice-review/review-list/${val}`);
+        } else {
+            this.router.navigateByUrl(`/advice-review/review-list/${type}`);
         }
-        this.currentSwitch = val
     }
 
     addFunc(): void {
@@ -62,4 +73,16 @@ export class ReviewListComponent implements OnInit {
     }
 
 
+    searchReview() {
+        this.dueService.reviewSearch(this.reviewKeyword);
+    }
+
+    searchClient() {
+        this.dueService.clientSearch(this.clientKeyword);
+    }
+
+    toggleArchived() {
+        this.showArchived = !this.showArchived;
+        this.dueService.archivedToggle(this.showArchived);
+    }
 }
