@@ -287,7 +287,7 @@ const routes: Routes = [
                 component: ReviewListComponent
             },
             {
-                path: 'add-client/:tabName',
+                path: 'add-client/:tabName/:id',
                 component: AddClientComponent,
             }
         ]

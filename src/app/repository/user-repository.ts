@@ -8,6 +8,7 @@ import {Authentication} from "../model/vo/authentication";
 import {CurrentUser} from "../model/vo/currentUser";
 import {SignupVo} from "../model/vo/signupVo";
 import {RoleInfo} from "../model/po/roleInfo";
+import {UserInfo} from "../model/po/userInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -69,5 +70,9 @@ export class UserRepository {
 
     getSupplierRoles(): Observable<HttpResult<Array<RoleInfo>>> {
         return this.http.get<HttpResult<Array<RoleInfo>>>(environment.baseURL + '/user/v1/queryJobTitleList');
+    }
+
+    getUsersByType(type: number): Observable<HttpResult<Array<UserInfo>>> {
+        return this.http.get<HttpResult<Array<UserInfo>>>(environment.baseURL + `/user/v1/queryUsers/${type}`);
     }
 }

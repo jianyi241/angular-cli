@@ -18,7 +18,7 @@ import {Subscription} from "rxjs";
 })
 export class ClientTableComponent implements OnInit {
 
-    condition: ClientCondition = new Condition(1, 10)
+    condition: ClientCondition = new ClientCondition(1, 10)
     clientPage: Page<ClientListVo> = new Page<ClientListVo>();
     searchSub: Subscription;
     archivedSub: Subscription;
@@ -57,13 +57,9 @@ export class ClientTableComponent implements OnInit {
         });
     }
 
-    sortList(column: string, sortType: number): void {
-
-    }
-
-
-    toDetail(): void {
-        this.showAddClientModal()
+    toDetail(id: string): void {
+        this.router.navigateByUrl(`/advice-review/add-client/Overview/${id}`)
+        // this.showAddClientModal()
     }
 
     pageChange(current: number) {

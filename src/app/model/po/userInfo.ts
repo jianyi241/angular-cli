@@ -28,5 +28,13 @@ export class UserInfo extends BaseModel{
     updateNewsFlag?:boolean;
     commFlag?: boolean;
     planFlag?: boolean;
+    accountType?: string;
+    adviceRoleId?: string;
+    bdmFlag?: string;
+    practiceName?: string;
+    practiceRoleId?: string;
+    supplierName?: string;
+    validCode?: string;
+    validToken?: string;
 }
 

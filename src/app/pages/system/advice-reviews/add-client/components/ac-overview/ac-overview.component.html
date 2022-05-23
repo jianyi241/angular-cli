@@ -19,21 +19,21 @@
                 <label class="control-label control-label-custom">
                     <div>First name <span class="label-required">*</span></div>
                 </label>
-                <input type="text" class="form-control"
+                <input type="text" class="form-control" [(ngModel)]="client.firstName"
                        placeholder="Enter your first name" />
             </div>
             <div class="form-group">
                 <label class="control-label control-label-custom">
                     <div>Last name <span class="label-required">*</span></div>
                 </label>
-                <input type="text" class="form-control"
+                <input type="text" class="form-control" [(ngModel)]="client.lastName"
                        placeholder="Enter your last name"/>
             </div>
             <div class="form-group">
                 <label class="control-label control-label-custom">
                     <div>Email<span class="label-required">*</span></div>
                 </label>
-                <input type="text" class="form-control"
+                <input type="text" class="form-control" [(ngModel)]="client.email"
                        placeholder="Enter your work email"/>
             </div>
         </div>
@@ -45,8 +45,8 @@
             </p>
         </div>
         <div class="form-group-right">
-            <ng-container *ngIf="fullNames.length">
-                <div class="form-group" *ngFor="let val of fullNames;let i = index" >
+            <ng-container *ngIf="client.clientMembers.length">
+                <div class="form-group" *ngFor="let val of client.clientMembers;let i = index" >
                     <label class="control-label control-label-custom">
                         <div>Full name <span class="label-required">*</span></div>
                     </label>
@@ -55,10 +55,10 @@
                     <button class="btn btn-text-danger btn-outline-purple-light remove-btn" (click)="removeNameInput(i)">Remove</button>
                 </div>
             </ng-container>
-            <div class="has-invalid-feedback " *ngIf="fullNames.length >= 6">
+            <div class="has-invalid-feedback " *ngIf="client.clientMembers.length >= 6">
                 Maximum 6 family members can be added.
             </div>
-            <button class="form-some-add-btn btn btn-outline-purple-light" *ngIf="fullNames.length < 6" (click)="addNameInput()">
+            <button class="form-some-add-btn btn btn-outline-purple-light" *ngIf="client.clientMembers.length < 6" (click)="addNameInput()">
                 <img src="assets/img/icon/icon-add-blue.svg" />
                 Family member
             </button>
@@ -74,7 +74,7 @@
             <label class="control-label control-label-custom">
                 <div>Description</div>
             </label>
-            <ckeditor [(ngModel)]="desc" [config]="config"></ckeditor>
+            <ckeditor [(ngModel)]="client.description" [config]="config"></ckeditor>
             <div class="tip-info">
                 <span class="info-left">Maximum 3,000 characters</span>
                 <span class="info-right">0 / 3,000</span>
@@ -91,8 +91,8 @@
             <label class="control-label control-label-custom">
                 <div>Adviser name<span class="label-required">*</span></div>
             </label>
-            <ng-select class="select-single" [(ngModel)]="adviserName" placeholder="Select adviser" dropdownPosition="bottom">
-                <ng-option *ngFor="let name of adviserNames" [value]="name">{{name}}</ng-option>
+            <ng-select class="select-single" [(ngModel)]="client.userId" placeholder="Select adviser" dropdownPosition="bottom">
+                <ng-option *ngFor="let item of adviserUsers" [value]="item.id">{{item.firstName + ' '+item.lastName}}</ng-option>
             </ng-select>
         </div>
     </div>

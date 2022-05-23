@@ -7,4 +7,5 @@ export class ClientInfo extends BaseModel{
     description?: string;
     userId?: string;
     archived?: boolean;
+    status?: string;
 }

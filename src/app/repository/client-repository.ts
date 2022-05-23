@@ -33,8 +33,8 @@ export class ClientRepository {
         return this.http.post<HttpResult<ClientDetailVo>>(environment.baseURL + '/client/save', client);
     }
 
-    getClientReviews(id: string): Observable<HttpResult<DueListVo>> {
-        return this.http.get<HttpResult<DueListVo>>(environment.baseURL + `/client/review/${id}`);
+    getClientReviews(id: string): Observable<HttpResult<Array<DueListVo>>> {
+        return this.http.get<HttpResult<Array<DueListVo>>>(environment.baseURL + `/client/reviews/${id}`);
     }
 }
 

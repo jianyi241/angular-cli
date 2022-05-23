@@ -63,7 +63,7 @@
           </td>
           <td class="text-left edit">
             <div class="edit-btn-group">
-              <button  class="btn btn-purple-border btn-tiny xs-ml-16" style="margin-left: 0 !important;" (click)="toDetail()">View</button>
+              <button  class="btn btn-purple-border btn-tiny xs-ml-16" style="margin-left: 0 !important;" (click)="toDetail(client.id)">View</button>
               <button *ngIf="!client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
                 <img src="./assets/img/icon/icon-delete-red.svg">
               </button>

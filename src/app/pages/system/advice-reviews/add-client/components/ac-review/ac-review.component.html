@@ -3,25 +3,25 @@
         <div class="col-body">
             <ng-container>
                 <div class="list-cell-large"
-                     *ngFor="let review of list">
+                     *ngFor="let review of reviewsList">
                     <div class="list-content">
                         <div class="info info-title">
                             <div class="title">{{review.name}}</div>
                         </div>
                         <div class="info info-avatar">
                             <div class="avatar">
-                                <img [src]="review.visitUrl" />
+                                <img [src]="review.userAvatar?.visitUrl" />
                             </div>
                             <div class="txt">
-                                <div class="txt-name">{{review.fullName}}</div>
+                                <div class="txt-name">{{review.username}}</div>
                                 <div class="txt-date">{{review.updateTime}}</div>
                             </div>
                         </div>
                         <div class="info info-status">
-                            <span class="label status-green" *ngIf="review.status === 1">Approved</span>
-                            <span class="label status-blue" *ngIf="review.status === 2">In progress</span>
-                            <span class="label status-yellow" *ngIf="review.status === 3">Pending approval</span>
-                            <span class="label status-red" *ngIf="review.status === 4">Archived</span>
+                            <span class="label" [ngClass]="[getStatusCls(review.status)]">{{review.status}}</span>
+<!--                            <span class="label status-blue" *ngIf="review.status === 2">In progress</span>-->
+<!--                            <span class="label status-yellow" *ngIf="review.status === 3">Pending approval</span>-->
+<!--                            <span class="label status-red" *ngIf="review.status === 4">Archived</span>-->
                         </div>
                     </div>
                     <div class="info info-edit">

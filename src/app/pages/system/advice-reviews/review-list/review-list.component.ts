@@ -7,7 +7,6 @@ import {DueRepository} from '../../../../repository/due-repository';
 import {DueService} from "../../../../service/due.service";
 import {Constants} from "../../../../model/constants";
 
-
 @Component({
     selector: 'app-review-list',
     templateUrl: './review-list.component.html',
@@ -55,7 +54,7 @@ export class ReviewListComponent implements OnInit {
         if (this.currentSwitch === 'review') {
             this.router.navigateByUrl(`/due/due-setup/${Constants.NON_ID}`)
         } else {
-            this.router.navigateByUrl('/advice-review/add-client/Overview')
+            this.router.navigateByUrl(`/advice-review/add-client/Overview/${Constants.NON_ID}`)
         }
     }
 
