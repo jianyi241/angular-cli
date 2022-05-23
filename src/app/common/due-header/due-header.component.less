@@ -1,0 +1,157 @@
+@head-height:80px;
+.transition {
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.head-layout{
+  position: fixed;
+  top:0;
+  left:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: @head-height;
+  padding-left: 32px;
+  padding-right:32px;
+  background-color: #F7F7F7;
+  z-index:99;
+
+  @media screen and (max-width: 940px){
+    padding-left: 20px;
+    padding-right:20px;
+  }
+}
+
+.head-left{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+
+  img{
+    width: 216px;
+    height: auto;
+
+    @media screen and (max-width: 1100px){
+      width: 180px;
+    }
+  }
+
+  .text{
+    color:#000000;
+    font-family: 'ClashDisplay';
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28.8px;
+    padding-left:24px;
+    padding-right:4px;
+  }
+
+  .text02{
+    font-family: 'Epilogue';
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 21px;
+    color: #4640DE;
+    margin-top:4px;
+  }
+}
+
+.head-right{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-with-info-icon{
+  position: relative;
+  .icon-block{
+    position: absolute;
+    top:0;
+    right:5px;
+  }
+}
+
+.head-step{
+  position: fixed;
+  top:80px;
+  left:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  z-index: 50;
+  background: #F2F2F2;
+
+  .icon-block{
+    margin:0 24px;
+  }
+
+
+  .step-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Epilogue';
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #A8ADB7;
+    padding:8px 16px;
+    border-radius: 100px;
+    //cursor: pointer;
+
+    .title{
+      font-family: 'ClashDisplay';
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      margin-left: 8px;
+      margin-top:-3px;
+      color:#7C8493;
+    }
+  }
+
+  .step-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active{
+      .step-box{
+        color: #4640DE;
+        background: #FFFFFF;
+
+        .title{
+          color: #4640DE;
+        }
+      }
+    }
+
+    &.actived{
+      .step-box{
+        color: #4640DE;
+
+        .title{
+          color: #4640DE;
+        }
+      }
+
+      .icon-block{
+        background-image: url("../../../assets/img/icon-review/icon-double-right.svg");
+      }
+    }
+
+  }
+}

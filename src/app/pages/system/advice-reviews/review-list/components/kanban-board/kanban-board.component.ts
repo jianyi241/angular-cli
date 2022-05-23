@@ -1,10 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProductInfo} from "../../../../../../model/po/productInfo";
 import {Router} from "@angular/router";
 import {ConfigService} from "../../../../../../service/config.service";
 import {CurrentUserService} from "../../../../../../service/current-user.service";
-import {Constants} from "../../../../../../model/constants";
-import {TabType} from "../../../../../../model/enums/tab-type";
 import {DueRepository} from "../../../../../../repository/due-repository";
 import {DueCondition} from "../../../../../../model/condition/due-condition";
 import {DueListVo} from "../../../../../../model/vo/dueListVo";
@@ -52,8 +49,8 @@ export class KanbanBoardComponent implements OnInit, OnDestroy{
         })
     }
 
-    toView(product: ProductInfo): void {
-        this.router.navigateByUrl(`/platform/product-box-detail/overview/${product.id}/${product.versionId || Constants.VERSION}/${TabType.overview.value}`)
+    toDetail(due: DueListVo): void {
+        this.router.navigateByUrl(`/due/due-setup/${due.id}`)
     }
 
     unarchive(due: DueListVo) {

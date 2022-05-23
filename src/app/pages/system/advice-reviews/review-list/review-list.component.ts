@@ -5,6 +5,7 @@ import {AddClientModalComponent} from "../modal/add-client-modal/add-client-moda
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DueRepository} from '../../../../repository/due-repository';
 import {DueService} from "../../../../service/due.service";
+import {Constants} from "../../../../model/constants";
 
 
 @Component({
@@ -52,7 +53,7 @@ export class ReviewListComponent implements OnInit {
 
     addFunc(): void {
         if (this.currentSwitch === 'review') {
-            this.toDetail()
+            this.router.navigateByUrl(`/due/due-setup/${Constants.NON_ID}`)
         } else {
             this.router.navigateByUrl('/advice-review/add-client/Overview')
         }

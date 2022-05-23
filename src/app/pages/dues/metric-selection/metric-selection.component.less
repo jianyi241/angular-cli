@@ -1,0 +1,105 @@
+.table-main-content{
+  height: 100%;
+  padding:0 168px;
+  overflow: auto;
+}
+
+.sub-head-review {
+  //position: sticky;
+  //left: 0;
+  //top:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 34px 0;
+  background-color: #F7F7F7;
+  z-index: 10;
+
+  .title {
+    font-family: 'ClashDisplay';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 38.4px;
+    color: #4640DE;
+  }
+}
+
+
+.selection-content{
+  .selection-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+
+    .title{
+      display: flex;
+      align-items: center;
+      font-family: 'ClashDisplay';
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 25px;
+      color: #25324B;
+    }
+
+    .btn-select{
+      font-family: 'Epilogue';
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 22px;
+      color: #4640DE;
+      cursor: pointer;
+    }
+  }
+
+  .selection-body{
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    padding:12px;
+    margin-bottom: 32px;
+    background: #F2F2F2;
+
+    .selection-item{
+      width: calc(33.33% - 24px);
+      min-height: 126px;
+      margin:12px;
+      padding:24px 24px 12px 24px;
+      border: 1px solid #D6DDEB;
+      background: #FFFFFF;
+      cursor: pointer;
+      word-break: break-word;
+
+      &.selected,&:hover{
+        background: #E7F7EB;
+        border: 1px solid #219653;
+      }
+
+      h4{
+        font-family: 'ClashDisplay';
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        color: #25324B;
+        margin-bottom: 8px;
+      }
+
+      .info{
+        font-family: 'Epilogue';
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 21px;
+        color: #25324B;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}

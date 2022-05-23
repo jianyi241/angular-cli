@@ -30,7 +30,9 @@ import {UserRepository} from './repository/user-repository';
 import {MessagingService} from './service/messaging.service';
 import {ScrollService} from "./service/scroll.service";
 import {CustomLinkActiveDirective} from './directive/custom-link-active.directive';
-
+import {DuesModule} from "./pages/dues/dues.module";
+import {DueHeaderComponent} from "./common/due-header/due-header.component";
+import {DueLayoutComponent} from "./common/due-layout/due-layout.component";
 
 @NgModule({
     declarations: [
@@ -41,6 +43,8 @@ import {CustomLinkActiveDirective} from './directive/custom-link-active.directiv
         FooterComponent,
         ReviewLayoutComponent,
         ReviewHeaderComponent,
+        DueHeaderComponent,
+        DueLayoutComponent,
         CustomLinkActiveDirective,
     ],
     imports: [
@@ -65,6 +69,7 @@ import {CustomLinkActiveDirective} from './directive/custom-link-active.directiv
         CKEditorModule,
         SystemModule,
         ReviewsModule,
+        DuesModule,
         NgbAccordionModule
     ],
     providers: [

@@ -1,0 +1,38 @@
+<div class="loading-bar has-load"></div>
+<div class="table-main-content">
+    <div class="sub-head-review">
+        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.metric)}} - Business metric selection</div>
+    </div>
+
+    <div class="selection-content" *ngFor="let selection of metricSelections">
+        <div class="selection-head">
+            <div class="title">
+                <span class="icon-block icon-head-dollar icon-45 xs-mr-24" *ngIf="selection.tabType == configService.tabType.overview"></span>
+                <span class="icon-block icon-head-cycle icon-45 xs-mr-24" *ngIf="selection.tabType == configService.tabType.information"></span>
+                <span class="icon-block icon-head-setting icon-45 xs-mr-24" *ngIf="selection.tabType == configService.tabType.esg"></span>
+                {{getSelectionName(selection)}}
+            </div>
+
+            <div class="btn-select" *ngIf="hasSelect(selection)" (click)="deselectAll(selection)">Deselect all</div>
+            <div class="btn-select" *ngIf="!hasSelect(selection)" (click)="selectAll(selection)">Select all</div>
+        </div>
+        <ng-container *ngIf="selection.tabType == configService.tabType.overview || selection.tabType == configService.tabType.esg">
+            <div class="selection-body">
+                <div class="selection-item" [ngClass]="{'selected': prop.compChecked}" (click)="selectProp(prop)" *ngFor="let prop of selection.propertyVoList">
+                    <h4>{{prop.name}}</h4>
+                    <div class="info" [innerHTML]="prop.description"></div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="selection.tabType == configService.tabType.information">
+            <div class="selection-body " *ngFor="let groupVo of selection.groupVoList">
+                <div class="selection-item" [ngClass]="{'selected': prop.compChecked}" (click)="selectProp(prop)" *ngFor="let prop of groupVo.propertyVoList">
+                    <h4>{{prop.name}}</h4>
+                    <div class="info" [innerHTML]="prop.description"></div>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+</div>
+
