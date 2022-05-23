@@ -106,11 +106,15 @@
 
                     <td>
                         <div class="td-cell">
-                            <label class="label label-green xs-pl-16 xs-pr-16"
-                                   *ngIf="comparison.status == configService.comparisonStatus.completed">Completed</label>
-                            <label class="label label-blue xs-pl-16 xs-pr-16"
-                                   *ngIf="comparison.status == configService.comparisonStatus.inProgress">In
-                                progress</label>
+                            <ng-container *ngIf="!comparison.archived">
+                                <label class="label label-green xs-pl-16 xs-pr-16"
+                                       *ngIf="comparison.status == configService.comparisonStatus.completed">Completed</label>
+                                <label class="label label-blue xs-pl-16 xs-pr-16"
+                                       *ngIf="comparison.status == configService.comparisonStatus.inProgress">In
+                                    progress</label>
+                            </ng-container>
+                            <label class="label label-red xs-pl-16 xs-pr-16"
+                                   *ngIf="comparison.archived">Archived</label>
                         </div>
                     </td>
 
