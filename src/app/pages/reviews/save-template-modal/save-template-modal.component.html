@@ -1,0 +1,36 @@
+<form #saveTemplateForm="ngForm" novalidate name="loginForm"
+      [ngxFormValidator]="validatorConfig">
+    <div class="modal-main p40">
+        <span class="icon-block icon-close-black icon-34" (click)="dismiss()"></span>
+        <div class="modal-header modal-header-reset xs-mb-32">
+            <h2 class="modal-title">Save the current selection as a template?</h2>
+            <p>Fill in the below fields about the new template.</p>
+        </div>
+        <div class="modal-body">
+
+            <div class="form modal-form">
+                <div class="xs-mb-32 ">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <div>Template name<span class="label-required">*</span></div>
+                        </label>
+                       <input type="text" class="form-control" name="templateName" placeholder="Enter template name" required [(ngModel)]="templateInfo.name"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"><div>Notes</div></label>
+                        <ckeditor [config]="config" name="notes" [(ngModel)]="templateInfo.notes"></ckeditor>
+                    </div>
+                </div>
+
+                <div class="form-button">
+                    <div class="submit">
+                        <button class="btn btn-purple btn-sign tx-16 btn-block" (ngxFormSubmit)="saveTemplate()">
+                            Save the template
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

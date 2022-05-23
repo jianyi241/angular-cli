@@ -18,6 +18,9 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
 import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
+import { SaveTemplateModalComponent } from './save-template-modal/save-template-modal.component';
+import { SaveTemplateTipModalComponent } from './save-template-tip-modal/save-template-tip-modal.component';
+import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
 @NgModule({
@@ -32,7 +35,9 @@ import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-feat
         ComparisonSetupComponent,
         MetricSelectionComponent,
         // EllipsisDirective,
-        DeselectFeaturesTipComponent],
+        DeselectFeaturesTipComponent,
+        SaveTemplateModalComponent,
+        SaveTemplateTipModalComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
@@ -42,6 +47,7 @@ import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-feat
         FormsModule,
         NgSelectModule,
         CKEditorModule,
+        NgxValidatorModule,
     ], exports: [
         ReviewDropdownDirective,
         TableScrollDirective,

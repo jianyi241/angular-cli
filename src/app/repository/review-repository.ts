@@ -15,7 +15,7 @@ import {GroupVo} from "../model/vo/groupVo";
 import {ComparisonPropertyInfo} from "../model/po/comparisonPropertyInfo";
 import {ComparisonProductVo} from "../model/vo/comparisonProductVo";
 import {ComparisonCommentInfo} from "../model/po/comparisonCommentInfo";
-import {ComparisonTemplateInfo} from "../model/po/comparisonTemplateInfo";
+import {ComparisonSaveTemplateInfo, ComparisonTemplateInfo} from "../model/po/comparisonTemplateInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -89,5 +89,9 @@ export class ReviewRepository {
 
     changeProductStatus(product: ComparisonProductVo) {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/changeProductStatus`, product);
+    }
+
+    saveFeatureTemplate(templateInfo:ComparisonSaveTemplateInfo){
+        return this.http.post<HttpResult<ComparisonSaveTemplateInfo>>(environment.baseURL + `/compare/saveFeatureTemplate`, templateInfo);
     }
 }
