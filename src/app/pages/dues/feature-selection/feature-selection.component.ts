@@ -109,31 +109,36 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     saveSubscribe(): void {
         this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
-            let groups = this.featureForm;
-            let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
-            if (this.validSave(props)) {
-                return;
-            }
-            if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
-                return;
-            }
-            let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.feature.value);
-            let comparisonProps = props.map(p => {
-                let prop = new ComparisonPropertyInfo();
-                prop.essential = p.essential;
-                prop.shPropertyId = p.id;
-                prop.shAnalyseId = analyseInfo.shAnalyseId;
-                prop.shComparisonId = this.dueService.due.id;
-                return prop;
-            });
-            this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
-                if (res.statusCode != 200) {
-                    this.toastRepository.showDanger(res.msg);
-                    return;
-                }
-                this.toastRepository.showSuccess('Save successfully.');
-            });
+            this.save();
         })
+    }
+
+    save(callback?: () => void) {
+        let groups = this.featureForm;
+        let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
+        if (this.validSave(props)) {
+            return;
+        }
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+            return;
+        }
+        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        let comparisonProps = props.map(p => {
+            let prop = new ComparisonPropertyInfo();
+            prop.essential = p.essential;
+            prop.shPropertyId = p.id;
+            prop.shAnalyseId = analyseInfo.shAnalyseId;
+            prop.shComparisonId = this.dueService.due.id;
+            return prop;
+        });
+        this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('Save successfully.');
+            callback && callback();
+        });
     }
 
     validSave(props: Array<PropertyVo>): boolean {
@@ -146,7 +151,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
+            this.save(() => {
+                this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
+            });
         });
     }
 
