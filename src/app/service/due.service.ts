@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
+import {ComparisonVo} from "../model/vo/comparisonVo";
+import {Router} from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +13,17 @@ export class DueService {
     private searchClientObservable: Observable<string> = this.searchClient.asObservable();
     private toggleArchived: Subject<boolean> = new Subject<boolean>();
     private toggleArchivedObservable: Observable<boolean> = this.toggleArchived.asObservable();
+    private nextSubject = new Subject<object>();
+    nextObservable = this.nextSubject.asObservable();
+    private saveSubject = new Subject<object>();
+    saveObservable = this.saveSubject.asObservable();
+    private backSubject = new Subject<object>();
+    backObservable = this.backSubject.asObservable();
+    private initComparisonSubject = new Subject<object>();
+    initComparisonObservable = this.initComparisonSubject.asObservable();
+    due: ComparisonVo;
 
-    constructor() {
+    constructor(private router: Router) {
     }
 
     reviewSearch(keyword: string): void {
@@ -45,5 +56,20 @@ export class DueService {
         })
     }
 
+    next(): void {
+        this.nextSubject.next();
+    }
+
+    save(): void {
+        this.saveSubject.next();
+    }
+
+    back(): void {
+        this.backSubject.next();
+    }
+
+    initNotify(): void {
+        this.initComparisonSubject.next();
+    }
 
 }

@@ -6,11 +6,9 @@ import {PlatformRepository} from "../../../repository/platform-repository";
 import {ImgShowModalComponent} from "../img-show-modal/img-show-modal.component";
 import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {ScrollService} from "../../../service/scroll.service";
-import {ReviewLayoutComponent} from "../../../common/review-layout/review-layout.component";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {ProductVo} from "../../../model/vo/ProductVo";
 import {PropertyInfo} from "../../../model/po/propertyInfo";
-import {ReviewService} from "../../../service/review.service";
 import {Router} from "@angular/router";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {GroupInfo} from "../../../model/po/groupInfo";
@@ -20,6 +18,8 @@ import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
 import {ConfigService} from "../../../service/config.service";
+import {DueService} from "../../../service/due.service";
+import {DueLayoutComponent} from "../../../common/due-layout/due-layout.component";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -42,11 +42,11 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
                 private storage: LocalStorageObServable,
                 private router: Router,
                 private modalService: NgbModal,
-                public reviewService: ReviewService,
+                public dueService: DueService,
                 public configService: ConfigService,
                 private scrollService: ScrollService,
                 private saveService: SaveService,
-                public reviewLayoutComponent: ReviewLayoutComponent
+                public dueLayoutComponent: DueLayoutComponent
     ) {
     }
 
@@ -64,7 +64,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
-        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+        this.initComparisonObservable = this.dueService.initComparisonObservable.subscribe(() => {
             this.compareList();
         })
         this.saveSubscribe();
@@ -73,20 +73,20 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
 
         })
     }
 
     nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.reviewService.nextStep(AnalysisType.feature);
+        this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/metric-selection/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/feature-selection/${this.reviewService.comparison.id}`)
+        this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/feature-selection/${this.dueService.due.id}`)
         })
     }
 
@@ -103,10 +103,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     compareList() {
-        if (!this.reviewService.comparison.id) {
+        if (!this.dueService.due.id) {
             return;
         }
-        this.reviewRepository.compareList(this.reviewService.comparison.id).subscribe(res => {
+        this.reviewRepository.compareList(this.dueService.due.id).subscribe(res => {
             this.compareData = Object.assign(this.compareData, res.data);
             //检查当前项目是否存在uncheck
             if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
@@ -146,7 +146,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     scrollEvent(e): void {
-        this.reviewLayoutComponent.viewHead.isScrollFixed = e;
+        this.dueLayoutComponent.viewHead.isScrollFixed = e;
     }
 
     hasEssential(prop: PropertyInfo): boolean {
@@ -174,7 +174,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     isMainProduct(product: ComparisonProductVo): boolean {
-        return this.reviewService.comparison.mainPlatformId == product.shProductId;
+        return this.dueService.due.mainPlatformId == product.shProductId;
     }
 
     hideByFlag(product): boolean {
@@ -185,7 +185,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     hidClassFlag(product) {
-        return !product.showFlag && product.shProductId != this.reviewService.comparison.mainPlatformId
+        return !product.showFlag && product.shProductId != this.dueService.due.mainPlatformId
     }
 
     hideCommon(prop: PropertyInfo): boolean {
@@ -200,7 +200,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
-        product.shComparisonId = this.reviewService.comparison.id;
+        product.shComparisonId = this.dueService.due.id;
         this.reviewRepository.changeProductStatus(product).subscribe(res => {
             if (res.statusCode != 200) {
                 product.showFlag = true;
@@ -211,7 +211,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     resetPlatform(product: ComparisonProductVo) {
         product.showFlag = true;
-        product.shComparisonId = this.reviewService.comparison.id
+        product.shComparisonId = this.dueService.due.id
         this.reviewRepository.changeProductStatus(product).subscribe(res => {
             if (res.statusCode != 200) {
                 product.showFlag = true;
@@ -221,9 +221,9 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     getComment(product: ComparisonProductVo, pComment: NgbPopover) {
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.feature.value);
         product.comparisonComment = new ComparisonCommentInfo();
-        this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
+        this.reviewRepository.getComment(this.dueService.due.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
             Object.assign(product.comparisonComment, res.data);
             pComment.open();
         })
@@ -233,8 +233,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
             return;
         }
-        product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        product.comparisonComment.shComparisonId = this.dueService.due.id;
+        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.feature.value);
         product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
         product.comparisonComment.shProductId = product.shProductId;
         this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {

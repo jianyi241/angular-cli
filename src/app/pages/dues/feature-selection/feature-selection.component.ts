@@ -4,7 +4,6 @@ import {ReviewRepository} from "../../../repository/review-repository";
 import {GroupVo} from "../../../model/vo/groupVo";
 import {PropertyVo} from "../../../model/vo/PropertyVo";
 import {Router} from "@angular/router";
-import {ReviewService} from "../../../service/review.service";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {SwiperComponent} from "swiper/angular";
@@ -15,6 +14,7 @@ import {environment} from "../../../../environments/environment";
 import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
+import {DueService} from "../../../service/due.service";
 
 SwiperCore.use([Pagination]);
 
@@ -66,7 +66,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     };
 
     constructor(private reviewRepository: ReviewRepository,
-                public reviewService: ReviewService,
+                public dueService: DueService,
                 public configService: ConfigService,
                 private saveService: SaveService,
                 private toastRepository: ToastRepository,
@@ -94,7 +94,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
-        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+        this.initComparisonObservable = this.dueService.initComparisonObservable.subscribe(() => {
             this.getFeatureSelection();
         })
         this.saveSubscribe();
@@ -103,7 +103,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
             let groups = this.featureForm;
             let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
             if (this.validSave(props)) {
@@ -112,13 +112,13 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
             if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
                 return;
             }
-            let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+            let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.feature.value);
             let comparisonProps = props.map(p => {
                 let prop = new ComparisonPropertyInfo();
                 prop.essential = p.essential;
                 prop.shPropertyId = p.id;
                 prop.shAnalyseId = analyseInfo.shAnalyseId;
-                prop.shComparisonId = this.reviewService.comparison.id;
+                prop.shComparisonId = this.dueService.due.id;
                 return prop;
             });
             this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
@@ -140,22 +140,22 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/feature-comparison/${this.reviewService.comparison.id}`);
+        this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.feature);
+        this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/due-setup/${this.dueService.due.id}`);
         })
     }
 
     getFeatureSelection(): void {
-        if (!this.reviewService.comparison.id) {
+        if (!this.dueService.due.id) {
             return
         }
-        this.reviewRepository.getFeatureGroupAndProperty(this.reviewService.comparison.id).subscribe(res => {
+        this.reviewRepository.getFeatureGroupAndProperty(this.dueService.due.id).subscribe(res => {
             this.featureForm = res.data || this.featureForm;
         });
     }

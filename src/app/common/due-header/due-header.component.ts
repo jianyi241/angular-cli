@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {ReviewService} from "../../service/review.service";
 import {Constants} from "../../model/constants";
 import {ReviewRepository} from "../../repository/review-repository";
 import {ComparisonVo} from "../../model/vo/comparisonVo";
 import {CurrentUserService} from "../../service/current-user.service";
 import {ComparisonAnalyseInfo} from "../../model/po/comparisonAnalyseInfo";
 import {AnalysisType} from "../../model/enums/analysis-type";
+import {DueService} from "../../service/due.service";
 
 @Component({
     selector: 'app-due-header',
@@ -18,43 +18,33 @@ export class DueHeaderComponent implements OnInit {
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
-                public reviewService: ReviewService,
+                public dueService: DueService,
                 private currentUserService: CurrentUserService,
                 private reviewRepository: ReviewRepository,) {
-        this.reviewService.comparison = new ComparisonVo();
-        this.reviewService.comparison.companyId = this.currentUserService.currentUser().companyId;
+        this.dueService.due = new ComparisonVo();
+        this.dueService.due.companyId = this.currentUserService.currentUser().companyId;
     }
 
     ngOnInit(): void {
         let comparisonId = this.activatedRoute?.firstChild?.snapshot?.params['id'];
         if (comparisonId && comparisonId != Constants.NON_ID) {
             this.reviewRepository.getCompareDetail(comparisonId).subscribe(res => {
-                Object.assign(this.reviewService.comparison, res.data);
-                this.reviewService.comparison.mainPlatformCheck = !!this.reviewService.comparison.mainPlatformId;
-                let products = this.reviewService.comparison.comparisonProductVoList;
-                if (products && products.length > 0) {
-                    let feeProducts = products.filter(p => p.feeFlag);
-                    let nonFeeProducts = products.filter(p => !p.feeFlag);
-                    this.reviewService.comparison.feeProducts = feeProducts.map(p => p.shProductId);
-                    this.reviewService.comparison.feeProductName = feeProducts.map(p => p.productName).join(', ');
-                    this.reviewService.comparison.nonFeeProducts = nonFeeProducts.map(p => p.shProductId);
-                    this.reviewService.comparison.nonFeeProductName = nonFeeProducts.map(p => p.productName).join(', ');
-                }
-                this.reviewService.initNotify();
+                Object.assign(this.dueService.due, res.data);
+                this.dueService.initNotify();
             });
         }
     }
 
     save() {
-        this.reviewService.save();
+        this.dueService.save();
     }
 
     next() {
-        this.reviewService.next();
+        this.dueService.next();
     }
 
     goBack() {
-        this.reviewService.back();
+        this.dueService.back();
     }
 
     getDynamicAnaName(analysis: ComparisonAnalyseInfo): string {
@@ -68,6 +58,6 @@ export class DueHeaderComponent implements OnInit {
     }
 
     totalDynamicAna(): number {
-        return this.reviewService.comparison.analyseVoList.length + 2;
+        return this.dueService.due.analyseVoList.length + 2;
     }
 }

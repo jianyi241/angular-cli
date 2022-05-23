@@ -1,9 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ReviewService} from "../../../service/review.service";
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
-import {AnalysisType} from "../../../model/enums/analysis-type";
+import {DueService} from "../../../service/due.service";
 
 @Component({
     selector: 'app-fee-comparison',
@@ -24,7 +23,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         {name: 'Non-custody solution', value: false},
     ];
 
-    constructor(public reviewService: ReviewService,
+    constructor(public dueService: DueService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private router: Router) {
@@ -46,14 +45,14 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     }
 
     nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            // this.router.navigateByUrl('/review/fee-comparison');
+        this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/metric-comparison/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.fee);
+        this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/metric-comparison/${this.dueService.due.id}`);
         })
     }
 

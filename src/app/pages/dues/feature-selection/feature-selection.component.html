@@ -1,6 +1,6 @@
 <div class="content">
     <div class="sub-head-selection">
-        <h2>Step {{reviewService.getCurrentAnaStep(configService.analysisType.feature)}} - What features are important {{reviewService.comparison.adviserName ? 'for ' + reviewService.comparison.adviserName : ''}}? <span class="text">Select the features you would like to include in the comparison</span>
+        <h2>Step 2 - What features are important to service Floyd?
         </h2>
     </div>
 
@@ -10,7 +10,7 @@
                          *ngFor="let group of featureForm; let groupIndex = index">
                 <div class="swiper-head">
                     <img [src]="group.attachmentVo?.visitUrl" alt="">
-<!--                    <span class="icon-block icon-teleconference icon-40"></span>-->
+                    <!--                    <span class="icon-block icon-teleconference icon-40"></span>-->
                     <div class="tip" (click)="selectGroupAll(group)" *ngIf="!hasSelect(group)">Select all features</div>
                     <div class="tip tx-red" (click)="deselectGroupAll(group)" *ngIf="hasSelect(group)">Deselect all
                         features
@@ -66,8 +66,9 @@
                                     <p class="sub-title">{{subGroup.name}}</p>
                                     <p [innerHTML]="subGroup.description"></p>
                                 </div>
-                                <div class="btn-right">{{acc.isExpanded('ngb-panel-' +subGroupIndex) ? 'Collapse all' : 'Show all'}} {{subGroup.propertyVoList.length}} features <span
-                                        class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
+                                <div class="btn-right">{{acc.isExpanded('ngb-panel-' + subGroupIndex) ? 'Collapse all' : 'Show all'}} {{subGroup.propertyVoList.length}}
+                                    features <span
+                                            class="icon-block  ml-8 icon-20 icon-arr-blue"></span>
                                 </div>
                             </div>
                         </ng-template>
@@ -83,7 +84,8 @@
                                             (click)="selectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple" [hidden]="!prop.description"></i>
+                                                <i class="icon-block icon-15 icon-info-circle-purple"
+                                                   [hidden]="!prop.description"></i>
                                             </div>
                                             <!--<button (click)="essential(prop, $event)"
                                                     [ngClass]="{'tx-yellow': prop.essential}">Essential

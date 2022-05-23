@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ReviewService} from "../../../service/review.service";
 import {Router} from "@angular/router";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {CompareMetricVo} from "../../../model/vo/compareMetircVo";
@@ -14,6 +13,7 @@ import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
+import {DueService} from "../../../service/due.service";
 
 @Component({
     selector: 'app-metric-comparison',
@@ -28,7 +28,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     reviewBackObservable: any;
     reviewSaveObservable: any;
 
-    constructor(public reviewService: ReviewService,
+    constructor(public dueService: DueService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
@@ -49,7 +49,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
-        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+        this.initComparisonObservable = this.dueService.initComparisonObservable.subscribe(() => {
             this.getMetricComparison();
         })
         this.nextSubscribe();
@@ -57,22 +57,22 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     }
 
     nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.reviewService.nextStep(AnalysisType.metric);
+        this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/fee-comparison/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/metric-selection/${this.reviewService.comparison.id}`);
+        this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/metric-selection/${this.dueService.due.id}`);
         })
     }
 
     getMetricComparison(): void {
-        if (!this.reviewService.comparison.id) {
+        if (!this.dueService.due.id) {
             return;
         }
-        this.reviewRepository.getMetricComparison(this.reviewService.comparison.id).subscribe(res => {
+        this.reviewRepository.getMetricComparison(this.dueService.due.id).subscribe(res => {
             this.compareData = Object.assign(this.compareData, res.data);
         });
     }
@@ -98,7 +98,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     }
 
     isMainProduct(product: ComparisonProductVo): boolean {
-        return this.reviewService.comparison.mainPlatformId == product.shProductId;
+        return this.dueService.due.mainPlatformId == product.shProductId;
     }
 
     hideByFlag(product: ComparisonProductVo): boolean {
@@ -110,7 +110,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
-        product.shComparisonId = this.reviewService.comparison.id;
+        product.shComparisonId = this.dueService.due.id;
         this.reviewRepository.changeProductStatus(product).subscribe(res => {
             if (res.statusCode != 200) {
                 product.showFlag = true;
@@ -121,7 +121,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     resetPlatform(product: ComparisonProductVo) {
         product.showFlag = true;
-        product.shComparisonId = this.reviewService.comparison.id
+        product.shComparisonId = this.dueService.due.id
         this.reviewRepository.changeProductStatus(product).subscribe(res => {
             if (res.statusCode != 200) {
                 product.showFlag = true;
@@ -131,9 +131,9 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     }
 
     getComment(product: ComparisonProductVo, pComment: NgbPopover) {
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
         product.comparisonComment = new ComparisonCommentInfo();
-        this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
+        this.reviewRepository.getComment(this.dueService.due.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
             Object.assign(product.comparisonComment, res.data);
             pComment.open();
         })
@@ -143,8 +143,8 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
             return;
         }
-        product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        product.comparisonComment.shComparisonId = this.dueService.due.id;
+        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
         product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
         product.comparisonComment.shProductId = product.shProductId;
         this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {

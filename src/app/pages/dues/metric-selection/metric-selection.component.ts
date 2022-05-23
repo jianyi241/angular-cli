@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ReviewService} from "../../../service/review.service";
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
@@ -11,6 +10,7 @@ import {environment} from "../../../../environments/environment";
 import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
+import {DueService} from "../../../service/due.service";
 
 @Component({
     selector: 'app-business-metric-comparison',
@@ -24,7 +24,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     reviewBackObservable: any;
     reviewSaveObservable: any;
 
-    constructor(public reviewService: ReviewService,
+    constructor(public dueService: DueService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
@@ -45,7 +45,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     subscribe(): void {
-        this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+        this.initComparisonObservable = this.dueService.initComparisonObservable.subscribe(() => {
             this.getBmGroupAndProperty();
         })
         this.saveSubscribe();
@@ -54,7 +54,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
             let props: Array<PropertyVo> = [];
             this.metricSelections.forEach(selection => {
                 if (selection.tabType == TabType.information.value) {
@@ -69,13 +69,13 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
             if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
                 return;
             }
-            let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+            let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
             let comparisonProps = props.map(p => {
                 let prop = new ComparisonPropertyInfo();
                 prop.essential = p.essential;
                 prop.shPropertyId = p.id;
                 prop.shAnalyseId = analyseInfo.shAnalyseId;
-                prop.shComparisonId = this.reviewService.comparison.id;
+                prop.shComparisonId = this.dueService.due.id;
                 return prop;
             });
             this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
@@ -97,23 +97,23 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     nextSubscribe(): void {
-        this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
+        this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/metric-comparison/${this.dueService.due.id}`);
         });
     }
 
     backSubscribe(): void {
-        this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.metric);
+        this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
+            this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
         })
     }
 
 
     getBmGroupAndProperty(): void {
-        if (!this.reviewService.comparison.id) {
+        if (!this.dueService.due.id) {
             return
         }
-        this.reviewRepository.getBmGroupAndProperty(this.reviewService.comparison.id).subscribe(res => {
+        this.reviewRepository.getBmGroupAndProperty(this.dueService.due.id).subscribe(res => {
             this.metricSelections = res.data || this.metricSelections;
         });
     }
