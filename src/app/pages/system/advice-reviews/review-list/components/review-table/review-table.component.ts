@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from "../../../../../../model/vo/page";
 import {Router} from "@angular/router";
 import {ConfigService} from "../../../../../../service/config.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddClientModalComponent} from "../../../modal/add-client-modal/add-client-modal.component";
 import {DueRepository} from "../../../../../../repository/due-repository";
 import {DueListVo} from "../../../../../../model/vo/dueListVo";
 import {DueCondition} from "../../../../../../model/condition/due-condition";
@@ -20,7 +18,6 @@ export class ReviewTableComponent implements OnInit {
 
     duePage: Page<DueListVo> = new Page<DueListVo>();
     condition: DueCondition = new DueCondition(1, 10);
-    currentSwitch: string = 'review'
     searchSub: Subscription;
     archivedSub: Subscription;
 
@@ -28,8 +25,7 @@ export class ReviewTableComponent implements OnInit {
                 private dueRepository: DueRepository,
                 private toastRepository: ToastRepository,
                 public configService: ConfigService,
-                private dueService: DueService,
-                private ngbModal: NgbModal) {
+                private dueService: DueService) {
     }
 
     ngOnInit(): void {
@@ -64,31 +60,13 @@ export class ReviewTableComponent implements OnInit {
 
     }
 
-    addFunc(): void {
-        if (this.currentSwitch === 'review') {
-            this.toDetail()
-        } else {
-            this.router.navigateByUrl('/advice-review/add-client/Overview')
-        }
-    }
-
-    toDetail(): void {
-        // this.router.navigateByUrl(`/admin/detail/${type}/${id || Constants.NON_ID}`)
-        this.showAddClientModal()
+    toDetail(due: DueListVo): void {
+        this.router.navigateByUrl(`/due/due-setup/${due.id}`)
     }
 
     pageChange(current: number) {
         this.condition.current = current
         this.getDuePage();
-    }
-
-    showAddClientModal(): void {
-        const modal = this.ngbModal.open(AddClientModalComponent, {
-            size: 'w644',
-            windowClass: 'tip-popup-modal',
-            centered: true
-        })
-        // modal.componentInstance.
     }
 
     unarchive(due: DueListVo) {

@@ -21,8 +21,8 @@ export class ClientRepository {
         return this.http.post<HttpResult<Array<ClientListVo>>>(environment.baseURL + '/client/page', condition);
     }
 
-    getList(): Observable<HttpResult<ClientInfo>> {
-        return this.http.get<HttpResult<ClientInfo>>(environment.baseURL + '/client/list');
+    getList(): Observable<HttpResult<Array<ClientInfo>>> {
+        return this.http.get<HttpResult<Array<ClientInfo>>>(environment.baseURL + '/client/list');
     }
 
     getDetail(id: string): Observable<HttpResult<ClientDetailVo>> {

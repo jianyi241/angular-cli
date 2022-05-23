@@ -1,0 +1,93 @@
+<div class="loading-bar has-load"></div>
+
+<div class="table-main-content">
+    <div class="review-content">
+        <div class="sub-head-review">
+            <div class="title">Step 1 - Review setup</div>
+        </div>
+
+        <div class="form-content">
+            <div class="form-group-custom form-group-custom-reset">
+                <div class="form-group-left">
+                    <label class="control-label">Basic info</label>
+                    <p class="info"></p>
+                </div>
+
+                <div class="form-group-right">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Adviser<span class="label-required">*</span></div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Select adviser" dropdownPosition="bottom"
+                                   [(ngModel)]="dueService.due.userId">
+                            <ng-option *ngFor="let user of adviserUsers" [value]="user.id">
+                                <div class="select-avatar-item">
+                                    <div class="avatar-box">
+                                        <img [src]="user.avatar?.visitUrl"/>
+                                    </div>
+                                    {{configService.fullName(user.firstName, user.lastName)}}
+                                </div>
+                            </ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Who is this review for?<span class="label-required">*</span></div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Select client" dropdownPosition="bottom"
+                                   [(ngModel)]="dueService.due.clientId">
+                            <ng-option *ngFor="let client of clients" [value]="client.id">
+                                {{configService.fullName(client.firstName, client.lastName)}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Name of review<span class="label-required">*</span></div>
+                        </label>
+                        <input type="text" placeholder="Enter review name"
+                               [(ngModel)]="dueService.due.name" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group-custom form-group-custom-reset">
+                <div class="form-group-left">
+                    <label class="control-label">Current situation and needs<span
+                            class="label-required">*</span></label>
+                    <p class="info">Articulate what this client's needs and priorities are when selecting a platform.
+                        This will appear on the final review report</p>
+                </div>
+
+                <div class="form-group-right">
+                    <ckeditor [config]="config" [(ngModel)]="dueService.due.objectives"></ckeditor>
+                    <div class="tip-info">Maximum 5,000 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group-custom form-group-custom-reset">
+                <div class="form-group-left">
+                    <label class="control-label">Templates</label>
+                    <p class="info"></p>
+                </div>
+
+                <div class="form-group-right">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Load features from template</div>
+                        </label>
+                        <ng-select class="select-single" placeholder="Enter template name" dropdownPosition="bottom"
+                                   [(ngModel)]="dueService.due.templateId">
+                            <ng-option *ngFor="let template of templates"
+                                       [value]="template.id">{{template.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

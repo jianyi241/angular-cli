@@ -15,6 +15,7 @@ import {GroupVo} from "../model/vo/groupVo";
 import {ComparisonPropertyInfo} from "../model/po/comparisonPropertyInfo";
 import {ComparisonProductVo} from "../model/vo/comparisonProductVo";
 import {ComparisonCommentInfo} from "../model/po/comparisonCommentInfo";
+import {ComparisonSaveTemplateInfo, ComparisonTemplateInfo} from "../model/po/comparisonTemplateInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -57,12 +58,24 @@ export class ReviewRepository {
         return this.http.get<HttpResult<Array<TeamInfo>>>(environment.baseURL + '/compare/querySupplierUser');
     }
 
+    getTemplates(): Observable<HttpResult<Array<ComparisonTemplateInfo>>> {
+        return this.http.get<HttpResult<Array<ComparisonTemplateInfo>>>(environment.baseURL + '/compare/getFeatureTemplateList');
+    }
+
+    getUsersByType(type: number): Observable<HttpResult<Array<TeamInfo>>> {
+        return this.http.get<HttpResult<Array<TeamInfo>>>(environment.baseURL + `/user/v1/queryUsers/${type}`);
+    }
+
     getComment(comparisonId: string, analyseId: string, productId: string): Observable<HttpResult<ComparisonCommentInfo>> {
         return this.http.get<HttpResult<ComparisonCommentInfo>>(environment.baseURL + `/compare/queryComment/${comparisonId}/${analyseId}/${productId}`);
     }
 
     saveComparison(comparison: ComparisonVo): Observable<HttpResult<ComparisonVo>> {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveOrUpdateComparison`, comparison);
+    }
+
+    saveDue(comparison: ComparisonVo): Observable<HttpResult<ComparisonVo>> {
+        return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/due/save`, comparison);
     }
 
     saveComment(comparisonComment: ComparisonCommentInfo): Observable<HttpResult<ComparisonVo>> {
@@ -76,5 +89,9 @@ export class ReviewRepository {
 
     changeProductStatus(product: ComparisonProductVo) {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/changeProductStatus`, product);
+    }
+
+    saveFeatureTemplate(templateInfo:ComparisonSaveTemplateInfo){
+        return this.http.post<HttpResult<ComparisonSaveTemplateInfo>>(environment.baseURL + `/compare/saveFeatureTemplate`, templateInfo);
     }
 }

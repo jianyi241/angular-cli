@@ -21,7 +21,7 @@
               <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
             </div>
             <div class="item-edit-group">
-              <button class="btn btn-outline-purple-light large-btn">
+              <button class="btn btn-outline-purple-light large-btn" (click)="toDetail(item)">
                 <img src="./assets/img/icon/icon-eye-purple.svg" />
                 View
               </button>
@@ -56,7 +56,7 @@
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
           </div>
           <div class="item-edit-group">
-            <button class="btn btn-outline-purple-light large-btn">
+            <button class="btn btn-outline-purple-light large-btn" (click)="toDetail(item)">
               <img src="./assets/img/icon/icon-eye-purple.svg" />
               View
             </button>
@@ -91,7 +91,7 @@
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
           </div>
           <div class="item-edit-group">
-            <button class="btn btn-outline-purple-light large-btn">
+            <button class="btn btn-outline-purple-light large-btn" (click)="toDetail(item)">
               <img src="./assets/img/icon/icon-eye-purple.svg" />
               View
             </button>

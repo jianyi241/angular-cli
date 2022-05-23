@@ -1,5 +1,6 @@
-export class ClientInfo {
-    id?: string;
+import {BaseModel} from "./baseModel";
+
+export class ClientInfo extends BaseModel{
     firstName?: string;
     lastName?: string;
     email?: string;

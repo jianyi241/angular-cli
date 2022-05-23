@@ -1,0 +1,76 @@
+<div class="head-layout">
+    <div class="head-left">
+        <a class="logo" [routerLink]="['/advice-review/review-list/list-view']">
+            <img src="./assets/img/logo_black.png"/>
+            <span class="text"><span
+                    class="tx-bold">{{dueService.due.userName}}</span> {{this.dueService.due.productName ? 'of ' + this.dueService.due.productName : ''}} </span>
+            <span class="text02">{{this.dueService.due.adviserName ? 'for' : ''}}
+                <span class="tx-bold">{{this.dueService.due.adviserName}}</span>
+                {{this.dueService.due.practiceName ? 'from ' + this.dueService.due.practiceName : ''}}
+            </span>
+        </a>
+    </div>
+
+    <div class="head-right">
+        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">
+            <div class="switch-text active">All</div>
+            <div class="switch-text">Hide non-essential features</div>
+        </div>
+
+        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">
+            <div class="switch-text">All</div>
+            <div class="switch-text active">Hide common features</div>
+        </div>
+
+        <button class="btn btn-text-theme btn-with-info-icon" *ngIf="!isScrollFixed" (click)="saveTemplate()">Save as
+            feature template <span
+                    class="icon-block icon-info-bold icon-14"></span></button>
+        <button class="btn btn-outline-blue-light xs-ml-30" (click)="goBack()">Go back</button>
+        <button class="btn btn-outline-blue-light xs-ml-30" (click)="save()">Save</button>
+        <!--        <button class="btn btn-outline-blue-light xs-ml-16">Load a template</button>-->
+        <button class="btn btn-purple xs-ml-16" *ngIf="dueService.due.id" (click)="next()">Next</button>
+    </div>
+</div>
+
+<div class="head-step">
+    <div *ngIf="!dueService.due.id" class="step-content" [link]="['/due/due-setup']"
+         [customLinkActive]="'active'">
+        <div class="step-box">
+            Step 1 <span class="title">Review setup</span>
+        </div>
+    </div>
+    <ng-container *ngIf="dueService.due.id">
+        <div class="step-content" [link]="['/due/due-setup']" [customLinkActive]="'active'">
+            <div class="step-box">
+                Step 1/5 <span class="title">Review setup</span>
+            </div>
+
+            <span class="icon-block icon-double-right-gray icon-9"></span>
+        </div>
+        <div class="step-content" [link]="['/due/feature-comparison', '/due/feature-selection']"
+             [customLinkActive]="'active'">
+            <div class="step-box">
+                Step 2/5 <span class="title">Feature review</span>
+            </div>
+            <span class="icon-block icon-double-right-gray icon-9"></span>
+        </div>
+        <div class="step-content" [link]="['/due/metric-comparison', '/due/metric-selection']"
+             [customLinkActive]="'active'">
+            <div class="step-box">
+                Step 3/5 <span class="title">Business metric comparison</span>
+            </div>
+            <span class="icon-block icon-double-right-gray icon-9"></span>
+        </div>
+        <div class="step-content" [link]="['/due/fee-comparison']" [customLinkActive]="'active'">
+            <div class="step-box">
+                Step 4/5 <span class="title">Fee comparison</span>
+            </div>
+            <span class="icon-block icon-double-right-gray icon-9"></span>
+        </div>
+        <div class="step-content">
+            <div class="step-box">
+                Step 5/5 <span class="title">Summary</span>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,17 @@
+<div class="tip-wrapper">
+    <span class="icon-block icon-close icon-20" (click)="dismiss()"></span>
+    <div class="title">{{title}}</div>
+    <div class="info">{{info}}</div>
+
+    <div class="tip-control">
+        <div class="row">
+            <div class="col-6">
+                <button class="btn btn-outline-purple-light btn-modal btn-block" (click)="dismiss()">{{btnCancelText}}</button>
+            </div>
+
+            <div class="col-6">
+                <button class="btn btn-purple btn-modal btn-block" (click)="close()">{{btnText}}</button>
+            </div>
+        </div>
+    </div>
+</div>
