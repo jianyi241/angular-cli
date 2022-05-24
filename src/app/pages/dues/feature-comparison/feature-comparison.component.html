@@ -31,8 +31,8 @@
                     <div class="th-first">
                         <div class="th-bottom">
                             <div class="title" title="Features">Features</div>
-                            <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span
-                                    class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>
+                            <!--<button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span
+                                    class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>-->
                         </div>
                     </div>
                 </th>
@@ -56,7 +56,10 @@
                         </div>
 
                         <div class="btn-control-box">
-                            <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
+                            <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                    (click)="addShortList(product)">+ Shortlist
+                            </button>
+                            <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
                                     (click)="getComment(product, pComment)"
                                     placement="top auto" [ngbPopover]="popCommentContent">Add comment
@@ -175,7 +178,10 @@
 
                 <th class="th-control" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList">
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
+                        <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                (click)="addShortList(product)">+ Shortlist
+                        </button>
+                        <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
                                 (click)="getComment(product,pComment)"
                                 [ngbPopover]="popCommentContent">Add comment

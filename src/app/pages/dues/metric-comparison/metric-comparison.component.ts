@@ -14,6 +14,7 @@ import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
 import {DueService} from "../../../service/due.service";
+import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 
 @Component({
     selector: 'app-metric-comparison',
@@ -110,23 +111,42 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
-        product.shComparisonId = this.dueService.due.id;
-        this.reviewRepository.changeProductStatus(product).subscribe(res => {
-            if (res.statusCode != 200) {
-                product.showFlag = true;
-                this.toastRepository.showDanger(res.msg);
-            }
-        })
+        this.changeProduct(product, (data) => {
+            product.id = data.id;
+        }, () => {
+            product.showFlag = true;
+        });
     }
 
     resetPlatform(product: ComparisonProductVo) {
         product.showFlag = true;
-        product.shComparisonId = this.dueService.due.id
-        this.reviewRepository.changeProductStatus(product).subscribe(res => {
+        this.changeProduct(product, (data) => {
+            product.id = data.id;
+        }, () => {
+            product.showFlag = false;
+        });
+    }
+
+    addShortList(product: ComparisonProductVo) {
+        product.shortFlag = true;
+        this.changeProduct(product, (data) => {
+            product.id = data.id;
+            this.getMetricComparison();
+        }, () => {
+            product.shortFlag = false;
+        });
+    }
+
+    changeProduct(product: ComparisonProductVo, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
+        product.shVersionId = this.dueService.due.modelVersionId;
+        product.shComparisonId = this.dueService.due.id;
+        this.reviewRepository.changeProduct(product).subscribe(res => {
             if (res.statusCode != 200) {
-                product.showFlag = true;
                 this.toastRepository.showDanger(res.msg);
+                error && error();
+                return
             }
+            callback && callback(res.data);
         })
     }
 

@@ -18,6 +18,7 @@ export class ComparisonProductInfo {
     createTime?: string;
     createUser?: string;
     showFlag?: boolean;
+    shortFlag?: boolean;
     deleteFlag?: boolean;
     feeFlag?: boolean;
     id?: string;

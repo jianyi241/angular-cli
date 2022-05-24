@@ -211,8 +211,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.ref.detectChanges();
     }
 
-    essential(prop: PropertyVo, event: any) {
-        event.stopPropagation();
+    essential(prop: PropertyVo, event?: any) {
+        event && event.stopPropagation();
         prop.essential = !prop.essential;
         this.ref.detectChanges();
     }

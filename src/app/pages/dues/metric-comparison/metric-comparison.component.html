@@ -53,7 +53,10 @@
                         </div>
 
                         <div class="btn-control-box">
-                            <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
+                            <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                    (click)="addShortList(product)">+ Shortlist
+                            </button>
+                            <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
                                     (click)="getComment(product, pComment)"
                                     placement="top auto" [ngbPopover]="popCommentContent">Add comment
@@ -234,7 +237,10 @@
 
                 <th class="th-control" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="btn-control-box">
-                        <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
+                        <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                (click)="addShortList(product)">+ Shortlist
+                        </button>
+                        <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
                                 (click)="getComment(product,pComment)"
                                 [ngbPopover]="popCommentContent">Add comment

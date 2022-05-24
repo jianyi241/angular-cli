@@ -20,6 +20,7 @@ import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
 import {ConfigService} from "../../../service/config.service";
+import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -200,23 +201,32 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     removePlatform(product: ComparisonProductVo) {
         product.showFlag = false;
-        product.shComparisonId = this.reviewService.comparison.id;
-        this.reviewRepository.changeProductStatus(product).subscribe(res => {
-            if (res.statusCode != 200) {
-                product.showFlag = true;
-                this.toastRepository.showDanger(res.msg);
-            }
-        })
+        this.changeProduct(product, (data) => {
+            product.id = data.id;
+        }, () => {
+            product.showFlag = true;
+        });
     }
 
     resetPlatform(product: ComparisonProductVo) {
         product.showFlag = true;
-        product.shComparisonId = this.reviewService.comparison.id
-        this.reviewRepository.changeProductStatus(product).subscribe(res => {
+        this.changeProduct(product, (data) => {
+            product.id = data.id;
+        }, () => {
+            product.showFlag = false;
+        });
+    }
+
+    changeProduct(product: ComparisonProductVo, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
+        product.shVersionId = this.reviewService.comparison.modelVersionId;
+        product.shComparisonId = this.reviewService.comparison.id;
+        this.reviewRepository.changeProduct(product).subscribe(res => {
             if (res.statusCode != 200) {
-                product.showFlag = true;
                 this.toastRepository.showDanger(res.msg);
+                error && error();
+                return;
             }
+            callback && callback(res.data);
         })
     }
 
