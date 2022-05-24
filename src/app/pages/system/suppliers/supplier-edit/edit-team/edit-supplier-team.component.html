@@ -30,28 +30,6 @@
 
         <div class="form-group-custom">
             <div class="form-group-left">
-                <label class="control-label">Account type</label>
-                <p class="info">Update your account type</p>
-            </div>
-
-            <div class="form-group-right">
-
-                <div class="form-group">
-                    <div class="radio-box radio-box-top-2 radio-box-small"
-                         *ngFor="let supplierRole of supplierRoles; let roleIndex = index">
-                        <input type="radio" name="accountType" id="supplierRole{{roleIndex}}" [value]="supplierRole.id"
-                               [(ngModel)]="team.roleId"/>
-                        <label for="supplierRole{{roleIndex}}">
-                            {{supplierRole.roleName}}
-                            <div class="info">{{supplierRole.roleDesc}}</div>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group-custom">
-            <div class="form-group-left">
                 <label class="control-label">Profile photo</label>
                 <p class="info">This helps your fellow team members recognise you</p>
             </div>
@@ -119,16 +97,66 @@
                     <label class="control-label control-label-custom">
                         <div>Job title<span class="label-required">*</span></div>
                     </label>
-                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select job title" dropdownPosition="bottom">
-                        <ng-option [value]="title.id" *ngFor="let title of jobTitles">{{title.roleName}}</ng-option>
-                    </ng-select>
+                    <input type="text" class="form-control" placeholder="Enter your job title"
+                           [(ngModel)]="team.email"/>
+<!--                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select job title" dropdownPosition="bottom">-->
+<!--                        <ng-option [value]="title.id" *ngFor="let title of jobTitles">{{title.roleName}}</ng-option>-->
+<!--                    </ng-select>-->
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label control-label-custom">
+                        <div>Contact number<span class="label-required">*</span></div>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your contact number"
+                           [(ngModel)]="team.mobile"/>
                 </div>
             </div>
         </div>
 
         <div class="form-group-custom">
             <div class="form-group-left">
-                <label class="control-label">Product access</label>
+                <label class="control-label">Account type</label>
+                <p class="info">Update your account type</p>
+            </div>
+
+            <div class="form-group-right">
+
+                <div class="form-group">
+                    <div class="radio-box radio-box-top-2 radio-box-small"
+                         *ngFor="let supplierRole of supplierRoles; let roleIndex = index">
+                        <input type="radio" name="accountType" id="supplierRole{{roleIndex}}" [value]="supplierRole.id"
+                               [(ngModel)]="team.roleId"/>
+                        <label for="supplierRole{{roleIndex}}">
+                            {{supplierRole.roleName}}
+                            <div class="info">{{supplierRole.roleDesc}}</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group-custom" *ngIf="showPermissions()">
+            <div class="form-group-left">
+                <label class="control-label">Permissions</label>
+                <p class="info">Update permissions</p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="permissions1" id="permissions1" />
+                        <label for="permissions1">Ability to Edit Supplier info</label>
+                    </div>
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="permissions2" id="permissions2" />
+                        <label for="permissions2">Ability to Edit Platform Manager</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Associated products</label>
                 <p class="info">Choose which of your products should feature this BDM's contact details</p>
             </div>
 

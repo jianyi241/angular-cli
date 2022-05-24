@@ -14,6 +14,7 @@ import {RoleInfo} from "../../../../../model/po/roleInfo";
 import {ProductAccessVo} from "../../../../../model/vo/productAccessVo";
 import {forkJoin, Observable} from "rxjs";
 import {HttpResult} from "../../../../../model/common/http-result";
+import {RoleType} from "../../../../../model/enums/role-type";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -71,6 +72,19 @@ export class EditSupplierTeamComponent implements OnInit {
                 product.checked = this.team.supplierUserProductVoList.some(sp => sp.shProductId == product.id);
             })
         });
+    }
+
+    showPermissions(): boolean {
+        const role = this.supplierRoles.find(item => item.id === this.team.roleId)
+        if (role) {
+            if (role.roleName === this.configService.roles.administrator || role.roleName === this.configService.roles.premiumUser) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
 
     getTeamDetail(): Observable<HttpResult<TeamInfo>> {
