@@ -25,6 +25,8 @@ export class IntegerComponent implements OnInit {
     @Input()
     required: boolean;
 
+    focusValue: string;
+
     constructor(private focusService: FocusService) {
     }
 
@@ -34,11 +36,15 @@ export class IntegerComponent implements OnInit {
     blur(): void {
         this.focusService.deleteFocus();
         let propValue = this.prop.productPropVo.propValue;
+        if (propValue === this.focusValue) {
+            return;
+        }
         this.prop.productPropVo.propValue = Number.isNaN(propValue) ? '' : propValue;
         this.change.emit(this.prop);
     }
 
     focus(): void {
+        this.focusValue = this.prop.productPropVo.propValue;
         this.focusService.addFocus();
     }
 }

@@ -27,6 +27,7 @@ export class LongTextComponent implements OnInit {
     prop_class: string;
     @Input()
     required: boolean;
+    focusValue: string;
 
     constructor(private focusService: FocusService) {
 
@@ -38,10 +39,14 @@ export class LongTextComponent implements OnInit {
 
     blur(): void {
         this.focusService.deleteFocus();
+        if (this.focusValue === this.prop.productPropVo.propValue) {
+            return;
+        }
         this.change.emit(this.prop);
     }
 
     focus(): void {
+        this.focusValue = this.prop.productPropVo.propValue;
         this.focusService.addFocus();
     }
 }

@@ -24,6 +24,7 @@ export class ShortTextComponent implements OnInit {
     required: boolean;
     @Input()
     change: EventEmitter<PropertyVo>;
+    focusValue: string;
 
     constructor(private focusService: FocusService) {
     }
@@ -33,10 +34,14 @@ export class ShortTextComponent implements OnInit {
 
     blur(): void {
         this.focusService.deleteFocus();
+        if (this.focusValue === this.prop.productPropVo.propValue) {
+            return;
+        }
         this.change.emit(this.prop);
     }
 
     focus(): void {
+        this.focusValue = this.prop.productPropVo.propValue;
         this.focusService.addFocus();
     }
 }
