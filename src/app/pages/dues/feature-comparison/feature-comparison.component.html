@@ -7,8 +7,12 @@
             <div class="title">Step 2 - Feature review</div>
             <div class="filter-content">
                 <div class="switch-button xs-ml-16">
-                    <div class="switch-text" [ngClass]="{'active': !hideRemovePlatformFlag}" (click)="hideRemovePlatformFlag = false">All</div>
-                    <div class="switch-text" [ngClass]="{'active': hideRemovePlatformFlag}" (click)="hideRemovePlatformFlag = true">Hide removed platforms</div>
+                    <div class="switch-text" [ngClass]="{'active': !hideRemovePlatformFlag}"
+                         (click)="hideRemovePlatformFlag = false">All
+                    </div>
+                    <div class="switch-text" [ngClass]="{'active': hideRemovePlatformFlag}"
+                         (click)="hideRemovePlatformFlag = true">Hide removed platforms
+                    </div>
                 </div>
 
                 <!--            <div class="switch-button xs-ml-16">-->
@@ -17,8 +21,12 @@
                 <!--            </div>-->
 
                 <div class="switch-button xs-ml-16">
-                    <div class="switch-text" [ngClass]="{'active': !hideCommonPropFlag}" (click)="hideCommonPropFlag = false">All</div>
-                    <div class="switch-text" [ngClass]="{'active': hideCommonPropFlag}" (click)="hideCommonPropFlag = true">Hide common features</div>
+                    <div class="switch-text" [ngClass]="{'active': !hideCommonPropFlag}"
+                         (click)="hideCommonPropFlag = false">All
+                    </div>
+                    <div class="switch-text" [ngClass]="{'active': hideCommonPropFlag}"
+                         (click)="hideCommonPropFlag = true">Hide common features
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,8 +45,10 @@
                     </div>
                 </th>
 
-                <th class="th-brand" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList">
-                    <div class="th-brand-box" [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
+                <th class="th-brand" [hidden]="hideByFlag(product)"
+                    *ngFor="let product of compareData.comparisonProductVoList">
+                    <div class="th-brand-box"
+                         [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
@@ -59,36 +69,51 @@
                             <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
                                     (click)="addShortList(product)">+ Shortlist
                             </button>
-                            <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
+                            <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                    #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
                                     (click)="getComment(product, pComment)"
                                     placement="top auto" [ngbPopover]="popCommentContent">Add comment
                             </button>
                             <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
-                                <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
+                                <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)"
+                                      *ngIf="product.showFlag"></span>
                                 <!-- reset icon-->
-                                <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
+                                <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)"
+                                      *ngIf="!product.showFlag"></span>
                             </button>
 
                             <ng-template #popCommentContent>
                                 <div class="comment-popover">
                                     <div class="title">Add a comment</div>
 
-                                    <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
+                                    <textarea class="form-control xs-mb-16"
+                                              [(ngModel)]="product.comparisonComment.comment"></textarea>
 
                                     <div class="comment-footer">
                                         <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                                 (click)="pComment.close()">Cancel
                                         </button>
-                                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComment(product, pComment)">Save</button>
+                                        <button class="btn btn-block btn-purple tx-16 xs-ml-8"
+                                                (click)="saveComment(product, pComment)">Save
+                                        </button>
                                     </div>
                                 </div>
                             </ng-template>
                         </div>
 
-                        <!--                    <div class="tip-message tip-success">-->
-                        <!--                       <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist-->
-                        <!--                    </div>-->
+                        <div class="tip-message tip-success" *ngIf="product.shortFlag && product.showFlag && product.checked">
+                            <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist
+                        </div>
+
+                        <div class="tip-message tip-danger" *ngIf="product.essential && product.showFlag">
+                            <span class="icon-block icon-info-red icon-16 xs-mr-4"></span> Missing essential
+                            features
+                        </div>
+
+                        <div class="tip-message tip-delete" *ngIf="!product.showFlag">
+                            <span class="icon-block icon-close-circle-white icon-16 xs-mr-4"></span> Removed
+                        </div>
 
                     </div>
                 </th>
@@ -129,7 +154,8 @@
                                 </div>
                             </td>
 
-                            <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList"
+                            <td [hidden]="hideByFlag(product)"
+                                *ngFor="let product of compareData.comparisonProductVoList"
                                 [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}"></td>
                         </tr>
                         </tbody>
@@ -146,7 +172,8 @@
                                     </div>
                                 </td>
 
-                                <td class="content-text" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList"
+                                <td class="content-text" [hidden]="hideByFlag(product)"
+                                    *ngFor="let product of compareData.comparisonProductVoList"
                                     [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
                                     <span class="icon-block icon-18 {{getChecked(prop.id, product)}}"></span>
                                     <ng-template #popContent>
@@ -176,20 +203,24 @@
                 <tfoot>
                 <th></th>
 
-                <th class="th-control" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList">
+                <th class="th-control" [hidden]="hideByFlag(product)"
+                    *ngFor="let product of compareData.comparisonProductVoList">
                     <div class="btn-control-box">
                         <button *ngIf="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
                                 (click)="addShortList(product)">+ Shortlist
                         </button>
-                        <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
+                        <button [hidden]="!product.shortFlag" class="btn btn-outline-purple-light btn-edit"
+                                #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
                                 (click)="getComment(product,pComment)"
                                 [ngbPopover]="popCommentContent">Add comment
                         </button>
                         <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
-                            <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
+                            <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)"
+                                  *ngIf="product.showFlag"></span>
                             <!-- reset icon-->
-                            <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
+                            <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)"
+                                  *ngIf="!product.showFlag"></span>
                         </button>
                     </div>
 
@@ -197,13 +228,16 @@
                         <div class="comment-popover">
                             <div class="title">Add a comment</div>
 
-                            <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
+                            <textarea class="form-control xs-mb-16"
+                                      [(ngModel)]="product.comparisonComment.comment"></textarea>
 
                             <div class="comment-footer">
                                 <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                         (click)="pComment.close()">Cancel
                                 </button>
-                                <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComment(product, pComment)">Save</button>
+                                <button class="btn btn-block btn-purple tx-16 xs-ml-8"
+                                        (click)="saveComment(product, pComment)">Save
+                                </button>
                             </div>
                         </div>
                     </ng-template>

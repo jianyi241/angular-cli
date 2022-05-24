@@ -83,9 +83,9 @@
                             </ng-template>
                         </div>
 
-                        <!--                    <div class="tip-message tip-success">-->
-                        <!--                       <span class="icon-block icon-checked-white icon-16 xs-mr-4"></span> Added to shortlist-->
-                        <!--                    </div>-->
+                        <div class="tip-message tip-delete" *ngIf="!product.showFlag">
+                            <span class="icon-block icon-close-circle-white icon-16 xs-mr-4"></span> Removed
+                        </div>
 
                     </div>
                 </th>

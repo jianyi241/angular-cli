@@ -21,6 +21,7 @@ import {ComparisonCommentInfo} from "../po/comparisonCommentInfo";
  */
 export class ComparisonProductVo extends ComparisonProductInfo{
     checked: boolean = true;
+    essential: boolean = true;
     attachmentVo?: Attachment;
     productPropVoList?: Array<ProductPropInfo> = new Array<ProductPropInfo>();
     comparisonComment: ComparisonCommentInfo;

@@ -111,12 +111,15 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             this.compareData = Object.assign(this.compareData, res.data);
             //检查当前项目是否存在uncheck
             if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
-                let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
+                let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []);
+                let anyEssential = props.some(p => !p.essential);
+                let propIds = props.map(p => p.id);
                 this.compareData.comparisonProductVoList.forEach(p => {
+                    p.essential = anyEssential;
                     if (p.productPropVoList && p.productPropVoList.length > 0) {
                         let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
                         //对比featureIds 和 productPropIds
-                        let idCheck = props.some(id => !prodPropIds.includes(id));
+                        let idCheck = propIds.some(id => !prodPropIds.includes(id));
                         if (!idCheck) {
                             let valueCheck = p.productPropVoList.some(pp => pp.propValue != 'yes');
                             p.checked = !valueCheck;
