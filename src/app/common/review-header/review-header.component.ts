@@ -19,7 +19,7 @@ import {ToastRepository} from "../../repository/toast-repository";
 export class ReviewHeaderComponent implements OnInit {
     public isScrollFixed: boolean;
 
-    constructor(private router: Router,
+    constructor(public router: Router,
                 private activatedRoute: ActivatedRoute,
                 private toastRepository: ToastRepository,
                 public reviewService: ReviewService,

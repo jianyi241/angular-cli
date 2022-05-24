@@ -14,7 +14,6 @@ import {ProductAccessVo} from "../model/vo/productAccessVo";
 import {Page} from "../model/vo/page";
 import {ProductCondition} from "../model/condition/product-condition";
 import PlatformView from "../model/po/platformView";
-import PlatformOverview from "../model/po/platformOverview";
 
 @Injectable({
     providedIn: 'root'
@@ -29,8 +28,9 @@ export class PlatformRepository {
         return this.http.get<HttpResult<Array<ProductInfo>>>(environment.baseURL + `/product/getProductList`);
     }
 
-    getAllProduct(): Observable<HttpResult<Array<ProductAccessVo>>> {
-        return this.http.get<HttpResult<Array<ProductAccessVo>>>(environment.baseURL + `/product/queryAllProduct`);
+    getAllProduct(companyId?: string): Observable<HttpResult<Array<ProductAccessVo>>> {
+        let url = companyId ? `/product/queryAllProduct/${companyId}` : `/product/queryAllProduct`;
+        return this.http.get<HttpResult<Array<ProductAccessVo>>>(environment.baseURL + url);
     }
 
     groupAndPropList(productId: string): Observable<HttpResult<Array<GroupInfo>>> {

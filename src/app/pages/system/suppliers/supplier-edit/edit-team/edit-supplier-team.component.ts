@@ -14,7 +14,6 @@ import {RoleInfo} from "../../../../../model/po/roleInfo";
 import {ProductAccessVo} from "../../../../../model/vo/productAccessVo";
 import {forkJoin, Observable} from "rxjs";
 import {HttpResult} from "../../../../../model/common/http-result";
-import {RoleType} from "../../../../../model/enums/role-type";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -95,7 +94,7 @@ export class EditSupplierTeamComponent implements OnInit {
     }
 
     getAllProduct(): Observable<HttpResult<Array<ProductAccessVo>>> {
-        return this.platformRepository.getAllProduct()
+        return this.platformRepository.getAllProduct(this.team.companyId);
     }
 
     getSupplierRole(): void {
