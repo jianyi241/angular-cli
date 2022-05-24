@@ -136,8 +136,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.toastRepository.showSuccess('Save successfully.');
-            callback && callback();
+            callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
         });
     }
 
