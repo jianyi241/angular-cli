@@ -2,12 +2,9 @@
     <div class="head-left">
         <a class="logo" [routerLink]="['/advice-review/review-list/list-view']">
             <img src="./assets/img/logo_black.png"/>
-            <span class="text"><span
-                    class="tx-bold">{{dueService.due.userName}}</span> {{this.dueService.due.productName ? 'of ' + this.dueService.due.productName : ''}} </span>
-            <span class="text02">{{this.dueService.due.adviserName ? 'for' : ''}}
-                <span class="tx-bold">{{this.dueService.due.adviserName}}</span>
-                {{this.dueService.due.practiceName ? 'from ' + this.dueService.due.practiceName : ''}}
-            </span>
+            <span class="text">
+                <span class="tx-bold">{{dueService.due.userName}}</span>
+                {{this.dueService.due.practiceName ? 'of ' + this.dueService.due.practiceName : ''}} </span>
         </a>
     </div>
 
