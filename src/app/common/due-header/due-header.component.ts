@@ -30,6 +30,9 @@ export class DueHeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.dueService.due.clientId = params['clientId'];
+        })
         let comparisonId = this.activatedRoute?.firstChild?.snapshot?.params['id'];
         if (comparisonId && comparisonId != Constants.NON_ID) {
             this.reviewRepository.getCompareDetail(comparisonId).subscribe(res => {

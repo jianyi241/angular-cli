@@ -84,4 +84,7 @@ export class AddClientComponent implements OnInit {
         this.router.navigateByUrl('/advice-review/review-list/client')
     }
 
+    startReview() {
+        this.router.navigateByUrl(`/due/due-setup/${Constants.NON_ID}?clientId=${this.clientId}`);
+    }
 }
