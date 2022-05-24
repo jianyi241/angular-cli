@@ -81,9 +81,20 @@
                                     <ul>
                                         <li [hidden]="prop.compChecked" *ngFor="let prop of subGroup.propertyVoList"
                                             (click)="selectProp(prop)">
+
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple" [hidden]="!prop.description"></i>
+                                                <i class="icon-block icon-15 icon-info-circle-purple" style="z-index: 2;" appPopoverCustom></i>
+                                                <div class="popover-custom popover table-cell-popover bs-popover-right">
+                                                    <div class="arrow"></div>
+                                                    <div class="popover-body">
+                                                        <div class="cell-popover">
+                                                            <span class="icon-block icon-close icon-13"></span>
+                                                            <div class="info">T+2 settlement available on managed funds</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <!--<button (click)="essential(prop, $event)"
                                                     [ngClass]="{'tx-yellow': prop.essential}">Essential
@@ -104,7 +115,16 @@
                                             (click)="unSelectProp(prop)">
                                             <div class="text">
                                                 <p>{{prop.name}}</p>
-                                                <i class="icon-block icon-15 icon-info-circle-purple"></i>
+                                                <i class="icon-block icon-15 icon-info-circle-purple" style="z-index: 2;" appPopoverCustom></i>
+                                                <div class="popover-custom popover table-cell-popover bs-popover-right">
+                                                    <div class="arrow"></div>
+                                                    <div class="popover-body">
+                                                        <div class="cell-popover">
+                                                            <span class="icon-block icon-close icon-13"></span>
+                                                            <div class="info">T+2 settlement available on managed funds</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <!--<button (click)="essential(prop, $event)"
                                                     [ngClass]="{'tx-yellow': prop.essential}">Essential
