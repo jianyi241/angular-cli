@@ -16,11 +16,6 @@
                 <!--                <div class="switch-text active">All</div>-->
                 <!--                <div class="switch-text">Hide non-essential features</div>-->
                 <!--            </div>-->
-
-                <div class="switch-button xs-ml-16">
-                    <div class="switch-text">All</div>
-                    <div class="switch-text active">Hide common features</div>
-                </div>
             </div>
         </div>
 
@@ -36,7 +31,7 @@
                 </th>
 
                 <th class="th-brand bg-light" [ngStyle]="{'width.%':100/compareData.comparisonProductVos.length}"  [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
-                    <div class="th-brand-box">
+                    <div class="th-brand-box" [ngClass]="{'bg-gray': hidClassFlag(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
@@ -93,7 +88,7 @@
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                             </div>
                         </td>
-                        <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
+                        <td [hidden]="hideByFlag(product)" [ngClass]="{'bg-gray': hidClassFlag(product)}" *ngFor="let product of compareData.comparisonProductVos"></td>
                     </tr>
                     </tbody>
 
@@ -109,12 +104,12 @@
                                     </div>
                                 </td>
 
-                                <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                     <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                         <div appShowMore>
                                             {{getProductPropValue(prop, product.productPropVoList)}}
                                         </div>
-                                        <span class="more-link bg-light" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                        <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
                                         <ng-template #popContent>
                                             <div class="cell-popover">
                                                 <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -125,7 +120,7 @@
                                     <div class="detail-content"
                                          *ngIf="prop.type == configService.propType.longText">
                                         <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                        <span class="more-link bg-light" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                        <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
                                         <ng-template #popContent>
                                             <div class="cell-popover">
                                                 <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -167,8 +162,7 @@
                                         <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                                     </div>
                                 </td>
-                                <td class="bg-light"></td>
-                                <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
+                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                             </tr>
                             </tbody>
                             <ng-container *ngFor="let prop of group.propertyVoList; let propIndex = index">
@@ -182,12 +176,12 @@
                                         </div>
                                     </td>
 
-                                    <td class="bg-light" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                                    <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                             <div appShowMore>
                                                 {{getProductPropValue(prop, product.productPropVoList)}}
                                             </div>
-                                            <span class="more-link bg-light" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
                                             <ng-template #popContent>
                                                 <div class="cell-popover">
                                                     <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -199,7 +193,7 @@
 
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.longText">
                                             <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                            <span class="more-link bg-light" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
                                             <ng-template #popContent>
                                                 <div class="cell-popover">
                                                     <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -233,7 +227,7 @@
                 <tfoot>
                 <th></th>
 
-                <th class="th-control" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                <th class="th-control" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="btn-control-box">
                         <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"

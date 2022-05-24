@@ -102,6 +102,10 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         return this.reviewService.comparison.mainPlatformId == product.shProductId;
     }
 
+    hidClassFlag(product) {
+        return !product.showFlag && product.shProductId != this.reviewService.comparison.mainPlatformId
+    }
+
     hideByFlag(product: ComparisonProductVo): boolean {
         if (this.isMainProduct(product)) {
             return false;
