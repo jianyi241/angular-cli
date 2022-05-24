@@ -145,7 +145,7 @@
 
                                 <td class="content-text" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList"
                                     [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
-                                    <span class="icon-block icon-18 {{getChecked(prop.id, product)}}"></span>
+                                    <span class="icon-block icon-39 {{getChecked(prop.id, product)}}"></span>
                                     <ng-template #popContent>
                                         <div class="cell-popover">
                                             <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -159,7 +159,7 @@
                                     </ng-template>
 
                                     <span class="icon-block icon-info-circle-purple icon-15"
-                                          [hidden]="getChecked(prop.id, product) == 'icon-close-red'"
+                                          [hidden]="getChecked(prop.id, product) == 'icon-close-red' || getChecked(prop.id, product) == 'icon-no-data'"
                                           (click)="openPop(prop.id, product)"
                                           #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
                                           placement="right auto" [ngbPopover]="popContent"></span>

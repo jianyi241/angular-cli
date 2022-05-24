@@ -32,6 +32,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     currentProdProp: ProductPropInfo = new ProductPropInfo();
     hideRemovePlatformFlag = false;
     hideCommonPropFlag = false;
+    hideNonEssential = false;
     initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
@@ -94,13 +95,18 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     getChecked(id, product: ProductVo): string {
         let prodProps = product.productPropVoList;
         if (prodProps.length == 0) {
+            return 'icon-no-data';
+        }
+        let hasYes = prodProps.some(p => p.shPropertyId == id && p.propValue == 'yes');
+        if (hasYes) {
+            return 'icon-checked-green';
+        }
+        let hasNo = prodProps.some(p => p.shPropertyId == id && p.propValue == 'no');
+        if (!hasNo) {
             return 'icon-close-red';
         }
-        let some = prodProps.some(p => p.shPropertyId == id && p.propValue == 'yes');
-        if (!some) {
-            return 'icon-close-red';
-        }
-        return 'icon-checked-green';
+        return 'icon-no-data';
+
     }
 
     compareList() {
@@ -194,12 +200,20 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     hideCommon(prop: PropertyInfo): boolean {
         let products = this.compareData.comparisonProductVoList;
-        let propProds = products.flatMap(p => p.productPropVoList);
+        let prodProps = products.filter(p => p.productPropVoList && p.productPropVoList.length > 0).map(p => p.productPropVoList);
+        if (prodProps.length < products.length) {
+            return false;
+        }
+        let propProds = prodProps.flat(1);
         if (propProds.length == 0) {
             return false;
         }
-        let some = propProds.some(p => p.shPropertyId != prop.id || (p.propValue == 'no' || !p.propValue));
+        let some = propProds.some(p => p.shPropertyId == prop.id && (p.propValue == 'no' || !p.propValue));
         return !some && this.hideCommonPropFlag;
+    }
+
+    hideEs(prop: PropertyInfo): boolean{
+        return !prop.essential && this.hideNonEssential;
     }
 
     removePlatform(product: ComparisonProductVo) {
@@ -268,6 +282,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             pComment.close();
         })
     }
+
 
 
 }

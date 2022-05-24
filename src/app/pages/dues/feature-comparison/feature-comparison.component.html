@@ -14,11 +14,14 @@
                          (click)="hideRemovePlatformFlag = true">Hide removed platforms
                     </div>
                 </div>
-
-                <!--            <div class="switch-button xs-ml-16">-->
-                <!--                <div class="switch-text active">All</div>-->
-                <!--                <div class="switch-text">Hide non-essential features</div>-->
-                <!--            </div>-->
+                <div class="switch-button xs-ml-16">
+                    <div class="switch-text" [ngClass]="{'active': !hideNonEssential}"
+                         (click)="hideNonEssential = false">All
+                    </div>
+                    <div class="switch-text" [ngClass]="{'active': hideNonEssential}"
+                         (click)="hideNonEssential = true">Hide non-essential features
+                    </div>
+                </div>
 
                 <div class="switch-button xs-ml-16">
                     <div class="switch-text" [ngClass]="{'active': !hideCommonPropFlag}"
@@ -161,7 +164,7 @@
                         </tbody>
                         <ng-container>
                             <tbody class="panel-content-{{groupIndex}}-{{subIndex}}">
-                            <tr [hidden]=" hideCommon(prop)" *ngFor="let prop of subGroup.propertyVoList">
+                            <tr [hidden]="hideCommon(prop) || hideEs(prop)" *ngFor="let prop of subGroup.propertyVoList">
                                 <td>
                                     <div class="content-title" [ngClass]="{'bg-red': hasEssential(prop)}"
                                          [title]="prop.name">
@@ -175,7 +178,7 @@
                                 <td class="content-text" [hidden]="hideByFlag(product)"
                                     *ngFor="let product of compareData.comparisonProductVoList"
                                     [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
-                                    <span class="icon-block icon-18 {{getChecked(prop.id, product)}}"></span>
+                                    <span class="icon-block icon-39 {{getChecked(prop.id, product)}}"></span>
                                     <ng-template #popContent>
                                         <div class="cell-popover">
                                             <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
@@ -189,7 +192,7 @@
                                     </ng-template>
 
                                     <span class="icon-block icon-info-circle-purple icon-15"
-                                          [hidden]="getChecked(prop.id, product) == 'icon-close-red'"
+                                          [hidden]="getChecked(prop.id, product) == 'icon-close-red' || getChecked(prop.id, product) == 'icon-no-data'"
                                           (click)="openPop(prop.id, product)"
                                           #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
                                           placement="right auto" [ngbPopover]="popContent"></span>
