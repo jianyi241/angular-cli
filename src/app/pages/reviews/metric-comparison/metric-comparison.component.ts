@@ -9,7 +9,7 @@ import {PropertyVo} from "../../../model/vo/PropertyVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {ComparisonProductVo} from "../../../model/vo/comparisonProductVo";
-import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
@@ -32,6 +32,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
+                private modalService: NgbModal,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
                 private saveService: SaveService,

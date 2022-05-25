@@ -59,7 +59,7 @@
                             <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
                                     (click)="getComment(product, pComment)"
-                                    placement="top auto" [ngbPopover]="popCommentContent">Add comment
+                                    placement="top auto" [ngbPopover]="popCommentContent">Edit comment
                             </button>
                             <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
                                 <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
@@ -69,7 +69,7 @@
 
                             <ng-template #popCommentContent>
                                 <div class="comment-popover">
-                                    <div class="title">Add a comment</div>
+                                    <div class="title">Edit a comment</div>
 
                                     <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
 
@@ -185,7 +185,7 @@
                         <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
                                 (click)="getComment(product,pComment)"
-                                [ngbPopover]="popCommentContent">Add comment
+                                [ngbPopover]="popCommentContent">Edit comment
                         </button>
                         <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
                             <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
@@ -196,7 +196,7 @@
 
                     <ng-template #popCommentContent>
                         <div class="comment-popover">
-                            <div class="title">Add a comment</div>
+                            <div class="title">Edit a comment</div>
 
                             <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
 

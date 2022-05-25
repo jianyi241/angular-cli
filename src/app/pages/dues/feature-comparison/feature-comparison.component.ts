@@ -198,6 +198,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         return !product.showFlag && product.shProductId != this.dueService.due.mainPlatformId
     }
 
+    shortClassFlag(product: ComparisonProductVo): boolean {
+        return product.shortFlag && product.checked && !product.essential && product.showFlag;
+    }
+
     hideCommon(prop: PropertyInfo): boolean {
         let products = this.compareData.comparisonProductVoList;
         let prodProps = products.filter(p => p.productPropVoList && p.productPropVoList.length > 0).map(p => p.productPropVoList);
