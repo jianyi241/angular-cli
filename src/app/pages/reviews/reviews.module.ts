@@ -20,6 +20,7 @@ import {MetricSelectionComponent} from './metric-selection/metric-selection.comp
 import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import {SummaryComponent} from "./summary/summary.component";
+import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -36,7 +37,8 @@ import {SummaryComponent} from "./summary/summary.component";
         MetricSelectionComponent,
         SummaryComponent,
         // EllipsisDirective,
-        DeselectFeaturesTipComponent],
+        DeselectFeaturesTipComponent,
+        PopoverCustomDirective],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
