@@ -1,4 +1,3 @@
-
 <div class="form-content">
     <div class="form-group-custom">
         <div class="form-group-left tx-blue" style="width: 100%;">
@@ -15,7 +14,7 @@
 
         <div class="form-group-right">
             <app-prop-view [model]="prop"
-                           [prop_class]="configService.getColorByStatus(prop.status, version.type)"
+                           [prop_class]="configService.getColorByStatus(prop.status, prop.productPropVo.status, version.type)"
                            [index]="groupIndex+'_'+propIndex"
                            [type]="prop.type"
                            [hidden]="configService.isArchive(prop.status, version.type)"

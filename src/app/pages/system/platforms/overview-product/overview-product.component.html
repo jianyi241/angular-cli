@@ -3,7 +3,7 @@
         <div class="form-group-left" style="width: 100%;">
             <label class="control-label">Basic information</label>
             <p class="info">
-<!--                This information will be displayed publicly-->
+                <!--                This information will be displayed publicly-->
                 This is company information that you can update anytime
             </p>
         </div>
@@ -18,7 +18,7 @@
         </div>
         <ng-container *ngIf="overview.propertyVoList.length > 0">
             <app-prop-view [model]="overview.propertyVoList[0]"
-                           [prop_class]="configService.getColorByStatus(overview.propertyVoList[0].status, version.type)"
+                           [prop_class]="configService.getColorByStatus(overview.propertyVoList[0].status, overview.propertyVoList[0].productPropVo.status, version.type)"
                            [index]="'0'"
                            [hidden]="configService.isArchive(overview.propertyVoList[0].status, version.type)"
                            [type]="configService.propType.attachment"
@@ -36,7 +36,7 @@
         </div>
         <ng-container *ngIf="overview.propertyVoList.length > 1">
             <app-prop-view [model]="overview.propertyVoList[1]"
-                           [prop_class]="configService.getColorByStatus(overview.propertyVoList[1].status, version.type)"
+                           [prop_class]="configService.getColorByStatus(overview.propertyVoList[1].status, overview.propertyVoList[1].productPropVo.status, version.type)"
                            [index]="'1'"
                            [hidden]="configService.isArchive(overview.propertyVoList[1].status, version.type)"
                            [type]="configService.propType.attachment"
@@ -57,7 +57,7 @@
             <ng-container *ngIf="overview.propertyVoList.length > 2">
                 <app-prop-view [model]="prop"
                                [hidden]="propIndex == 0 || propIndex == 1 || configService.isArchive(prop.status, version.type)"
-                               [prop_class]="configService.getColorByStatus(prop.status, version.type)"
+                               [prop_class]="configService.getColorByStatus(prop.status, prop.productPropVo.status, version.type)"
                                [index]="propIndex+''"
                                [type]="prop.type"
                                [required]="prop.freezeFieldName === 'platformName' || prop.freezeFieldName === 'platformWebsite' || prop.freezeFieldName === 'description'"

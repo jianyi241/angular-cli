@@ -116,7 +116,7 @@ export class ConfigService {
         if (this.currentUserService.isAdminUser()) {
             if (!status) return versionType === VersionType.Draft.value;
             return versionType === VersionType.Draft.value && status != 'Archive';
-        } else if (this.currentUserService.isSupplierUser()){
+        } else if (this.currentUserService.isSupplierUser()) {
             if (this.currentVersion.versionStatus === this.versionStatus.wait || this.currentVersion.versionStatus === this.versionStatus.waitPublish) {
                 return false
             }
@@ -133,7 +133,7 @@ export class ConfigService {
     }
 
     isWaitPublish(): boolean {
-        return  this.currentVersion.versionStatus === VersionStatus.WaitPublish.value
+        return this.currentVersion.versionStatus === VersionStatus.WaitPublish.value
     }
 
 
@@ -150,17 +150,17 @@ export class ConfigService {
         }
     }
 
-    getColorByStatus(status: string, versionType: string): string {
+    getColorByStatus(status: string, prodStatus: string, versionType: string): string {
         if (versionType === VersionType.Publish.value) return '';
-        switch (status) {
-            case 'Insert':
-            case 'Update':
-                return 'tx-blue';
-            case 'Archive':
-                return 'tx-red';
-            default:
-                return '';
+        let blueArr = ['Insert', 'Update'];
+        let redArr = ['Archive'];
+        if (blueArr.includes(status) || blueArr.includes(prodStatus)) {
+            return 'tx-blue';
         }
+        if (redArr.includes(status) || redArr.includes(prodStatus)) {
+            return 'tx-red';
+        }
+        return '';
     }
 
     //Archive
@@ -190,7 +190,7 @@ export class ConfigService {
         return [firstName, lastName].join(' ');
     }
 
-    editViewBtn(versionStatus: string, tabType: number,readyOnly: boolean=false) {
+    editViewBtn(versionStatus: string, tabType: number, readyOnly: boolean = false) {
         if (tabType === TabType.features.value) {
             return this.currentVersion.versionStatus !== VersionStatus.WaitPublish.value
         } else if (tabType === TabType.information.value) {

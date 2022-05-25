@@ -41,7 +41,7 @@
             <div class="form-sub-group" [hidden]="configService.isArchive(prop.status, version.type)"
                  *ngFor="let prop of subGroup.propertyVoList; let propIndex = index">
                 <div class="form-sub-left">
-                    <div class="title {{configService.getColorByStatus(prop.status, version.type)}}">{{prop.name}}</div>
+                    <div class="title {{configService.getColorByStatus(prop.status, prop.productPropVo.status, version.type)}}">{{prop.name}}</div>
                     <div class="text" [innerHTML]="prop.description"></div>
                 </div>
                 <div class="form-sub-right">

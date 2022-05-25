@@ -15,7 +15,7 @@
         <div class="form-group-right">
             <ng-container *ngIf="esg.propertyVoList.length > 0">
                 <app-prop-view [model]="prop"
-                               [prop_class]="configService.getColorByStatus(prop.status, version.type)"
+                               [prop_class]="configService.getColorByStatus(prop.status, prop.productPropVo.status, version.type)"
                                [index]="propIndex+''"
                                [type]="prop.type"
                                [hidden]="configService.isArchive(prop.status, version.type)"
