@@ -100,13 +100,14 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
             windowClass: 'tip-popup-modal',
             centered: true
         });
-        modalRef.componentInstance.title = 'Archive the supplier?';
-        modalRef.componentInstance.info = 'Archiving a supplier will remove the access of this supplier from all users. Only the admin can access archived supplier. \n' +
-            'Are you sure to archive this supplier?';
-        modalRef.componentInstance.btnText = 'Yes, archive it';
+        modalRef.componentInstance.title = `${this.supplierService.supplier.archiveFlag ? 'Unarchive' : 'Archive'} the supplier?`
+        modalRef.componentInstance.info = `${this.supplierService.supplier.archiveFlag ? 'Unarchive' : 'Archive'} a supplier will ${this.supplierService.supplier.archiveFlag ? 'bring back' : 'remove'} the access of this supplier from all users. ${this.supplierService.supplier.archiveFlag ? '' : 'Only the admin can access archived supplier.'}
+            Are you sure to ${this.supplierService.supplier.archiveFlag ? 'unarchive' : 'archive'} this supplier?`;
+        modalRef.componentInstance.btnText = `Yes, ${this.supplierService.supplier.archiveFlag ? 'unarchive' : 'archive'} it`
+        const msg = `${this.supplierService.supplier.name} has been ${this.supplierService.supplier.archiveFlag ? 'unarchived' : 'archived'}`
         modalRef.result.then((result) => {
-            this.supplierService.supplier.archiveFlag = true;
-            this.saveSupplier(false, `${this.supplierService.supplier.name} has been archived`);
+            this.supplierService.supplier.archiveFlag = !this.supplierService.supplier.archiveFlag;
+            this.saveSupplier(false, msg);
         }, (reason) => {
         });
     }

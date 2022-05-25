@@ -158,25 +158,25 @@
             </div>
         </div>
 
-        <div class="form-group-custom" *ngIf="currentUserService.isSupplierUser()">
-            <div class="form-group-left">
-                <label class="control-label">Permissions</label>
-                <p class="info">Update permissions</p>
-            </div>
+<!--        <div class="form-group-custom" *ngIf="currentUserService.isSupplierUser()">-->
+<!--            <div class="form-group-left">-->
+<!--                <label class="control-label">Permissions</label>-->
+<!--                <p class="info">Update permissions</p>-->
+<!--            </div>-->
 
-            <div class="form-group-right">
-                <div class="form-group">
-                    <div class="check-box check-box-purple xs-mb-24">
-                        <input type="checkbox" name="supplierInfo" id="supplierInfo" [(ngModel)]="currentUser.editSupplierFlag"/>
-                        <label for="supplierInfo">Ability to Edit Supplier info</label>
-                    </div>
-                    <div class="check-box check-box-purple xs-mb-24">
-                        <input type="checkbox" name="platformManager" id="platformManager" [(ngModel)]="currentUser.editPlatformFlag"/>
-                        <label for="platformManager">Ability to Edit Platform Manager</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--            <div class="form-group-right">-->
+<!--                <div class="form-group">-->
+<!--                    <div class="check-box check-box-purple xs-mb-24">-->
+<!--                        <input type="checkbox" name="supplierInfo" id="supplierInfo" [(ngModel)]="currentUser.editSupplierFlag"/>-->
+<!--                        <label for="supplierInfo">Ability to Edit Supplier info</label>-->
+<!--                    </div>-->
+<!--                    <div class="check-box check-box-purple xs-mb-24">-->
+<!--                        <input type="checkbox" name="platformManager" id="platformManager" [(ngModel)]="currentUser.editPlatformFlag"/>-->
+<!--                        <label for="platformManager">Ability to Edit Platform Manager</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="form-group-custom" *ngIf="currentUserService.isSupplierUser()">
             <div class="form-group-left">
@@ -202,55 +202,57 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <div class="check-box check-box-purple">
-                        <input type="checkbox" name="showFindBDM" id="showFindBDM"/>
+                        <input type="checkbox" name="showFindBDM" [(ngModel)]="currentUser.bdmFlag" id="showFindBDM"/>
                         <label for="showFindBDM">
                             <p style="font-weight: 400;">Show this user's details on the "Find a BDM" page</p>
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>Public contact number</div>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
-                           placeholder="Enter public contact number"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>Preferred contact hours</div>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
-                           placeholder="Enter preferred contact hours"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>Public email</div>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
-                           placeholder="Enter public email"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>LinkedIn profile URL</div>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
-                           placeholder="Enter linkedIn profile URL"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>Region</div>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="currentUser.email"
-                           placeholder="Enter region"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label control-label-custom">
-                        <div>Biography</div>
-                    </label>
-                    <ckeditor [config]="config"></ckeditor>
-                    <div class="tip-info">
-                        <span class="info-left">Maximum 3,000 characters</span>
-                        <span class="info-right">0 / 3,000</span>
+                <div *ngIf="currentUser.bdmFlag">
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Public contact number</div>
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="currentUser.supplierPublicDetailVo.contactNum"
+                               placeholder="Enter public contact number"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Preferred contact hours</div>
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="currentUser.supplierPublicDetailVo.contactHours"
+                               placeholder="Enter preferred contact hours"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Public email</div>
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="currentUser.supplierPublicDetailVo.contactEmail"
+                               placeholder="Enter public email"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>LinkedIn profile URL</div>
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="currentUser.supplierPublicDetailVo.linkedUrl"
+                               placeholder="Enter linkedIn profile URL"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Region</div>
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="currentUser.supplierPublicDetailVo.region"
+                               placeholder="Enter region"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom">
+                            <div>Biography</div>
+                        </label>
+                        <ckeditor [config]="config" [(ngModel)]="currentUser.supplierPublicDetailVo.biography"></ckeditor>
+                        <div class="tip-info">
+                            <span class="info-left">Maximum 3,000 characters</span>
+                            <span class="info-right">0 / 3,000</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -30,6 +30,20 @@ export class SupplierListComponent implements OnInit {
         })
     }
 
+    search():void {
+        this.condition.current = 1
+        this.getSupplierList()
+    }
+
+    sortList(column: string,type: number): void {
+        if (type === 0) {
+            this.condition.order = {column: 'name', asc: true}
+        } else {
+            this.condition.order = {column, asc: false}
+        }
+        this.getSupplierList()
+    }
+
     filterArchived() {
         if (this.condition.archived === null) {
              this.condition.archived = false

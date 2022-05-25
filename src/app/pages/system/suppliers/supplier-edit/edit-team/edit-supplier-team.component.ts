@@ -17,6 +17,8 @@ import {HttpResult} from "../../../../../model/common/http-result";
 import {RoleType} from "../../../../../model/enums/role-type";
 import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CurrentUser} from "../../../../../model/vo/currentUser";
+import {CurrentUserService} from "../../../../../service/current-user.service";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -42,7 +44,8 @@ export class EditSupplierTeamComponent implements OnInit {
                 private platformRepository: PlatformRepository,
                 public configService: ConfigService,
                 private teamRepository: TeamRepository,
-                private ngbModal: NgbModal) {
+                private ngbModal: NgbModal,
+                private currentUser: CurrentUserService) {
         this.team.companyType = 2;
     }
 

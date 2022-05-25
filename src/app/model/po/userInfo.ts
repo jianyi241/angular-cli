@@ -30,7 +30,7 @@ export class UserInfo extends BaseModel{
     planFlag?: boolean;
     accountType?: string;
     adviceRoleId?: string;
-    bdmFlag?: string;
+    bdmFlag?: boolean;
     practiceName?: string;
     practiceRoleId?: string;
     supplierName?: string;

@@ -9,7 +9,7 @@
 
         <div class="btn-control-group">
             <button class="btn text-danger" *ngIf="supplierService.supplier.id" (click)="archiveSupplier()">
-                Archive {{supplierService.supplier.name}}</button>
+                 {{(supplierService.supplier.archiveFlag ? 'Unarchive ' : 'Archive ') + supplierService.supplier.name}}</button>
             <button class="btn btn-outline-purple-light" [routerLink]="['/supplier/supplier-list']"
                     *ngIf="!supplierService.supplier.id">Cancel
             </button>
@@ -25,10 +25,12 @@
             <div class="tab-text" [routerLink]="['/supplier/supplier-edit/team/' + supplierService.supplier.id]"
                  routerLinkActive="active">Team <span
                     class="line"></span></div>
-            <div class="tab-text">Billing
+            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/billing/' + supplierService.supplier.id]"
+                 routerLinkActive="active">Billing
                 <span
                         class="line"></span></div>
-            <div class="tab-text">Invoices
+            <div class="tab-text" [routerLink]="['/supplier/supplier-edit/invoices/' + supplierService.supplier.id]"
+                 routerLinkActive="active">Invoices
                 <span class="line"></span></div>
         </ng-container>
     </div>

@@ -89,11 +89,11 @@ const routes: Routes = [
                         component: SupplierPlatformComponent,
                     },
                     {
-                        path: 'billing',
+                        path: 'billing/:id',
                         component: SupplierBillingComponent,
                     },
                     {
-                        path: 'invoices',
+                        path: 'invoices/:id',
                         component: SupplierInvoicesComponent,
                     },
                 ]

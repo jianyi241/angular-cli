@@ -46,11 +46,12 @@ export class ProfileComponent implements OnInit {
                 private router: Router,
                 private configService: ConfigService,
                 private saveService: SaveService) {
-        this.currentUser = {...this.currentUserService.currentUser()}
+        this.currentUser = Object.assign(this.currentUser, this.currentUserService.currentUser())
         this.currentRole = this.currentUserService.authorities()[0]
     }
 
     ngOnInit(): void {
+
         if (!this.currentUserService.isAdminUser()) {
             this.getAccountRoles();
             this.getPracticeRoles();
@@ -66,6 +67,9 @@ export class ProfileComponent implements OnInit {
     getAllSupplierProducts(): void {
         this.platformRepository.getAllProduct(this.currentUser.companyId).subscribe(res => {
             this.products = res.data
+            this.products.map(product => {
+                product.checked = this.currentUser.supplierUserProductVoList.some(sp => sp.shProductId == product.id);
+            })
         },err => {});
     }
 
@@ -134,6 +138,9 @@ export class ProfileComponent implements OnInit {
             this.toastRepository.showDanger("Email is required.");
             return;
         }
+        this.currentUser.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({
+            shProductId: p.id
+        }));
         if (this.saveService.saveCheck(environment.baseURL + `/user/v1/updateUserInfo`)) {
             return;
         }
