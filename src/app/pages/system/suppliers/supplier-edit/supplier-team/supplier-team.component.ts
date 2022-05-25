@@ -58,8 +58,19 @@ export class SupplierTeamComponent implements OnInit {
         })
     }
 
-    searchTeamPage(type?: string) {
-        this.condition.accountType = type || '';
+    searchTeamPage(type?: string | boolean) {
+        if (!type) {
+            this.condition.accountType = '';
+            this.condition.owner = false;
+        }
+        if (typeof type == 'string') {
+            this.condition.accountType = type;
+            this.condition.owner = false;
+        }
+        if (typeof type == 'boolean') {
+            this.condition.owner = type;
+            this.condition.accountType = '';
+        }
         this.getTeamList();
     }
 }
