@@ -10,7 +10,7 @@
                 <div class="col-head-right">
                     <div class="switch-button">
                         <div class="switch-text "
-                             [ngClass]="{'active' : condition.accountType == ''}"
+                             [ngClass]="{'active' : condition.accountType == '' && !condition.owner}"
                              (click)="searchTeamPage()">All
                         </div>
                         <div class="switch-text"
@@ -18,8 +18,8 @@
                              (click)="searchTeamPage(configService.roles.businessDevelopmentManager)">BDM
                         </div>
                         <div class="switch-text"
-                             [ngClass]="{'active' : condition.accountType == configService.roles.administrator}"
-                             (click)="searchTeamPage(configService.roles.administrator)">Owner
+                             [ngClass]="{'active' : condition.owner}"
+                             (click)="searchTeamPage(true)">Owner
                         </div>
                     </div>
 
