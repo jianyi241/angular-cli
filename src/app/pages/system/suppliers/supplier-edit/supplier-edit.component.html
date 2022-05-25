@@ -8,7 +8,7 @@
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger" *ngIf="supplierService.supplier.id" (click)="archiveSupplier()">
+            <button class="btn text-danger" *ngIf="supplierService.supplier.id && !currentUserService.isSupplierUser()" (click)="archiveSupplier()">
                  {{(supplierService.supplier.archiveFlag ? 'Unarchive ' : 'Archive ') + supplierService.supplier.name}}</button>
             <button class="btn btn-outline-purple-light" [routerLink]="['/supplier/supplier-list']"
                     *ngIf="!supplierService.supplier.id">Cancel
