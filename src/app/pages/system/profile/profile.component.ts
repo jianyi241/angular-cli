@@ -46,22 +46,34 @@ export class ProfileComponent implements OnInit {
                 private router: Router,
                 private configService: ConfigService,
                 private saveService: SaveService) {
-        this.currentUser = Object.assign(this.currentUser, this.currentUserService.currentUser())
-        this.currentRole = this.currentUserService.authorities()[0]
     }
 
     ngOnInit(): void {
-
+        this.getNewestUserInfo()
         if (!this.currentUserService.isAdminUser()) {
             this.getAccountRoles();
             this.getPracticeRoles();
             this.getTransferUsers();
-            if (this.currentUserService.isSupplierUser()) {
-                this.getAllSupplierProducts()
-            }
         } else {
             this.getAdminRoles();
         }
+    }
+
+    getNewestUserInfo(): void {
+        const openId = this.currentUserService.currentUser().openId
+        console.log('openId -- ', openId)
+        this.userRepository.getProfileUser(openId).subscribe(res => {
+            if (res.statusCode !== 200) {
+                return;
+            }
+            this.storage.setItem(Constants.CURRENT_USER, res.data);
+            this.currentUserService.setAuthentication(res.data);
+            this.currentUser = Object.assign(this.currentUser, this.currentUserService.currentUser())
+            this.currentRole = this.currentUserService.authorities()[0]
+            if (this.currentUserService.isSupplierUser()) {
+                this.getAllSupplierProducts()
+            }
+        },err => {})
     }
 
     getAllSupplierProducts(): void {

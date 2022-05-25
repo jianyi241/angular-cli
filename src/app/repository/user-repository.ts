@@ -87,4 +87,8 @@ export class UserRepository {
     transOwnerShip(ownerId: string): Observable<HttpResult<any>> {
         return this.http.put<HttpResult<any>>(`${environment.baseURL}/user/v1/transOwnership/${ownerId}`,{});
     }
+
+    getProfileUser(openId: string): Observable<HttpResult<Authentication>> {
+        return this.http.get<HttpResult<Authentication>>(`${environment.baseURL}/user/v1/getProfileUser/${openId}`);
+    }
 }
