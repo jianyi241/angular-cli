@@ -79,7 +79,10 @@
                         </td>
 
                         <td>
-                            <div class="td-cell">{{team.roleName}}</div>
+                            <div class="td-cell">
+                                <span *ngIf="team.owner">Owner</span>
+                                <span *ngIf="!team.owner">{{team.roleName}}</span>
+                            </div>
                         </td>
 
                         <td>
