@@ -13,6 +13,11 @@ import {Constants} from "../../../model/constants";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {Router} from "@angular/router";
 import {AdminRepository} from "../../../repository/admin-repository";
+import {RoleType} from "../../../model/enums/role-type";
+import {ConfigService} from "../../../service/config.service";
+import {UserInfo} from "../../../model/po/userInfo";
+import {ProductAccessVo} from "../../../model/vo/productAccessVo";
+import {PlatformRepository} from "../../../repository/platform-repository";
 
 @Component({
     selector: 'app-profile',
@@ -21,30 +26,47 @@ import {AdminRepository} from "../../../repository/admin-repository";
 })
 export class ProfileComponent implements OnInit {
     currentUser: CurrentUser = new CurrentUser();
+    currentRole: RoleInfo = new RoleInfo();
     accountRoles: Array<RoleInfo> = new Array<RoleInfo>();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
+    owners: Array<UserInfo> = new Array<UserInfo>();
+    products: Array<ProductAccessVo> = new Array<ProductAccessVo>();
+    ownerId?: string;
     uploading = false;
     config = {...Constants.EDITOR_CONFIG};
 
     constructor(public currentUserService: CurrentUserService,
-                private saveService: SaveService,
                 private storage: LocalStorageObServable,
                 private fileRepository: FileRepository,
                 private userRepository: UserRepository,
                 private toastRepository: ToastRepository,
                 private adviceRepository: AdviceRepository,
                 private adminRepository: AdminRepository,
-                private router: Router) {
+                private platformRepository: PlatformRepository,
+                private router: Router,
+                private configService: ConfigService,
+                private saveService: SaveService) {
         this.currentUser = {...this.currentUserService.currentUser()}
+        this.currentRole = this.currentUserService.authorities()[0]
     }
 
     ngOnInit(): void {
         if (!this.currentUserService.isAdminUser()) {
             this.getAccountRoles();
             this.getPracticeRoles();
+            this.getTransferUsers();
+            if (this.currentUserService.isSupplierUser()) {
+                this.getAllSupplierProducts()
+            }
         } else {
             this.getAdminRoles();
         }
+    }
+
+    getAllSupplierProducts(): void {
+        this.platformRepository.getAllProduct(this.currentUser.companyId).subscribe(res => {
+            this.products = res.data
+        },err => {});
     }
 
     getAccountRoles(): void {
@@ -90,6 +112,7 @@ export class ProfileComponent implements OnInit {
                     this.uploading = false;
                     if (res.statusCode == 200) {
                         this.currentUser.avatar = res.data[0];
+                        console.log('currentUser --> ', this.currentUser)
                     }
                 });
             });
@@ -125,4 +148,26 @@ export class ProfileComponent implements OnInit {
             this.currentUserService.setAuthentication(res.data);
         })
     }
+
+    getTransferUsers(): void {
+        this.userRepository.getTransferUsers().subscribe(res => {
+            this.owners = res.data.filter(item => item.id != this.currentUser.id)
+        },err => {})
+    }
+
+    transOwner(): void {
+        if (!this.ownerId) {
+            this.toastRepository.showDanger('owner is required')
+            return
+        }
+        this.userRepository.transOwnerShip(this.ownerId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'operation failed')
+            }
+            this.currentUser.owner = false
+            this.currentUserService.updatePrincipal(this.currentUser)
+            this.toastRepository.showSuccess('Transfer successfully')
+        },err => {})
+    }
+
 }

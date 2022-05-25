@@ -34,6 +34,11 @@ export class CurrentUserService {
         }
     }
 
+    updatePrincipal(user: any): void {
+        this._authentication.principal = user
+        localStorage.setItem(Constants.CURRENT_USER, JSON.stringify(this._authentication))
+    }
+
     fullName(): string {
         if (!this._authentication) {
             return;

@@ -14,6 +14,9 @@ import {RoleInfo} from "../../../../../model/po/roleInfo";
 import {ProductAccessVo} from "../../../../../model/vo/productAccessVo";
 import {forkJoin, Observable} from "rxjs";
 import {HttpResult} from "../../../../../model/common/http-result";
+import {RoleType} from "../../../../../model/enums/role-type";
+import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -38,7 +41,8 @@ export class EditSupplierTeamComponent implements OnInit {
                 private supplierRepository: SupplierRepository,
                 private platformRepository: PlatformRepository,
                 public configService: ConfigService,
-                private teamRepository: TeamRepository) {
+                private teamRepository: TeamRepository,
+                private ngbModal: NgbModal) {
         this.team.companyType = 2;
     }
 
@@ -148,7 +152,7 @@ export class EditSupplierTeamComponent implements OnInit {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
-        if (!this.team.practiceRoleId) {
+        if (!this.team.jobTitle) {
             this.toastRepository.showDanger('Job title is required.');
             return;
         }
@@ -169,4 +173,23 @@ export class EditSupplierTeamComponent implements OnInit {
             this.router.navigateByUrl(`/supplier/edit-team/${res.data.id}/${res.data.companyId}`);
         })
     }
+
+    archivedConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal.title = 'Archive this user?'
+        modalRef.componentInstance.modal.text = 'Archiving the user will disable their access to SuitabilityHub. Are you sure?'
+        modalRef.componentInstance.modal.cancelText = 'No, do nothing'
+        modalRef.componentInstance.modal.confirmText = 'Yes, archive'
+        modalRef.result.then(res => {
+            alert('confirm archived')
+        }, err => {
+            console.log('cancel')
+        })
+    }
+
+
 }

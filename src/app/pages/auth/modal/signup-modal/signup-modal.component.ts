@@ -7,7 +7,6 @@ import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {ExistedModalComponent} from "../existed-modal/existed-modal.component";
 import {Router} from "@angular/router";
-import {tsCreateElement} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
 
 @Component({
     selector: 'app-signup-modal',
@@ -38,13 +37,14 @@ export class SignupModalComponent implements OnInit {
                 },
                 practiceRole: {
                     required: 'Practice role is required.'
-                },
-                supplierName: {
-                    required: 'supplier name is required'
-                },
-                supplierRole: {
-                    required: 'Job title is required'
                 }
+                // ,
+                // supplierName: {
+                //     required: 'supplier name is required'
+                // },
+                // supplierRole: {
+                //     required: 'Job title is required'
+                // }
             },
             validateOn: 'submit'
         };
@@ -55,18 +55,18 @@ export class SignupModalComponent implements OnInit {
     }
 
     existedModal(): void {
-        if (!this.signup.updateNewsFlag) {
-            this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
-            return;
-        }
-        if (!this.signup.commFlag) {
-            this.toastRepository.showDanger("Please agree to have marketing information from SuitabilityHub sent to you");
-            return;
-        }
-        if (!this.signup.planFlag) {
-            this.toastRepository.showDanger("Please agree to join the research team and be invited to participate in occasional surveys");
-            return;
-        }
+        // if (!this.signup.updateNewsFlag) {
+        //     this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
+        //     return;
+        // }
+        // if (!this.signup.commFlag) {
+        //     this.toastRepository.showDanger("Please agree to have marketing information from SuitabilityHub sent to you");
+        //     return;
+        // }
+        // if (!this.signup.planFlag) {
+        //     this.toastRepository.showDanger("Please agree to join the research team and be invited to participate in occasional surveys");
+        //     return;
+        // }
         this.userRepository.signup(this.signup).subscribe(res => {
             if (res.statusCode != 200) {
                 if (res.statusCode == 201) {

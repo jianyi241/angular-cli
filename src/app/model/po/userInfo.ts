@@ -36,5 +36,9 @@ export class UserInfo extends BaseModel{
     supplierName?: string;
     validCode?: string;
     validToken?: string;
+    owner?: boolean;
+    jobTitle?: string;
+    editSupplierFlag?: boolean;
+    editPlatformFlag?: boolean;
 }
 

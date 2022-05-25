@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpResult} from '../model/common/http-result';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {InviteUser, LoginUser, RestPassword, VerifyCode} from "../model/user";
+import {InviteUser, LoginUser, RestPassword, SupplierSend, VerifyCode} from "../model/user";
 import {Authentication} from "../model/vo/authentication";
 import {CurrentUser} from "../model/vo/currentUser";
 import {SignupVo} from "../model/vo/signupVo";
@@ -74,5 +74,17 @@ export class UserRepository {
 
     getUsersByType(type: number): Observable<HttpResult<Array<UserInfo>>> {
         return this.http.get<HttpResult<Array<UserInfo>>>(environment.baseURL + `/user/v1/queryUsers/${type}`);
+    }
+
+    supplierRequestEmail(supplierSend: SupplierSend): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/email/supplierRequestEmail', supplierSend);
+    }
+
+    getTransferUsers(): Observable<HttpResult<Array<UserInfo>>> {
+        return this.http.get<HttpResult<Array<UserInfo>>>(environment.baseURL + '/user/v1/transferUsers');
+    }
+
+    transOwnerShip(ownerId: string): Observable<HttpResult<any>> {
+        return this.http.put<HttpResult<any>>(`${environment.baseURL}/user/v1/transOwnership/${ownerId}`,{});
     }
 }

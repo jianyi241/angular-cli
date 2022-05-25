@@ -117,7 +117,7 @@
                         <div>Job title<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter your job title" name="jobTitle"
-                           required [(ngModel)]="inviteUser.supplierName"/>
+                           required [(ngModel)]="inviteUser.jobTitle"/>
                 </div>
                 <div class="form-group form-group-sign xs-mb-32" *ngIf="inviteUser.companyType === 2">
                     <label class="control-label">
@@ -126,7 +126,7 @@
                         </div>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter your contact number" name="supplierName"
-                           required [(ngModel)]="inviteUser.supplierName"/>
+                           required [(ngModel)]="inviteUser.mobile"/>
                 </div>
                 <div class="form-group form-group-sign password-input">
                     <label class="control-label">
@@ -146,12 +146,12 @@
                            [(ngModel)]="inviteUser.confirmPassword"/>
                     <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                 </div>
-                <div *ngIf="inviteUser.companyType === 2">
+                <div>
                     <div class="check-box check-box-purple">
-                        <input type="checkbox" name="agree2" [(ngModel)]="inviteUser.bdmFlag"/>
+                        <input type="checkbox" name="agree2" [(ngModel)]="agree"/>
                         <label for="agree2">
-                            <p>I have read and agree to the <span class="tx-bold tx-purple">Terms & Conditions</span>
-                                and <span class="tx-bold tx-purple">Privacy Policy</span></p>
+                            <p>I have read and agree to the <a href="javascript:;" class="tx-bold tx-purple">Terms & Conditions</a>
+                                and <a href="javascript:;" class="tx-bold tx-purple">Privacy Policy</a></p>
                         </label>
                     </div>
                     <div class="check-box check-box-purple">
@@ -175,13 +175,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" name="agree3" id="agree3" [(ngModel)]="agree"/>
-                    <label for="agree3">
-                        <p>I have read and agree to the<a href="javascript:void(0);">Terms of service</a> and <a
-                                href="javascript:void(0);">Privacy policy.</a></p>
-                    </label>
-                </div>
+<!--                <div class="check-box check-box-purple">-->
+<!--                    <input type="checkbox" name="agree3" id="agree3" [(ngModel)]="agree"/>-->
+<!--                    <label for="agree3">-->
+<!--                        <p>I have read and agree to the<a href="javascript:void(0);">Terms of service</a> and <a-->
+<!--                                href="javascript:void(0);">Privacy policy.</a></p>-->
+<!--                    </label>-->
+<!--                </div>-->
 
                 <div class="form-button xs-mt-32">
                     <div class="submit">

@@ -17,6 +17,9 @@
                 <input type="text" placeholder="Search a keyword" class="form-control"/>
                 <span class="icon icon-search icon-16"></span>
             </div>
+            <div class="right-edit">
+                <div class="filter" (click)="filterArchived()">{{condition.archived === null ? 'Hide archived' : 'Show archived'}}</div>
+            </div>
         </div>
     </div>
 

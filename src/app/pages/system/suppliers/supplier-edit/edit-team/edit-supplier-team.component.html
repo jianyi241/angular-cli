@@ -10,12 +10,19 @@
 
         <div class="btn-control-group">
 <!--            <button class="btn tx-red">Archive Reynaud</button>-->
-            <button class="btn btn-outline-purple-light"
-                    [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">Cancel
+<!--            <button class="btn btn-outline-purple-light"-->
+<!--                    [routerLink]="['/supplier/supplier-edit/team/' + team.companyId]">Cancel-->
+<!--            </button>-->
+            <button class="btn tx-red" (click)="archivedConfirm()">Archive {{team.firstName}}
             </button>
-            <button class="btn btn-purple xs-ml-24" *ngIf="!team.id" (click)="save()">Create and send welcome email
+            <button class="btn btn-outline-purple-light" *ngIf="team.status == configService.userStatus.pending">Resend invite
             </button>
-            <button class="btn btn-purple xs-ml-24" *ngIf="team.id" (click)="save()">Save</button>
+            <button class="btn btn-outline-purple-light" *ngIf="team.status == configService.userStatus.active">Disable
+            </button>
+            <button class="btn btn-outline-purple-light" *ngIf="team.status == configService.userStatus.disable">Enable
+            </button>
+            <button class="btn btn-purple xs-ml-24"(click)="save()">{{!team.id ?'Create and send welcome email' : 'Save'}}
+            </button>
         </div>
     </div>
 
@@ -98,7 +105,7 @@
                         <div>Job title<span class="label-required">*</span></div>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter your job title"
-                           [(ngModel)]="team.email"/>
+                           [(ngModel)]="team.jobTitle"/>
 <!--                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select job title" dropdownPosition="bottom">-->
 <!--                        <ng-option [value]="title.id" *ngFor="let title of jobTitles">{{title.roleName}}</ng-option>-->
 <!--                    </ng-select>-->
@@ -144,12 +151,12 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <div class="check-box check-box-purple xs-mb-24">
-                        <input type="checkbox" name="permissions1" id="permissions1" />
-                        <label for="permissions1">Ability to Edit Supplier info</label>
+                        <input type="checkbox" name="supplierInfo" id="supplierInfo" [(ngModel)]="team.editSupplierFlag"/>
+                        <label for="supplierInfo">Ability to Edit Supplier info</label>
                     </div>
                     <div class="check-box check-box-purple xs-mb-24">
-                        <input type="checkbox" name="permissions2" id="permissions2" />
-                        <label for="permissions2">Ability to Edit Platform Manager</label>
+                        <input type="checkbox" name="platformManager" id="platformManager" [(ngModel)]="team.editPlatformFlag"/>
+                        <label for="platformManager">Ability to Edit Platform Manager</label>
                     </div>
                 </div>
             </div>
@@ -231,25 +238,25 @@
             </div>
         </div>
 
-        <div class="form-group-custom">
-            <div class="form-group-left">
-                <label class="control-label">Additional permissions</label>
-                <p class="info">Select any other permissions you’d like this user to access</p>
-            </div>
+<!--        <div class="form-group-custom">-->
+<!--            <div class="form-group-left">-->
+<!--                <label class="control-label">Additional permissions</label>-->
+<!--                <p class="info">Select any other permissions you’d like this user to access</p>-->
+<!--            </div>-->
 
-            <div class="form-group-right">
-                <div class="form-group">
-                    <div class="check-box check-box-purple check-box_with_info">
-                        <input type="checkbox" name="AdditionalPermissions" id="ProductManagement" checked/>
-                        <label for="ProductManagement">Product management
-                            <div class="info">This user can submit changes to products, including product profiles,
-                                features, business metrics and pricing.
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--            <div class="form-group-right">-->
+<!--                <div class="form-group">-->
+<!--                    <div class="check-box check-box-purple check-box_with_info">-->
+<!--                        <input type="checkbox" name="AdditionalPermissions" id="ProductManagement" checked/>-->
+<!--                        <label for="ProductManagement">Product management-->
+<!--                            <div class="info">This user can submit changes to products, including product profiles,-->
+<!--                                features, business metrics and pricing.-->
+<!--                            </div>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="form-group-custom">
             <div class="form-group-left">

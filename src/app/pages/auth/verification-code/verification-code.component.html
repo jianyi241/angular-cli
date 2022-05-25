@@ -27,8 +27,9 @@
                         trouble you can chat with us now.</p>
                     <button class="btn btn-purple btn-sign tx-16 btn-block xs-mt-68" (ngxFormSubmit)="verify()">Verify</button>
 
-                    <div class="bottom-tip">Didn’t receive the email?<a href="javascript:void(0);" class="xs-ml-8"
-                                                                         (click)="resend()">Resend</a></div>
+                    <div class="bottom-tip">Didn’t receive the email?
+                        <span *ngIf="getCountDown() > 0">{{getCountDown()}}</span>
+                        <a *ngIf="getCountDown() <= 0" href="javascript:void(0);" class="xs-ml-8" (click)="resend()">Resend</a></div>
                 </div>
             </form>
         </div>

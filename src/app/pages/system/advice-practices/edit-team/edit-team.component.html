@@ -94,6 +94,12 @@
                         <ng-option *ngFor="let practiceRole of practiceRoles" [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>
                     </ng-select>
                 </div>
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label control-label-custom">Account type</label>-->
+<!--                    <ng-select class="select-single" [(ngModel)]="team.practiceRoleId" placeholder="Select role" dropdownPosition="bottom">-->
+<!--                        <ng-option *ngFor="let practiceRole of practiceRoles" [value]="practiceRole.id">{{practiceRole.roleName}}</ng-option>-->
+<!--                    </ng-select>-->
+<!--                </div>-->
 
                 <div class="form-group">
                     <label class="control-label control-label-custom">ARN (Authorised Representative Number)</label>
@@ -120,12 +126,39 @@
                         </label>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
 
+        <div class="form-group-custom">
+            <div class="form-group-left">
+                <label class="control-label">Communication preferences</label>
+                <p class="info"></p>
+            </div>
+
+            <div class="form-group-right">
+                <div class="form-group">
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="CommunicationPreferences" id="SendProduct"
+                               [(ngModel)]="team.updateNewsFlag"/>
+                        <label for="SendProduct" class="tx-bold">Send me product updates and news from SuitabilityHub</label>
+                    </div>
+
+                    <div class="check-box check-box-purple xs-mb-24">
+                        <input type="checkbox" name="CommunicationPreferences" id="SendMarketing"
+                               [(ngModel)]="team.commFlag"/>
+                        <label for="SendMarketing" class="tx-bold">Send me marketing communications from SuitabilityHub</label>
+                    </div>
+
+                    <div class="check-box check-box-purple">
+                        <input type="checkbox" name="CommunicationPreferences" id="joinResearch"
+                               [(ngModel)]="team.planFlag"/>
+                        <label for="joinResearch" class="tx-bold">I want to join the research panel and be invited to occasional surveys</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

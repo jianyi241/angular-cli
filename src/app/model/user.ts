@@ -30,3 +30,10 @@ export class InviteUser extends UserInfo {
     practiceName: string;
     validToken: string;
 }
+
+export class SupplierSend {
+    email?: string;
+    name?: string;
+    phone?: string;
+    message?: string;
+}

@@ -24,8 +24,8 @@
             <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/team/' + practiceService.practice.id]"
                  routerLinkActive="active">Team <span class="line"></span>
             </div>
-            <div class="tab-text">Billing <span class="line"></span></div>
-            <div class="tab-text">Invoices <span class="line"></span></div>
+            <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/billing/' + practiceService.practice.id]" routerLinkActive="active">Billing <span class="line"></span></div>
+            <div class="tab-text" [routerLink]="['/advice-practices/advice-tab/invoices/' + practiceService.practice.id]" routerLinkActive="active">Invoices <span class="line"></span></div>
         </ng-container>
     </div>
 

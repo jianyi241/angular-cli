@@ -47,6 +47,10 @@ export class TeamInfo {
     receiveNewsFlag?: boolean;
     roleId?: string;
     roleName?: string;
+    // supplier
+    jobTitle?: string;
+    editSupplierFlag?: boolean;
+    editPlatformFlag?: boolean;
     /**
      * Active,Pending,Disable
      */

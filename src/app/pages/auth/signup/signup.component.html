@@ -75,14 +75,14 @@
                             </label>
                             <input type="text" class="form-control" name="account" required
                                    placeholder="Enter your name"
-                                   [(ngModel)]="signup.email"/>
+                                   [(ngModel)]="supplierSend.name"/>
                         </div>
                         <div class="form-group form-group-sign xs-mt-24">
                             <label class="control-label">
                                 <div>Email<span class="label-required">*</span></div>
                             </label>
                             <input type="text" class="form-control" name="account" required placeholder="Enter email"
-                                   [(ngModel)]="signup.email"/>
+                                   [(ngModel)]="supplierSend.email"/>
                         </div>
                         <div class="form-group form-group-sign xs-mt-24">
                             <label class="control-label">
@@ -90,13 +90,13 @@
                             </label>
                             <input type="text" class="form-control" name="account" required
                                    placeholder="Enter phone number"
-                                   [(ngModel)]="signup.email"/>
+                                   [(ngModel)]="supplierSend.phone"/>
                         </div>
                         <div class="form-group form-group-sign xs-mt-24">
                             <label class="control-label">
                                 <div>Message<span class="label-required">*</span></div>
                             </label>
-                            <textarea class="form-control xs-mb-16" [rows]="3" name="account" required placeholder="Enter message"></textarea>
+                            <textarea class="form-control xs-mb-16" [(ngModel)]="supplierSend.message" [rows]="3" name="account" required placeholder="Enter message"></textarea>
                         </div>
                     </div>
 
@@ -108,7 +108,7 @@
                                 and <a href="javascript:void(0);">Privacy policy.</a></p>
                         </label>
                     </div>
-                    <button (ngxFormSubmit)="signupModal()"
+                    <button (ngxFormSubmit)="continueSignup()"
                             class="btn btn-purple btn-sign tx-16 btn-block xs-mt-24">Continue
                     </button>
                     <div class="bottom-tip">Already have an account? <a [routerLink]="['../login']"

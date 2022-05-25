@@ -9,7 +9,7 @@ import {RoleInfo} from "../../../model/po/roleInfo";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ActivatedRoute, Router} from "@angular/router";
-import {VerifyCode} from "../../../model/user";
+import {SupplierSend, VerifyCode} from "../../../model/user";
 import {regPwd, pwdReg} from "../../../utils/regular";
 
 @Component({
@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
     verification: VerifyCode = new VerifyCode();
     practiceRoles: Array<RoleInfo> = new Array<RoleInfo>();
     supplierRoles: Array<RoleInfo> = new Array<RoleInfo>();
+    supplierSend: SupplierSend = new SupplierSend();
     agree = false;
     checkEmailUnique = false;
     pwdReg = pwdReg
@@ -69,6 +70,28 @@ export class SignupComponent implements OnInit {
         this.signup.companyType = 1
     }
 
+    continueSignup(): void {
+        if (!this.agree) {
+            this.toastRepository.showDanger("Please agree to the Terms of service and Privacy policy.");
+            return;
+        }
+        if (this.signup.companyType == 1) {
+            this.signupModal()
+        } else {
+           this.supplierSignup()
+        }
+    }
+
+    supplierSignup(): void {
+        this.userRepository.supplierRequestEmail(this.supplierSend).subscribe(res => {
+            console.log('')
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'operation failed')
+            }
+            this.toastRepository.showSuccess('Request sent. We will be reaching out within 5 business days. ')
+        },err => {})
+    }
+
     switchCompanyType(_companyType: number, formValidator): void {
         formValidator.reset();
         this.signup.companyType = _companyType;
@@ -87,10 +110,6 @@ export class SignupComponent implements OnInit {
     }
 
     signupModal(): void {
-        if (!this.agree) {
-            this.toastRepository.showDanger("Please agree to the Terms of service and Privacy policy.");
-            return;
-        }
         if (this.signup.confirmPassword != this.signup.password) {
             this.toastRepository.showDanger("Passwords don't match.");
             return;

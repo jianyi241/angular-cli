@@ -30,6 +30,16 @@ export class SupplierListComponent implements OnInit {
         })
     }
 
+    filterArchived() {
+        if (this.condition.archived === null) {
+             this.condition.archived = false
+        } else {
+            this.condition.archived = null
+        }
+        this.condition.current = 1
+        this.getSupplierList()
+    }
+
     pageChange(current: number): void {
         this.condition.current = current;
         this.getSupplierList();
@@ -39,3 +49,4 @@ export class SupplierListComponent implements OnInit {
         this.router.navigateByUrl(`/supplier/supplier-edit/overview/${supplier?.id || Constants.NON_ID}`)
     }
 }
+

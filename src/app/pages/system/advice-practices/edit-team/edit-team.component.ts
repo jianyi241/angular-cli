@@ -101,6 +101,7 @@ export class EditTeamComponent implements OnInit {
             return;
         }
         if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
+            console.log('saveCheck')
             return;
         }
         this.teamRepository.saveTeam(copyTeam).subscribe(res => {

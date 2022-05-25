@@ -58,25 +58,26 @@
                 {{currentUserService.fullName()}}
                 <img src="./assets/img/icon/icon-dropdown.svg"/>
             </div>
+            <div class="user-menu-mask" [hidden]="!showMenu" (click)="changeMenu()"></div>
             <div class="user-menu" *ngIf="showMenu">
-                <div class="menu-item" [routerLink]="['/profile']">
+                <div class="menu-item" (click)="toPage('/profile')">
                     <img src="./assets/img/icon/icon-profile.svg" class="menu-icon"/>
                     <div class="menu-name">Profile</div>
                 </div>
                 <ng-container *ngIf="currentUserService.isAdminUser()">
-                    <div class="menu-item" [routerLink]="['/admin/list']">
+                    <div class="menu-item" (click)="toPage('/admin/list')">
                         <img src="./assets/img/icon/icon-suitabilityhub-users.svg" class="menu-icon"/>
                         <div class="menu-name">SuitabilityHub users</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isSupplierUser()">
-                    <div class="menu-item" [routerLink]="['/supplier/supplier-edit/overview/' + currentUserService.currentUser().companyId]">
+                    <div class="menu-item" (click)="toPage('/supplier/supplier-edit/overview/' + currentUserService.currentUser().companyId)">
                         <img src="./assets/img/icon/icon-company.svg" class="menu-icon"/>
                         <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isAdviceUser()">
-                    <div class="menu-item" [routerLink]="['/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId]">
+                    <div class="menu-item" (click)="toPage('/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId)">
                         <img src="./assets/img/icon/icon-company.svg" class="menu-icon" />
                         <div class="menu-name">Users & subscription</div>
                     </div>

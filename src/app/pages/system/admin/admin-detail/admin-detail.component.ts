@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TeamInfo} from "../../../../model/po/teamInfo";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {SaveService} from "../../../../service/save.service";
-import {environment} from "../../../../../environments/environment";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
 import {AdminRepository} from "../../../../repository/admin-repository";
@@ -12,6 +11,8 @@ import {AdminInfo} from "../../../../model/po/adminInfo";
 import {Constants} from "../../../../model/constants";
 import {ConfigService} from "../../../../service/config.service";
 import {UserRepository} from "../../../../repository/user-repository";
+import {CurrentUser} from "../../../../model/vo/currentUser";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
     selector: 'app-admin-detail',
@@ -31,7 +32,10 @@ export class AdminDetailComponent implements OnInit {
                 private userRepository: UserRepository,
                 private saveService: SaveService,
                 private fileRepository: FileRepository,
-                private toastRepository: ToastRepository) {
+                private toastRepository: ToastRepository,
+                private router: Router,
+                private currentUserService: CurrentUserService
+                ) {
     }
 
     ngOnInit(): void {
@@ -64,7 +68,7 @@ export class AdminDetailComponent implements OnInit {
     getOperateText(): string {
         switch (this.adminInfo.status) {
             case this.configService.userStatus.active:
-                return "Disabled"
+                return `Disabled ${this.adminInfo.firstName} ${this.adminInfo.lastName}`
                 break;
             case this.configService.userStatus.pending:
                 return "Resend welcome email"
@@ -74,6 +78,11 @@ export class AdminDetailComponent implements OnInit {
             default:
                 return "Create and send welcome email"
         }
+    }
+
+    toForgot(): void {
+        // this.router.navigate(['/forgot'],{queryParams: {email: this.adminInfo.email}})
+        this.toastRepository.showSuccess(`Reset password link has been sent to ${this.adminInfo.email}.`)
     }
 
     getAdminDetail(): void {
@@ -172,5 +181,13 @@ export class AdminDetailComponent implements OnInit {
             }
             this.toastRepository.showSuccess(res.msg || 'Successful operation');
         })
+    }
+
+    disableAccountType(): boolean {
+        return this.currentUserService.currentUser().role === this.configService.roles.admin
+    }
+
+    showResetPassword(): boolean {
+        return this.adminInfo.status === this.configService.userStatus.active
     }
 }

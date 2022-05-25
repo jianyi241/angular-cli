@@ -82,6 +82,13 @@
                     <input type="text" class="form-control" [(ngModel)]="adminInfo.email"
                            placeholder="Enter your work email" (blur)="blurUpdate()"/>
                 </div>
+                <div class="form-group" *ngIf="showResetPassword()">
+                    <div class="label-wrapper">
+                        <label class="control-label control-label-custom">Password</label>
+                        <a href="javascript:;" (click)="toForgot()" class="tx-bold tx-purple">Reset password</a>
+                    </div>
+                    <input type="password" class="form-control" value="xxxxxxxxxx" disabled/>
+                </div>
             </div>
         </div>
         <div class="form-group-custom">
@@ -92,7 +99,7 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <div class="radio-box radio-box-top-2" *ngFor="let adminType of adminRoles; let roleIndex = index">
-                        <input type="radio" [value]="adminType.id" [(ngModel)]="adminInfo.adviceRoleId" name="adminType" id="adminType-{{roleIndex}}" (ngModelChange)="blurUpdate()"/>
+                        <input type="radio" [value]="adminType.id" [(ngModel)]="adminInfo.adviceRoleId" [disabled]="disableAccountType()" name="adminType" id="adminType-{{roleIndex}}" (ngModelChange)="blurUpdate()"/>
                         <label for="adminType-{{roleIndex}}">
                             {{adminType.roleName}}
                             <div class="info">{{adminType.roleDesc}}</div>

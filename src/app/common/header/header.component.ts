@@ -52,10 +52,12 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    changeMenu(): void {
-        this.showMenu = !this.showMenu
-        console.log('this.showMenu ===> ', this.showMenu)
+    toPage(pageUrl): void {
+        this.router.navigateByUrl(pageUrl)
+        this.changeMenu()
     }
 
-
+    changeMenu(): void {
+        this.showMenu = !this.showMenu
+    }
 }
