@@ -187,7 +187,7 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <div class="check-box check-box-purple xs-mb-24" *ngFor="let product of products">
-                        <input type="checkbox" [name]="product.name" [id]="product.id" [(ngModel)]="product.checked"/>
+                        <input type="checkbox" disabled [name]="product.name" [id]="product.id" [(ngModel)]="product.checked"/>
                         <label for="{{product.id}}">{{product.name}}</label>
                     </div>
                 </div>
