@@ -31,8 +31,8 @@
                     <div class="th-first">
                         <div class="th-bottom">
                             <div class="title" title="Features">Features</div>
-                            <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span
-                                    class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>
+<!--                            <button class="btn btn-outline-purple-light btn-hide">(32) Hidden <span-->
+<!--                                    class="icon-block icon-close-circle-purple icon-19 xs-ml-10"></span></button>-->
                         </div>
                     </div>
                 </th>
@@ -121,9 +121,8 @@
                                      [content-tag]="'tbody'" [panel]="panelContent"
                                      [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
                                     {{subGroup.name}}
-                                    ({{subGroup.propertyVoList.length}} / {{subGroup.totalPropCount}})
                                     <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
-                                    <p class="select-info">(5/22 features selected)</p>
+                                    <p class="select-info">({{subGroup.propertyVoList.length}}/{{subGroup.totalPropCount}} features selected)</p>
                                 </div>
                             </td>
 
@@ -145,7 +144,7 @@
                                         <ng-template #popContent>
                                             <div class="cell-popover">
                                                 <span class="icon-block icon-close icon-13" (click)="pInfo.close()"></span>
-                                                <div class="info" [innerHTML]="prop.name"></div>
+                                                <div class="info" [innerHTML]="prop.description"></div>
                                             </div>
                                         </ng-template>
                                     </div>

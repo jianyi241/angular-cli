@@ -152,8 +152,8 @@
                                      [content-tag]="'tbody'" [panel]="panelContent"
                                      [content-prefix]="'panel-content-'+groupIndex+'-'+subIndex">
                                     {{subGroup.name}}
-                                    ({{subGroup.propertyVoList.length}} / {{subGroup.totalPropCount}})
                                     <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
+                                    <p class="select-info">({{subGroup.propertyVoList.length}}/{{subGroup.totalPropCount}} features selected)</p>
                                 </div>
                             </td>
 
@@ -171,7 +171,14 @@
                                         {{prop.name}}
                                         <label class="label label-yellow tx-yellow xs-ml-10"
                                                [hidden]="!hasEssential(prop)">Essential</label>
-                                        <span class="icon-block icon-block-right icon-info-circle-purple icon-20"></span>
+                                        <span class="icon-block icon-block-right icon-info-circle-purple icon-20" #pInfo="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
+                                              placement="right auto" container="body" [ngbPopover]="popContent"></span>
+                                        <ng-template #popContent>
+                                            <div class="cell-popover">
+                                                <span class="icon-block icon-close icon-13" (click)="pInfo.close()"></span>
+                                                <div class="info" [innerHTML]="prop.description"></div>
+                                            </div>
+                                        </ng-template>
                                     </div>
                                 </td>
 
