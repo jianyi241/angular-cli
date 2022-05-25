@@ -52,7 +52,8 @@ import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
     ], exports: [
         ReviewDropdownDirective,
         TableScrollDirective,
-        ShowMoreDirective
+        ShowMoreDirective,
+        PopoverCustomDirective
     ]
 })
 export class ReviewsModule {
