@@ -51,6 +51,7 @@ export class TeamInfo {
     jobTitle?: string;
     editSupplierFlag?: boolean;
     editPlatformFlag?: boolean;
+    owner?: boolean;
     /**
      * Active,Pending,Disable
      */
