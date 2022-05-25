@@ -15,6 +15,7 @@ import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
+import {ImgShowModalComponent} from "../../dues/img-show-modal/img-show-modal.component";
 
 @Component({
     selector: 'app-metric-comparison',
@@ -168,5 +169,17 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
             }
             pComment.close();
         })
+    }
+
+    showPic(img: any): void {
+        const modalRef = this.modalService.open(ImgShowModalComponent, {
+            size: 'lg',
+            windowClass: 'popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.img = img;
+        modalRef.result.then((result) => {
+        }, (reason) => {
+        });
     }
 }

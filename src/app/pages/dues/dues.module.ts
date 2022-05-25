@@ -19,6 +19,7 @@ import {SaveTemplateTipModalComponent} from "./save-template-tip-modal/save-temp
 import {SaveTemplateModalComponent} from "./save-template-modal/save-template-modal.component";
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import {SummaryComponent} from './summary/summary.component';
+import {ImgShowModalComponent} from "./img-show-modal/img-show-modal.component";
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -33,6 +34,7 @@ import {SummaryComponent} from './summary/summary.component';
         SaveTemplateModalComponent,
         // EllipsisDirective,
         DeselectFeaturesTipComponent,
+        ImgShowModalComponent,
         SummaryComponent],
     imports: [
         CommonModule,

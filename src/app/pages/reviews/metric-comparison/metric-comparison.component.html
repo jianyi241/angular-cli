@@ -112,45 +112,54 @@
                                 </td>
 
                                 <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
-                                    <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
-                                        <div appShowMore>
+                                    <ng-container *ngIf="getProductPropValue(prop, product.productPropVoList)">
+                                        <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
+                                            <div appShowMore>
+                                                {{getProductPropValue(prop, product.productPropVoList)}}
+                                            </div>
+                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                            <ng-template #popContent>
+                                                <div class="cell-popover">
+                                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                                    <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                        <div class="detail-content" *ngIf="prop.type == configService.propType.longText">
+                                            <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                            <ng-template #popContent>
+                                                <div class="cell-popover">
+                                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                                    <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                        <!--<div class="amount-content"
+                                             *ngIf="prop.type == configService.propType.integer">
+                                            {{getProductPropValue(prop, product.productPropVoList)}}
+                                        </div>-->
+                                        <div class="bool-content tx-green"
+                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
+                                            Yes
+                                        </div>
+                                        <div class="bool-content tx-red"
+                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
+                                            No
+                                        </div>
+                                        <div class="number-content"
+                                             *ngIf="prop.type == configService.propType.integer">
                                             {{getProductPropValue(prop, product.productPropVoList)}}
                                         </div>
-                                        <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
-                                        <ng-template #popContent>
-                                            <div class="cell-popover">
-                                                <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                                <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                    <div class="detail-content"
-                                         *ngIf="prop.type == configService.propType.longText">
-                                        <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                        <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
-                                        <ng-template #popContent>
-                                            <div class="cell-popover">
-                                                <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                                <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                    <!--<div class="amount-content"
-                                         *ngIf="prop.type == configService.propType.integer">
-                                        {{getProductPropValue(prop, product.productPropVoList)}}
-                                    </div>-->
-                                    <div class="bool-content tx-green"
-                                         *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
-                                        Yes
-                                    </div>
-                                    <div class="bool-content tx-red"
-                                         *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
-                                        No
-                                    </div>
-                                    <div class="number-content"
-                                         *ngIf="prop.type == configService.propType.integer">
-                                        {{getProductPropValue(prop, product.productPropVoList)}}
-                                    </div>
+                                        <div class="attachment-content" (click)="showPic(getProductPropValue(prop, product.productPropVoList))"
+                                             *ngIf="prop.type == configService.propType.attachment && getProductPropValue(prop, product.productPropVoList)">
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="!getProductPropValue(prop, product.productPropVoList)">
+                                        <div style="text-align: center">
+                                            <span class="icon-block icon-info-circle-purple icon-39 icon-no-data"></span>
+                                        </div>
+                                    </ng-container>
                                 </td>
                             </tr>
                             </tbody>
@@ -191,46 +200,54 @@
                                     </td>
 
                                     <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
-                                        <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
-                                            <div appShowMore>
+                                        <ng-container *ngIf="getProductPropValue(prop, product.productPropVoList)">
+                                            <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
+                                                <div appShowMore>
+                                                    {{getProductPropValue(prop, product.productPropVoList)}}
+                                                </div>
+                                                <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                                <ng-template #popContent>
+                                                    <div class="cell-popover">
+                                                        <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                                        <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                            <div class="detail-content" *ngIf="prop.type == configService.propType.longText">
+                                                <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
+                                                <ng-template #popContent>
+                                                    <div class="cell-popover">
+                                                        <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                                                        <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                            <!--<div class="amount-content"
+                                                 *ngIf="prop.type == configService.propType.integer">
+                                                {{getProductPropValue(prop, product.productPropVoList)}}
+                                            </div>-->
+                                            <div class="bool-content tx-green"
+                                                 *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
+                                                Yes
+                                            </div>
+                                            <div class="bool-content tx-red"
+                                                 *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
+                                                No
+                                            </div>
+                                            <div class="number-content"
+                                                 *ngIf="prop.type == configService.propType.integer">
                                                 {{getProductPropValue(prop, product.productPropVoList)}}
                                             </div>
-                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
-                                            <ng-template #popContent>
-                                                <div class="cell-popover">
-                                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                                    <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                                </div>
-                                            </ng-template>
-                                        </div>
-
-
-                                        <div class="detail-content" *ngIf="prop.type == configService.propType.longText">
-                                            <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                            <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
-                                            <ng-template #popContent>
-                                                <div class="cell-popover">
-                                                    <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
-                                                    <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
-                                                </div>
-                                            </ng-template>
-                                        </div>
-                                        <!--<div class="amount-content"
-                                             *ngIf="prop.type == configService.propType.integer">
-                                            {{getProductPropValue(prop, product.productPropVoList)}}
-                                        </div>-->
-                                        <div class="bool-content tx-green"
-                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'yes'">
-                                            Yes
-                                        </div>
-                                        <div class="bool-content tx-red"
-                                             *ngIf="prop.type == configService.propType.boolean && getProductPropValue(prop, product.productPropVoList) == 'no'">
-                                            No
-                                        </div>
-                                        <div class="number-content"
-                                             *ngIf="prop.type == configService.propType.integer">
-                                            {{getProductPropValue(prop, product.productPropVoList)}}
-                                        </div>
+                                            <div class="attachment-content" (click)="showPic(getProductPropValue(prop, product.productPropVoList))"
+                                                 *ngIf="prop.type == configService.propType.attachment && getProductPropValue(prop, product.productPropVoList)">
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="!getProductPropValue(prop, product.productPropVoList)">
+                                            <div style="text-align: center">
+                                                <span class="icon-block icon-info-circle-purple icon-39 icon-no-data"></span>
+                                            </div>
+                                        </ng-container>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -1,10 +1,10 @@
-.table-main-content{
+.table-main-content {
   height: 100%;
-  padding:0 32px;
+  padding: 0 32px;
   overflow: hidden;
 }
 
-.tx-ellipsis{
+.tx-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -86,7 +86,7 @@
   }
 
 
-  thead, tbody,tfoot {
+  thead, tbody, tfoot {
     th, td {
       padding: 0;
       border-bottom: 1px solid #D6DDEB;
@@ -178,7 +178,7 @@
       position: relative;
       width: 68px;
       height: 68px;
-      margin:0 auto;
+      margin: 0 auto;
 
       img {
         width: 100%;
@@ -187,19 +187,19 @@
         max-height: 100%;
       }
 
-      .label-brand{
+      .label-brand {
         position: absolute;
-        top:-10px;
-        right:-18px;
+        top: -10px;
+        right: -18px;
         font-family: 'Epilogue';
         font-weight: 500;
         font-size: 10px;
         line-height: 16px;
         border-radius: 4px;
-        padding:2px 4px;
-        margin:0;
+        padding: 2px 4px;
+        margin: 0;
 
-        &.label-brand-orange{
+        &.label-brand-orange {
           color: #F8F8FD;
           background: #EDA114;
         }
@@ -275,16 +275,18 @@
       left: 8px;
     }
   }
+
   .review-content-close {
     .icon-block-right {
       animation: turn-up 0.25s linear 1;
-      animation-fill-mode:forwards;
+      animation-fill-mode: forwards;
     }
   }
+
   .review-content-open {
     .icon-block-right {
       animation: turn-down 0.25s linear 1;
-      animation-fill-mode:forwards;
+      animation-fill-mode: forwards;
     }
   }
 
@@ -358,13 +360,13 @@
     word-break: break-word;
   }
 
-  .select-info{
+  .select-info {
     font-family: 'Epilogue';
     font-weight: 400;
     font-size: 12px;
     line-height: 19px;
     color: #7C8493;
-    margin:0;
+    margin: 0;
   }
 
   .content-title {
@@ -405,6 +407,7 @@
 
   tfoot {
     display: none;
+
     th {
       position: -webkit-sticky;
       position: sticky;
@@ -420,12 +423,12 @@
       }
 
 
-      &.th-control{
-        padding:0 24px;
+      &.th-control {
+        padding: 0 24px;
 
         .btn-control-box {
           height: 46px;
-          margin:0 0 -50px 0;
+          margin: 0 0 -50px 0;
         }
       }
     }
@@ -512,26 +515,26 @@
 
   .th-brand-box {
     height: 66px;
-    padding:13px 13px 10px;
+    padding: 13px 13px 10px;
 
-    .th-brand-box-top{
+    .th-brand-box-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
 
-      .box-center-left,.box-center-right{
+      .box-center-left, .box-center-right {
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
 
-      .box-center-left{
+      .box-center-left {
         align-items: flex-start;
         text-align: left;
       }
 
-      .box-center-right{
+      .box-center-right {
         align-items: flex-end;
         text-align: right;
       }
@@ -546,7 +549,7 @@
     .title {
       font-size: 12px;
       line-height: 19px;
-      margin:0;
+      margin: 0;
     }
 
     .text {
@@ -568,17 +571,18 @@
     }
   }
 
-  .th-first,.th-brand-box,.brand-pic,.title ,.text,.num,.btn-control-box{
+  .th-first, .th-brand-box, .brand-pic, .title, .text, .num, .btn-control-box {
     -webkit-transition: all 0.25s ease-in-out;
     -o-transition: all 0.25s ease-in-out;
     -moz-transition: all 0.25s ease-in-out;
     transition: all 0.25s ease-in-out;
   }
 
-  tfoot{
+  tfoot {
     display: table-footer-group;
-    th{
-      &.th-control{
+
+    th {
+      &.th-control {
         .btn-control-box {
           margin-bottom: 0;
         }
@@ -590,67 +594,74 @@
 
 .table-review-step3 {
 
-  tr{
-    td{
+  tr {
+    td {
       height: 75px;
     }
   }
 
 
-  .th-head,.th-brand,.th-first,.th-brand-box {
+  .th-head, .th-brand, .th-first, .th-brand-box {
     height: 245px;
   }
 
-  .btn-control-box{
+  .btn-control-box {
     margin-bottom: 0;
   }
 
-  .main-group-title{
+  .main-group-title {
     padding-left: 8px;
     max-width: 330px;
   }
 
 
-  .detail-content{
+  .detail-content {
     font-weight: 400;
     font-size: 12px;
     line-height: 17px;
     letter-spacing: -0.04em;
     color: #515B6F;
-    padding:16px 12px;
+    padding: 16px 12px;
   }
 
-  .amount-content{
+  .amount-content {
     color: #25324B;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    padding:16px 12px;
+    padding: 16px 12px;
   }
 
-  .bool-content{
+  .bool-content {
     font-weight: 700;
     font-size: 16px;
     line-height: 10px;
     text-align: center;
-    padding:16px 12px;
+    padding: 16px 12px;
   }
 
-  .number-content{
+  .number-content {
     color: #515B6F;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    padding:16px 12px;
+    padding: 16px 12px;
   }
 
-  .status-green{
+  .attachment-content {
+    width: 24px;
+    height: 24px;
+    background-image: url('../../../../assets/img/icon-review/icon-attachment.svg');
+    margin: auto;
+  }
+
+  .status-green {
     position: absolute;
     left: 0px;
     top: 50%;
-    margin-top:-11px;
+    margin-top: -11px;
     width: 3px;
     height: 22px;
     background: #219653;
@@ -662,17 +673,17 @@
 
   .table-review-step3 {
 
-    .th-head,.th-brand,.th-first,.th-brand-box {
+    .th-head, .th-brand, .th-first, .th-brand-box {
       height: 66px;
     }
   }
 }
 
-.more-link{
+.more-link {
   position: absolute;
   bottom: 14px;
   right: 10px;
-  color:#4640de;
+  color: #4640de;
   font-family: 'Epilogue';
   font-weight: 700;
   font-size: 12px;
@@ -684,21 +695,21 @@
   text-align: right;
   display: none;
 
-  .dot{
+  .dot {
     display: none;
   }
 }
 
-.detail-content-more{
+.detail-content-more {
   position: relative;
   display: -webkit-box;
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  padding-right:28px;
+  padding-right: 28px;
 }
 
-.detail-content{
+.detail-content {
   position: relative;
   word-break: break-word;
 }

@@ -8,13 +8,15 @@ import {PropertyVo} from "../../../model/vo/PropertyVo";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {ComparisonProductVo} from "../../../model/vo/comparisonProductVo";
-import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
 import {environment} from "../../../../environments/environment";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
 import {DueService} from "../../../service/due.service";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
+import {PropType} from "../../../model/enums/prop-type";
+import {ImgShowModalComponent} from "../img-show-modal/img-show-modal.component";
 
 @Component({
     selector: 'app-metric-comparison',
@@ -31,6 +33,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
 
     constructor(public dueService: DueService,
                 public configService: ConfigService,
+                private modalService: NgbModal,
                 private reviewRepository: ReviewRepository,
                 private toastRepository: ToastRepository,
                 private saveService: SaveService,
@@ -95,6 +98,9 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         //     let text = $1.text();
         //     return text;
         // }
+        if (prop.type == PropType.attachment.value) {
+            return productProp.attachmentVo?.visitUrl;
+        }
         return productProp.propValue;
     }
 
@@ -178,5 +184,17 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
             }
             pComment.close();
         })
+    }
+
+    showPic(img: any): void {
+        const modalRef = this.modalService.open(ImgShowModalComponent, {
+            size: 'lg',
+            windowClass: 'popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.img = img;
+        modalRef.result.then((result) => {
+        }, (reason) => {
+        });
     }
 }
