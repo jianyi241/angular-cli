@@ -18,6 +18,7 @@ export class SupplierListComponent implements OnInit {
 
     constructor(private supplierRepository: SupplierRepository,
                 private router: Router) {
+        this.condition.order = {column: 'name', asc: true};
     }
 
     ngOnInit(): void {
