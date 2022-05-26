@@ -55,7 +55,7 @@
                         <div>Enter password again</div>
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password again"
-                           autocomplete="new-password" name="confirmPassword" required
+                           autocomplete="new-password" name="confirmPassword" required [pattern]="pwdReg"
                            [(ngModel)]="inviteUser.confirmPassword"/>
                     <span class="icon-block icon-eye-on icon-16"
                           appTogglePwd></span>
@@ -124,7 +124,7 @@
                         <div>Contact number
                         </div>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter your contact number" name="supplierName"
+                    <input type="text" class="form-control" placeholder="Enter your contact number" name="mobile"
                            required [(ngModel)]="inviteUser.mobile"/>
                 </div>
                 <div class="form-group form-group-sign password-input">
@@ -141,7 +141,7 @@
                         <div>Enter password again</div>
                     </label>
                     <input type="password" class="form-control" placeholder="Enter your password again"
-                           autocomplete="new-password" name="confirmPassword" required
+                           autocomplete="new-password" name="confirmPassword" required [pattern]="pwdReg"
                            [(ngModel)]="inviteUser.confirmPassword"/>
                     <span class="icon-block icon-eye-on icon-16" appTogglePwd></span>
                 </div>

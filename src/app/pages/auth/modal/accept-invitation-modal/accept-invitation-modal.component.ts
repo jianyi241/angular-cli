@@ -4,6 +4,7 @@ import {UserRepository} from "../../../../repository/user-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {pwdReg} from "../../../../utils/regular";
 
 @Component({
     selector: 'app-accept-invitation-modal',
@@ -15,6 +16,7 @@ export class AcceptInvitationModalComponent implements OnInit {
     verification: VerifyCode = new VerifyCode();
     agree = false;
     news = false;
+    pwdReg = pwdReg;
     validatorConfig: NgxValidatorConfig = {
         validationMessages: {
             firstName: {
@@ -27,7 +29,16 @@ export class AcceptInvitationModalComponent implements OnInit {
                 required: 'Password is required.',
             },
             confirmPassword: {
-                required: 'Confirm your password is required.'
+                required: 'Confirm your password is required.',
+                pattern: 'The password should be at least 8 characters.\n' +
+                    'The password should include both upper case and lower case letters.\n' +
+                    'The password should include at least 1 number.'
+            },
+            jobTitle: {
+                required: 'JobTitle is required.'
+            },
+            mobile: {
+                required: 'Mobile is required.'
             }
         },
         validateOn: 'submit'
