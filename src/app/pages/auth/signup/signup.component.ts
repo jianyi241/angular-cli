@@ -10,7 +10,7 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {NgxValidatorConfig} from "@why520crazy/ngx-validator";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SupplierSend, VerifyCode} from "../../../model/user";
-import {regPwd, pwdReg} from "../../../utils/regular";
+import { pwdReg} from "../../../utils/regular";
 
 @Component({
     selector: 'app-signup',
