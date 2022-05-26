@@ -108,13 +108,13 @@
                 </tr>
                 </tbody>
             </table>
+            <div *ngIf="supplierPage.total == 0" class="empty-text">You don’s have any supplier yet. Click on “Add supplier”
+                to add.
+            </div>
         </div>
 
         <ngb-pagination *ngIf="supplierPage.total > 0" [collectionSize]="supplierPage.total" [(page)]="supplierPage.current"
                         [pageSize]="supplierPage.size" (pageChange)="pageChange($event)"></ngb-pagination>
-        <div *ngIf="supplierPage.total == 0" class="empty-text">You don’s have any supplier yet. Click on “Add supplier”
-            to add.
-        </div>
 
     </div>
 </div>

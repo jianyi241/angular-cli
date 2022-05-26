@@ -72,13 +72,13 @@
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isSupplierUser()">
                     <div class="menu-item" (click)="toPage('/supplier/supplier-edit/overview/' + currentUserService.currentUser().companyId)">
-                        <img src="./assets/img/icon/icon-company.svg" class="menu-icon"/>
+                        <img src="./assets/img/icon/icon-setting.svg" class="menu-icon"/>
                         <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="currentUserService.isAdviceUser()">
                     <div class="menu-item" (click)="toPage('/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId)">
-                        <img src="./assets/img/icon/icon-company.svg" class="menu-icon" />
+                        <img src="./assets/img/icon/icon-setting.svg" class="menu-icon" />
                         <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>

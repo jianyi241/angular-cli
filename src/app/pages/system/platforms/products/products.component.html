@@ -123,12 +123,11 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="empty-text" *ngIf="productPage.total == 0">This section is empty.</div>
             </div>
             <ngb-pagination *ngIf="productPage.total > 0" [collectionSize]="productPage.total"
                             [(page)]="productPage.current" [pageSize]="productPage.size"
                             (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
         </ng-container>
-        <div class="empty-text" *ngIf="productPage.total == 0">This section is empty.
-        </div>
     </div>
 </div>

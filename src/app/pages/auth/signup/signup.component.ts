@@ -40,6 +40,18 @@ export class SignupComponent implements OnInit {
                 pattern: 'The password should be at least 8 characters.\n' +
                     'The password should include both upper case and lower case letters.\n' +
                     'The password should include at least 1 number.'
+            },
+            name: {
+                required: 'Name is required.',
+            },
+            email: {
+                required: 'Email is required.',
+            },
+            phone: {
+                required: 'Phone is required.',
+            },
+            message: {
+                required: 'Message is required.',
             }
         },
         validateOn: 'submit'

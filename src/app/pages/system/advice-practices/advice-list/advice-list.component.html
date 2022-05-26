@@ -117,16 +117,12 @@
                 </tr>
                 </tbody>
             </table>
+                <div class="empty-text" *ngIf="advicePage.total == 0">You don’s have any advice practice yet. Click on “Add practice” to add.</div>
             </div>
-            <ngb-pagination [collectionSize]="advicePage.total" [(page)]="advicePage.current"
+            <ngb-pagination *ngIf="advicePage.total > 0" [collectionSize]="advicePage.total" [(page)]="advicePage.current"
                             [pageSize]="advicePage.size"
                             (pageChange)="pageChange($event)"></ngb-pagination>
         </ng-container>
-
-
-        <div class="empty-text" *ngIf="advicePage.total == 0">You don’s have any advice practice yet. Click on “Add
-            practice” to add.
-        </div>
 
     </div>
 </div>
