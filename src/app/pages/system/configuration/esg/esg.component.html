@@ -44,7 +44,7 @@
                     </div>
                     <div class="edit" *ngIf="version.type">
                         <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                                [hidden]="configService.isEditable(version.type)">View
+                                *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.esg, prop.readOnly)">View
                         </button>
                         <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
                                 [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">
@@ -74,7 +74,7 @@
                         </div>
                         <div class="edit" *ngIf="version.type">
                             <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
-                                    [hidden]="configService.isEditable(version.type)">View
+                                    *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.esg, prop.readOnly)">View
                             </button>
                             <button class="btn btn-outline-purple-light btn-small" (click)="save(prop.id)"
                                     [hidden]="!configService.isEditable(version.type) || prop.readOnly || configService.isWaitPublish()">

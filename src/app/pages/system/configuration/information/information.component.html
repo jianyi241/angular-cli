@@ -37,7 +37,7 @@
                         </div>
                         <div class="edit">
                             <span class="tx-purple tx-bold"
-                                  [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
+                                  *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.information, section.readOnly)"
                                   (click)="saveSection(section.id, $event, 'view')">View
                             </span>
                             <span class="icon-edit icon-20" (click)="saveSection(section.id,$event,'update')"
@@ -91,7 +91,7 @@
                     </div>
                     <div class="edit" *ngIf="version.type">
                         <button class="btn btn-outline-purple-light btn-small"
-                                [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop.id)">View
+                                *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.information, prop.readOnly)" (click)="saveProp(prop.id)">View
                         </button>
                         <button class="btn btn-outline-purple-light btn-small"
                                 (click)="saveProp(prop.id)"
@@ -122,7 +122,7 @@
                         </div>
                         <div class="edit" *ngIf="version.type">
                             <button class="btn btn-outline-purple-light btn-small"
-                                    [hidden]="configService.isEditable(version.type)" (click)="saveProp(prop.id)">View
+                                    *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.information, prop.readOnly)" (click)="saveProp(prop.id)">View
                             </button>
                             <button class="btn btn-outline-purple-light btn-small"
                                     (click)="saveProp(prop.id)"
