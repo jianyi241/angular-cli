@@ -19,6 +19,7 @@ export class AdviceListComponent implements OnInit {
     constructor(private adviceRepository: AdviceRepository,
                 public configService: ConfigService,
                 private router: Router) {
+        this.condition.order = {column: 'name', asc: true};
     }
 
     ngOnInit(): void {
@@ -27,6 +28,20 @@ export class AdviceListComponent implements OnInit {
 
     init(): void {
         this.getAdvicePage();
+    }
+
+    search():void {
+        this.condition.current = 1
+        this.getAdvicePage()
+    }
+
+    sortList(column: string,type: number): void {
+        if (type === 0) {
+            this.condition.order = {column: 'name', asc: true}
+        } else {
+            this.condition.order = {column, asc: false}
+        }
+        this.getAdvicePage()
     }
 
     getAdvicePage(): void {
