@@ -93,6 +93,10 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
 
     save(tip: boolean = true, msg?: string) {
         let copyPractice = {...this.practiceService.practice};
+        if (!copyPractice.attachmentVo || !copyPractice.attachmentVo?.visitUrl) {
+            this.toastRepository.showDanger('Practice logo is required.');
+            return;
+        }
         if (!copyPractice.name) {
             this.toastRepository.showDanger('Practice name is required.');
             return;

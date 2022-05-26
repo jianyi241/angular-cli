@@ -155,6 +155,10 @@ export class AdminDetailComponent implements OnInit {
 
     save(): void {
         let _adminInfo = {...this.adminInfo};
+        if (!_adminInfo.avatar || !_adminInfo.avatar?.visitUrl) {
+            this.toastRepository.showDanger('Profile photo is required.');
+            return;
+        }
         if (!_adminInfo.firstName) {
             this.toastRepository.showDanger('First name is required.');
             return;

@@ -46,6 +46,16 @@ export class EditTeamComponent implements OnInit {
         this.getPracticeRoles();
     }
 
+    updateStatus(): void {
+        const _team = JSON.parse(JSON.stringify(this.team))
+        if (_team.status === this.configService.userStatus.active) {
+            _team.status = this.configService.userStatus.disable
+        } else {
+            _team.status = this.configService.userStatus.active
+        }
+        this.save(_team)
+    }
+
     getTeamDetail(): void {
         this.teamRepository.teamDetail(this.team.id).subscribe(res => {
             this.team = Object.assign(this.team, res.data);
@@ -86,17 +96,20 @@ export class EditTeamComponent implements OnInit {
         }
     }
 
-    save(): void {
-        let copyTeam = {...this.team};
-        if (!copyTeam.firstName) {
+    save(team: TeamInfo): void {
+        if (!team.attachmentVo || !team.attachmentVo?.visitUrl) {
+            this.toastRepository.showDanger('Profile photo is required.');
+            return;
+        }
+        if (!team.firstName) {
             this.toastRepository.showDanger('First name is required.');
             return;
         }
-        if (!copyTeam.lastName) {
+        if (!team.lastName) {
             this.toastRepository.showDanger('Last name is required.');
             return;
         }
-        if (!copyTeam.email) {
+        if (!team.email) {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
@@ -104,7 +117,7 @@ export class EditTeamComponent implements OnInit {
             console.log('saveCheck')
             return;
         }
-        this.teamRepository.saveTeam(copyTeam).subscribe(res => {
+        this.teamRepository.saveTeam(team).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
