@@ -4,13 +4,17 @@
         <div class="sub-title" [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
             {{configService.fullName(team.firstName, team.lastName)}}
+            <label class="label label-green-light" *ngIf="team.status == configService.userStatus.active">Active</label>
+            <label class="label label-orange" *ngIf="team.status == configService.userStatus.pending">Pending</label>
+            <label class="label label-grey" *ngIf="team.status == configService.userStatus.disable">Disable</label>
         </div>
 
         <div class="btn-control-group">
-            <button class="btn btn-outline-purple-light"
-                    [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">Cancel
-            </button>
-            <button class="btn btn-purple xs-ml-24" (click)="save()">{{team.id ? 'Save' : 'Create and send welcome email'}}</button>
+<!--            <button class="btn btn-outline-purple-light"-->
+<!--                    [routerLink]="['/advice-practices/advice-tab/team/' + practiceId]">Cancel-->
+<!--            </button>-->
+            <button class="btn btn-outline-purple-light" (click)="updateStatus()" *ngIf="team.status != configService.userStatus.pending && team.id">{{team.status == configService.userStatus.active ? 'Disable' : 'Enabled'}}</button>
+            <button class="btn btn-purple xs-ml-24" (click)="save(team)">{{team.id ? 'Save' : 'Create and send welcome email'}}</button>
         </div>
     </div>
 
