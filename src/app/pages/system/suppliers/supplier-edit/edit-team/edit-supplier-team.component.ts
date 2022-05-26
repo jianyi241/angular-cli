@@ -147,6 +147,10 @@ export class EditSupplierTeamComponent implements OnInit {
     }
 
     save(team: TeamInfo) {
+        if (!team.attachmentVo || !team.attachmentVo?.visitUrl) {
+            this.toastRepository.showDanger('Profile photo is required.');
+            return;
+        }
         if (!team.roleId) {
             this.toastRepository.showDanger('Account type is required.');
             return;
@@ -186,7 +190,9 @@ export class EditSupplierTeamComponent implements OnInit {
             } else {
                 this.toastRepository.showSuccess('New user created and welcome email sent');
             }
-            this.router.navigateByUrl(`/supplier/edit-team/${res.data.id}/${res.data.companyId}`);
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this.router.navigate([`/supplier/edit-team/${res.data.id}/${res.data.companyId}`]);
+            })
         })
     }
 
