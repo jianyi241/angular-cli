@@ -183,7 +183,6 @@ export class EditSupplierTeamComponent implements OnInit {
             }
             if (team.id) {
                 this.toastRepository.showSuccess('Save Successfully');
-                this.team = res.data
             } else {
                 this.toastRepository.showSuccess('New user created and welcome email sent');
             }
