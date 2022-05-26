@@ -76,7 +76,9 @@ export class DueSetupComponent implements OnInit, OnDestroy {
                 }
                 Object.assign(this.dueService.due, res.data);
                 this.toastRepository.showSuccess('Save successfully.');
-                this.router.navigateByUrl(`/due/due-setup/${this.dueService.due.id}`)
+                this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                    this.router.navigate([`/due/due-setup/${this.dueService.due.id}`]);
+                })
             });
         })
     }
@@ -96,7 +98,6 @@ export class DueSetupComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
-
 
 
     validSave(comparison: ComparisonVo): boolean {
