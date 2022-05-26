@@ -14,10 +14,8 @@ import {RoleInfo} from "../../../../../model/po/roleInfo";
 import {ProductAccessVo} from "../../../../../model/vo/productAccessVo";
 import {forkJoin, Observable} from "rxjs";
 import {HttpResult} from "../../../../../model/common/http-result";
-import {RoleType} from "../../../../../model/enums/role-type";
 import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {CurrentUser} from "../../../../../model/vo/currentUser";
 import {CurrentUserService} from "../../../../../service/current-user.service";
 
 @Component({
@@ -169,6 +167,11 @@ export class EditSupplierTeamComponent implements OnInit {
             this.toastRepository.showDanger('Job title is required.');
             return;
         }
+        if (!team.mobile) {
+            this.toastRepository.showDanger('Mobile is required.');
+            return;
+        }
+
         team.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({
             shProductId: p.id
         }));
