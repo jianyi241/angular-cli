@@ -80,6 +80,16 @@ export class EditSupplierTeamComponent implements OnInit {
         });
     }
 
+    updateStatus(): void {
+        const _team = JSON.parse(JSON.stringify(this.team))
+        if (_team.status === this.configService.userStatus.active) {
+            _team.status = this.configService.userStatus.disable
+        } else {
+            _team.status = this.configService.userStatus.active
+        }
+        this.save(_team)
+    }
+
     showPermissions(): boolean {
         const role = this.supplierRoles.find(item => item.id === this.team.roleId)
         if (role) {
@@ -138,38 +148,39 @@ export class EditSupplierTeamComponent implements OnInit {
         }
     }
 
-    save() {
-        if (!this.team.roleId) {
+    save(team: TeamInfo) {
+        if (!team.roleId) {
             this.toastRepository.showDanger('Account type is required.');
             return;
         }
-        if (!this.team.firstName) {
+        if (!team.firstName) {
             this.toastRepository.showDanger('First name is required.');
             return;
         }
-        if (!this.team.lastName) {
+        if (!team.lastName) {
             this.toastRepository.showDanger('Last name is required.');
             return;
         }
-        if (!this.team.email) {
+        if (!team.email) {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
-        if (!this.team.jobTitle) {
+        if (!team.jobTitle) {
             this.toastRepository.showDanger('Job title is required.');
             return;
         }
-        this.team.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({
+        team.supplierUserProductVoList = this.products.filter(p => p.checked).map(p => ({
             shProductId: p.id
         }));
 
-        this.teamRepository.saveTeam(this.team).subscribe(res => {
+        this.teamRepository.saveTeam(team).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            if (this.team.id) {
+            if (team.id) {
                 this.toastRepository.showSuccess('Save Successfully');
+                this.team = res.data
             } else {
                 this.toastRepository.showSuccess('New user created and welcome email sent');
             }
