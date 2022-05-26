@@ -35,5 +35,8 @@ export class SupplierInfo {
     updateTime?: string;
     updateUser?: string;
     website?: string;
+    totalUser?: number;
+    totalBdm?: number;
+    totalPremium?: number;
 }
 
