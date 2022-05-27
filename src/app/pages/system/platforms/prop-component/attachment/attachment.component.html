@@ -21,12 +21,12 @@
                     <div class="upload-content" *ngIf="editable" (click)="openFileSelector()">
                         <span class="icon-block icon-photo icon-32"></span>
                         <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
-                        <div class="file-tip">SVG, PNG, JPG or GIF (max. {{width}} x {{height}}px)</div>
+                        <div class="file-tip">SVG, PNG, JPG or GIF (recommended size {{width}} x {{height}}px)</div>
                     </div>
                     <div class="upload-content upload-disable" *ngIf="!editable">
                         <span class="icon-block icon-photo icon-32"></span>
                         <div class="file-intro"><span>Click to replace</span> or drag and drop</div>
-                        <div class="file-tip">SVG, PNG, JPG or GIF (max. {{width}} x {{height}}px)</div>
+                        <div class="file-tip">SVG, PNG, JPG or GIF (recommended size {{width}} x {{height}}px)</div>
                     </div>
                 </ng-template>
             </ngx-file-drop>
