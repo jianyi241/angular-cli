@@ -7,6 +7,9 @@ import {ReviewRepository} from "../../../repository/review-repository";
 import {HttpResult} from "../../../model/common/http-result";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {TemplatePropertyInfo} from "../../../model/po/templatePropertyInfo";
+import {SaveService} from "../../../service/save.service";
+import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-save-template-modal',
@@ -22,6 +25,8 @@ export class SaveTemplateModalComponent implements OnInit {
     constructor(
         private modalService: NgbModal,
         private activeModal: NgbActiveModal,
+        private loadingComponent: NgxLoadingSpinnerService,
+        private saveService: SaveService,
         private reviewRepository: ReviewRepository,
         private toastRepository: ToastRepository,) {
     }
@@ -38,9 +43,14 @@ export class SaveTemplateModalComponent implements OnInit {
             this.toastRepository.showDanger('Name is required.');
             return;
         }
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveFeatureTemplate`)) {
+            return;
+        }
         this.templateInfo.id = '';
         this.templateInfo.templateProperties = this.templateProps;
+        this.loadingComponent.show();
         this.reviewRepository.saveFeatureTemplate(this.templateInfo).subscribe((result: HttpResult<ComparisonSaveTemplateInfo>) => {
+            this.loadingComponent.hide();
             if (result.statusCode !== 200) {
                 if (result.statusCode === 201) {
                     this.saveOverwriteTip();
