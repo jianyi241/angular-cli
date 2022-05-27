@@ -43,7 +43,7 @@ export class AdviceTeamComponent implements OnInit {
     }
 
     save(team?: TeamInfo) {
-        this.router.navigateByUrl(`/advice-practices/edit-team/${team?.id || Constants.NON_ID}/${this.condition.companyId}/${team?.openId || Constants.NON_ID}`);
+        this.router.navigateByUrl(`/advice-practices/edit-team/${team?.id || Constants.NON_ID}/${this.condition.companyId}`);
     }
 
     resend(team: TeamInfo): void {

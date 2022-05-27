@@ -140,7 +140,7 @@ export class EditTeamComponent implements OnInit {
             }
             this.toastRepository.showSuccess(this.team.id ? 'Save Successfully' : 'New user created and welcome email sent');
             this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                this.router.navigate([`/advice-practices/edit-team/${res.data.id}/${res.data.companyId}/${this.team.openId || Constants.NON_ID}`]);
+                this.router.navigate([`/advice-practices/edit-team/${res.data.id}/${res.data.companyId}`]);
             })
         });
     }

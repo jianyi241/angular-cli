@@ -43,9 +43,7 @@ import {ComparisonsListComponent} from "./suppliers/comparisons-list/comparisons
 import {ProductsBoxComponent} from "./platforms/products-box/products-box.component";
 import {ProductsBoxDetailComponent} from "./platforms/products-box-detail/products-box-detail.component";
 import {PbdOverviewComponent} from "./platforms/products-box-detail/children/pbd-overview/pbd-overview.component";
-import {
-    PbdInformationComponent
-} from "./platforms/products-box-detail/children/pbd-information/pbd-information.component";
+import {PbdInformationComponent} from "./platforms/products-box-detail/children/pbd-information/pbd-information.component";
 import {PbdEsgComponent} from "./platforms/products-box-detail/children/pbd-esg/pbd-esg.component";
 import {PbdFeaturesComponent} from "./platforms/products-box-detail/children/pbd-features/pbd-features.component";
 import {PbdFeesRatesComponent} from "./platforms/products-box-detail/children/pbd-fees-rates/pbd-fees-rates.component";
@@ -65,7 +63,7 @@ const routes: Routes = [
                 component: SupplierListComponent,
             },
             {
-                path: 'edit-team/:id/:companyId/:openId',
+                path: 'edit-team/:id/:companyId',
                 component: EditSupplierTeamComponent,
             },
             {
@@ -249,7 +247,7 @@ const routes: Routes = [
                 component: AdviceListComponent,
             },
             {
-                path: 'edit-team/:id/:practiceId/:openId',
+                path: 'edit-team/:id/:practiceId',
                 component: EditTeamComponent,
             },
             {
