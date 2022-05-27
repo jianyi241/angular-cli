@@ -11,7 +11,6 @@ import {AdminInfo} from "../../../../model/po/adminInfo";
 import {Constants} from "../../../../model/constants";
 import {ConfigService} from "../../../../service/config.service";
 import {UserRepository} from "../../../../repository/user-repository";
-import {CurrentUser} from "../../../../model/vo/currentUser";
 import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
@@ -146,9 +145,11 @@ export class AdminDetailComponent implements OnInit {
 
     sendInvite(): void {
         this.userRepository.reSendInviteAdmin(this.adminInfo.openId).subscribe(res => {
-            if (res.statusCode === 200) {
-                this.toastRepository.showSuccess(res.msg);
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return
             }
+            this.toastRepository.showSuccess('The invitation email has been sent. Please check your inbox.');
         }, err => {
         })
     }

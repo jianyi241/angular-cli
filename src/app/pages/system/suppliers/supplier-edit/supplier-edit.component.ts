@@ -101,7 +101,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
             centered: true
         });
         modalRef.componentInstance.title = `${this.supplierService.supplier.archiveFlag ? 'Unarchive' : 'Archive'} the supplier?`
-        modalRef.componentInstance.info = `${this.supplierService.supplier.archiveFlag ? 'Unarchive' : 'Archive'} a supplier will ${this.supplierService.supplier.archiveFlag ? 'bring back' : 'remove'} the access of this supplier from all users. ${this.supplierService.supplier.archiveFlag ? '' : 'Only the admin can access archived supplier.'}
+        modalRef.componentInstance.info = `${this.supplierService.supplier.archiveFlag ? 'Unarchiving' : 'Archive'} a supplier will ${this.supplierService.supplier.archiveFlag ? 'bring back' : 'remove'} the access of this supplier from all users. ${this.supplierService.supplier.archiveFlag ? '' : 'Only the admin can access archived supplier.'}
             Are you sure to ${this.supplierService.supplier.archiveFlag ? 'unarchive' : 'archive'} this supplier?`;
         modalRef.componentInstance.btnText = `Yes, ${this.supplierService.supplier.archiveFlag ? 'unarchive' : 'archive'} it`
         const msg = `${this.supplierService.supplier.name} has been ${this.supplierService.supplier.archiveFlag ? 'unarchived' : 'archived'}`
