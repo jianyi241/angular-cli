@@ -38,7 +38,7 @@ export class AcceptInvitationModalComponent implements OnInit {
                 required: 'JobTitle is required.'
             },
             mobile: {
-                required: 'Mobile is required.'
+                required: 'Contact number is required.'
             }
         },
         validateOn: 'submit'
