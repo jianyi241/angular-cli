@@ -178,7 +178,7 @@ export class EditSupplierTeamComponent implements OnInit {
             return;
         }
         if (!team.mobile) {
-            this.toastRepository.showDanger('Mobile is required.');
+            this.toastRepository.showDanger('Contact number is required.');
             return;
         }
 
