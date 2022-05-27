@@ -231,7 +231,6 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     changeProduct(product: ComparisonProductVo, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
-        product.shVersionId = this.reviewService.comparison.modelVersionId;
         product.shComparisonId = this.reviewService.comparison.id;
         this.reviewRepository.changeProduct(product).subscribe(res => {
             if (res.statusCode != 200) {
