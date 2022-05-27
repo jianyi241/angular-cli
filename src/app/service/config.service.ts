@@ -192,13 +192,14 @@ export class ConfigService {
     }
 
     editViewBtn(versionStatus: string, tabType: number, readyOnly: boolean = false) {
-        if (tabType === TabType.features.value) { // [hidden]
-            return this.currentVersion.versionStatus !== VersionStatus.WaitPublish.value
-        } else if (tabType === TabType.information.value) { // *ngIf
-            return (this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly) || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
-        } else if (tabType === TabType.esg.value) { // *ngIf
-            return (this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly) || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
-        }
+        return this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === VersionType.Publish.value && !readyOnly) || this.currentVersion.type === VersionType.History.value
+        // if (tabType === TabType.features.value) { // *ngIf
+        //     return this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
+        // } else if (tabType === TabType.information.value) { // *ngIf
+        //     return (this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly) || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
+        // } else if (tabType === TabType.esg.value) { // *ngIf
+        //     return (this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly) || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
+        // }
         return true
     }
 }

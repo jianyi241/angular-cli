@@ -35,7 +35,7 @@
                         </div>
                         <div class="edit">
                             <span class="tx-purple tx-bold"
-                                  [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
+                                  *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.features, group.readOnly)"
                                   (click)="saveGroup(group, 'view')">View
                             </span>
                             <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type) || group.readOnly || configService.isWaitPublish()"
@@ -73,10 +73,10 @@
                     </div>
                     <div class="edit">
                         <span class="tx-purple tx-bold"
-                              [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)"
+                              *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.features, subGroup.readOnly)"
                               (click)="saveSubGroup(subGroup, 'view')">View
                             </span>
-                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
+                        <span class="icon-block icon-edit icon-20" [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish() || subGroup.readOnly"
                               (click)="saveSubGroup(subGroup,'update')"></span>
                     </div>
                     </div>
@@ -120,10 +120,11 @@
                 </div>
                 <ng-container *ngIf="version.type">
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="configService.editViewBtn(version.versionStatus, configService.tabType.features)" (click)="saveProp(prop, 'view')">View
+                            *ngIf="configService.editViewBtn(version.versionStatus, configService.tabType.features, prop.readOnly)"
+                             (click)="saveProp(prop, 'view')">View
                     </button>
                     <button class="btn btn-outline-purple-light btn-small"
-                            [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish()"
+                            [hidden]="!configService.isEditable(version.type) || configService.isWaitPublish() || prop.readOnly"
                             (click)="saveProp(prop)">
                         <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
                     </button>
