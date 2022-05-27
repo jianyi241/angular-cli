@@ -11,7 +11,7 @@ export class RoleEnum implements EnumIdentity {
     static readonly Support = new RoleEnum('Support', "Support", RoleType.AdviceUser.value);
     static readonly Owner = new RoleEnum('Owner', "Owner", RoleType.SupplierUser.value);
     static readonly Administrator = new RoleEnum('Administrator', "Administrator", RoleType.SupplierUser.value);
-    static readonly PremiumUser = new RoleEnum('Premium user', "Premium user", RoleType.SupplierUser.value);
+    static readonly User = new RoleEnum('User', "User", RoleType.SupplierUser.value);
     static readonly BusinessDevelopmentManager = new RoleEnum('Business development manager', "Business development manager", RoleType.SupplierUser.value);
 
     private constructor(public readonly value: string, public readonly name: string, public readonly type: number) {
