@@ -33,7 +33,7 @@ export class AcOverviewComponent implements OnInit {
 
   @Input() clientId?: string;
 
-  constructor(private route: Router,
+  constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               public configService: ConfigService,
               private toastRepository: ToastRepository,
@@ -100,6 +100,9 @@ export class AcOverviewComponent implements OnInit {
     this.clientRepository.save(this.client).subscribe(res => {
       if (res.statusCode === 200 ) {
         this.toastRepository.showSuccess('Save successfully')
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([`/advice-review/add-client/overview/${res.data?.id || Constants.NON_ID}`])
+        })
       } else {
         this.toastRepository.showDanger(res.msg || 'Save failed')
       }

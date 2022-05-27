@@ -119,6 +119,7 @@ export class EditSupplierTeamComponent implements OnInit {
     getSupplierRole(): void {
         this.supplierRepository.getSupplierRole().subscribe(res => {
             this.supplierRoles = res.data;
+            this.team.roleId = this.supplierRoles[0].id
         });
     }
 

@@ -8,7 +8,7 @@
         </div>
 
         <div class="btn-control-group">
-            <button class="btn text-danger" *ngIf="editType !== 'add'" (click)="updateStatus('Disable')">Disable {{clientName.split(' ')[0]}}</button>
+            <button class="btn text-danger" *ngIf="editType !== 'add' && clientName" (click)="updateStatus('Disable')">Disable {{clientName.split(' ')[0]}}</button>
             <button class="btn btn-purple xs-ml-24" (click)="save()">
                 Save
             </button>
