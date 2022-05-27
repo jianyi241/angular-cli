@@ -113,17 +113,14 @@
                     </tbody>
 
                 </table>
+                    <div class="empty-text" *ngIf="teamPage.total == 0">This section is empty. Click on “+ Add team member” to
+                        add.
+                    </div>
                 </div>
-                <ngb-pagination [collectionSize]="teamPage.total" [(page)]="teamPage.current" [pageSize]="teamPage.size"
+                <ngb-pagination *ngIf="teamPage.total > 0" [collectionSize]="teamPage.total" [(page)]="teamPage.current" [pageSize]="teamPage.size"
                                 (pageChange)="pageChange($event)"></ngb-pagination>
 
             </ng-container>
-
-            <div class="empty-text" *ngIf="teamPage.total == 0">This section is empty. Click on “+ Add team member” to
-                add.
-            </div>
-
-
 
         </div>
     </div>
