@@ -59,7 +59,7 @@ export class AdminDetailComponent implements OnInit {
                 return "label-orange"
                 break;
             case this.configService.userStatus.disable:
-                return "label-grey"
+                return "label-red"
         }
         return "";
     }
