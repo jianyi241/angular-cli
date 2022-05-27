@@ -68,6 +68,9 @@ export class ReviewService {
             case AnalysisType.fee.value:
                 this.router.navigateByUrl(`/review/fee-comparison/${this.comparison.id}`);
                 break;
+            default:
+                this.router.navigateByUrl(`/review/summary/${this.comparison.id}`);
+                break;
         }
     }
 

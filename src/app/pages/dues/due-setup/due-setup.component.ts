@@ -61,26 +61,34 @@ export class DueSetupComponent implements OnInit, OnDestroy {
 
     saveSubscribe(): void {
         this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
-            let comparison = Commons.deepCopy(this.dueService.due);
-            if (this.validSave(comparison)) {
+            this.save();
+        })
+    }
+
+    private save(callback?: () => void) {
+        let comparison = Commons.deepCopy(this.dueService.due);
+        if (this.validSave(comparison)) {
+            return;
+        }
+        if (this.saveService.saveCheck(environment.baseURL + `/due/save`)) {
+            return;
+        }
+        this.dealSaveData(comparison);
+        this.reviewRepository.saveDue(comparison).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
                 return;
             }
-            if (this.saveService.saveCheck(environment.baseURL + `/due/save`)) {
-                return;
-            }
-            this.dealSaveData(comparison);
-            this.reviewRepository.saveDue(comparison).subscribe(res => {
-                if (res.statusCode != 200) {
-                    this.toastRepository.showDanger(res.msg);
-                    return;
-                }
-                Object.assign(this.dueService.due, res.data);
+            Object.assign(this.dueService.due, res.data);
+            if (callback) {
+                callback();
+            } else {
                 this.toastRepository.showSuccess('Save successfully.');
                 this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
                     this.router.navigate([`/due/due-setup/${this.dueService.due.id}`]);
                 })
-            });
-        })
+            }
+        });
     }
 
     dealSaveData(comparison) {
@@ -89,7 +97,9 @@ export class DueSetupComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/due/feature-selection/${this.dueService.due.id}`);
+            this.save(() => {
+                this.router.navigateByUrl(`/due/feature-selection/${this.dueService.due.id}`);
+            })
         });
     }
 
