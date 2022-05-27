@@ -43,21 +43,17 @@ export class AttachmentComponent implements OnInit {
         const height: number = this.height
         let targetWidth: number = 0
         let targetHeight: number = 0
-        // if (width === height) {
-        //     targetHeight = 94
-        //     targetWidth = 94
-        // } else if (width !== 1100 && height === 400) {
-        //     targetHeight = 94
-        //     const times: number = targetHeight / height
-        //     targetWidth = wid * times
-        // }
-
-        if (width > height) {
+        if (width === height) {
             targetHeight = 94
-            targetWidth = (width / height) * 94
-        } else {
             targetWidth = 94
-            targetHeight = (height / width) * 94
+        } else if (width === 1100 && height === 400) {
+            if (width > height) {
+                targetHeight = 94
+                targetWidth = (targetHeight / height) * width
+            } else {
+                targetWidth = 94
+                targetHeight = (targetWidth / width) * height
+            }
         }
         return {targetWidth,targetHeight}
     }
