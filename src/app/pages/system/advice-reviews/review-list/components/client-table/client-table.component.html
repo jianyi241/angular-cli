@@ -56,7 +56,7 @@
           <td>
             <div class="td-cell" *ngIf="!client.archived">
               <label class="label tx-blue" *ngIf="client.status == 'Active'">Active</label>
-              <label class="label tx-red" *ngIf="client.status == 'Disable'">Disable</label>
+              <label class="label tx-red" *ngIf="client.status == 'Disable'">Disabled</label>
             </div>
             <div class="td-cell" *ngIf="client.archived">
               <label class="label tx-red">Archived</label>
