@@ -65,26 +65,34 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     saveSubscribe(): void {
         this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-            let comparison = Commons.deepCopy(this.reviewService.comparison);
-            if (this.validSave(comparison)) {
+            this.save();
+        })
+    }
+
+    save(callback?: () => void) {
+        let comparison = Commons.deepCopy(this.reviewService.comparison);
+        if (this.validSave(comparison)) {
+            return;
+        }
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
+            return;
+        }
+        this.dealSaveData(comparison);
+        this.reviewRepository.saveComparison(comparison).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
                 return;
             }
-            if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
-                return;
-            }
-            this.dealSaveData(comparison);
-            this.reviewRepository.saveComparison(comparison).subscribe(res => {
-                if (res.statusCode != 200) {
-                    this.toastRepository.showDanger(res.msg);
-                    return;
-                }
-                Object.assign(this.reviewService.comparison, res.data);
+            Object.assign(this.reviewService.comparison, res.data);
+            if (callback) {
+                callback();
+            } else {
                 this.toastRepository.showSuccess('Save successfully.');
                 this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
                     this.router.navigate([`/review/comparison-setup/${this.reviewService.comparison.id}`]);
                 })
-            });
-        })
+            }
+        });
     }
 
     dealSaveData(comparison) {
@@ -113,7 +121,9 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.reviewService.nextStep();
+            this.save(() => {
+                this.reviewService.nextStep();
+            });
         });
     }
 
