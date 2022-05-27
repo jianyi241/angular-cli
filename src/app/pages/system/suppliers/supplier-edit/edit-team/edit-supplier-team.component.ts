@@ -17,6 +17,7 @@ import {HttpResult} from "../../../../../model/common/http-result";
 import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../../service/current-user.service";
+import {UserRepository} from "../../../../../repository/user-repository";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -51,6 +52,7 @@ export class EditSupplierTeamComponent implements OnInit {
         let obsArr: Observable<HttpResult<any>>[] = [];
         this.activatedRoute.params.subscribe(params => {
             this.team.companyId = params['companyId'];
+            this.team.openId = params['openId']
             if (params['id'] != Constants.NON_ID) {
                 this.team.id = params['id'];
                 let teamDetail = this.getTeamDetail();
@@ -76,6 +78,10 @@ export class EditSupplierTeamComponent implements OnInit {
                 product.checked = this.team.supplierUserProductVoList.some(sp => sp.shProductId == product.id);
             })
         });
+    }
+
+    isShowResendInvite(): boolean {
+        return this.team.openId !== Constants.NON_ID && this.team.status === this.configService.userStatus.pending
     }
 
     updateStatus(): void {
@@ -191,7 +197,7 @@ export class EditSupplierTeamComponent implements OnInit {
                 this.toastRepository.showSuccess('New user created and welcome email sent');
             }
             this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                this.router.navigate([`/supplier/edit-team/${res.data.id}/${res.data.companyId}`]);
+                this.router.navigate([`/supplier/edit-team/${res.data.id}/${res.data.companyId}/${this.team?.openId || Constants.NON_ID}`]);
             })
         })
     }
@@ -213,5 +219,13 @@ export class EditSupplierTeamComponent implements OnInit {
         })
     }
 
-
+    resend(): void {
+        this.teamRepository.resendSupplierInvite(this.team.openId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('The invitation email has been sent. Please check your inbox.');
+        })
+    }
 }

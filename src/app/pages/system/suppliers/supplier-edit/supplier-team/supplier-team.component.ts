@@ -45,7 +45,7 @@ export class SupplierTeamComponent implements OnInit {
     }
 
     save(team?: TeamInfo) {
-        this.router.navigateByUrl(`/supplier/edit-team/${team?.id || Constants.NON_ID}/${this.condition.companyId}`);
+        this.router.navigateByUrl(`/supplier/edit-team/${team?.id || Constants.NON_ID}/${this.condition.companyId}/${team?.openId || Constants.NON_ID}`);
     }
 
     resend(team: TeamInfo): void {

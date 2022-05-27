@@ -65,7 +65,7 @@ const routes: Routes = [
                 component: SupplierListComponent,
             },
             {
-                path: 'edit-team/:id/:companyId',
+                path: 'edit-team/:id/:companyId/:openId',
                 component: EditSupplierTeamComponent,
             },
             {
@@ -249,7 +249,7 @@ const routes: Routes = [
                 component: AdviceListComponent,
             },
             {
-                path: 'edit-team/:id/:practiceId',
+                path: 'edit-team/:id/:practiceId/:openId',
                 component: EditTeamComponent,
             },
             {

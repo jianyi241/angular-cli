@@ -24,6 +24,10 @@ export class PropViewComponent implements OnInit {
     prop_class: string;
     @Input()
     required: boolean = false;
+    @Input()
+    width: number = 400;
+    @Input()
+    height: number = 400;
     @Output()
     prop_change = new EventEmitter<PropertyVo>();
 

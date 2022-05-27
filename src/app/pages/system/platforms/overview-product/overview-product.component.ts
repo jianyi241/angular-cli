@@ -22,6 +22,14 @@ export class OverviewProductComponent implements OnInit, OnDestroy {
     config = {...Constants.EDITOR_CONFIG};
     routerSubscription: any;
     activatedRouteSubscription: any;
+    platFormLogoSize = {
+        width: 300,
+        height: 300
+    }
+    platFormBannerSize = {
+        width: 1100,
+        height: 400
+    }
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,

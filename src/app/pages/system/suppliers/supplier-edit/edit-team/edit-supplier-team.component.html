@@ -16,7 +16,7 @@
 <!--            </button>-->
 <!--            <button class="btn tx-red" (click)="archivedConfirm()">Archive {{team.firstName}}-->
 <!--            </button>-->
-<!--            <button class="btn btn-outline-purple-light" *ngIf="team.status == configService.userStatus.pending">Resend invite</button>-->
+            <button class="btn btn-outline-purple-light" (click)="resend()" *ngIf="isShowResendInvite()">Resend invite</button>
             <button class="btn btn-outline-purple-light" (click)="updateStatus()" *ngIf="team.status != configService.userStatus.pending && team.id">{{team.status == configService.userStatus.active ? 'Disable' : 'Enabled'}}</button>
             <button class="btn btn-purple xs-ml-24"(click)="save(team)">{{!team.id ?'Create and send welcome email' : 'Save'}}</button>
         </div>

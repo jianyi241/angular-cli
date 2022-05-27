@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TeamInfo} from "../../../../model/po/teamInfo";
 import {Constants} from "../../../../model/constants";
 import {AdviceRepository} from "../../../../repository/advice-repository";
@@ -30,13 +30,15 @@ export class EditTeamComponent implements OnInit {
                 private fileRepository: FileRepository,
                 private toastRepository: ToastRepository,
                 private adviceRepository: AdviceRepository,
-                private teamRepository: TeamRepository) {
+                private teamRepository: TeamRepository,
+                private router: Router) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe(params => {
             this.practiceId = params['practiceId'];
             this.team.companyId = this.practiceId;
+            this.team.openId = params['openId']
             if (params['id'] != Constants.NON_ID) {
                 this.team.id = params['id'];
                 this.getTeamDetail();
@@ -46,6 +48,20 @@ export class EditTeamComponent implements OnInit {
         this.getPracticeRoles();
     }
 
+    isShowResendInvite(): boolean {
+        return this.team.openId !== Constants.NON_ID && this.team.status === this.configService.userStatus.pending
+    }
+
+    resend(): void {
+        this.teamRepository.resendAdviceInvite(this.team.openId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            this.toastRepository.showSuccess('The invitation email has been sent. Please check your inbox.');
+        })
+    }
+
     updateStatus(): void {
         const _team = JSON.parse(JSON.stringify(this.team))
         if (_team.status === this.configService.userStatus.active) {
@@ -53,7 +69,7 @@ export class EditTeamComponent implements OnInit {
         } else {
             _team.status = this.configService.userStatus.active
         }
-        this.save(_team)
+        this.save(_team, true)
     }
 
     getTeamDetail(): void {
@@ -96,7 +112,7 @@ export class EditTeamComponent implements OnInit {
         }
     }
 
-    save(team: TeamInfo): void {
+    save(team: TeamInfo, changeStatus: boolean = false): void {
         if (!team.attachmentVo || !team.attachmentVo?.visitUrl) {
             this.toastRepository.showDanger('Profile photo is required.');
             return;
@@ -114,16 +130,18 @@ export class EditTeamComponent implements OnInit {
             return;
         }
         if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
-            console.log('saveCheck')
             return;
         }
+
         this.teamRepository.saveTeam(team).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
             this.toastRepository.showSuccess(this.team.id ? 'Save Successfully' : 'New user created and welcome email sent');
-            this.team = res.data;
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this.router.navigate([`/advice-practices/edit-team/${res.data.id}/${res.data.companyId}/${this.team.openId || Constants.NON_ID}`]);
+            })
         });
     }
 }

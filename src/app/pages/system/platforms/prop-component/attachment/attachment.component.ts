@@ -21,6 +21,10 @@ export class AttachmentComponent implements OnInit {
     @Input()
     tabType: number;
     @Input()
+    width: number;
+    @Input()
+    height: number;
+    @Input()
     prop_class: string;
     @Input()
     change: EventEmitter<PropertyVo>;
@@ -32,6 +36,30 @@ export class AttachmentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    previewImageSize(): any {
+        const width: number = this.width
+        const height: number = this.height
+        let targetWidth: number = 0
+        let targetHeight: number = 0
+        // if (width === height) {
+        //     targetHeight = 94
+        //     targetWidth = 94
+        // } else if (width !== 1100 && height === 400) {
+        //     targetHeight = 94
+        //     const times: number = targetHeight / height
+        //     targetWidth = wid * times
+        // }
+
+        if (width > height) {
+            targetHeight = 94
+            targetWidth = (width / height) * 94
+        } else {
+            targetWidth = 94
+            targetHeight = (height / width) * 94
+        }
+        return {targetWidth,targetHeight}
     }
 
     droppedFile(files: NgxFileDropEntry[]): void {

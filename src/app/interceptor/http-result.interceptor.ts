@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 import {ToastRepository} from "../repository/toast-repository";
 import {SaveService} from "../service/save.service";
 import {Constants} from "../model/constants";
+import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
     constructor(private storage: LocalStorageObServable,
                 private saveService: SaveService,
                 private toastRepository: ToastRepository,
+                private ngxLoadingSpinnerService: NgxLoadingSpinnerService,
                 private router: Router) {
     }
 
@@ -66,6 +68,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
                 if (this.saveService.has(baseUrl)) {
                     this.saveService.delete(baseUrl);
                 }
+                this.ngxLoadingSpinnerService.hide();
                 this.toastRepository.showDanger(error.statusText);
                 throw error;
             })
