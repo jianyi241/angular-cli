@@ -8,7 +8,7 @@
                         <div class="text">{{getVersionTime(version)}}</div>
                     </div>
                     <div class="info-center">
-                        <div class="title">{{version.updateUser || 'Bailey Hao'}}</div>
+                        <div class="title">{{version.username}}</div>
                         <div class="text">{{version.type == 'Draft' ? 'Last updated by' : 'Approver'}}</div>
                     </div>
                     <div class="btn-control" *ngIf="version.type == 'Draft'">
