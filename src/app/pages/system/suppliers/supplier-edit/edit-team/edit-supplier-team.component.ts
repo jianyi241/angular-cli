@@ -17,7 +17,6 @@ import {HttpResult} from "../../../../../model/common/http-result";
 import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../../service/current-user.service";
-import {UserRepository} from "../../../../../repository/user-repository";
 
 @Component({
     selector: 'app-manage-supplier-users',
