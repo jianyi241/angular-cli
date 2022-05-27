@@ -20,6 +20,20 @@
   }
 }
 
+.table-list-wrap {
+  max-height: calc(100vh - 340px);
+  overflow-y: auto;
+  margin-bottom: 15px;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 6px;
+    border-radius: 3px;
+    background-color: #777777;
+  }
+}
+
 .table-head{
   display: flex;
   justify-content: space-between;
