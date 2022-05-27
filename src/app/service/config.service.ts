@@ -200,6 +200,6 @@ export class ConfigService {
         // } else if (tabType === TabType.esg.value) { // *ngIf
         //     return (this.currentVersion.versionStatus === VersionStatus.WaitPublish.value || readyOnly) || (this.currentVersion.versionStatus === VersionStatus.Normal.value && this.currentVersion.type === 'Publish' && !readyOnly)
         // }
-        return true
+        // return true
     }
 }
