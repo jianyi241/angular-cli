@@ -31,15 +31,12 @@ export class PbdInformationComponent implements OnInit {
   }
 
   getAllPlatformView(): void{
-    console.log('productId ', this.productId, '--- ')
     this.platformRepository.getPlatformViewByTabType<PlatformInformation>(this.productId, TabType.information.value) .subscribe(res => {
       this.platformViewAllInfo = res.data
       let properties = res.data.groups.flatMap(item => {
         return item.properties
       })
       this.properties = properties
-      console.log('properties ===> ', properties)
-      console.log('getAllPlatformView information ===> ', this.platformViewAllInfo)
     },err => {})
   }
 

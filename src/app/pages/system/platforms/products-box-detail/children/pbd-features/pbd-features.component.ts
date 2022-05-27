@@ -49,14 +49,16 @@ export class PbdFeaturesComponent implements OnInit {
   }
 
   getAllPlatformView(): void{
-    console.log('productId ', this.productId, '--- ')
     this.platformRepository.getPlatformViewByTabType<PlatformInformation>(this.productId, TabType.features.value) .subscribe(res => {
       this.platformViewAllInfo = res.data
-      this.groups = res.data.groups
-      let list = this.groups[0].subGroups[0].properties
-      this.propertiesList = list
-      this.alreadyExpandList = [this.propertiesList[0].shPropertyId]
-      console.log('this.groups  features ===> ', this.groups )
+      this.groups = res.data.groups || []
+      if (this.groups.length) {
+        let list = this.groups[0]?.subGroups[0]?.properties
+        this.propertiesList = list || []
+        if (this.propertiesList.length) {
+          this.alreadyExpandList = [this.propertiesList[0].shPropertyId]
+        }
+      }
     },err => {})
   }
 
@@ -90,7 +92,6 @@ export class PbdFeaturesComponent implements OnInit {
 
 
   chooseSubGroup(group: Group) {
-    console.log('group ', group)
     this.subGroup = group;
     this.propertiesList = group.properties
     if (!this.propertiesList || this.propertiesList.length === 0) {
@@ -98,7 +99,6 @@ export class PbdFeaturesComponent implements OnInit {
     } else {
       this.alreadyExpandList = [this.propertiesList[0].shPropertyId]
     }
-    console.log('properties ', this.propertiesList)
   }
 
   previewImage(imgUrl: string): void {

@@ -97,7 +97,6 @@ export class ProductsBoxDetailComponent implements OnInit {
 
     getFreezeData(): void {
         this.platformRepository.getPlatformFreezeData(this.productId, 1).subscribe(res => {
-            console.log('get freezeData ===> ', res);
             this.platformOverviewInfo = res.data;
         }, err => {
         });
@@ -118,8 +117,6 @@ export class ProductsBoxDetailComponent implements OnInit {
     }
 
     editProduct(): void {
-        console.log('versionid produtid ' + this.productId);
-        console.log('versionid produtid ' + this.versionId);
         this.router.navigateByUrl(`/platform/product-tab/overview/${this.productId}/${this.versionId || Constants.VERSION}`);
     }
 

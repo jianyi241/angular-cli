@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="form-column-right">
-            <div class="list">
+            <div class="list" *ngIf="propertiesList && propertiesList.length">
                 <div class="item" *ngFor="let item of propertiesList">
                     <div class="item-title">{{item.propName}}
                         <div class="tooltip-wrapper">
@@ -51,10 +51,12 @@
                         </div>
                     </div>
                     <div class="item-introduce">
-                        Yes. This feature is avaliable.
-                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}" (click)="expandItem(item)"/>
+                        <div *ngIf="item.propValue === 'yes'">Yes. This feature is avaliable.</div>
+                        <div *ngIf="item.propValue === 'no' || !item.propValue">No. This is not yet avaliable in this platform.</div>
+<!--                        <img src="assets/img/icon/icon-dropdown-purple.svg" class="dropdown-btn" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}" (click)="expandItem(item)"/>-->
                     </div>
-                    <div class="item-content" [ngClass]="{'expand': alreadyExpandList.includes(item.shPropertyId)}">
+                    <div class="item-content" [ngClass]="{'expand': item.propValue === 'yes'}">
+<!--                        alreadyExpandList.includes(item.shPropertyId)}-->
                         <div [innerHTML]="item.prodPropDesc"></div>
                         <div class="content-image-list">
                             <div class="image-wrapper" *ngIf="item.attachment?.visitUrl">
@@ -67,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <div class="empty-text" *ngIf="!propertiesList || propertiesList.length === 0">no data.</div>
         </div>
     </div>
 </div>
