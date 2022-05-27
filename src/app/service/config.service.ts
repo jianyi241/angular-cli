@@ -11,6 +11,7 @@ import {CurrentUserService} from "./current-user.service";
 import {Version} from "../model/po/version";
 import {AnalysisType} from "../model/enums/analysis-type";
 import {WorkFlowsStatus} from "../model/enums/work-flows-status";
+// @ts-ignore
 import {ComparisonStatus} from "../model/enums/comparison-status";
 
 @Injectable({
@@ -56,7 +57,7 @@ export class ConfigService {
         support: RoleEnum.Support.value,
         owner: RoleEnum.Owner.value,
         administrator: RoleEnum.Administrator.value,
-        premiumUser: RoleEnum.PremiumUser.value,
+        premiumUser: RoleEnum.User.value,
         businessDevelopmentManager: RoleEnum.BusinessDevelopmentManager.value,
     }
 

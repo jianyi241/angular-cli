@@ -6,7 +6,7 @@
             {{configService.fullName(team.firstName, team.lastName)}}
             <label class="label label-green-light" *ngIf="team.status == configService.userStatus.active">Active</label>
             <label class="label label-orange" *ngIf="team.status == configService.userStatus.pending">Pending</label>
-            <label class="label label-grey" *ngIf="team.status == configService.userStatus.disable">Disable</label>
+            <label class="label label-red" *ngIf="team.status == configService.userStatus.disable">Disable</label>
         </div>
 
         <div class="btn-control-group">

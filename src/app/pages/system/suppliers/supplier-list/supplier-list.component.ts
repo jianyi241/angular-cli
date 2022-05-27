@@ -37,7 +37,7 @@ export class SupplierListComponent implements OnInit {
     }
 
     sortList(column: string,type: number): void {
-        if (type === 0) {
+        if (type === 1) {
             this.condition.order = {column: 'name', asc: true}
         } else {
             this.condition.order = {column, asc: false}
