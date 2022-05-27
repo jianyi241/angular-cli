@@ -92,11 +92,12 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="empty-text" *ngIf="duePage.total == 0">This section is empty.
+            </div>
         </div>
         <ngb-pagination *ngIf="duePage.total > 0" [collectionSize]="duePage.total" [(page)]="duePage.current"
                         [pageSize]="duePage.size"
                         (pageChange)="pageChange($event)" [rotate]="true" [maxSize]="5"></ngb-pagination>
     </ng-container>
-    <div class="empty-text" *ngIf="duePage.total == 0">This section is empty.
-    </div>
+
 </div>
