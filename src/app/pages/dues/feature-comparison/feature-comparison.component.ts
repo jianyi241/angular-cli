@@ -103,7 +103,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             return 'icon-checked-green';
         }
         let hasNo = prodProps.some(p => p.shPropertyId == id && p.propValue == 'no');
-        if (!hasNo) {
+        if (hasNo) {
             return 'icon-close-red';
         }
         return 'icon-no-data';

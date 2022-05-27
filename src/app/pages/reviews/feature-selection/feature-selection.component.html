@@ -56,7 +56,7 @@
     <div class="features-accordion">
         <div class="accordion-main" *ngIf="subGroups.length > 0">
             <div class="list">
-                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" [destroyOnHide]="true">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" [destroyOnHide]="true" [closeOthers]="false">
                     <ngb-panel *ngFor="let subGroup of subGroups; let subGroupIndex = index;"
                                id="ngb-panel-{{subGroupIndex}}">
                         <ng-template ngbPanelTitle="Collapse all 10 features">

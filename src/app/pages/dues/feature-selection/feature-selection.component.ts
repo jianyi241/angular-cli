@@ -17,6 +17,7 @@ import {ConfigService} from "../../../service/config.service";
 import {DueService} from "../../../service/due.service";
 import {SaveTemplateModalComponent} from "../save-template-modal/save-template-modal.component";
 import {TemplatePropertyInfo} from "../../../model/po/templatePropertyInfo";
+import {NgbAccordion} from "@ng-bootstrap/ng-bootstrap/accordion/accordion";
 
 SwiperCore.use([Pagination]);
 
@@ -28,6 +29,7 @@ SwiperCore.use([Pagination]);
 })
 export class FeatureSelectionComponent implements OnInit, OnDestroy {
     @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
+    @ViewChild('acc') acc: NgbAccordion;
     featureForm: Array<GroupVo> = new Array<GroupVo>();
     subGroups: Array<GroupVo> = [];
     initComparisonObservable: any;
@@ -197,6 +199,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     slideChange(event: any): void {
         this.subGroups = this.featureForm[event.realIndex].subList || [];
         this.ref.detectChanges();
+        this.acc && this.acc.expandAll();
         this.currentIndex = event.realIndex;
     }
 

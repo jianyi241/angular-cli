@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import SwiperCore, {Pagination} from "swiper";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {GroupVo} from "../../../model/vo/groupVo";
@@ -15,6 +15,7 @@ import {environment} from "../../../../environments/environment";
 import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
+import {NgbAccordion} from "@ng-bootstrap/ng-bootstrap/accordion/accordion";
 
 SwiperCore.use([Pagination]);
 
@@ -24,8 +25,9 @@ SwiperCore.use([Pagination]);
     styleUrls: ['./feature-selection.component.less']
 
 })
-export class FeatureSelectionComponent implements OnInit, OnDestroy {
+export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
+    @ViewChild('acc') acc: NgbAccordion;
     featureForm: Array<GroupVo> = new Array<GroupVo>();
     subGroups: Array<GroupVo> = [];
     initComparisonObservable: any;
@@ -86,6 +88,11 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
     }
+
+    ngAfterViewInit(): void {
+    }
+
+
 
 
     init(): void {
@@ -173,6 +180,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     slideChange(event: any): void {
         this.subGroups = this.featureForm[event.realIndex].subList || [];
         this.ref.detectChanges();
+        this.acc && this.acc.expandAll();
         this.currentIndex = event.realIndex;
     }
 
