@@ -151,6 +151,7 @@
                         </label>
                         <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                    (change)="changeNonFee()"
+                                   [disabled]="disableAnalyse()"
                                    [(ngModel)]="reviewService.comparison.nonFeeProducts"
                                    placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
@@ -181,6 +182,7 @@
                         </label>
                         <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                    (change)="changeFee()"
+                                   [disabled]="disableAnalyse()"
                                    [(ngModel)]="reviewService.comparison.feeProducts"
                                    placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
