@@ -63,6 +63,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.dueLayoutComponent.viewHead.isScrollFixed = false;
     }
 
     subscribe(): void {
