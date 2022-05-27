@@ -28,10 +28,8 @@ export class PbdEsgComponent implements OnInit {
   }
 
   getAllPlatformView(): void{
-    console.log('productId ', this.productId, '--- ')
     this.platformRepository.getPlatformViewByTabType<PlatformEsg>(this.productId, TabType.esg.value) .subscribe(res => {
       this.platformViewAllInfo = res.data
-      console.log('Esg info ===> ', this.platformViewAllInfo)
     },err => {})
   }
 }
