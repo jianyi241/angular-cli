@@ -21,6 +21,7 @@ import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
 import {ConfigService} from "../../../service/config.service";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
+import * as Enumerable from "linq";
 
 @Component({
     selector: 'app-feature-comparison',
@@ -169,15 +170,17 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     groupMatch(group: GroupInfo, product: ComparisonProductVo): number {
         let propIds = group.subList.flatMap(s => s.propertyVoList.flatMap(p => p.id));
         let total = propIds.length;
-        let match = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId)).length;
-        return match == 0 ? 0 : parseFloat((match / total).toFixed(2)) * 100;
+        let matchProps = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId));
+        let match = Enumerable.from(matchProps).distinct(m => m.shPropertyId).toArray().length;
+        return match == 0 ? 0 : parseFloat((match / total * 100).toFixed(0));
     }
 
     allMatch(product: ComparisonProductVo): number {
         let propIds = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
         let total = propIds.length;
-        let match = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId)).length;
-        return match == 0 ? 0 : parseFloat((match / total).toFixed(2)) * 100;
+        let matchProps = product.productPropVoList.filter(p => p.propValue == 'yes' && propIds.includes(p.shPropertyId));
+        let match = Enumerable.from(matchProps).distinct(m => m.shPropertyId).toArray().length;
+        return match == 0 ? 0 : parseFloat((match / total * 100).toFixed(0));
     }
 
     isMainProduct(product: ComparisonProductVo): boolean {

@@ -25,4 +25,12 @@ export class Commons {
     public static deepCopy<T>(obj: T): T {
         return JSON.parse(JSON.stringify(obj));
     }
+
+    // public static distinct(arr: [], func: (a) => boolean) {
+    //     Enumerable.from(arr).distinct(a => a.id);
+    //     arr.filter(a => {
+    //         func(a)
+    //     })
+    // }
 }
+
