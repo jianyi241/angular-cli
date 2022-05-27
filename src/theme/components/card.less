@@ -9,7 +9,7 @@
 
             .card-header {
                 background-color: transparent;
-                padding: 0;
+                padding: 24px 0 0 0 ;
                 border-color: #D6DDEB;
 
                 button {
@@ -26,6 +26,7 @@
 
                     &.collapsed {
                         .accordion-head {
+                            padding:28px 0 0 0 ;
                             .btn-right {
                                 .icon-arr-blue {
                                     transform: rotateZ(-180deg);
@@ -128,6 +129,7 @@
 
                         ul {
                             padding-left: 0;
+                            margin-bottom:0;
 
                             li {
                                 padding: 6px 12px;
@@ -136,8 +138,12 @@
                                 display: flex;
                                 justify-content: space-between;
                                 align-items: center;
-                                margin-bottom: 16px;
+                                margin-top: 16px;
                                 cursor: pointer;
+
+                                &:first-child{
+                                    margin-top: 0;
+                                }
 
                                 .text {
                                     position: relative;
