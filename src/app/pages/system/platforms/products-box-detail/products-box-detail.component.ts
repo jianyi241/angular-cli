@@ -129,7 +129,7 @@ export class ProductsBoxDetailComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.router.navigateByUrl(`/platform/product-tab/overview/${this.product.id}/${res.data.id}`)
+            this.router.navigate([`/platform/product-tab/overview/${this.product.id}/${res.data.id}`], {queryParams: {from: 'view'}})
         });
     }
 

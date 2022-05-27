@@ -98,6 +98,11 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     showEditButton(type: string) {
+        if (type === 'edit') {
+            return this.version.type === VersionType.Publish.value
+        } else if (type === 'submit' || type === 'discard') {
+            return this.version.type === VersionType.Draft.value && (this.version.versionStatus === VersionStatus.Normal.value || this.version.versionStatus === VersionStatus.Rejected.value)
+        }
         if (this.currentUserService.isAdminUser()) {
             if (type === 'reject' || type === 'approve') {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
@@ -105,12 +110,6 @@ export class ProductLayoutComponent implements OnInit {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value && this.version.publishPlatformFlag
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
-            }
-        } else if (this.currentUserService.isSupplierUser()) {
-            if (type === 'edit') {
-                return this.version.type === VersionType.Publish.value
-            } else if (type === 'submit' || type === 'discard') {
-                return this.version.type === VersionType.Draft.value && (this.version.versionStatus === VersionStatus.Normal.value || this.version.versionStatus === VersionStatus.Rejected.value)
             }
         }
     }
@@ -366,11 +365,20 @@ export class ProductLayoutComponent implements OnInit {
             console.log('cancel')
         })
     }
+
     editDiscardDraft(): void {
         this.versionRepository.discard(this.version.id).subscribe(res => {
             if (res.statusCode === 200) {
                 // this.getVersionNoParams()
-                this.router.navigateByUrl(`/platform/product-box-detail/overview/${res.data.id}/${res.data.versionId}}/${TabType.overview.value}`)
+                if (this.currentUserService.isSupplierUser()) {
+                    this.router.navigateByUrl(`/platform/product-box-detail/overview/${res.data.id}/${res.data.versionId}}/${TabType.overview.value}`)
+                } else {
+                    if (this.from === 'view') {
+                        this.router.navigateByUrl(`/platform/product-box-detail/overview/${res.data.id}/${res.data.versionId}}/${TabType.overview.value}`)
+                    } else {
+                        this.router.navigateByUrl('/platform/product')
+                    }
+                }
             } else {
                 this.toastRepository.showDanger(res.msg || 'Failed operation')
             }
