@@ -42,11 +42,11 @@ export class AcReviewComponent implements OnInit {
     getStatusCls(statusName: string): string {
         if (statusName === ComparisonStatus.InProgress.value) {
             return 'status-blue'
-        } else if (statusName === 'Approved') {
+        } else if (statusName === ComparisonStatus.Approved.value || statusName === ComparisonStatus.Completed.value) {
             return 'status-green'
-        } else if (statusName === 'Pending approval') {
+        } else if (statusName === ComparisonStatus.PendingApproval.value) {
             return 'status-yellow'
-        } else if (statusName === 'Archived') {
+        } else if (statusName === ComparisonStatus.Archived.value) {
             return 'status-red'
         }
         return ''
