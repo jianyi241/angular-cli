@@ -13,6 +13,7 @@ import {AnalysisType} from "../model/enums/analysis-type";
 import {WorkFlowsStatus} from "../model/enums/work-flows-status";
 // @ts-ignore
 import {ComparisonStatus} from "../model/enums/comparison-status";
+import {PlatformStatus} from "../model/enums/platform-status";
 
 @Injectable({
     providedIn: 'root'
@@ -79,6 +80,12 @@ export class ConfigService {
         feature: AnalysisType.feature.value,
         metric: AnalysisType.metric.value,
         fee: AnalysisType.fee.value,
+    }
+
+    platformStatus = {
+        Active: PlatformStatus.Active.value,
+        Disabled: PlatformStatus.Disabled.value,
+        Pending: PlatformStatus.Pending.value
     }
 
     workflowStatus = {

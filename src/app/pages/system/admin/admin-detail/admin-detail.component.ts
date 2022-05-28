@@ -26,7 +26,7 @@ export class AdminDetailComponent implements OnInit {
     uploading: boolean = false;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private configService: ConfigService,
+                protected configService: ConfigService,
                 private adminRepository: AdminRepository,
                 private userRepository: UserRepository,
                 private saveService: SaveService,

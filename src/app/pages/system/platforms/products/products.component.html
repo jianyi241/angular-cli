@@ -81,13 +81,13 @@
                                 </div>
                             </div>
                             <div *ngIf="!product.archived">
-                                <div class="td-cell" *ngIf="product.status == 'Active'">
+                                <div class="td-cell" *ngIf="product.status === configService.platformStatus.Active">
                                     <label class="label label-green">Active</label>
                                 </div>
-                                <div class="td-cell" *ngIf="product.status == 'Disabled'">
+                                <div class="td-cell" *ngIf="product.status == configService.platformStatus.Disabled">
                                     <label class="label label-red">Disabled</label>
                                 </div>
-                                <div class="td-cell" *ngIf="product.status == 'Pending'">
+                                <div class="td-cell" *ngIf="product.status == configService.platformStatus.Pending">
                                     <label class="label label-orange">Pending</label>
                                 </div>
                             </div>

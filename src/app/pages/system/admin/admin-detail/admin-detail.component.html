@@ -4,7 +4,8 @@
         <div class="sub-title" [routerLink]="['/admin/list']">
             <span class="icon-block icon-arr-left-long icon-31 xs-mr-16"></span>
             {{ type === '0' ? 'New administrator' : 'Recep Peker'}}
-            <label class="label status" [ngClass]="[getStatusCls()]">{{ adminInfo.status }}</label>
+            <label class="label status" [ngClass]="[getStatusCls()]" *ngIf="adminInfo.status === configService.userStatus.disable">Disabled</label>
+            <label class="label status" [ngClass]="[getStatusCls()]" *ngIf="adminInfo.status !== configService.userStatus.disable">{{adminInfo.status}}</label>
         </div>
 
         <div class="btn-control-group">
