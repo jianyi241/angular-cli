@@ -10,7 +10,7 @@
                         </div>
                         <div class="info info-avatar">
                             <div class="avatar">
-                                <img [src]="review.userAvatar?.visitUrl" />
+                                <img [src]="review.userAvatar?.visitUrl || './assets/img/unassgin.svg'" />
                             </div>
                             <div class="txt">
                                 <div class="txt-name">{{review.username}}</div>
@@ -18,10 +18,8 @@
                             </div>
                         </div>
                         <div class="info info-status">
-                            <span class="label" [ngClass]="[getStatusCls(review.status)]">{{review.status}}</span>
-<!--                            <span class="label status-blue" *ngIf="review.status === 2">In progress</span>-->
-<!--                            <span class="label status-yellow" *ngIf="review.status === 3">Pending approval</span>-->
-<!--                            <span class="label status-red" *ngIf="review.status === 4">Archived</span>-->
+                            <span class="label tx-green" *ngIf="review.status == configService.comparisonStatus.completed">Completed</span>
+                            <span class="label" *ngIf="review.status != configService.comparisonStatus.completed" [ngClass]="[getStatusCls(review.status)]">{{review.status}}</span>
                         </div>
                     </div>
                     <div class="info info-edit">
