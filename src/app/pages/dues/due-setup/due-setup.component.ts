@@ -14,6 +14,8 @@ import {ClientInfo} from "../../../model/po/clientInfo";
 import {ClientRepository} from "../../../repository/client-repository";
 import {ComparisonTemplateInfo} from "../../../model/po/comparisonTemplateInfo";
 import {DueService} from "../../../service/due.service";
+import {AddClientModalComponent} from "../../system/advice-reviews/modal/add-client-modal/add-client-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -33,6 +35,7 @@ export class DueSetupComponent implements OnInit, OnDestroy {
     constructor(public dueService: DueService,
                 public configService: ConfigService,
                 private saveService: SaveService,
+                private modalService: NgbModal,
                 private router: Router,
                 private toastRepository: ToastRepository,
                 private reviewRepository: ReviewRepository,
@@ -149,4 +152,16 @@ export class DueSetupComponent implements OnInit, OnDestroy {
     }
 
 
+    addClient() {
+        const modal = this.modalService.open(AddClientModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        })
+        modal.result.then(res => {
+            this.getClients();
+        }).catch(res => {
+        })
+
+    }
 }
