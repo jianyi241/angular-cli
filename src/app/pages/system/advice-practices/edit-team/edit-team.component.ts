@@ -11,6 +11,7 @@ import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
 import {TeamRepository} from "../../../../repository/team-repository";
 import {ConfigService} from "../../../../service/config.service";
+import {CompanyType} from "../../../../model/enums/company-type";
 
 @Component({
     selector: 'app-edit-team',
@@ -32,6 +33,7 @@ export class EditTeamComponent implements OnInit {
                 private adviceRepository: AdviceRepository,
                 private teamRepository: TeamRepository,
                 private router: Router) {
+        this.team.companyType = CompanyType.Practice.value;
     }
 
     ngOnInit(): void {
