@@ -4,6 +4,7 @@ import {ConfigService} from "../../../../../../service/config.service";
 import {ToastRepository} from "../../../../../../repository/toast-repository";
 import {ClientRepository} from "../../../../../../repository/client-repository";
 import {DueListVo} from "../../../../../../model/vo/dueListVo";
+import {ComparisonStatus} from "../../../../../../model/enums/comparison-status";
 
 @Component({
     selector: 'app-ac-review',
@@ -39,7 +40,7 @@ export class AcReviewComponent implements OnInit {
 
     //
     getStatusCls(statusName: string): string {
-        if (statusName === 'In progress') {
+        if (statusName === ComparisonStatus.InProgress.value) {
             return 'status-blue'
         } else if (statusName === 'Approved') {
             return 'status-green'
