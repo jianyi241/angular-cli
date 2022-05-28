@@ -4,6 +4,7 @@ import {ConfigService} from "../../../../../../service/config.service";
 import {ToastRepository} from "../../../../../../repository/toast-repository";
 import {ClientRepository} from "../../../../../../repository/client-repository";
 import {DueListVo} from "../../../../../../model/vo/dueListVo";
+import {ComparisonStatus} from "../../../../../../model/enums/comparison-status";
 
 @Component({
     selector: 'app-ac-review',
@@ -39,14 +40,14 @@ export class AcReviewComponent implements OnInit {
 
     //
     getStatusCls(statusName: string): string {
-        if (statusName === 'In progress') {
-            return 'status-blue'
-        } else if (statusName === 'Approved') {
-            return 'status-green'
-        } else if (statusName === 'Pending approval') {
-            return 'status-yellow'
-        } else if (statusName === 'Archived') {
-            return 'status-red'
+        if (statusName === ComparisonStatus.InProgress.value) {
+            return 'label-blue'
+        } else if (statusName === ComparisonStatus.Approved.value || statusName === ComparisonStatus.Completed.value) {
+            return 'label-green'
+        } else if (statusName === ComparisonStatus.PendingApproval.value) {
+            return 'label-orange'
+        } else if (statusName === ComparisonStatus.Archived.value) {
+            return 'label-red'
         }
         return ''
     }
