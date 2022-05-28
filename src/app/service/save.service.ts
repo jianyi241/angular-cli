@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ToastRepository} from "../repository/toast-repository";
+import * as moment from "moment";
 
 class SaveObj {
     path: string;
+    time: Date;
 
     constructor(name: string) {
         this.path = name;
+        this.time = new Date();
     }
 }
 
@@ -23,7 +26,13 @@ export class SaveService {
 
     saveCheck(path): boolean {
         if (this.has(path)) {
-            // this.toastRepository.showDanger("Click limit.");
+            //safe
+            let saveObj = this.get(path);
+            let diff = moment(new Date()).diff(saveObj.time, 'ms');
+            if (diff >= 1500) {
+                this.delete(path);
+                return false;
+            }
             return true;
         }
         this.add(path);
