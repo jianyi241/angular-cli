@@ -131,7 +131,7 @@ export class EditTeamComponent implements OnInit {
             this.toastRepository.showDanger('Work email is required.');
             return;
         }
-        if (this.saveService.saveCheck(environment.baseURL + '/advice/saveOrUpdateTeamMember')) {
+        if (this.saveService.saveCheck(environment.baseURL + '/team/saveOrUpdateTeamMember')) {
             return;
         }
 
