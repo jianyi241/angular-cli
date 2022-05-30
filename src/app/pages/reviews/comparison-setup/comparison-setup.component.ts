@@ -170,6 +170,17 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             this.toastRepository.showDanger('Main platform is required.');
             return true;
         }
+
+        if (comparison.nonFeeProducts.length == 0) {
+            this.toastRepository.showDanger('Non-fee platforms is required.');
+            return true;
+        }
+
+        if (this.showFeeProduct() && comparison.feeProducts.length == 0) {
+            this.toastRepository.showDanger('Fee platforms is required.');
+            return true;
+        }
+
         return false;
     }
 
@@ -233,7 +244,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         }
     }
 
-    hideFeeProduct(): boolean {
+    showFeeProduct(): boolean {
         return this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
     }
 }
