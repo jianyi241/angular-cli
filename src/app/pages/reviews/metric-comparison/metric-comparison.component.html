@@ -30,8 +30,8 @@
                     </div>
                 </th>
 
-                <th class="th-brand bg-light" [ngStyle]="{'width.%':100/compareData.comparisonProductVos.length}"  [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
-                    <div class="th-brand-box" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
+                <th class="th-brand " [ngStyle]="{'width.%':100/compareData.comparisonProductVos.length}"  [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                    <div class="th-brand-box" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-main': isMainProduct(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
@@ -87,7 +87,7 @@
                 </thead>
                 <ng-container *ngFor="let tab of compareData.tabVoList; let tabIndex = index">
                     <tbody >
-                    <tr class="main-group bg-light">
+                    <tr class="main-group ">
                         <td>
                             <div class="main-group-title review-content-open" reviewDropdown [content-tag]="'tbody'" [panel]="panelContent"
                                  [content-prefix]="'panel-content-'+tabIndex">
@@ -95,7 +95,7 @@
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                             </div>
                         </td>
-                        <td [hidden]="hideByFlag(product)" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" *ngFor="let product of compareData.comparisonProductVos"></td>
+                        <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                     </tr>
                     </tbody>
 
@@ -118,7 +118,7 @@
                                     </div>
                                 </td>
 
-                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                                <td class="" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-main': isMainProduct(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                     <ng-container *ngIf="getProductPropValue(prop, product.productPropVoList)">
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                             <div appShowMore>
@@ -185,7 +185,7 @@
                                         <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                                     </div>
                                 </td>
-                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
+                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-main': isMainProduct(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                             </tr>
                             </tbody>
                             <ng-container *ngFor="let prop of group.propertyVoList; let propIndex = index">
@@ -206,7 +206,7 @@
                                         </div>
                                     </td>
 
-                                    <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                                    <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-main': isMainProduct(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                         <ng-container *ngIf="getProductPropValue(prop, product.productPropVoList)">
                                             <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                                 <div appShowMore>
@@ -265,7 +265,7 @@
                 <tfoot>
                 <th></th>
 
-                <th class="th-control" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                <th class="th-control" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-main': isMainProduct(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="btn-control-box">
                         <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
