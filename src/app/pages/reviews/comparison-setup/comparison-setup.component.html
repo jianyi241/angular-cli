@@ -156,7 +156,7 @@
                                    placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                 <div class="ng-value ng-custom-value">
-                                    {{items.length}}/4 selected
+                                    {{items.length}}/{{products.length}} selected
                                 </div>
                             </ng-template>
                             <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="(reviewService.comparison.mainPlatformId == product.id) || false">
@@ -187,7 +187,7 @@
                                    placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                 <div class="ng-value ng-custom-value">
-                                    {{items.length}}/4 selected
+                                    {{items.length}}/{{products.length}} selected
                                 </div>
                             </ng-template>
                             <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="reviewService?.comparison.mainPlatformId == product.id">
