@@ -160,7 +160,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.feature);
+            this.save(() => {
+                this.reviewService.preStep(AnalysisType.feature);
+            })
         })
     }
 

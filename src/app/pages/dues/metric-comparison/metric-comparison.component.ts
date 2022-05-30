@@ -60,6 +60,12 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         this.backSubscribe();
     }
 
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe((callback) => {
+            callback && callback()
+        })
+    }
+
     nextSubscribe(): void {
         this.reviewNextObservable = this.dueService.nextObservable.subscribe(() => {
             this.router.navigateByUrl(`/due/fee-comparison/${this.dueService.due.id}`);

@@ -19,8 +19,8 @@ export class ReviewTipComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    dismiss(): void {
-        this.activeModal.dismiss();
+    dismiss(flag: boolean): void {
+        this.activeModal.dismiss(flag);
     }
 
     close() {

@@ -15,7 +15,7 @@ export class DueService {
     private toggleArchivedObservable: Observable<boolean> = this.toggleArchived.asObservable();
     private nextSubject = new Subject<object>();
     nextObservable = this.nextSubject.asObservable();
-    private saveSubject = new Subject<object>();
+    private saveSubject = new Subject<() => void>();
     saveObservable = this.saveSubject.asObservable();
     private backSubject = new Subject<object>();
     backObservable = this.backSubject.asObservable();
@@ -62,8 +62,8 @@ export class DueService {
         this.nextSubject.next();
     }
 
-    save(): void {
-        this.saveSubject.next();
+    save(callback?: () => void): void {
+        this.saveSubject.next(callback);
     }
 
     back(): void {

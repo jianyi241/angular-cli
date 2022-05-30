@@ -12,6 +12,7 @@ import {DueService} from "../../../service/due.service";
 export class FeeComparisonComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
+    reviewSaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     platformItems: Array<{ name: string, value: boolean }> = [
@@ -36,12 +37,20 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
     }
 
 
     subscribe(): void {
         this.nextSubscribe();
         this.backSubscribe();
+        this.saveSubscribe();
+    }
+
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe((callback) => {
+            callback && callback()
+        })
     }
 
     nextSubscribe(): void {

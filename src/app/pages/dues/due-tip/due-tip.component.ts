@@ -19,8 +19,8 @@ export class DueTipComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    dismiss(): void {
-        this.activeModal.dismiss();
+    dismiss(flag): void {
+        this.activeModal.dismiss(flag);
     }
 
     close() {

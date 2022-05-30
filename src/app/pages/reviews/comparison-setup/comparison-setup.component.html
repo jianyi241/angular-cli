@@ -148,7 +148,7 @@
                 <div class="form-group-right">
                     <div class="form-group xs-mb-8">
                         <label class="control-label control-label-custom">
-                            <div>Select platforms to include in non-fee analysis</div>
+                            <div>Select platforms to include in non-fee analysis<span class="label-required">*</span></div>
                         </label>
                         <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                    (change)="changeNonFee()"
@@ -176,10 +176,10 @@
 
                         </textarea>
                     </div>
-                    <ng-container *ngIf="hideFeeProduct()">
+                    <ng-container *ngIf="showFeeProduct()">
                         <div class="form-group xs-mb-8">
                             <label class="control-label control-label-custom">
-                                <div>Select platforms to include in fee analysis</div>
+                                <div>Select platforms to include in fee analysis<span class="label-required">*</span></div>
                             </label>
                             <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                        (change)="changeFee()"
