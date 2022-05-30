@@ -38,7 +38,7 @@
                 </th>
 
                 <th class="th-brand" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList">
-                    <div class="th-brand-box" [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
+                    <div class="th-brand-box" [ngClass]="{'bg-main': isMainProduct(product), 'bg-gray': hidClassFlag(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
@@ -127,7 +127,7 @@
                             </td>
 
                             <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList"
-                                [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}"></td>
+                                [ngClass]="{'bg-main': isMainProduct(product), 'bg-gray': hidClassFlag(product)}"></td>
                         </tr>
                         </tbody>
                         <ng-container>
@@ -151,7 +151,7 @@
                                 </td>
 
                                 <td class="content-text" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVoList"
-                                    [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product)}">
+                                    [ngClass]="{'bg-main': isMainProduct(product), 'bg-gray': hidClassFlag(product)}">
                                     <span class="icon-block icon-39 {{getChecked(prop.id, product)}}"></span>
                                     <ng-template #popContent>
                                         <div class="cell-popover">

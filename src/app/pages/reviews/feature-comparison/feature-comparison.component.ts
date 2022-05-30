@@ -117,24 +117,24 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         this.reviewRepository.compareList(this.reviewService.comparison.id).subscribe(res => {
             this.compareData = Object.assign(this.compareData, res.data);
             //检查当前项目是否存在uncheck
-            if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
-                let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
-                this.compareData.comparisonProductVoList.forEach(p => {
-                    if (p.productPropVoList && p.productPropVoList.length > 0) {
-                        let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
-                        //对比featureIds 和 productPropIds
-                        let idCheck = props.some(id => !prodPropIds.includes(id));
-                        if (!idCheck) {
-                            let valueCheck = p.productPropVoList.some(pp => pp.propValue != 'yes');
-                            p.checked = !valueCheck;
-                        } else {
-                            p.checked = !idCheck;
-                        }
-                    } else {
-                        p.checked = false;
-                    }
-                });
-            }
+            // if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
+            //     let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []).map(p => p.id);
+            //     this.compareData.comparisonProductVoList.forEach(p => {
+            //         if (p.productPropVoList && p.productPropVoList.length > 0) {
+            //             let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
+            //             //对比featureIds 和 productPropIds
+            //             let idCheck = props.some(id => !prodPropIds.includes(id));
+            //             if (!idCheck) {
+            //                 let valueCheck = p.productPropVoList.some(pp => pp.propValue != 'yes');
+            //                 p.checked = !valueCheck;
+            //             } else {
+            //                 p.checked = !idCheck;
+            //             }
+            //         } else {
+            //             p.checked = false;
+            //         }
+            //     });
+            // }
         });
     }
 
