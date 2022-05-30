@@ -71,7 +71,7 @@
                 </thead>
 
                 <tbody *ngIf="supplierPage.total > 0">
-                <tr *ngFor="let supplier of supplierPage.records">
+                <tr *ngFor="let supplier of supplierPage.records" (click)="saveSupplier(supplier)">
                     <td>
                         <div class="td-cell td-cell_logo tx-bold" title="BT">
                             <div class="logo-box xs-mr-16">

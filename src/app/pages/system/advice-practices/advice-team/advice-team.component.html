@@ -71,7 +71,7 @@
                     </thead>
 
                     <tbody *ngIf="teamPage.total > 0">
-                    <tr *ngFor="let team of teamPage.records">
+                    <tr *ngFor="let team of teamPage.records" (click)="save(team)">
                         <td>
                             <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
                                 <div class="avatar-box xs-mr-16">
