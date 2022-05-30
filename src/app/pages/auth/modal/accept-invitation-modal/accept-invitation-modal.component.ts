@@ -67,12 +67,12 @@ export class AcceptInvitationModalComponent implements OnInit {
             return;
         }
 
-        if(this.inviteUser.companyType!==2){
-            if (!this.news) {
-                this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
-                return;
-            }
-        }
+        // if(this.inviteUser.companyType!==2){
+        //     if (!this.news) {
+        //         this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
+        //         return;
+        //     }
+        // }
 
         if (this.inviteUser.password !== this.inviteUser.confirmPassword) {
             this.toastRepository.showDanger("Passwords don't match");
