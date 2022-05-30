@@ -8,11 +8,12 @@
         </div>
 
         <div class="btn-control-group">
-            <ng-container *ngIf="has()">
-                <button class="btn text-danger" (click)="onArchive()">
+            <ng-container *ngIf="has() && practiceService.practice.id && !currentUserService.isAdviceUser()">
+                <button class="btn text-danger"  (click)="onArchive()">
                     {{(practiceService.practice.archiveFlag ? 'Unarchive ' : 'Archive ') + practiceService.practice.name}}
                 </button>
-                <button class="btn btn-outline-purple-light" (click)="onDisable()">Disable</button>
+                <button class="btn btn-outline-purple-light" (click)="onDisable()" *ngIf="practiceService.practice.status === configService.practiceStatus.active">Disable</button>
+                <button class="btn btn-outline-purple-light" (click)="onDisable()" *ngIf="practiceService.practice.status === configService.practiceStatus.disable">Enable</button>
             </ng-container>
             <button class="btn btn-purple xs-ml-24" (click)="save()">Save</button>
         </div>

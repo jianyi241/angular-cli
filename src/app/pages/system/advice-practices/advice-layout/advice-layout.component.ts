@@ -12,6 +12,7 @@ import {PracticeStatus} from "../../../../model/enums/practice-status";
 import {SaveService} from "../../../../service/save.service";
 import {environment} from "../../../../../environments/environment";
 import {CurrentUserService} from "../../../../service/current-user.service";
+import {ConfigService} from "../../../../service/config.service";
 
 @Component({
     selector: 'app-advice-layout',
@@ -26,7 +27,8 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 public practiceService: PracticeService,
                 private router: Router,
-                private adviceRepository: AdviceRepository) {
+                private adviceRepository: AdviceRepository,
+                public configService: ConfigService) {
         this.practiceService.practice = new PracticeInfo();
     }
 
@@ -81,14 +83,24 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
             windowClass: 'tip-popup-modal',
             centered: true
         });
-        modalRef.componentInstance.title = 'Disable the practice?';
-        modalRef.componentInstance.info = 'Disabling a practice will freeze it from being changed.Are you sure to disable this practice?';
-        modalRef.componentInstance.btnText = 'Yes, disable it';
+        const isDisabled = this.practiceService.practice.status === this.configService.practiceStatus.disable
+        modalRef.componentInstance.title = `${isDisabled ? 'Enable' : 'Disable'} the practice?`
+        modalRef.componentInstance.info = `${isDisabled ? 'Enabling' : 'Disabling'} a practice will freeze it from being changed.Are you sure to ${isDisabled ? 'enable' : 'disable'} this practice?`;
+        modalRef.componentInstance.btnText = `Yes, ${isDisabled ? 'enable' : 'disable'} it`
+        const msg = `${this.practiceService.practice.name} has been ${isDisabled ? 'enabled' : 'disabled'}`
         modalRef.result.then((result) => {
-            this.practiceService.practice.status = PracticeStatus.Disable.value;
-            this.save(false, `${this.practiceService.practice.name} has been disabled`);
+            if (isDisabled) {
+                this.practiceService.practice.status = PracticeStatus.Active.value;
+            } else {
+                this.practiceService.practice.status = PracticeStatus.Disable.value;
+            }
+            this.save(false, msg);
         }, (reason) => {
         });
+    }
+
+    onEnable(): void {
+
     }
 
     save(tip: boolean = true, msg?: string) {
