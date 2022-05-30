@@ -210,7 +210,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     changeMainPlatform() {
         let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
-        this.reviewService.comparison.productName = mainPlatform.name;
+        this.reviewService.comparison.productName = mainPlatform?.name;
         this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.nonFeeProducts = this.reviewService.comparison.nonFeeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
     }
