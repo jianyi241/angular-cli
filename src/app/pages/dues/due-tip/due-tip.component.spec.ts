@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DeselectFeaturesTipComponent} from './deselect-features-tip.component';
+import {DueTipComponent} from './due-tip.component';
 
 describe('SaveTemplateTipComponent', () => {
-  let component: DeselectFeaturesTipComponent;
-  let fixture: ComponentFixture<DeselectFeaturesTipComponent>;
+  let component: DueTipComponent;
+  let fixture: ComponentFixture<DueTipComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeselectFeaturesTipComponent ]
+      declarations: [ DueTipComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeselectFeaturesTipComponent);
+    fixture = TestBed.createComponent(DueTipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

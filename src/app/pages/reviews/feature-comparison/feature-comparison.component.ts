@@ -76,8 +76,8 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            callback && callback();
         })
     }
 

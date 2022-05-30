@@ -55,6 +55,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
             this.getMetricComparison();
         })
+        this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
     }
@@ -68,6 +69,12 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
             this.router.navigateByUrl(`/review/metric-selection/${this.reviewService.comparison.id}`);
+        })
+    }
+
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            callback && callback();
         })
     }
 

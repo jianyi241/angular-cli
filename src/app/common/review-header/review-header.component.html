@@ -1,6 +1,6 @@
 <div class="head-layout">
     <div class="head-left">
-        <a class="logo" [routerLink]="['/supplier/comparisons-list']">
+        <a class="logo" (click)="leaveReview()">
             <img src="./assets/img/logo_black.png"/>
             <span class="text"><span
                     class="tx-bold">{{reviewService.comparison.userName}}</span> {{this.reviewService.comparison.productName ? 'of ' + this.reviewService.comparison.productName : ''}} </span>

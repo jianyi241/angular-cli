@@ -10,6 +10,8 @@ import {AnalysisType} from "../../model/enums/analysis-type";
 import {Commons} from "../../utils/Commons";
 import {ComparisonStatus} from "../../model/enums/comparison-status";
 import {ToastRepository} from "../../repository/toast-repository";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ReviewTipComponent} from "../../pages/reviews/review-tip/review-tip.component";
 
 @Component({
     selector: 'app-review-header',
@@ -23,6 +25,7 @@ export class ReviewHeaderComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private toastRepository: ToastRepository,
                 public reviewService: ReviewService,
+                private modalService: NgbModal,
                 private currentUserService: CurrentUserService,
                 private reviewRepository: ReviewRepository,) {
         this.reviewService.comparison = new ComparisonVo();
@@ -49,8 +52,8 @@ export class ReviewHeaderComponent implements OnInit {
         }
     }
 
-    save() {
-        this.reviewService.save();
+    save(callback?: () => void) {
+        this.reviewService.save(callback);
     }
 
     next() {
@@ -84,6 +87,26 @@ export class ReviewHeaderComponent implements OnInit {
                 return;
             }
             this.toastRepository.showSuccess("Save successfully.")
+        })
+    }
+
+    leaveReview() {
+        const modalRef = this.modalService.open(ReviewTipComponent, {
+            backdrop: 'static',
+            size: 'small',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.title = 'Are you sure to exit?';
+        modalRef.componentInstance.info = `You’re about to exit the comparison, would you like to save your changes?`;
+        modalRef.componentInstance.btnText = 'Save and exit';
+        modalRef.componentInstance.btnCancelText = 'Clear and exit';
+        modalRef.result.then(() => {
+            this.save(() => {
+                this.router.navigateByUrl('/supplier/comparisons-list');
+            });
+        }).catch(() => {
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 }

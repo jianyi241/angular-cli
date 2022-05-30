@@ -15,7 +15,7 @@
             <div class="item-review-name">{{item.name}}</div>
             <div class="item-adviser-info">
               <div class="adviser-avatar">
-                <img [src]="item.userAvatar?.visitUrl" />
+                <img [src]="(item.userAvatar?.visitUrl) || './assets/img/unassgin.svg'" />
               </div>
               <div class="txt adviser-name">{{item.username}}</div>|
               <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
@@ -50,7 +50,7 @@
           <div class="item-review-name">{{item.name}}</div>
           <div class="item-adviser-info">
             <div class="adviser-avatar">
-              <img [src]="item.userAvatar?.visitUrl" />
+              <img [src]="(item.userAvatar?.visitUrl) || './assets/img/unassgin.svg'" />
             </div>
             <div class="txt adviser-name">{{item.username}}</div>|
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>
@@ -85,7 +85,7 @@
           <div class="item-review-name">{{item.name}}</div>
           <div class="item-adviser-info">
             <div class="adviser-avatar">
-              <img [src]="item.userAvatar?.visitUrl" />
+              <img [src]="(item.userAvatar?.visitUrl) || './assets/img/unassgin.svg'" />
             </div>
             <div class="txt adviser-name">{{item.username}}</div>|
             <div class="txt adviser-valid_date">{{item.createTime | dateFormat : 'DD MMM, YYYY'}}</div>

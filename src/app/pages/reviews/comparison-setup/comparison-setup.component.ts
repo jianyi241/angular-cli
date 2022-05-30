@@ -15,6 +15,7 @@ import {environment} from "../../../../environments/environment";
 import {ComparisonAnalyseInfo} from "../../../model/po/comparisonAnalyseInfo";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 import {Commons} from "../../../utils/Commons";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -64,8 +65,8 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-            this.save();
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            this.save(callback);
         })
     }
 
@@ -210,11 +211,27 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     changeMainPlatform() {
         let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
-        this.reviewService.comparison.productName = mainPlatform.name;
+        this.reviewService.comparison.productName = mainPlatform?.name;
+        this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
+        this.reviewService.comparison.nonFeeProducts = this.reviewService.comparison.nonFeeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
+        this.changeFee();
+        this.changeNonFee();
     }
 
     changeCheckMain() {
         this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : null
         this.reviewService.comparison.productName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.productName : ''
+    }
+
+    changeAnalysis() {
+        let hasFee = this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
+        if (!hasFee) {
+            this.reviewService.comparison.feeProducts = [];
+            this.reviewService.comparison.feeProductName = '';
+        }
+    }
+
+    hideFeeProduct(): boolean {
+        return this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
     }
 }
