@@ -54,6 +54,10 @@ export class SignupModalComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    close(): void {
+        this.activeModal.close();
+    }
+
     existedModal(): void {
         // if (!this.signup.updateNewsFlag) {
         //     this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
