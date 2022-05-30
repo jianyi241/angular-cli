@@ -105,8 +105,8 @@ export class ReviewHeaderComponent implements OnInit {
             this.save(() => {
                 this.router.navigateByUrl('/supplier/comparisons-list');
             });
-        }).catch(() => {
-            this.router.navigateByUrl('/supplier/comparisons-list');
+        }).catch((flag) => {
+            flag && this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 }

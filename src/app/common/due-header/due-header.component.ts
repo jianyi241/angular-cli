@@ -102,8 +102,8 @@ export class DueHeaderComponent implements OnInit {
             this.save(() => {
                 this.router.navigateByUrl('/advice-review/review-list/list-view');
             });
-        }).catch(() => {
-            this.router.navigateByUrl('/advice-review/review-list/list-view');
+        }).catch((flag) => {
+            flag && this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
 }
