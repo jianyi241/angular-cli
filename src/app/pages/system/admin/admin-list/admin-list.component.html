@@ -50,7 +50,7 @@
                     </tr>
                     </thead>
                     <tbody *ngIf="adminPage.total > 0">
-                    <tr *ngFor="let admin of adminPage.records">
+                    <tr *ngFor="let admin of adminPage.records" (click)="toDetail('1', admin.id)">
                         <td>
                             <div class="td-cell td-cell_avatar tx-bold" title="ABC Advisory">
                                 <div class="avatar-box xs-mr-16">

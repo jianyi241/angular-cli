@@ -76,7 +76,7 @@
                 </thead>
 
                 <tbody *ngIf="advicePage.total > 0">
-                <tr *ngFor="let practice of advicePage.records">
+                <tr *ngFor="let practice of advicePage.records" (click)="save(practice)">
                     <td>
                         <div class="td-cell tx-bold">{{practice.name}}</div>
                     </td>

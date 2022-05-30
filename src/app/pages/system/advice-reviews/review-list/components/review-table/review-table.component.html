@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody *ngIf="duePage.total > 0">
-                <tr *ngFor="let due of duePage.records">
+                <tr *ngFor="let due of duePage.records" (click)="toDetail(due)">
                     <td>
                         <div class="td-cell td-cell_avatar tx-bold">
                             <div class="text-ellipsis max-w-200">{{due.name}}</div>

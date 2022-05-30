@@ -36,7 +36,7 @@
         </tr>
         </thead>
         <tbody *ngIf="clientPage.total > 0">
-        <tr *ngFor="let client of clientPage.records">
+        <tr *ngFor="let client of clientPage.records" (click)="toDetail(client.id)">
           <td>
             <div class="td-cell td-cell_avatar tx-bold">
               <div class="text-ellipsis max-w-200">{{client.firstName + ' ' + client.lastName}}</div>

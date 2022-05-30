@@ -78,7 +78,7 @@
                 </thead>
 
                 <tbody *ngIf="comparisonPage.total > 0">
-                <tr *ngFor="let comparison of comparisonPage.records">
+                <tr *ngFor="let comparison of comparisonPage.records" (click)="save(comparison)">
                     <td>
                         <div class="td-cell max-w-212 tx-bold" [title]="comparison.name">{{comparison.name}}</div>
                     </td>

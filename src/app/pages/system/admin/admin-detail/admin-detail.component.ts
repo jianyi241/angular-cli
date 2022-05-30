@@ -95,7 +95,7 @@ export class AdminDetailComponent implements OnInit {
             if (res.statusCode === 200) {
                 this.adminRoles = res.data
                 if (this.type === '0') {
-                    this.adminInfo.adviceRoleId = this.adminRoles[0].id
+                    this.adminInfo.adviceRoleId = this.adminRoles[1].id
                 }
             }
         })

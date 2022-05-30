@@ -3,7 +3,7 @@
         <div class="col-body">
             <ng-container>
                 <div class="list-cell-large"
-                     *ngFor="let review of reviewsList">
+                     *ngFor="let review of reviewsList" (click)="editReview(review)">
                     <div class="list-content">
                         <div class="info info-title">
                             <div class="title">{{review.name}}</div>
