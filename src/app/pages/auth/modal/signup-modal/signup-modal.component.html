@@ -1,6 +1,9 @@
 <form name="signupModalForm" #signupModalForm="ngForm" novalidate
       [ngxFormValidator]="validatorConfig">
     <div class="modal-main p40">
+        <div (click)="close()" class="close-btn">
+            <img src="./assets/img/icon/icon-close-black.svg">
+        </div>
         <div class="modal-header ">
             <h2 class="modal-title" *ngIf="signup.companyType === 1">Almost there, let us know more about you</h2>
         </div>
