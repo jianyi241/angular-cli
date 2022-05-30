@@ -5,7 +5,7 @@
     </div>
 
     <div class="features-swiper" *ngIf="featureForm.length > 0">
-        <swiper #swiper [config]="config" (slideChange)="slideChange($event)">
+        <swiper #swiper [config]="config" (slideChange)="slideChange($event)" [slideToClickedSlide]="true">
             <ng-template swiperSlide [virtualIndex]="groupIndex"
                          *ngFor="let group of featureForm; let groupIndex = index">
                 <div class="swiper-head">

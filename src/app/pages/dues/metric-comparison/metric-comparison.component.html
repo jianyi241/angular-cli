@@ -30,7 +30,7 @@
                     </div>
                 </th>
 
-                <th class="th-brand bg-light" [ngStyle]="{'width.%':100/compareData.comparisonProductVos.length}"  [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                <th class="th-brand" [ngStyle]="{'width.%':100/compareData.comparisonProductVos.length}"  [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                     <div class="th-brand-box" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
@@ -98,7 +98,7 @@
                                 <span class="icon-block icon-block-right icon-arr-up-purple icon-20"></span>
                             </div>
                         </td>
-                        <td [hidden]="hideByFlag(product)" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" *ngFor="let product of compareData.comparisonProductVos"></td>
+                        <td [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos"></td>
                     </tr>
                     </tbody>
 
@@ -121,7 +121,7 @@
                                     </div>
                                 </td>
 
-                                <td class="bg-light" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
+                                <td class="" [ngClass]="{'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}" [hidden]="hideByFlag(product)" *ngFor="let product of compareData.comparisonProductVos">
                                     <ng-container *ngIf="getProductPropValue(prop, product.productPropVoList)">
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.shortText">
                                             <div appShowMore>

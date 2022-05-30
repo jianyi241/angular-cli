@@ -51,7 +51,7 @@
                 <th class="th-brand" [hidden]="hideByFlag(product)"
                     *ngFor="let product of compareData.comparisonProductVoList">
                     <div class="th-brand-box"
-                         [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
+                         [ngClass]="{'bg-red': product.essential, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
                         <div class="th-brand-box-top">
                             <div class="box-center-left">
                                 <div class="brand-pic">
@@ -159,7 +159,7 @@
 
                             <td [hidden]="hideByFlag(product)"
                                 *ngFor="let product of compareData.comparisonProductVoList"
-                                [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}"></td>
+                                [ngClass]="{'bg-red': product.essential, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}"></td>
                         </tr>
                         </tbody>
                         <ng-container>
@@ -184,7 +184,7 @@
 
                                 <td class="content-text" [hidden]="hideByFlag(product)"
                                     *ngFor="let product of compareData.comparisonProductVoList"
-                                    [ngClass]="{'bg-red': !product.checked, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
+                                    [ngClass]="{'bg-red': product.essential, 'bg-gray': hidClassFlag(product), 'bg-green-light-01': shortClassFlag(product)}">
                                     <span class="icon-block icon-39 {{getChecked(prop.id, product)}}"></span>
                                     <ng-template #popContent>
                                         <div class="cell-popover">

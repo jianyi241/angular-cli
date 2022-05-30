@@ -121,10 +121,10 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
             if (this.compareData.comparisonProductVoList && this.compareData.comparisonProductVoList.length > 0) {
                 let props = this.compareData.groupVoList.flatMap(g => g.subList || []).flatMap(s => s.propertyVoList || []);
                 let anyEssential = props.some(p => !p.essential);
-                let propIds = props.map(p => p.id);
+                // let propIds = props.map(p => p.id);
                 this.compareData.comparisonProductVoList.forEach(p => {
                     p.essential = anyEssential;
-                    if (p.productPropVoList && p.productPropVoList.length > 0) {
+                    /*if (p.productPropVoList && p.productPropVoList.length > 0) {
                         let prodPropIds = p.productPropVoList.map(pp => pp.shPropertyId);
                         //对比featureIds 和 productPropIds
                         let idCheck = propIds.some(id => !prodPropIds.includes(id));
@@ -136,7 +136,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         p.checked = false;
-                    }
+                    }*/
                 });
             }
         });
@@ -203,7 +203,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     }
 
     shortClassFlag(product: ComparisonProductVo): boolean {
-        return product.shortFlag && product.checked && !product.essential && product.showFlag;
+        return product.shortFlag && !product.essential && product.showFlag;
     }
 
     hideCommon(prop: PropertyInfo): boolean {
