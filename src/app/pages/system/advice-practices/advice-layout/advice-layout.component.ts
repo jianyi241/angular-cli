@@ -63,13 +63,13 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
             windowClass: 'tip-popup-modal',
             centered: true
         });
-        modalRef.componentInstance.title = 'Archive the practice?';
-        modalRef.componentInstance.info = 'Archiving a practice will remove the access of this practice from all users. Only the admin can access archived practices. \n' +
-            'Are you sure to archive this practice?';
-        modalRef.componentInstance.btnText = 'Yes, archive it';
+        modalRef.componentInstance.title = `${this.practiceService.practice.archiveFlag ? 'Unarchive' : 'Archive'} the practice?`;
+        modalRef.componentInstance.info = `${this.practiceService.practice.archiveFlag ? 'Unarchiving' : 'Archiving'} a practice will ${this.practiceService.practice.archiveFlag ? 'bring back' : 'remove'} the access of this practice from all users. ${this.practiceService.practice.archiveFlag ? '' : 'Only the admin can access archived practices.'} Are you sure to ${this.practiceService.practice.archiveFlag ? 'unarchive' : 'archive'} this practice?`;
+        modalRef.componentInstance.btnText = `Yes,  ${this.practiceService.practice.archiveFlag ? 'unarchive' : 'archive'} it`;
+        const msg = `${this.practiceService.practice.name} has been ${this.practiceService.practice.archiveFlag ? 'unarchived' : 'archived'}`
         modalRef.result.then((result) => {
-            this.practiceService.practice.archiveFlag = true;
-            this.save(false, `${this.practiceService.practice.name} has been archived`);
+            this.practiceService.practice.archiveFlag = !this.practiceService.practice.archiveFlag;
+            this.save(false, msg);
         }, (reason) => {
         });
     }
