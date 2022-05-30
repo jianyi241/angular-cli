@@ -208,6 +208,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     deselectGroupAll(group: GroupVo): void {
+        this.ref.detectChanges();
         const modalRef = this.modalService.open(DeselectFeaturesTipComponent, {
             backdrop: 'static',
             size: 'small',
@@ -223,7 +224,6 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
             group.subList.forEach(s => {
                 this.deselectSubGroupAll(s);
             });
-            this.ref.detectChanges();
         }, (reason) => {
         });
     }
