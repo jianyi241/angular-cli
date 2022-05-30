@@ -54,8 +54,8 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
-            this.save();
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe((callback) => {
+            this.save(callback);
         })
     }
 
@@ -110,7 +110,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
+            this.save(() => {
+                this.router.navigateByUrl(`/due/feature-comparison/${this.dueService.due.id}`);
+            })
         })
     }
 

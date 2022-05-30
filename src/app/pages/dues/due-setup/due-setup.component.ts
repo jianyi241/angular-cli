@@ -63,8 +63,8 @@ export class DueSetupComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.dueService.saveObservable.subscribe(() => {
-            this.save();
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe((callback) => {
+            this.save(callback);
         })
     }
 
@@ -108,7 +108,9 @@ export class DueSetupComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
-            this.router.navigateByUrl('/advice-review/review-list/list-view');
+            this.save(() => {
+                this.router.navigateByUrl('/advice-review/review-list/list-view');
+            })
         })
     }
 

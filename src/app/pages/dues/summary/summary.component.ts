@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./summary.component.less']
 })
 export class SummaryComponent implements OnInit {
-
+    reviewSaveObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
@@ -37,12 +37,20 @@ export class SummaryComponent implements OnInit {
     ngOnDestroy(): void {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
     }
 
 
     subscribe(): void {
         this.nextSubscribe();
         this.backSubscribe();
+        this.saveSubscribe();
+    }
+
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.dueService.saveObservable.subscribe((callback) => {
+            callback && callback()
+        })
     }
 
     nextSubscribe(): void {
