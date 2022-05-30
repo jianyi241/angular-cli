@@ -110,7 +110,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.preStep(AnalysisType.metric);
+            this.save(() => {
+                this.reviewService.preStep(AnalysisType.metric);
+            })
         })
     }
 
