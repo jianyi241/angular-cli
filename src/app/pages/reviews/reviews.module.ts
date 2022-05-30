@@ -17,7 +17,7 @@ import {ComparisonSetupComponent} from './comparison-setup/comparison-setup.comp
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
-import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
+import {ReviewTipComponent} from './review-tip/review-tip.component';
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import {SummaryComponent} from "./summary/summary.component";
 import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
@@ -37,7 +37,7 @@ import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
         MetricSelectionComponent,
         SummaryComponent,
         // EllipsisDirective,
-        DeselectFeaturesTipComponent,
+        ReviewTipComponent,
         PopoverCustomDirective],
     imports: [
         CommonModule,

@@ -12,7 +12,7 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
-import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
+import {ReviewTipComponent} from "../review-tip/review-tip.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
 import {NgbAccordion} from "@ng-bootstrap/ng-bootstrap/accordion/accordion";
@@ -110,8 +110,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-            this.save();
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            this.save(callback);
         })
     }
 
@@ -209,7 +209,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
 
     deselectGroupAll(group: GroupVo): void {
         this.ref.detectChanges();
-        const modalRef = this.modalService.open(DeselectFeaturesTipComponent, {
+        const modalRef = this.modalService.open(ReviewTipComponent, {
             backdrop: 'static',
             size: 'small',
             windowClass: 'tip-popup-modal',

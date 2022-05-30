@@ -13,6 +13,7 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 export class FeeComparisonComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
+    reviewSaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     platformItems: Array<{ name: string, value: boolean }> = [
@@ -37,10 +38,12 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
+        this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
     }
 
 
     subscribe(): void {
+        this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
     }
@@ -54,6 +57,12 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
             this.reviewService.preStep(AnalysisType.fee);
+        })
+    }
+
+    saveSubscribe(): void {
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            callback && callback();
         })
     }
 

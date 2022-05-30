@@ -11,7 +11,7 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {SaveService} from "../../../service/save.service";
 import {environment} from "../../../../environments/environment";
-import {DeselectFeaturesTipComponent} from "../deselect-feature-tip/deselect-features-tip.component";
+import {DueTipComponent} from "../due-tip/due-tip.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
 import {DueService} from "../../../service/due.service";
@@ -228,7 +228,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     deselectGroupAll(group: GroupVo): void {
         this.ref.detectChanges();
-        const modalRef = this.modalService.open(DeselectFeaturesTipComponent, {
+        const modalRef = this.modalService.open(DueTipComponent, {
             backdrop: 'static',
             size: 'small',
             windowClass: 'tip-popup-modal',

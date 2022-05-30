@@ -13,7 +13,7 @@ import {DueSetupComponent} from './due-setup/due-setup.component';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CKEditorModule} from "ckeditor4-angular";
 import {MetricSelectionComponent} from './metric-selection/metric-selection.component';
-import {DeselectFeaturesTipComponent} from './deselect-feature-tip/deselect-features-tip.component';
+import {DueTipComponent} from './due-tip/due-tip.component';
 import {ReviewsModule} from "../reviews/reviews.module";
 import {SaveTemplateTipModalComponent} from "./save-template-tip-modal/save-template-tip-modal.component";
 import {SaveTemplateModalComponent} from "./save-template-modal/save-template-modal.component";
@@ -33,7 +33,7 @@ import {ImgShowModalComponent} from "./img-show-modal/img-show-modal.component";
         SaveTemplateTipModalComponent,
         SaveTemplateModalComponent,
         // EllipsisDirective,
-        DeselectFeaturesTipComponent,
+        DueTipComponent,
         ImgShowModalComponent,
         SummaryComponent],
     imports: [

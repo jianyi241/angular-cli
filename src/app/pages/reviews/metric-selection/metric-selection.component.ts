@@ -54,8 +54,8 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     saveSubscribe(): void {
-        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe(() => {
-            this.save();
+        this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
+            this.save(callback);
         })
     }
 
