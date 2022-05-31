@@ -134,6 +134,15 @@
                                         </div>
                                         <div class="detail-content" *ngIf="prop.type == configService.propType.longText">
                                             <div appShowMore [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                            <div class="popover-custom popover table-cell-popover bs-popover-right">
+                                                <div class="arrow"></div>
+                                                <div class="popover-body">
+                                                    <div class="cell-popover">
+                                                        <span class="icon-block icon-close icon-13"></span>
+                                                        <div class="info" [innerHTML]="getProductPropValue(prop, product.productPropVoList)"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <span class="more-link" #p="ngbPopover" popoverClass="table-cell-popover max-787" [autoClose]="true" placement="right auto" [ngbPopover]="popContent"><span class="dot">...</span>More</span>
                                             <ng-template #popContent>
                                                 <div class="cell-popover">
