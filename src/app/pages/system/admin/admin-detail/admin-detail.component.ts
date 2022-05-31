@@ -67,7 +67,7 @@ export class AdminDetailComponent implements OnInit {
     getOperateText(): string {
         switch (this.adminInfo.status) {
             case this.configService.userStatus.active:
-                return `Disabled ${this.adminInfo.firstName} ${this.adminInfo.lastName}`
+                return `Disable ${this.adminInfo.firstName} ${this.adminInfo.lastName}`
                 break;
             case this.configService.userStatus.pending:
                 return "Resend welcome email"
