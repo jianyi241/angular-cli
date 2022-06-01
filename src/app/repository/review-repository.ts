@@ -16,6 +16,7 @@ import {ComparisonPropertyInfo} from "../model/po/comparisonPropertyInfo";
 import {ComparisonCommentInfo} from "../model/po/comparisonCommentInfo";
 import {ComparisonSaveTemplateInfo, ComparisonTemplateInfo} from "../model/po/comparisonTemplateInfo";
 import {ComparisonProductInfo} from "../model/po/comparisonProductInfo";
+import {SelectionCondition} from "../model/condition/selection-condition";
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +87,11 @@ export class ReviewRepository {
     saveComparisonProperty(comparisonProperties: Array<ComparisonPropertyInfo>): Observable<HttpResult<ComparisonVo>> {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveComparisonProperty`, comparisonProperties);
     }
+
+    propertySelection(condition: SelectionCondition): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/compare/featurePropertySelection', condition);
+    }
+
 
     changeProduct(product: ComparisonProductInfo) {
         return this.http.put<HttpResult<ComparisonProductInfo>>(environment.baseURL + `/compare/changeProduct`, product);

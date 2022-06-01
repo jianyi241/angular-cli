@@ -9,13 +9,13 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {SwiperComponent} from "swiper/angular";
 import {AnalysisType} from "../../../model/enums/analysis-type";
-import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {SaveService} from "../../../service/save.service";
-import {environment} from "../../../../environments/environment";
 import {ReviewTipComponent} from "../review-tip/review-tip.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigService} from "../../../service/config.service";
 import {NgbAccordion} from "@ng-bootstrap/ng-bootstrap/accordion/accordion";
+import {SelectionCondition} from "../../../model/condition/selection-condition";
+import {SelectionType} from "../../../model/enums/selection-type";
 
 SwiperCore.use([Pagination]);
 
@@ -116,30 +116,31 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     private save(callback?: () => void) {
-        let groups = this.featureForm;
-        let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
-        if (this.validSave(props)) {
-            return;
-        }
-        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
-            return;
-        }
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
-        let comparisonProps = props.map(p => {
-            let prop = new ComparisonPropertyInfo();
-            prop.essential = p.essential;
-            prop.shPropertyId = p.id;
-            prop.shAnalyseId = analyseInfo.shAnalyseId;
-            prop.shComparisonId = this.reviewService.comparison.id;
-            return prop;
-        });
-        this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
-        });
+        callback && callback();
+        // let groups = this.featureForm;
+        // let props = groups.flatMap(g => g.subList || []).flatMap(g => g.propertyVoList || []).filter(p => p.compChecked)
+        // if (this.validSave(props)) {
+        //     return;
+        // }
+        // if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+        //     return;
+        // }
+        // let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        // let comparisonProps = props.map(p => {
+        //     let prop = new ComparisonPropertyInfo();
+        //     prop.essential = p.essential;
+        //     prop.shPropertyId = p.id;
+        //     prop.shAnalyseId = analyseInfo.shAnalyseId;
+        //     prop.shComparisonId = this.reviewService.comparison.id;
+        //     return prop;
+        // });
+        // this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg);
+        //         return;
+        //     }
+        //     callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
+        // });
     }
 
     validSave(props: Array<PropertyVo>): boolean {
@@ -189,11 +190,13 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     selectProp(prop: PropertyVo) {
         prop.compChecked = true;
         this.ref.detectChanges();
+        this.selectionProperty(prop.id, true, SelectionType.Property.value);
     }
 
     unSelectProp(prop: PropertyVo) {
         prop.compChecked = false;
         this.ref.detectChanges();
+        this.selectionProperty(prop.id, false, SelectionType.Property.value);
     }
 
     essential(prop: PropertyVo, event: any) {
@@ -203,8 +206,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     selectGroupAll(group: GroupVo): void {
+        this.selectionProperty(group.id, true, SelectionType.Group.value);
         group.subList.forEach(s => {
-            this.selectSubGroupAll(s);
+            s.propertyVoList.forEach(p => p.compChecked = true);
         });
         this.ref.detectChanges();
     }
@@ -223,21 +227,33 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
         modalRef.componentInstance.btnCancelText = 'No, don’t do anything';
 
         modalRef.result.then((result) => {
+            this.selectionProperty(group.id, false, SelectionType.Group.value);
             group.subList.forEach(s => {
-                this.deselectSubGroupAll(s);
+                s.propertyVoList.forEach(p => p.compChecked = false);
             });
         }, (reason) => {
         });
     }
 
     selectSubGroupAll(subGroup: GroupVo): void {
+        this.selectionProperty(subGroup.id, true, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = true);
         this.ref.detectChanges();
     }
 
     deselectSubGroupAll(subGroup: GroupVo): void {
+        this.selectionProperty(subGroup.id, false, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = false);
         this.ref.detectChanges();
+    }
+
+    selectionProperty(id: string, flag: boolean, type: string) {
+        let condition = this.buildSelectionCondition(id, flag, type);
+        this.reviewRepository.propertySelection(condition).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     hasSelect(group: GroupVo): boolean {
@@ -267,5 +283,17 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
             return 0;
         }
         return group.subList.flatMap(s => s.propertyVoList.filter(p => p.compChecked).flatMap(p => p.id)).length;
+    }
+
+    buildSelectionCondition(id: string, flag: boolean, type: string): SelectionCondition {
+        let condition = new SelectionCondition();
+        let analyse = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
+        condition.id = id;
+        condition.comparisonId = this.reviewService.comparison.id;
+        condition.analyseId = analyse.shAnalyseId;
+        condition.essential = true;
+        condition.selectFlag = flag;
+        condition.selectionType = type;
+        return condition;
     }
 }
