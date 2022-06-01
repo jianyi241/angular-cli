@@ -27,7 +27,7 @@ export class ShowMoreDirective {
                     e.stopPropagation();
                 })
                 let pop = $(element).siblings('.popover-custom');
-                //使Pop展示位置居中, 偏移量 + monk-link高度50% - 箭头高度50% - pop高度50%
+                $('.popover-custom').hide();
                 let number = e.target.offsetTop + 9 - 5 - pop.height() / 2;
                 pop.css('transform', `translate(${e.target.offsetLeft + 40}px, ${number}px)`)
                 pop.show();

@@ -12,22 +12,23 @@ export class PopoverCustomDirective {
     }
 
     @HostListener('click', ['$event']) onClick($event) {
-
         $event.stopPropagation();
         let element = this.elementRef.nativeElement;
-        $(element).siblings('.popover-custom').click(e => {
+        let pop = $(element).siblings('.popover-custom');
+        $('.popover-custom').hide();
+        pop.click(e => {
             e.stopPropagation();
         })
-        $(element).siblings('.popover-custom').show();
-
-        $(element).siblings('.popover-custom').find('.icon-close').click(function ($event) {
+        let number = element.offsetTop + 7.5 - pop.height() / 2;
+        pop.css('transform', `translate(${element.offsetLeft + 15}px, ${number}px)`)
+        pop.show();
+        pop.find('.icon-close').click(function ($event) {
             $event.stopPropagation();
             $(this).parents('.popover-custom').hide();
         })
-
         $(document).one('click', (e) => {
             e.stopPropagation();
-            $(element).siblings('.popover-custom').hide();
+            pop.hide();
         })
 
     }
