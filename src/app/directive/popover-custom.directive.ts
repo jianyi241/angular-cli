@@ -19,8 +19,8 @@ export class PopoverCustomDirective {
         pop.click(e => {
             e.stopPropagation();
         })
-        let number = element.offsetTop + 7.5 - pop.height() / 2;
-        pop.css('transform', `translate(${element.offsetLeft + 15}px, ${number}px)`)
+        let offsetTop = element.offsetTop + 7.5 - pop.height() / 2;
+        pop.css('transform', `translate(${element.offsetLeft + 15}px, ${offsetTop}px)`)
         pop.show();
         pop.find('.icon-close').click(function ($event) {
             $event.stopPropagation();

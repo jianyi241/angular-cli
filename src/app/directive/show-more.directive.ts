@@ -28,8 +28,8 @@ export class ShowMoreDirective {
                 })
                 let pop = $(element).siblings('.popover-custom');
                 $('.popover-custom').hide();
-                let number = e.target.offsetTop + 9 - 5 - pop.height() / 2;
-                pop.css('transform', `translate(${e.target.offsetLeft + 40}px, ${number}px)`)
+                let offsetTop = e.target.offsetTop + 9 - 5 - pop.height() / 2;
+                pop.css('transform', `translate(${e.target.offsetLeft + 40}px, ${offsetTop}px)`)
                 pop.show();
                 pop.find('.icon-close').click(function ($event) {
                     $(this).parents('.popover-custom').hide();
