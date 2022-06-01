@@ -88,8 +88,12 @@ export class ReviewRepository {
         return this.http.post<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/saveComparisonProperty`, comparisonProperties);
     }
 
-    propertySelection(condition: SelectionCondition): Observable<HttpResult<any>> {
+    featurePropertySelection(condition: SelectionCondition): Observable<HttpResult<any>> {
         return this.http.post<HttpResult<any>>(environment.baseURL + '/compare/featurePropertySelection', condition);
+    }
+
+    metricPropertySelection(condition: SelectionCondition): Observable<HttpResult<any>> {
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/compare/metricPropertySelection', condition);
     }
 
 

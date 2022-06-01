@@ -11,6 +11,8 @@ import {environment} from "../../../../environments/environment";
 import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
+import {SelectionCondition} from "../../../model/condition/selection-condition";
+import {SelectionType} from "../../../model/enums/selection-type";
 
 @Component({
     selector: 'app-business-metric-comparison',
@@ -133,6 +135,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     selectProp(prop: PropertyVo) {
         prop.compChecked = !prop.compChecked;
+        this.selectionProperty(prop.id, prop.compChecked, SelectionType.Property.value, prop.tabType);
     }
 
     deselectAll(selection: TabVo): void {
@@ -141,6 +144,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             selection.propertyVoList.forEach(p => p.compChecked = false);
         }
+        this.selectionProperty(null, false, SelectionType.Group.value, selection.tabType);
     }
 
     selectAll(selection: TabVo): void {
@@ -149,6 +153,16 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             selection.propertyVoList.forEach(p => p.compChecked = true);
         }
+        this.selectionProperty(null, true, SelectionType.Group.value, selection.tabType);
+    }
+
+    selectionProperty(id: string, flag: boolean, type: string, tabType: number) {
+        let condition = this.buildSelectionCondition(id, flag, type, tabType);
+        this.reviewRepository.metricPropertySelection(condition).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     hasSelect(selection: TabVo): boolean {
@@ -157,6 +171,18 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             return selection.propertyVoList.some(p => p.compChecked);
         }
+    }
+
+    buildSelectionCondition(id: string, flag: boolean, type: string, tabType: number): SelectionCondition {
+        let condition = new SelectionCondition();
+        let analyse = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        condition.id = id;
+        condition.comparisonId = this.reviewService.comparison.id;
+        condition.analyseId = analyse.shAnalyseId;
+        condition.selectFlag = flag;
+        condition.selectionType = type;
+        condition.tabType = tabType;
+        return condition;
     }
 
 }

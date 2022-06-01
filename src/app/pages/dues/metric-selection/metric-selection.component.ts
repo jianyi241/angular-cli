@@ -6,11 +6,11 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 import {TabVo} from "../../../model/vo/compareMetircVo";
 import {TabType} from "../../../model/enums/tab-type";
 import {PropertyVo} from "../../../model/vo/PropertyVo";
-import {environment} from "../../../../environments/environment";
-import {ComparisonPropertyInfo} from "../../../model/po/comparisonPropertyInfo";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {SaveService} from "../../../service/save.service";
 import {DueService} from "../../../service/due.service";
+import {SelectionCondition} from "../../../model/condition/selection-condition";
+import {SelectionType} from "../../../model/enums/selection-type";
 
 @Component({
     selector: 'app-business-metric-comparison',
@@ -60,36 +60,37 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     save(callback?: () => void) {
-        let props: Array<PropertyVo> = [];
-        this.metricSelections.forEach(selection => {
-            if (selection.tabType == TabType.information.value) {
-                props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
-            } else {
-                props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
-            }
-        })
-        if (this.validSave(props)) {
-            return;
-        }
-        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
-            return;
-        }
-        let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
-        let comparisonProps = props.map(p => {
-            let prop = new ComparisonPropertyInfo();
-            prop.essential = p.essential;
-            prop.shPropertyId = p.id;
-            prop.shAnalyseId = analyseInfo.shAnalyseId;
-            prop.shComparisonId = this.dueService.due.id;
-            return prop;
-        });
-        this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
-        });
+        callback && callback();
+        // let props: Array<PropertyVo> = [];
+        // this.metricSelections.forEach(selection => {
+        //     if (selection.tabType == TabType.information.value) {
+        //         props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
+        //     } else {
+        //         props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
+        //     }
+        // })
+        // if (this.validSave(props)) {
+        //     return;
+        // }
+        // if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+        //     return;
+        // }
+        // let analyseInfo = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        // let comparisonProps = props.map(p => {
+        //     let prop = new ComparisonPropertyInfo();
+        //     prop.essential = p.essential;
+        //     prop.shPropertyId = p.id;
+        //     prop.shAnalyseId = analyseInfo.shAnalyseId;
+        //     prop.shComparisonId = this.dueService.due.id;
+        //     return prop;
+        // });
+        // this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg);
+        //         return;
+        //     }
+        //     callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
+        // });
     }
 
     validSave(props: Array<PropertyVo>): boolean {
@@ -133,6 +134,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     selectProp(prop: PropertyVo) {
         prop.compChecked = !prop.compChecked;
+        this.selectionProperty(prop.id, prop.compChecked, SelectionType.Property.value, prop.tabType);
     }
 
     deselectAll(selection: TabVo): void {
@@ -141,6 +143,7 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             selection.propertyVoList.forEach(p => p.compChecked = false);
         }
+        this.selectionProperty(null, false, SelectionType.Group.value, selection.tabType);
     }
 
     selectAll(selection: TabVo): void {
@@ -149,6 +152,16 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             selection.propertyVoList.forEach(p => p.compChecked = true);
         }
+        this.selectionProperty(null, true, SelectionType.Group.value, selection.tabType);
+    }
+
+    selectionProperty(id: string, flag: boolean, type: string, tabType: number) {
+        let condition = this.buildSelectionCondition(id, flag, type, tabType);
+        this.reviewRepository.metricPropertySelection(condition).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+            }
+        })
     }
 
     hasSelect(selection: TabVo): boolean {
@@ -157,6 +170,18 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
         } else {
             return selection.propertyVoList.some(p => p.compChecked);
         }
+    }
+
+    buildSelectionCondition(id: string, flag: boolean, type: string, tabType: number): SelectionCondition {
+        let condition = new SelectionCondition();
+        let analyse = this.dueService.due.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        condition.id = id;
+        condition.comparisonId = this.dueService.due.id;
+        condition.analyseId = analyse.shAnalyseId;
+        condition.selectFlag = flag;
+        condition.selectionType = type;
+        condition.tabType = tabType;
+        return condition;
     }
 
 }

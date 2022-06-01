@@ -249,7 +249,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
 
     selectionProperty(id: string, flag: boolean, type: string) {
         let condition = this.buildSelectionCondition(id, flag, type);
-        this.reviewRepository.propertySelection(condition).subscribe(res => {
+        this.reviewRepository.featurePropertySelection(condition).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }
