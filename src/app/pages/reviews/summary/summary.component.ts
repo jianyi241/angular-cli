@@ -13,6 +13,7 @@ export class SummaryComponent implements OnInit {
     reviewSaveObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
+    reviewLeaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     platformItems: Array<{ name: string, value: boolean }> = [
@@ -38,6 +39,7 @@ export class SummaryComponent implements OnInit {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
 
@@ -62,6 +64,12 @@ export class SummaryComponent implements OnInit {
     saveSubscribe(): void {
         this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
             callback && callback();
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 

@@ -14,6 +14,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     platformItems: Array<{ name: string, value: boolean }> = [
@@ -39,6 +40,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
 
@@ -46,6 +48,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     nextSubscribe(): void {
@@ -63,6 +66,12 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     saveSubscribe(): void {
         this.reviewSaveObservable = this.reviewService.saveObservable.subscribe((callback) => {
             callback && callback();
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 

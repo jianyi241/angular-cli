@@ -37,6 +37,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
 
     constructor(private reviewRepository: ReviewRepository,
                 private platformRepository: PlatformRepository,
@@ -63,6 +64,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
         this.reviewLayoutComponent.viewHead.isScrollFixed = false;
     }
 
@@ -73,6 +75,7 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -90,6 +93,12 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
             this.router.navigateByUrl(`/review/feature-selection/${this.reviewService.comparison.id}`)
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 

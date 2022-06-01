@@ -34,6 +34,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
     currentIndex: number = 0;
     config = {
         spaceBetween: 8,
@@ -87,6 +88,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
+
     }
 
     ngAfterViewInit(): void {
@@ -107,6 +110,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -164,6 +168,12 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
             this.save(() => {
                 this.reviewService.preStep(AnalysisType.feature);
             })
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/supplier/comparisons-list');
         })
     }
 
