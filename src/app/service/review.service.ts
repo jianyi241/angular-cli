@@ -3,6 +3,8 @@ import {Subject} from "rxjs";
 import {ComparisonVo} from "../model/vo/comparisonVo";
 import {AnalysisType} from "../model/enums/analysis-type";
 import {Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ReviewTipComponent} from "../pages/reviews/review-tip/review-tip.component";
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +23,7 @@ export class ReviewService {
     comparison: ComparisonVo;
     cacheSaveData: Array<any> = [];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private modalService: NgbModal) {
     }
 
     next(): void {
@@ -42,6 +44,32 @@ export class ReviewService {
 
     leave(): void {
         this.leaveReviewSubject.next();
+    }
+
+    dealLeave(data: any[]): void {
+        let cache = this.cacheSaveData.join(',');
+        let curr = data.join(',');
+        if (cache !== curr) {
+            const modalRef = this.modalService.open(ReviewTipComponent, {
+                backdrop: 'static',
+                size: 'small',
+                windowClass: 'tip-popup-modal',
+                centered: true
+            });
+            modalRef.componentInstance.title = 'Are you sure to exit?';
+            modalRef.componentInstance.info = `You’re about to exit the comparison, would you like to save your changes?`;
+            modalRef.componentInstance.btnText = 'Save and exit';
+            modalRef.componentInstance.btnCancelText = 'Clear and exit';
+            modalRef.result.then(() => {
+                this.save(() => {
+                    this.router.navigateByUrl('/supplier/comparisons-list');
+                });
+            }).catch((flag) => {
+                flag && this.router.navigateByUrl('/supplier/comparisons-list');
+            })
+        } else {
+            this.router.navigateByUrl('/supplier/comparisons-list');
+        }
     }
 
     preStep(anaType: AnalysisType): void {

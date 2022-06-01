@@ -31,6 +31,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -53,15 +54,18 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
     subscribe(): void {
         this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
             this.initSelectedAnalyseType();
+            this.reviewService.cacheCurrentStepSaveData(this.buildCacheSaveData());
         });
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -130,9 +134,13 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.save(() => {
-                this.router.navigateByUrl('/supplier/comparisons-list');
-            });
+            this.reviewService.dealLeave(this.buildCacheSaveData(true));
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
+            this.reviewService.dealLeave(this.buildCacheSaveData(true));
         })
     }
 
@@ -143,6 +151,12 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
                 a.checked = analyses.some(aa => aa.shAnalyseId == a.id);
             });
         }
+    }
+
+    buildCacheSaveData(leave?: boolean): any[] {
+        let comparison = this.reviewService.comparison;
+        let analyses = leave ? this.analyses.filter(a => a.checked).map(a => a.id) : comparison.analyseVoList.map(a => a.shAnalyseId);
+        return [comparison.userId, comparison.name, comparison.adviserName, comparison.practiceName, comparison.objectives, analyses];
     }
 
     validSave(comparison: ComparisonVo): boolean {

@@ -60,7 +60,6 @@ export class DueSetupComponent implements OnInit, OnDestroy {
 
     subscribe(): void {
         this.dueService.initComparisonObservable.subscribe(() => {
-
             this.dueService.cacheCurrentStepSaveData(this.buildCacheSaveData());
         })
         this.saveSubscribe();
