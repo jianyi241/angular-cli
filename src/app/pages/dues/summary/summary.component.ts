@@ -13,6 +13,7 @@ export class SummaryComponent implements OnInit {
     reviewSaveObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
+    reviewLeaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     platformItems: Array<{ name: string, value: boolean }> = [
@@ -38,6 +39,7 @@ export class SummaryComponent implements OnInit {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
 
@@ -45,6 +47,7 @@ export class SummaryComponent implements OnInit {
         this.nextSubscribe();
         this.backSubscribe();
         this.saveSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -62,6 +65,12 @@ export class SummaryComponent implements OnInit {
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
             this.router.navigateByUrl(`/due/fee-comparison/${this.dueService.due.id}`);
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.dueService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
 

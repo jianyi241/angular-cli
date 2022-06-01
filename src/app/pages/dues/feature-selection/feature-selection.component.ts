@@ -36,7 +36,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
     saveTemplateObservable: any;
+
     currentIndex: number = 0;
     config = {
         spaceBetween: 8,
@@ -91,6 +93,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
         this.saveTemplateObservable && this.saveTemplateObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
 
@@ -107,6 +110,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.nextSubscribe();
         this.backSubscribe();
         this.saveTemplateSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -164,6 +168,12 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
             this.save(() => {
                 this.router.navigateByUrl(`/due/due-setup/${this.dueService.due.id}`);
             });
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.dueService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
 

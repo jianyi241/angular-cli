@@ -30,6 +30,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
 
     constructor(public dueService: DueService,
                 public configService: ConfigService,
@@ -50,6 +51,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
     subscribe(): void {
@@ -58,6 +60,7 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
         })
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -75,6 +78,12 @@ export class MetricComparisonComponent implements OnInit, OnDestroy {
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
             this.router.navigateByUrl(`/due/metric-selection/${this.dueService.due.id}`);
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.dueService.leaveReviewObservable.subscribe(() => {
+            this.router.navigateByUrl('/advice-review/review-list/list-view');
         })
     }
 
