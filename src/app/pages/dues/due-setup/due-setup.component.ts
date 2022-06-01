@@ -31,6 +31,7 @@ export class DueSetupComponent implements OnInit, OnDestroy {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewSaveObservable: any;
+    reviewLeaveObservable: any;
 
     constructor(public dueService: DueService,
                 public configService: ConfigService,
@@ -54,12 +55,18 @@ export class DueSetupComponent implements OnInit, OnDestroy {
         this.reviewNextObservable && this.reviewNextObservable.unsubscribe();
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
+        this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
     subscribe(): void {
+        this.dueService.initComparisonObservable.subscribe(() => {
+
+            this.dueService.cacheCurrentStepSaveData(this.buildCacheSaveData());
+        })
         this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
+        this.leaveSubscribe();
     }
 
     saveSubscribe(): void {
@@ -108,9 +115,13 @@ export class DueSetupComponent implements OnInit, OnDestroy {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.dueService.backObservable.subscribe(() => {
-            this.save(() => {
-                this.router.navigateByUrl('/advice-review/review-list/list-view');
-            })
+            this.dueService.dealLeave(this.buildCacheSaveData());
+        })
+    }
+
+    leaveSubscribe(): void {
+        this.reviewLeaveObservable = this.dueService.leaveReviewObservable.subscribe(() => {
+            this.dueService.dealLeave(this.buildCacheSaveData());
         })
     }
 
@@ -133,6 +144,11 @@ export class DueSetupComponent implements OnInit, OnDestroy {
             return true;
         }
         return false;
+    }
+
+    buildCacheSaveData(): any[] {
+        let due = this.dueService.due;
+        return [due.userId, due.clientId, due.name, due.objectives, due.templateId]
     }
 
     getAdviserUsers() {

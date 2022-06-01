@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
 import {ComparisonVo} from "../model/vo/comparisonVo";
 import {Router} from "@angular/router";
+import {DueTipComponent} from "../pages/dues/due-tip/due-tip.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Injectable({
     providedIn: 'root'
@@ -23,9 +25,12 @@ export class DueService {
     initComparisonObservable = this.initComparisonSubject.asObservable();
     private templateSubject = new Subject<object>();
     templateObservable = this.templateSubject.asObservable();
+    private leaveReviewSubject = new Subject<object>();
+    leaveReviewObservable = this.leaveReviewSubject.asObservable();
     due: ComparisonVo;
+    cacheSaveData: Array<any> = [];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private modalService: NgbModal) {
     }
 
     reviewSearch(keyword: string): void {
@@ -78,4 +83,38 @@ export class DueService {
         this.initComparisonSubject.next();
     }
 
+
+    leave(): void {
+        this.leaveReviewSubject.next();
+    }
+
+    dealLeave(data: any[]): void {
+        let cache = this.cacheSaveData.join(',');
+        let curr = data.join(',');
+        if (cache !== curr) {
+            const modalRef = this.modalService.open(DueTipComponent, {
+                backdrop: 'static',
+                size: 'small',
+                windowClass: 'tip-popup-modal',
+                centered: true
+            });
+            modalRef.componentInstance.title = 'Are you sure to exit?';
+            modalRef.componentInstance.info = `You’re about to exit the comparison, would you like to save your changes?`;
+            modalRef.componentInstance.btnText = 'Save and exit';
+            modalRef.componentInstance.btnCancelText = 'Clear and exit';
+            modalRef.result.then(() => {
+                this.save(() => {
+                    this.router.navigateByUrl('/advice-review/review-list/list-view');
+                });
+            }).catch((flag) => {
+                flag && this.router.navigateByUrl('/advice-review/review-list/list-view');
+            })
+        } else {
+            this.router.navigateByUrl('/advice-review/review-list/list-view');
+        }
+    }
+
+    cacheCurrentStepSaveData(data: any[]) {
+        this.cacheSaveData = data;
+    }
 }

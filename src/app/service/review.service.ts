@@ -16,7 +16,10 @@ export class ReviewService {
     backObservable = this.backSubject.asObservable();
     private initComparisonSubject = new Subject<object>();
     initComparisonObservable = this.initComparisonSubject.asObservable();
+    private leaveReviewSubject = new Subject<object>();
+    leaveReviewObservable = this.leaveReviewSubject.asObservable();
     comparison: ComparisonVo;
+    cacheSaveData: Array<any> = [];
 
     constructor(private router: Router) {
     }
@@ -35,6 +38,10 @@ export class ReviewService {
 
     initNotify(): void {
         this.initComparisonSubject.next();
+    }
+
+    leave(): void {
+        this.leaveReviewSubject.next();
     }
 
     preStep(anaType: AnalysisType): void {
@@ -79,5 +86,11 @@ export class ReviewService {
             return this.comparison.analyseVoList.findIndex(a => a.name == value) + 2;
         }
     }
+
+    cacheCurrentStepSaveData(data: any[]) {
+        this.cacheSaveData = data;
+    }
+
+
 
 }
