@@ -93,6 +93,7 @@ import {DueLayoutComponent} from "./common/due-layout/due-layout.component";
     bootstrap: [AppComponent],
     exports: [
         FooterComponent,
+        CustomLinkActiveDirective,
     ]
 })
 export class AppModule {

@@ -1,33 +1,406 @@
 .table-main-content{
   height: 100%;
-  padding:0 168px;
   overflow: auto;
-  background-color: #ffffff;
-
-  @media screen and (max-width: 1440px){
-    padding:0 32px;
+  background-color: #FAFAFA;
+  .btn.btn-small {
+    height: 30px;
+    padding: 0 16px;
   }
-}
+  > .module-wrapper {
+    padding: 0 32px;
+  }
+  > header.module-wrapper {
+    background-color: #FFFFFF;
+    padding-bottom: 28px;
+    > .personnel-wrapper > .personnel-info{
+      > .personnel-info_title {
+        font: normal 700  32px 'ClashDisplay';
+        line-height: 1.2;
+        display: flex;
+        color: #000000;
+      }
+      > .personnel-info_base {
+        display: flex;
+        align-items: center;
+        font: normal 400 12px 'Epilogue';
+        line-height: 1.6;
+        color: #25324B;
+        margin-top: 4px;
+        > .personnel-info_avatar {
+          width: 29px;
+          height: 29px;
+          margin-right: 8px;
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        > .personnel-info_name {
+          margin-right: 16px;
+          font-weight: 600;
+          color: #25324B;
+        }
+        > .personnel-info_start {
+          margin: 0 16px;
+        }
+        > .personnel-info_end {
+          margin-left: 16px;
+        }
+      }
+    }
+    > .sub-head-review {
+      position: sticky;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 24px 0 8px 0;
+      z-index: 10;
 
-.sub-head-review {
-  position: sticky;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 24px 0 8px 0;
-  z-index: 10;
-
+      .title {
+        font-family: 'ClashDisplay';
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 38.4px;
+        color: #4640DE;
+      }
+    }
+  }
+  > .summary-introduce {
+    padding: 32px;
+    > .introduce-title-info > .info-title {
+      font: normal 600 20px 'ClashDisplay';
+      line-height: 1.2;
+      color: #4640DE;
+    }
+    > .introduce-title-info > .info-sub-title {
+      font: normal 400 13px 'Epilogue';
+      line-height: 1.6;
+      color: #515B6F;
+    }
+    > .introduce-from-info {
+      display: flex;
+      align-items: center;
+      font: normal 400 16px 'Epilogue';
+      color: #25324B;
+      line-height: 1.6;
+      margin-top: 24px;
+      > .from-info__avatar {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        > img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      > .from-info__name {
+        font-weight: 700;
+        margin-right: 6px;
+      }
+    }
+    > .introduce-content {
+      margin-top: 34px;
+      > .introduce-content__target {
+        display: flex;
+        align-items: center;
+        height: 38px;
+        font: normal 600 14px 'Epilogue';
+        color: #25324B;
+        box-shadow: 0px 1px 0px #D6DDEB;
+      }
+      > .introduce-content__text {
+        font: normal 400 14px 'Epilogue';
+        line-height: 1.6;
+        padding: 12px 0;
+      }
+    }
+  }
+  > .summary-platform {
+    background-color: #FFFFFF;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    > .platform-title-info > .info-title{
+      font: normal 600 28px 'ClashDisplay';
+      line-height: 1.2;
+      color: #000000;
+    }
+    > .platform-title-info > .info-sub-title {
+      font: normal 400 13px 'Epilogue';
+      line-height: 1.6;
+      color: #515B6F;
+    }
+  }
   .title {
-    font-family: 'ClashDisplay';
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 38.4px;
-    color: #4640DE;
+    line-height: 1.2;
+    font: normal 600 20px 'ClashDisplay';
+    color: #000000;
   }
-}
+  .title-large {
+    font-size: 28px;
+  }
+  .sub-title {
+    font: normal 400 13px 'Epilogue';
+    line-height: 1.6;
+    color: #515B6F;
+    margin-top: 4px;
+  }
+  .tables {
+    margin-top: 24px;
+    > .table-horizontal {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #D6DDEB;
+      border-top-width: 0;
+      border-bottom-width: 0;
+      margin-bottom: 24px;
+      &.table--metrics__platform {
+        .table-column-title:not([first='1']),> .table-row__platform > .table-column-value {
+          font: normal 600 16px 'ClashDisplay' !important;
+          color: #4640DE !important;
+        }
 
-.review-content {
-  position: relative;
+      }
+      &.table--metrics {
+        .table-column-value {
+          padding: 16px;
+        }
+        > .table-row {
+          .table-column-title {
+            padding: 16px;
+            line-height: 1.6 !important;
+          }
+          &.table-row__new--flows--in--last--12months,&.table-row__fua,&.table-row__recent--financial--year {
+            > .table-column-value {
+              font: normal 700 16px 'Epilogue';
+            }
+          }
+          &.table-row__ownership--structure {
+            > .table-column-value {
+              font: normal 400 12px 'Epilogue';
+              line-height: 1.6;
+            }
+          }
+        }
+      }
+      > .table-row {
+        display: flex;
+        border-bottom: 1px solid #D6DDEB;
+        > .table-column {
+          flex: 1;
+          &.table-column-value {
+            display: flex;
+            align-items: center;
+            padding-right: 16px;
+          }
+          &.table-column-title {
+            display: flex;
+            align-items: center;
+            font: normal 600 12px 'Epilogue';
+            color: #25324B;
+            padding-left: 16px;
+          }
+        }
+        &.table-row__platform {
+          flex-basis: 43px;
+          background-color: #D6DDEB;
+          > .table-column-value {
+            display: flex;
+            align-items: center;
+            font: normal 700 12px 'Epilogue';
+            > img {
+              width: 24px;
+              height: 23px;
+              background-color: #5C6BC0;
+              margin-right: 8px;
+            }
+          }
+        }
+        &.table-row__feature--match {
+          flex-basis: 58px;
+          font: normal 600 16px 'Epilogue';
+        }
+        &.table-row__feature--analysis,
+        &.table-row__business--analysis,
+        &.table-row__fee--analysis,
+        &.table-row__final--analysis {
+          flex: 1 0 146px;
+          > .table-column-value {
+            font: normal 400 12px 'Epilogue';
+            > .analysis-wrapper {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              line-height: 1.5;
+              padding: 16px 0;
+              > button {
+                width: 75px;
+                margin-top: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .status > .label {
+    min-width: 65px;
+    height: 16px;
+    line-height: 16px !important;
+    font: normal 500 10px 'Epilogue';
+    border-radius: 4px;
+    padding: 0 !important;
+  }
+  > .summary-business-metrics {
+    padding-bottom: 48px;
+    background-color: #FFFFFF;
+    > .metrics-title-info > .metrics-title {
+      > span {
+        font: normal 400 16px 'ClashDisplay';
+      }
+    }
+  }
+  > .summary-remarks,> .summary-disclaimer {
+    background-color: #FFFFFF;
+    padding-bottom: 48px ;
+    > .remark-content {
+      font: normal 400 14px 'Epilogue';
+      line-height: 1.6;
+      color: #515B6F;
+      margin-top: 24px;
+    }
+    > .btn {
+      margin-top: 18px;
+    }
+  }
+  > .summary-disclaimer {
+    padding-top: 48px;
+  }
+  > .summary__decision--making--process {
+    padding-top: 48px;
+  }
+  > .summary__platform--considerations {
+    padding-top: 48px;
+    > .table {
+      border-left: 1px solid #D6DDEB;
+      border-right: 1px solid #D6DDEB;
+      margin-top: 24px;
+      > .head-row, > .body-row {
+        display: flex;
+        border-bottom: 1px solid #D6DDEB;
+        > .column {
+          flex: 1;
+        }
+        > .column--platform {
+          flex: 0 0 180px;
+        }
+        > .column--feature__match {
+          flex: 0 0 160px;
+        }
+      }
+      > .head-row {
+        font: normal 600 12px 'Epilogue';
+        line-height: 1.6;
+        background-color: #D6DDEB;
+        > .column {
+          height: 35px;
+          line-height: 35px;
+          padding: 0 16px;
+        }
+      }
+      > .body-row {
+        &:nth-child(odd) {
+          background-color: #FFFFFF;
+        }
+        > .column {
+          display: flex;
+          align-items: center;
+          padding: 16px;
+          &.column--platform {
+            font: normal 600 16px 'ClashDisplay';
+            color: #4640DE;
+          }
+          &.column--feature__match {
+            font: normal 600 20px 'ClashDisplay';
+            color: #25324B
+          }
+          &.column--feature__analysis,&.column--business__analysis,&.column--final__analysis {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            > .html-content {
+              font: normal 400 12px 'Epilogue';
+              color: #25324B;
+              line-height: 1.6;
+            }
+            > .btn {
+              margin-top: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+  > .summary__features--included--review,> .summary__metrics--included--review {
+    margin-top: 40px;
+    > .lists {
+      position: relative;
+      column-count: 2;
+      column-gap: 64px;
+      margin-top: 24px;
+      > .list {
+        width: 100%;
+        break-inside: avoid-column;
+        font: normal 400 12px 'Epilogue';
+        margin-bottom: 24px;
+        border-bottom: 1px solid #D6DDEB;
+        > .list-title,> .list-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 16px;
+        }
+        > .list-title {
+          height: 38px;
+          background-color: #D6DDEB;
+          > .list-title-left {
+            font-size: 14px;
+            font-weight: bold;
+            color: #25324B;
+            line-height: 1.6;
+            > span {
+              font-size: 13px;
+            }
+          }
+          > .list-title-right {
+            font-size: 12px;
+            color: #515B6F;
+          }
+        }
+        > .list-item {
+          height: 30px;
+          &:nth-child(odd) {
+            background-color: #FFFFFF;
+          }
+          > .item-text {
+            font-size: 14px;
+            color: #515B6F;
+          }
+          > .item-status > .status__essential {
+            color: #EDA114;
+            background: rgba(237, 161, 20, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  > .summary__metrics--platforms {
+    padding-top: 48px;
+    > .title-info span{
+      font: normal 400 16px 'ClashDisplay';
+    }
+  }
 }

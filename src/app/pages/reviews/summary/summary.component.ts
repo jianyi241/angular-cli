@@ -3,6 +3,8 @@ import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
 import {ReviewService} from "../../../service/review.service";
+import {arr1ToArr2} from "../../../utils/array";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-summary',
@@ -16,14 +18,9 @@ export class SummaryComponent implements OnInit {
     reviewLeaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
-    platformItems: Array<{ name: string, value: boolean }> = [
-        {name: 'Retail insurance', value: false},
-        {name: 'Australian direct shares', value: false},
-        {name: 'International direct shares', value: false},
-        {name: 'Unlisted bonds', value: false},
-        {name: 'Managed accounts (SMA or MDA models)', value: false},
-        {name: 'Non-custody solution', value: false},
-    ];
+    mockPlatformData: Array<any> = []
+    choiceAnalysis:Array<string> = ["Feature analysis","Business metric analysis","Fee analysis"]
+    featuresIncludedReviewList: Array<Array<number>> = [[1,2,3,4,5],[1,2,3],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5],[1,2,3,4,5,6,7],[1,2],[1,2,3,4,5,6],[2,3,4,5,9]]
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -33,6 +30,21 @@ export class SummaryComponent implements OnInit {
 
     ngOnInit(): void {
         this.subscribe();
+        this.getPlatformSelectedList()
+    }
+
+    getPlatformAnalysis() {
+        return `
+            Feature spotlight: Manage cash reserves and<br/> automate investing with Cash Settings. Feature<br/> spotlight: Manage cash reserves and automate<br/> investing with Cash Settings
+        `
+    }
+
+    getPlatformSelectedList() {
+        let list = [1,2,3,4,5,6,7]
+        let _list = arr1ToArr2(JSON.parse(JSON.stringify(list)), 4)
+        _list[_list.length - 1].length = 4
+        this.mockPlatformData = _list
+        console.log('mockPlatformData ', this.mockPlatformData)
     }
 
     ngOnDestroy(): void {
