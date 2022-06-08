@@ -4,7 +4,7 @@ import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
 import {ReviewService} from "../../../service/review.service";
 import {arr1ToArr2} from "../../../utils/array";
-import {AnalysisType} from "../../../model/enums/analysis-type";
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-summary',
@@ -21,6 +21,10 @@ export class SummaryComponent implements OnInit {
     mockPlatformData: Array<any> = []
     choiceAnalysis:Array<string> = ["Feature analysis","Business metric analysis","Fee analysis"]
     featuresIncludedReviewList: Array<Array<number>> = [[1,2,3,4,5],[1,2,3],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5],[1,2,3,4,5,6,7],[1,2],[1,2,3,4,5,6],[2,3,4,5,9]]
+    modalMockVal: string = `BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
+                        BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
+                        BT is confident that issues dogging its Panorama wealth platform have been resolved,
+                        July were delayed and a separate error led to the platform being offline for an entire week.`
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -85,38 +89,17 @@ export class SummaryComponent implements OnInit {
         })
     }
 
-    addIdps() {
-        this.idpsArr.push({
-            name: '',
-            value: 0,
-        });
+    openPopover(pComment: NgbPopover) {
+        pComment.open();
+        let isOpen = pComment.isOpen();
+        console.log('open', isOpen)
     }
 
-    addSuper() {
-        this.superArr.push({
-            name: '',
-            value: 0,
-        });
-    }
-
-    totalValue(): number {
-        let superTotal = this.superArr.map(s => s.value).reduce((a, b) => a + b);
-        let idpsTotal = this.idpsArr.map(s => s.value).reduce((a, b) => a + b);
-        return idpsTotal + superTotal;
-    }
-
-    removeSuper(superIndex: number) {
-        if (superIndex == 0) {
-            return;
-        }
-        this.superArr.splice(superIndex, 1);
-    }
-
-    removeIdps(idpsIndex: number) {
-        if (idpsIndex == 0) {
-            return;
-        }
-        this.idpsArr.splice(idpsIndex, 1);
+    closeComment(pComment: NgbPopover) {
+        // if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
+        //     return;
+        // }
+        pComment.close();
     }
 
 }

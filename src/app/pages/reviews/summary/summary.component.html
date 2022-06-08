@@ -1,396 +1,476 @@
 <div class="loading-bar has-load"></div>
-<div class="table-main-content summary-container">
-    <header class="module-wrapper">
-        <div class="sub-head-review">
-            <div class="title">Step 5 - Summary</div>
-        </div>
-        <div class="personnel-wrapper">
-            <div class="personnel-info">
-                <div class="personnel-info_title">Floyd’s review performed in Q1 2022</div>
-                <div class="personnel-info_base">
-                    <div class="personnel-info personnel-info_avatar">
-                        <img src="./assets/img/unassgin.svg" />
+<div class="table-main-content">
+    <div class="summary-container" appTableScroll>
+        <div class="summary__title module-wrapper">
+            <div class="sub-head-review">
+                <div class="title">Step 5 - Summary</div>
+            </div>
+            <div class="personnel-wrapper">
+                <div class="personnel-info">
+                    <div class="personnel-info_title">Floyd’s review performed in Q1 2022</div>
+                    <div class="personnel-info_base">
+                        <div class="personnel-info personnel-info_avatar">
+                            <img src="./assets/img/unassgin.svg" />
+                        </div>
+                        <div class="personnel-info personnel-info_name">Guy Hawkins</div>|
+                        <div class="personnel-info personnel-info_start">Data valid on 21 March 2022</div>|
+                        <div class="personnel-info personnel-info_end">Created at 1:39pm 28 March 2022</div>
                     </div>
-                    <div class="personnel-info personnel-info_name">Guy Hawkins</div>|
-                    <div class="personnel-info personnel-info_start">Data valid on 21 March 2022</div>|
-                    <div class="personnel-info personnel-info_end">Created at 1:39pm 28 March 2022</div>
                 </div>
             </div>
         </div>
-    </header>
-    <div class="summary-introduce module-wrapper">
-        <div class="introduce-title-info">
-            <div class="info-title">This review is for</div>
-            <div class="info-sub-title">The client profile information</div>
-        </div>
-        <div class="introduce-from-info">
-            <div class="from-info__avatar">
-                <img src="./assets/img/icon/icon-member.svg" />
+        <div class="summary__introduce module-wrapper">
+            <div class="introduce-title-info">
+                <div class="info-title">This review is for</div>
+                <div class="info-sub-title">The client profile information</div>
             </div>
-            <div class="from-info__name">Miracle Gouse </div>
-            <div class="from-info__address">from Wisewealth</div>
+            <div class="introduce-from-info">
+                <div class="from-info__avatar">
+                    <img src="./assets/img/icon/icon-member.svg" />
+                </div>
+                <div class="from-info__name">Miracle Gouse </div>
+                <div class="from-info__address">from Wisewealth</div>
+            </div>
+            <div class="introduce-content">
+                <div class="introduce-content__target">Objectives</div>
+                <div class="introduce-content__text">
+                    BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
+                    BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
+                    BT is confident that issues dogging its Panorama wealth platform have been resolved,
+                    July were delayed and a separate error led to the platform being offline for an entire week.
+                </div>
+                <button class="btn btn-outline-purple-light btn-small"
+                        #pIntroduce='ngbPopover'
+                        container="body" [autoClose]="'outside'"
+                        popoverClass="table-comment-popover"
+                        triggers="manual"
+                        (click)="openPopover(pIntroduce)"
+                        placement="top auto"
+                        [ngbPopover]="popIntroduceContent">
+                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                </button>
+                <ng-template #popIntroduceContent>
+                    <div class="comment-popover">
+                        <div class="title">Edit</div>
+
+                        <textarea class="form-control xs-mb-16" [(ngModel)]="modalMockVal"></textarea>
+
+                        <div class="comment-footer">
+                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                    (click)="pIntroduce.close()">Cancel
+                            </button>
+                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeComment(pIntroduce)">Save</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
         </div>
-        <div class="introduce-content">
-            <div class="introduce-content__target">Objectives</div>
-            <div class="introduce-content__text">
+        <div class="summary__platform module-wrapper">
+            <div class="platform-title-info">
+                <div class="info-title">Platforms selected</div>
+                <div class="info-sub-title">5 platforms have been selected from 15 </div>
+            </div>
+            <div class="tables tables--platform">
+                <div class="table-horizontal table--platform" *ngFor="let list of mockPlatformData">
+                    <div class="table-row table-row__platform">
+                        <div class="table-column table-column-title">
+                            Platform
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
+                            {{item ? 'BT Panorama '+item : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__feature--match" *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
+                        <div class="table-column table-column-title">
+                            Features match
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? '96%' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__feature--analysis" *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
+                        <div class="table-column table-column-title">
+                            Feature analysis
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <div class="analysis-wrapper" *ngIf="item">
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                                <button class="btn btn-outline-purple-light btn-small"
+                                        #pPlatform='ngbPopover'
+                                        container="body" [autoClose]="'outside'"
+                                        popoverClass="table-comment-popover"
+                                        triggers="manual"
+                                        (click)="openPopover(pPlatform)"
+                                        placement="top auto" [ngbPopover]="popPlatformContent">
+                                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                                </button>
+                                <ng-template #popPlatformContent>
+                                    <div class="comment-popover">
+                                        <div class="title">Edit</div>
+
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="modalMockVal"></textarea>
+
+                                        <div class="comment-footer">
+                                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                                    (click)="pPlatform.close()">Cancel
+                                            </button>
+                                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeComment(pPlatform)">Save</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__business--analysis" *ngIf="choiceAnalysis.includes(configService.analysisType.metric)">
+                        <div class="table-column table-column-title">
+                            Business analysis
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <div class="analysis-wrapper" *ngIf="item">
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                                <button class="btn btn-outline-purple-light btn-small"
+                                        #pPlatform='ngbPopover'
+                                        container="body" [autoClose]="'outside'"
+                                        popoverClass="table-comment-popover"
+                                        triggers="manual"
+                                        (click)="openPopover(pPlatform)"
+                                        placement="top auto" [ngbPopover]="popPlatformContent">
+                                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                                </button>
+                                <ng-template #popPlatformContent>
+                                    <div class="comment-popover">
+                                        <div class="title">Edit</div>
+
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="modalMockVal"></textarea>
+
+                                        <div class="comment-footer">
+                                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                                    (click)="pPlatform.close()">Cancel
+                                            </button>
+                                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeComment(pPlatform)">Save</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__fee--analysis" *ngIf="0">
+                        <div class="table-column table-column-title">
+                            Fee analysis
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <div class="analysis-wrapper" *ngIf="item">
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                                <button class="btn btn-outline-purple-light btn-small"
+                                        #pPlatform='ngbPopover'
+                                        container="body" [autoClose]="'outside'"
+                                        popoverClass="table-comment-popover"
+                                        triggers="manual"
+                                        (click)="openPopover(pPlatform)"
+                                        placement="top auto" [ngbPopover]="popPlatformContent">
+                                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                                </button>
+                                <ng-template #popPlatformContent>
+                                    <div class="comment-popover">
+                                        <div class="title">Edit</div>
+
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="modalMockVal"></textarea>
+
+                                        <div class="comment-footer">
+                                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                                    (click)="pPlatform.close()">Cancel
+                                            </button>
+                                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeComment(pPlatform)">Save</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__final--analysis">
+                        <div class="table-column table-column-title">
+                            Final analysis
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <div class="analysis-wrapper" *ngIf="item">
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                                <button class="btn btn-outline-purple-light btn-small"
+                                        #pPlatform='ngbPopover'
+                                        container="body" [autoClose]="'outside'"
+                                        popoverClass="table-comment-popover"
+                                        triggers="manual"
+                                        (click)="openPopover(pPlatform)"
+                                        placement="top auto" [ngbPopover]="popPlatformContent">
+                                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                                </button>
+                                <ng-template #popPlatformContent>
+                                    <div class="comment-popover">
+                                        <div class="title">Edit</div>
+
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="modalMockVal"></textarea>
+
+                                        <div class="comment-footer">
+                                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                                    (click)="pPlatform.close()">Cancel
+                                            </button>
+                                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeComment(pPlatform)">Save</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="summary__business--metrics module-wrapper">
+            <div class="metrics-title-info">
+                <div class="title metrics-title">
+                    Business metrics<span>of selected platforms</span>
+                </div>
+                <div class="sub-title metrics-sub-title">
+                    5 platforms have been selected from 15
+                </div>
+            </div>
+            <div class="tables tables--metrics">
+                <div class="table-horizontal table--metrics" *ngFor="let list of mockPlatformData">
+                    <div class="table-row table-row__platform">
+                        <div class="table-column table-column-title">
+                            Platform
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
+                            {{item ? 'BT Panorama '+item : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__new--flows--in--last--12months">
+                        <div class="table-column table-column-title">
+                            Net flows in last 12 months
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? '$15MM' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__fua">
+                        <div class="table-column table-column-title">
+                            Funds under administration (FUA)
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? '$15MM' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__recent--financial--year">
+                        <div class="table-column table-column-title">
+                            Platform operations profitable in most recent financial year
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <span class="status-yes" *ngIf="item && item %2 === 0" style="color: #219653">Yes</span>
+                            <span class="status-no" *ngIf="item && item %2 !== 0" style="color: #EB5757">No</span>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__ownership--structure">
+                        <div class="table-column table-column-title">
+                            Ownership structure
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? 'Netwealth is an ASX listed company. It is majority owned by its founders, and 40% of their stock is floated' : ''}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="summary__remarks module-wrapper">
+            <div class="remark-title-info">
+                <div class="title">Concluding remarks</div>
+                <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
+            </div>
+            <div class="remark-content">
                 <p>BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.</p>
                 <p>BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.</p>
-                <p>BT is confident that issues dogging its Panorama wealth platform have been resolved,</p>
-                <p>July were delayed and a separate error led to the platform being offline for an entire week.</p>
             </div>
             <button class="btn btn-outline-purple-light btn-small">
-                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
+                Edit
             </button>
         </div>
-    </div>
-    <div class="summary-platform module-wrapper">
-        <div class="platform-title-info">
-            <div class="info-title">Platforms selected</div>
-            <div class="info-sub-title">5 platforms have been selected from 15 </div>
+        <div class="summary__decision--making--process module-wrapper">
+            <div class="title-info">
+                <div class="title title-large">The decision making process</div>
+                <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
+            </div>
         </div>
-        <div class="tables tables--platform">
-            <div class="table-horizontal table--platform" *ngFor="let list of mockPlatformData">
-                <div class="table-row table-row__platform">
-                    <div class="table-column table-column-title">
-                        Platform
+        <div class="summary__platform--considerations module-wrapper">
+            <div class="title-info">
+                <div class="title title-large">Summary of platform considerations</div>
+                <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
+            </div>
+            <div class="table">
+                <div class="head-row">
+                    <div class="column column--platform">Platform</div>
+                    <div class="column column--feature__match">Features match</div>
+                    <div class="column column--feature__analysis">Feature analysis </div>
+                    <div class="column column--business__analysis">Business analysis </div>
+                    <div class="column column--final__analysis">Final analysis  </div>
+                </div>
+                <div class="body-row" *ngFor="let item of [1,2,3,4,5,6,7]">
+                    <div class="column column--platform">
+                        BT Panorama {{item}}
                     </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
-                        {{item ? 'BT Panorama '+item : ''}}
+                    <div class="column column--feature__match">
+                        96%
+                    </div>
+                    <div class="column column--feature__analysis">
+                        <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                        <button class="btn btn-outline-purple-light btn-small">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                        </button>
+                    </div>
+                    <div class="column column--business__analysis">
+                        <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                        <div class="status">
+                            <span class="status--removed label label-red">Removed</span>
+                        </div>
+                        <button class="btn btn-outline-purple-light btn-small">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                        </button>
+                    </div>
+                    <div class="column column--final__analysis">
+                        <div class="html-content" *ngIf="0" [innerHTML]="''"></div>
+                        <div class="html-content" *ngIf="1" [innerHTML]="'-'"></div>
+                        <button class="btn btn-outline-purple-light btn-small">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
+                            Add comment
+                        </button>
                     </div>
                 </div>
-                <div class="table-row table-row__feature--match" *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
-                    <div class="table-column table-column-title">
-                        Features match
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? '96%' : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__feature--analysis" *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
-                    <div class="table-column table-column-title">
-                        Feature analysis
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
+            </div>
+        </div>
+        <div class="summary__features--included--review module-wrapper">
+            <div class="title-info">
+                <div class="title title-large">Features included in the review</div>
+                <div class="sub-title">250 out of 400 features have been selected</div>
+            </div>
+            <div class="lists">
+                <div class="list" *ngFor="let list of featuresIncludedReviewList">
+                    <div class="list-title">
+                        <div class="list-title-left">
+                            Product menu > <span>Listed securities</span>
+                        </div>
+                        <div class="list-title-right">
+                            13/20 selected
                         </div>
                     </div>
-                </div>
-                <div class="table-row table-row__business--analysis" *ngIf="choiceAnalysis.includes(configService.analysisType.metric)">
-                    <div class="table-column table-column-title">
-                        Business analysis
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
+                    <div class="list-item" *ngFor="let item of list">
+                        <div class="item-text">
+                            Range of ASX listed securities in super/pension - All ASX{{item}}
                         </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__fee--analysis" *ngIf="0">
-                    <div class="table-column table-column-title">
-                        Fee analysis
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__final--analysis">
-                    <div class="table-column table-column-title">
-                        Final analysis
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="summary-business-metrics module-wrapper">
-        <div class="metrics-title-info">
-            <div class="title metrics-title">
-                Business metrics<span>of selected platforms</span>
-            </div>
-            <div class="sub-title metrics-sub-title">
-                5 platforms have been selected from 15
-            </div>
-        </div>
-        <div class="tables tables--metrics">
-            <div class="table-horizontal table--metrics" *ngFor="let list of mockPlatformData">
-                <div class="table-row table-row__platform">
-                    <div class="table-column table-column-title">
-                        Platform
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
-                        {{item ? 'BT Panorama '+item : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__new--flows--in--last--12months">
-                    <div class="table-column table-column-title">
-                        Net flows in last 12 months
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? '$15MM' : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__fua">
-                    <div class="table-column table-column-title">
-                        Funds under administration (FUA)
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? '$15MM' : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__recent--financial--year">
-                    <div class="table-column table-column-title">
-                        Platform operations profitable in most recent financial year
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <span class="status-yes" *ngIf="item && item %2 === 0" style="color: #219653">Yes</span>
-                        <span class="status-no" *ngIf="item && item %2 !== 0" style="color: #EB5757">No</span>
-                    </div>
-                </div>
-                <div class="table-row table-row__ownership--structure">
-                    <div class="table-column table-column-title">
-                        Ownership structure
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? 'Netwealth is an ASX listed company. It is majority owned by its founders, and 40% of their stock is floated' : ''}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="summary-remarks module-wrapper">
-        <div class="remark-title-info">
-            <div class="title">Concluding remarks</div>
-            <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
-        </div>
-        <div class="remark-content">
-            <p>BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.</p>
-            <p>BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.</p>
-        </div>
-        <button class="btn btn-outline-purple-light btn-small">
-            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
-            Edit
-        </button>
-    </div>
-    <div class="summary__decision--making--process module-wrapper">
-        <div class="title-info">
-            <div class="title title-large">The decision making process</div>
-            <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
-        </div>
-    </div>
-    <div class="summary__platform--considerations module-wrapper">
-        <div class="title-info">
-            <div class="title title-large">Summary of platform considerations</div>
-            <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
-        </div>
-        <div class="table">
-            <div class="head-row">
-                <div class="column column--platform">Platform</div>
-                <div class="column column--feature__match">Features match</div>
-                <div class="column column--feature__analysis">Feature analysis </div>
-                <div class="column column--business__analysis">Business analysis </div>
-                <div class="column column--final__analysis">Final analysis  </div>
-            </div>
-            <div class="body-row" *ngFor="let item of [1,2,3,4,5,6,7]">
-                <div class="column column--platform">
-                    BT Panorama {{item}}
-                </div>
-                <div class="column column--feature__match">
-                    96%
-                </div>
-                <div class="column column--feature__analysis">
-                    <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                    <button class="btn btn-outline-purple-light btn-small">
-                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                    </button>
-                </div>
-                <div class="column column--business__analysis">
-                    <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                    <div class="status">
-                        <span class="status--removed label label-red">Removed</span>
-                    </div>
-                    <button class="btn btn-outline-purple-light btn-small">
-                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                    </button>
-                </div>
-                <div class="column column--final__analysis">
-                    <div class="html-content" *ngIf="0" [innerHTML]="''"></div>
-                    <div class="html-content" *ngIf="1" [innerHTML]="'-'"></div>
-                    <button class="btn btn-outline-purple-light btn-small">
-                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
-                        Add comment
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="summary__features--included--review module-wrapper">
-        <div class="title-info">
-            <div class="title title-large">Features included in the review</div>
-            <div class="sub-title">250 out of 400 features have been selected</div>
-        </div>
-        <div class="lists">
-            <div class="list" *ngFor="let list of featuresIncludedReviewList">
-                <div class="list-title">
-                    <div class="list-title-left">
-                        Product menu > <span>Listed securities</span>
-                    </div>
-                    <div class="list-title-right">
-                        13/20 selected
-                    </div>
-                </div>
-                <div class="list-item" *ngFor="let item of list">
-                    <div class="item-text">
-                        Range of ASX listed securities in super/pension - All ASX{{item}}
-                    </div>
-                    <div class="item-status status">
-                        <span class="status__essential label">Essential</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="summary__metrics--included--review module-wrapper">
-        <div class="title-info">
-            <div class="title title-large">Business metrics included in the review </div>
-            <div class="sub-title">250 out of 400 features have been selected</div>
-        </div>
-        <div class="lists">
-            <div class="list" *ngFor="let list of featuresIncludedReviewList">
-                <div class="list-title">
-                    <div class="list-title-left">
-                        Financial strength
-                    </div>
-                    <div class="list-title-right">
-                        13/20 selected
-                    </div>
-                </div>
-                <div class="list-item" *ngFor="let item of list">
-                    <div class="item-text">
-                        Range of ASX listed securities in super/pension - All ASX{{item}}
-                    </div>
-                    <div class="item-status status">
-                        <span class="status__selected label label-blue">Selected</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="summary__metrics--platforms module-wrapper">
-        <div class="title-info">
-            <div class="title">
-                Business metrics
-                <span>of all platforms</span>
-            </div>
-            <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
-        </div>
-        <div class="tables tables--metrics__platform">
-            <div class="table-horizontal table--metrics__platform" *ngFor="let list of mockPlatformData">
-                <div class="table-row table-row__platform">
-                    <div class="table-column table-column-title" first="1">
-                        Platform
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? 'BT Panorama '+item : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__feature--match">
-                    <div class="table-column table-column-title">
-                        Net flows in last 12 months
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        {{item ? '96%' : ''}}
-                    </div>
-                </div>
-                <div class="table-row table-row__feature--analysis">
-                    <div class="table-column table-column-title">
-                        Funds under administration (FUA)
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__business--analysis">
-                    <div class="table-column table-column-title">
-                        Platform operations profitable in most recent financial year
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__fee--analysis" *ngIf="0">
-                    <div class="table-column table-column-title">
-                        Ownership structure
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__final--analysis">
-                    <div class="table-column table-column-title">
-                        Diversity targets in place for employees
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row table-row__final--analysis">
-                    <div class="table-column table-column-title">
-                        Social initiatives and policies
-                    </div>
-                    <div class="table-column table-column-value" *ngFor="let item of list">
-                        <div class="analysis-wrapper" *ngIf="item">
-                            <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
-                            <button class="btn btn-outline-purple-light btn-small">
-                                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                            </button>
+                        <div class="item-status status">
+                            <span class="status__essential label">Essential</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="summary-disclaimer module-wrapper">
+        <div class="summary__metrics--included--review module-wrapper">
+            <div class="title-info">
+                <div class="title title-large">Business metrics included in the review </div>
+                <div class="sub-title">250 out of 400 features have been selected</div>
+            </div>
+            <div class="lists">
+                <div class="list" *ngFor="let list of featuresIncludedReviewList">
+                    <div class="list-title">
+                        <div class="list-title-left">
+                            Financial strength
+                        </div>
+                        <div class="list-title-right">
+                            13/20 selected
+                        </div>
+                    </div>
+                    <div class="list-item" *ngFor="let item of list">
+                        <div class="item-text">
+                            Range of ASX listed securities in super/pension - All ASX{{item}}
+                        </div>
+                        <div class="item-status status">
+                            <span class="status__selected label label-blue">Selected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="summary__metrics--platforms module-wrapper">
+            <div class="title-info">
+                <div class="title">
+                    Business metrics
+                    <span>of all platforms</span>
+                </div>
+                <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
+            </div>
+            <div class="tables tables--metrics__platform">
+                <div class="table-horizontal table--metrics__platform" *ngFor="let list of mockPlatformData">
+                    <div class="table-row table-row__platform">
+                        <div class="table-column table-column-title" first="1">
+                            Platform
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? 'BT Panorama '+item : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__feature--analysis">
+                        <div class="table-column table-column-title">
+                            Net flows in last 12 months
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? '$15MM' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__feature--analysis">
+                        <div class="table-column table-column-title">
+                            Funds under administration (FUA)
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? '$15MM' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__business--analysis">
+                        <div class="table-column table-column-title">
+                            Platform operations profitable in most recent financial year
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <span class="status-yes" *ngIf="item && item %2 === 0" style="color: #219653">Yes</span>
+                            <span class="status-no" *ngIf="item && item %2 !== 0" style="color: #EB5757">No</span>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__fee--analysis">
+                        <div class="table-column table-column-title">
+                            Ownership structure
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? 'Netwealth is an ASX listed company. It is majority owned by its founders, and 40% of their stock is floated' : ''}}
+                        </div>
+                    </div>
+                    <div class="table-row table-row__final--analysis">
+                        <div class="table-column table-column-title">
+                            Diversity targets in place for employees
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            <div class="analysis-wrapper" *ngIf="item" style="justify-content: center">
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-row table-row__final--analysis">
+                        <div class="table-column table-column-title">
+                            Social initiatives and policies
+                        </div>
+                        <div class="table-column table-column-value" *ngFor="let item of list">
+                            {{item ? 'Netwealth is an ASX listed company. It is majority owned by its founders, and 40% of their stock is floated' : ''}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="summary__disclaimer module-wrapper">
         <div class="title-info">
             <div class="title">Disclaimer</div>
             <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
@@ -404,5 +484,5 @@
             Edit
         </button>
     </div>
-
+    </div>
 </div>
