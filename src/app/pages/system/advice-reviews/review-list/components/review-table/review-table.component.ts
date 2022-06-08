@@ -69,12 +69,14 @@ export class ReviewTableComponent implements OnInit {
         this.getDuePage();
     }
 
-    unarchive(due: DueListVo) {
+    unarchive(e: Event,due: DueListVo) {
+        e.stopPropagation()
         due.archived = false;
         this.save(due);
     }
 
-    archive(due: DueListVo) {
+    archive(e: Event,due: DueListVo) {
+        e.stopPropagation()
         due.archived = true
         this.save(due);
     }

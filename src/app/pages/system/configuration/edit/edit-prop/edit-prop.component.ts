@@ -120,6 +120,11 @@ export class EditPropComponent implements OnInit {
         this.saveProp();
     }
 
+    unArchive(): void {
+        this.prop.status = PropStatus.Update.value;
+        this.saveProp();
+    }
+
     saveProp() {
         if (!this.prop.name) {
             this.toastRepository.showDanger('Name is required.');

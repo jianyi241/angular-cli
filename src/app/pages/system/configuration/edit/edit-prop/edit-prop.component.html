@@ -6,9 +6,9 @@
         </div>
         <ng-container *ngIf="version.type">
             <div class="btn-control-group"
-                 [hidden]="!configService.isEditable(version.type, prop.status) || prop.readOnly">
-                <button class="btn btn-text-danger" (click)="archive()" *ngIf="prop.id && prop.moveFlag">Archive
-                </button>
+                 [hidden]="!configService.isEditable(version.type, prop.status,'configuration') || prop.readOnly">
+                <button class="btn btn-text-danger" (click)="archive()" *ngIf="prop.id && prop.moveFlag && prop.status !== configService.groupStatus.archive">Archive</button>
+                <button class="btn btn-text-danger" (click)="unArchive()" *ngIf="prop.id && prop.moveFlag && prop.status === configService.groupStatus.archive">Unarchive</button>
                 <button class="btn btn-purple" (click)="saveProp()">{{prop.id ? 'Update' : 'Save'}}</button>
             </div>
         </ng-container>

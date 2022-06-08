@@ -10,6 +10,8 @@
         <div class="btn-control-group">
             <button class="btn text-danger" *ngIf="supplierService.supplier.id && !currentUserService.isSupplierUser()" (click)="archiveSupplier()">
                  {{(supplierService.supplier.archiveFlag ? 'Unarchive ' : 'Archive ') + supplierService.supplier.name}}</button>
+            <button class="btn btn-outline-purple-light" (click)="onDisable()" *ngIf="supplierService.supplier.status === configService.supplierStatus.active">Disable</button>
+            <button class="btn btn-outline-purple-light" (click)="onDisable()" *ngIf="supplierService.supplier.status === configService.supplierStatus.disable">Enable</button>
             <button class="btn btn-outline-purple-light" [routerLink]="['/supplier/supplier-list']"
                     *ngIf="!supplierService.supplier.id">Cancel
             </button>

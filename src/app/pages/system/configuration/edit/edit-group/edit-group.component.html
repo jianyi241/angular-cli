@@ -5,11 +5,10 @@
             <div class="text-ellipsis">{{group.name}}</div>
         </div>
         <ng-container *ngIf="version.type && !readOnly()">
-            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, group.status) || group.readOnly">
-                <button class="btn btn-text-danger" (click)="archive()" *ngIf="group.id && group.moveFlag">Archive
-                </button>
-                <button class="btn btn-purple"
-                        (click)="saveGroup()">{{group.id ? 'Update' : 'Save'}}</button>
+            <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, group.status,'configuration') || group.readOnly">
+                <button class="btn btn-text-danger" (click)="archive()" *ngIf="group.id && group.moveFlag && group.status !== configService.groupStatus.archive">Archive</button>
+                <button class="btn btn-text-danger" (click)="unArchive()" *ngIf="group.id && group.moveFlag && group.status === configService.groupStatus.archive">Unarchive</button>
+                <button class="btn btn-purple" (click)="saveGroup()">{{group.id ? 'Update' : 'Save'}}</button>
             </div>
         </ng-container>
     </div>

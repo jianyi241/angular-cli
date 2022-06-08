@@ -48,12 +48,14 @@ export class ComparisonsListComponent implements OnInit {
         this.router.navigateByUrl(`/review/comparison-setup/${comparison?.id || Constants.NON_ID}`)
     }
 
-    archive(comparison: ComparisonInfo) {
+    archive(e: Event,comparison: ComparisonInfo) {
+        e.stopPropagation()
         comparison.archived = true;
         this.saveSample(comparison);
     }
 
-    unarchive(comparison: ComparisonInfo) {
+    unarchive(e: Event,comparison: ComparisonInfo) {
+        e.stopPropagation()
         comparison.archived = false;
         this.saveSample(comparison);
     }

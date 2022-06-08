@@ -14,6 +14,7 @@ import {VersionRepository} from "../../../../../repository/version-repository";
 import {GroupStatus} from "../../../../../model/enums/group-status";
 import {environment} from "../../../../../../environments/environment";
 import {SaveService} from "../../../../../service/save.service";
+import {take} from "rxjs/operators";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -54,7 +55,7 @@ export class EditSubGroupComponent implements OnInit {
         if (this.editType === 'add') {
             return false
         } else if (this.editType === 'update') {
-            return !this.configService.isEditable(this.version.type, this.subGroup.status)
+            return !this.configService.isEditable(this.version.type, this.subGroup.status,'configuration')
         } else if (this.editType === 'view') {
             return true
         }
@@ -119,6 +120,10 @@ export class EditSubGroupComponent implements OnInit {
         this.subGroup.status = GroupStatus.Archive.value;
         this.saveSubGroup();
     }
+    unArchive(): void {
+        this.subGroup.status = GroupStatus.Update.value;
+        this.saveSubGroup();
+    }
 
     saveSubGroup() {
         if (!this.subGroup.name) {
@@ -136,7 +141,7 @@ export class EditSubGroupComponent implements OnInit {
             this.toastRepository.showSuccess(`${this.subGroup.id ? 'Update' : 'Save'} Successfully.`);
             this.subGroup.id = res.data.id;
             this.subGroup.moveFlag = res.data.moveFlag;
-            this.storage.getItem<Reminder>('reminder' + this.currentTab).subscribe(data => {
+            this.storage.getItem<Reminder>('reminder' + this.currentTab).pipe(take(5)).subscribe(data => {
                 data.subGroupId = res.data.id;
                 this.storage.setItem<Reminder>('reminder' + this.currentTab, data);
             });

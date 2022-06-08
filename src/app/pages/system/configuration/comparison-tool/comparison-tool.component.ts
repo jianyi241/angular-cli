@@ -15,6 +15,7 @@ import {GroupStatus} from "../../../../model/enums/group-status";
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {PropStatus} from "../../../../model/enums/prop-status";
 import {Sort} from "../../../../model/vo/sort";
+import {take} from "rxjs/operators";
 
 @Component({
     selector: 'app-comparison-tool',
@@ -41,7 +42,7 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 private configurationRepository: ConfigurationRepository,
                 public configService: ConfigService) {
-        this.storage.getItem<Reminder>('reminder' + TabType.features.value).subscribe(data => {
+        this.storage.getItem<Reminder>('reminder' + TabType.features.value).pipe(take(5)).subscribe(data => {
             if (data != 'undefined' && data) {
                 this.reminder = data;
             }

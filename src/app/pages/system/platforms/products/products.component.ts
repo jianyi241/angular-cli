@@ -68,7 +68,8 @@ export class ProductsComponent implements OnInit {
         this.router.navigateByUrl(`/platform/product-tab/overview/${product.id}/${product.versionId || Constants.VERSION}`);
     }
 
-    editProductInfo(product: ProductInfo): void {
+    editProductInfo(e: Event, product: ProductInfo): void {
+        e.stopPropagation()
         if (this.saveService.saveCheck(environment.baseURL + `/product/editProduct/${product.id}`)) {
             return;
         }

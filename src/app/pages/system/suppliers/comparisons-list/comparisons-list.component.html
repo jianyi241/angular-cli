@@ -120,11 +120,11 @@
 
                     <td class="text-center">
                         <button class="btn btn-purple-border btn-tiny xs-ml-12" (click)="save(comparison)">View</button>
-                        <button *ngIf="!comparison.archived" (click)="archive(comparison)"
+                        <button *ngIf="!comparison.archived" (click)="archive($event, comparison)"
                                 class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
                             <img src="./assets/img/icon/icon-delete-red.svg">
                         </button>
-                        <button *ngIf="comparison.archived" (click)="unarchive(comparison)"
+                        <button *ngIf="comparison.archived" (click)="unarchive($event, comparison)"
                                 class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn">
                             <img src="./assets/img/icon/icon-refresh-blur.svg">
                         </button>

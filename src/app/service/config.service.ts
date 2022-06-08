@@ -14,12 +14,13 @@ import {WorkFlowsStatus} from "../model/enums/work-flows-status";
 // @ts-ignore
 import {ComparisonStatus} from "../model/enums/comparison-status";
 import {PlatformStatus} from "../model/enums/platform-status";
-
+import {GroupStatus} from "../model/enums/group-status";
+import {SupplierStatus} from "../model/enums/supplier-status";
+type EditModule = 'platform' | 'configuration'
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigService {
-
 
     tabType = {
         overview: TabType.overview.value,
@@ -42,6 +43,10 @@ export class ConfigService {
     practiceStatus = {
         active: PracticeStatus.Active.value,
         disable: PracticeStatus.Disable.value,
+    }
+    supplierStatus = {
+        active: SupplierStatus.Active.value,
+        disable: SupplierStatus.Disable.value,
     }
 
     userStatus = {
@@ -99,6 +104,14 @@ export class ConfigService {
         completed: ComparisonStatus.Completed.value,
     }
 
+    groupStatus = {
+        normal: GroupStatus.Normal.value,
+        insert: GroupStatus.Insert.value,
+        update: GroupStatus.Update.value,
+        archive: GroupStatus.Archive.value
+    }
+
+
     currentVersion: Version = new Version()
 
     constructor(private router: Router, public currentUserService: CurrentUserService) {
@@ -120,10 +133,14 @@ export class ConfigService {
         return this.router.url.includes(this.converterTabToRouter(tab)) ? 'active' : '';
     }
 
-    isEditable(versionType: string, status?: string): boolean {
+    isEditable(versionType: string, status?: string, module: EditModule = 'platform'): boolean {
         if (this.currentUserService.isAdminUser()) {
             if (!status) return versionType === VersionType.Draft.value;
-            return versionType === VersionType.Draft.value && status != 'Archive';
+            if (module === 'configuration') {
+                return versionType === VersionType.Draft.value
+            } else {
+                return versionType === VersionType.Draft.value && status != 'Archive';
+            }
         } else if (this.currentUserService.isSupplierUser()) {
             if (this.currentVersion.versionStatus === this.versionStatus.wait || this.currentVersion.versionStatus === this.versionStatus.waitPublish) {
                 return false

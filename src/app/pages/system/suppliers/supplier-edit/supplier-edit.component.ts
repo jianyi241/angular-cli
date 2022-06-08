@@ -10,6 +10,8 @@ import {environment} from "../../../../../environments/environment";
 import {TipModalComponent} from "../../advice-practices/tip-modal/tip-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../service/current-user.service";
+import {ConfigService} from "../../../../service/config.service";
+import {SupplierStatus} from "../../../../model/enums/supplier-status";
 
 @Component({
     selector: 'app-supplier-edit',
@@ -25,7 +27,8 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
                 private supplierRepository: SupplierRepository,
                 private activatedRoute: ActivatedRoute,
                 private toastRepository: ToastRepository,
-                private router: Router) {
+                private router: Router,
+                public configService: ConfigService) {
         this.supplierService.supplier = new SupplierInfo();
     }
 
@@ -47,7 +50,6 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/supplier/supplier-list');
         }
     }
-
 
     supplierDetail(): void {
         this.supplierRepository.getSupplierDetail(this.supplierService.supplier.id).subscribe(res => {
@@ -93,6 +95,29 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
         });
     }
 
+    onDisable(): void {
+        const modalRef = this.modalService.open(TipModalComponent, {
+            backdrop: 'static',
+            size: 'small',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        const isDisabled = this.supplierService.supplier.status === this.configService.supplierStatus.disable
+        modalRef.componentInstance.title = `${isDisabled ? 'Enable' : 'Disable'} the supplier?`
+        modalRef.componentInstance.info = `${isDisabled ? 'Enabling' : 'Disabling'} a supplier will freeze it from being changed.Are you sure to ${isDisabled ? 'enable' : 'disable'} this supplier?`;
+        modalRef.componentInstance.btnText = `Yes, ${isDisabled ? 'enable' : 'disable'} it`
+        const msg = `${this.supplierService.supplier.name} has been ${isDisabled ? 'enabled' : 'disabled'}`
+        modalRef.result.then((result) => {
+            if (isDisabled) {
+                this.supplierService.supplier.status = SupplierStatus.Active.value;
+            } else {
+                this.supplierService.supplier.status = SupplierStatus.Disable.value;
+            }
+            this.saveSupplier(false, msg);;
+        }, (reason) => {
+        });
+    }
+
     archiveSupplier(): void {
         const modalRef = this.modalService.open(TipModalComponent, {
             backdrop: 'static',
@@ -111,22 +136,4 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
         }, (reason) => {
         });
     }
-
-    /*onDisable(): void {
-        const modalRef = this.modalService.open(TipModalComponent, {
-            backdrop: 'static',
-            size: 'small',
-            windowClass: 'tip-popup-modal',
-            centered: true
-        });
-        modalRef.componentInstance.title = 'Disable the practice?';
-        modalRef.componentInstance.info = 'Disabling a practice will freeze it from being changed.Are you sure to disable this practice?';
-        modalRef.componentInstance.btnText = 'Yes, disable it';
-        modalRef.result.then((result) => {
-            this.practiceService.practice.status = PracticeStatus.Disable.value;
-            this.save(false, `${this.practiceService.practice.name} has been disabled`);
-        }, (reason) => {
-        });
-    }*/
-
 }
