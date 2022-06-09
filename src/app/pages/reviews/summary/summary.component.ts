@@ -19,6 +19,7 @@ export class SummaryComponent implements OnInit {
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     mockPlatformData: Array<any> = []
+    section: number = 4
     choiceAnalysis:Array<string> = ["Feature analysis","Business metric analysis","Fee analysis"]
     featuresIncludedReviewList: Array<Array<number>> = [[1,2,3,4,5],[1,2,3],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5],[1,2,3,4,5,6,7],[1,2],[1,2,3,4,5,6],[2,3,4,5,9]]
     modalMockVal: string = `BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
@@ -35,6 +36,10 @@ export class SummaryComponent implements OnInit {
     ngOnInit(): void {
         this.subscribe();
         this.getPlatformSelectedList()
+        window.addEventListener('resize',(e: UIEvent) => {
+            const windowWidth = window.innerWidth
+            this.updateViewList(windowWidth)
+        })
     }
 
     getPlatformAnalysis() {
@@ -49,6 +54,27 @@ export class SummaryComponent implements OnInit {
         _list[_list.length - 1].length = 4
         this.mockPlatformData = _list
         console.log('mockPlatformData ', this.mockPlatformData)
+        console.log('flat mockPlatformData ', this.mockPlatformData.flat())
+    }
+
+    updateViewList(windowWidth: number) {
+        if (windowWidth <= 1540) {
+            if (this.section != 3) {
+                console.log('column -> 3')
+                this.section = 3
+                let _list = arr1ToArr2(this.mockPlatformData.flat(), this.section)
+                _list[_list.length - 1].length = this.section
+                this.mockPlatformData = _list
+            }
+        } else {
+            if (this.section != 4) {
+                console.log('column -> 4')
+                this.section = 4
+                let _list = arr1ToArr2(this.mockPlatformData.flat(), this.section)
+                _list[_list.length - 1].length = this.section
+                this.mockPlatformData = _list
+            }
+        }
     }
 
     ngOnDestroy(): void {

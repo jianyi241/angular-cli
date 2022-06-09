@@ -17,6 +17,22 @@
 
         <div class="btn-control-group"
              *ngIf="version.type && currentTab != 'change-history' && version.type != 'History'">
+            <div class="save-loading" *ngIf="showEditButton('saving')">
+                <img src="./assets/img/icon/icon-save-success.svg" class="success" [hidden]="configService.platformLoading"/>
+                <img src="./assets/img/icon/icon-saving.svg" class="saving" [hidden]="!configService.platformLoading"/>
+                {{configService.platformLoading ? 'Saving...' : 'Saved '}}
+            </div>
+            <!--            <div *ngIf="currentUserService.isSupplierUser()">-->
+            <!--                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"-->
+            <!--                        (click)="editProduct()">Edit Product-->
+            <!--                </button>-->
+            <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('discard')"
+                    (click)="discardConfirm()">Discard draft
+            </button>
+            <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('submit')"
+                    (click)="supplierSubmitConfirm()">Submit for review
+            </button>
+            <!--            </div>-->
             <div *ngIf="currentUserService.isAdminUser()">
 <!--                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"-->
 <!--                        (click)="editProduct()">Edit-->
@@ -30,17 +46,6 @@
                         (click)="publishProduct()">Publish
                 </button>
             </div>
-<!--            <div *ngIf="currentUserService.isSupplierUser()">-->
-<!--                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"-->
-<!--                        (click)="editProduct()">Edit Product-->
-<!--                </button>-->
-                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('discard')"
-                        (click)="discardConfirm()">Discard draft
-                </button>
-                <button class="btn btn-purple xs-ml-24" *ngIf="showEditButton('submit')"
-                        (click)="supplierSubmitConfirm()">Submit for review
-                </button>
-<!--            </div>-->
         </div>
     </div>
 

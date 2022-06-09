@@ -115,36 +115,33 @@ export class EditPropComponent implements OnInit {
         });
     }
 
-    archive(): void {
-        this.prop.status = PropStatus.Archive.value;
-        this.saveProp();
+    updateStatus(status: string): void {
+        const _prop = JSON.parse(JSON.stringify(this.prop))
+        _prop.status = status;
+        this.saveProp(_prop);
     }
 
-    unArchive(): void {
-        this.prop.status = PropStatus.Update.value;
-        this.saveProp();
-    }
-
-    saveProp() {
-        if (!this.prop.name) {
+    saveProp(_prop: PropertyInfo) {
+        if (!_prop.name) {
             this.toastRepository.showDanger('Name is required.');
             return;
         }
-        if (!this.prop.type) {
+        if (!_prop.type) {
             this.toastRepository.showDanger('Field type is required.');
             return;
         }
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateProperty`)) {
             return;
         }
-        this.configurationRepository.saveProp(this.prop).subscribe(res => {
+        this.configurationRepository.saveProp(_prop).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.toastRepository.showSuccess(`${this.prop.id ? 'Update' : 'Save'} Successfully.`);
+            this.toastRepository.showSuccess(`${_prop.id ? 'Update' : 'Save'} Successfully.`);
             this.prop.id = res.data.id;
             this.prop.moveFlag = res.data.moveFlag;
+            this.prop.status = res.data.status
         });
     }
 }

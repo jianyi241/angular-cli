@@ -169,9 +169,13 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     emptyList(): boolean {
         if (this.hideSectionArchive) {
-            let filter1 = this.moveProps.filter(m => m.status != PropStatus.Archive.value);
-            let filter2 = this.freezeProps.filter(m => m.status != PropStatus.Archive.value);
-            return filter1.length == 0 && filter2.length == 0;
+            if (this.hidePropArchive) {
+                let filter1 = this.moveProps.filter(m => m.status != PropStatus.Archive.value);
+                let filter2 = this.freezeProps.filter(m => m.status != PropStatus.Archive.value);
+                return filter1.length == 0 && filter2.length == 0;
+            } else {
+                return this.moveProps.length == 0 && this.freezeProps.length == 0;
+            }
         } else {
             return this.moveProps.length == 0 && this.freezeProps.length == 0;
         }
@@ -179,9 +183,6 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     showSectionArchived(): void {
         this.hideSectionArchive = !this.hideSectionArchive;
-        if (this.hideSectionArchive === true) {
-
-        }
     }
 
     showPropArchived(): void {

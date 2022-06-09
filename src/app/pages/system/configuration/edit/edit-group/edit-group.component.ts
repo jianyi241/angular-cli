@@ -131,31 +131,29 @@ export class EditGroupComponent implements OnInit {
         }
     }
 
-    archive(): void {
-        this.group.status = GroupStatus.Archive.value;
-        this.saveGroup();
-    }
-    unArchive(): void {
-        this.group.status = GroupStatus.Update.value;
-        this.saveGroup();
+    updateStatus(status: string): void {
+        const _group = JSON.parse(JSON.stringify(this.group))
+        _group.status = status;
+        this.saveGroup(_group);
     }
 
-    saveGroup() {
-        if (!this.group.name) {
+    saveGroup(_group: GroupInfo) {
+        if (!_group.name) {
             this.toastRepository.showDanger('Name is required.')
             return;
         }
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
-        this.configurationRepository.saveGroup(this.group).subscribe(res => {
+        this.configurationRepository.saveGroup(_group).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg)
                 return;
             }
-            this.toastRepository.showSuccess(`${this.group.id ? 'Update' : 'Save'} Successfully.`);
+            this.toastRepository.showSuccess(`${_group.id ? 'Update' : 'Save'} Successfully.`);
             this.group.id = res.data.id;
             this.group.moveFlag = res.data.moveFlag;
+            this.group.status = res.data.status
             this.storage.getItem('reminder' + this.currentTab).pipe(take(5)).subscribe(data => {
                 data.groupId = this.group.id;
                 this.storage.setItem('reminder' + this.currentTab, data);

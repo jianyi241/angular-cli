@@ -6,9 +6,9 @@
         </div>
         <ng-container *ngIf="version.type && !readOnly()">
             <div class="btn-control-group" [hidden]="!configService.isEditable(version.type, subGroup.status,'configuration')">
-                <button class="btn btn-text-danger" (click)="archive()" *ngIf="subGroup.id && subGroup.moveFlag && subGroup.status !== configService.groupStatus.archive">Archive</button>
-                <button class="btn btn-text-danger" (click)="unArchive()" *ngIf="subGroup.id && subGroup.moveFlag && subGroup.status === configService.groupStatus.archive">Unarchive</button>
-                <button class="btn btn-purple" (click)="saveSubGroup()">{{subGroup.id ? 'Update' : 'Save'}}</button>
+                <button class="btn btn-text-danger" (click)="updateStatus(configService.groupStatus.archive)" *ngIf="subGroup.id && subGroup.moveFlag && subGroup.status !== configService.groupStatus.archive">Archive</button>
+                <button class="btn btn-text-danger" (click)="updateStatus(configService.groupStatus.update)" *ngIf="subGroup.id && subGroup.moveFlag && subGroup.status === configService.groupStatus.archive">Unarchive</button>
+                <button class="btn btn-purple" (click)="saveSubGroup(subGroup)">{{subGroup.id ? 'Update' : 'Save'}}</button>
             </div>
         </ng-container>
     </div>

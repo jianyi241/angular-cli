@@ -116,31 +116,29 @@ export class EditSubGroupComponent implements OnInit {
         })
     }
 
-    archive(): void {
-        this.subGroup.status = GroupStatus.Archive.value;
-        this.saveSubGroup();
-    }
-    unArchive(): void {
-        this.subGroup.status = GroupStatus.Update.value;
-        this.saveSubGroup();
+    updateStatus(status: string): void {
+        const _subGroup = JSON.parse(JSON.stringify(this.subGroup))
+        _subGroup.status = status;
+        this.saveSubGroup(_subGroup);
     }
 
-    saveSubGroup() {
-        if (!this.subGroup.name) {
+    saveSubGroup(_subGroup: GroupInfo) {
+        if (!_subGroup.name) {
             this.toastRepository.showDanger('Name is required.')
             return;
         }
         if (this.saveService.saveCheck(`${environment.baseURL}/supplier/saveOrUpdateGroup`)) {
             return;
         }
-        this.configurationRepository.saveGroup(this.subGroup).subscribe(res => {
+        this.configurationRepository.saveGroup(_subGroup).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
             }
-            this.toastRepository.showSuccess(`${this.subGroup.id ? 'Update' : 'Save'} Successfully.`);
+            this.toastRepository.showSuccess(`${_subGroup.id ? 'Update' : 'Save'} Successfully.`);
             this.subGroup.id = res.data.id;
             this.subGroup.moveFlag = res.data.moveFlag;
+            this.subGroup.status = res.data.status
             this.storage.getItem<Reminder>('reminder' + this.currentTab).pipe(take(5)).subscribe(data => {
                 data.subGroupId = res.data.id;
                 this.storage.setItem<Reminder>('reminder' + this.currentTab, data);

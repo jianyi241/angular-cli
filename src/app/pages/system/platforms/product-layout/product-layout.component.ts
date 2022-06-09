@@ -100,7 +100,7 @@ export class ProductLayoutComponent implements OnInit {
     showEditButton(type: string) {
         if (type === 'edit') {
             return this.version.type === VersionType.Publish.value
-        } else if (type === 'submit' || type === 'discard') {
+        } else if (type === 'submit' || type === 'discard' || type === 'saving') {
             return this.version.type === VersionType.Draft.value && (this.version.versionStatus === VersionStatus.Normal.value || this.version.versionStatus === VersionStatus.Rejected.value)
         }
         if (this.currentUserService.isAdminUser()) {

@@ -78,6 +78,9 @@ export class AcceptInvitationModalComponent implements OnInit {
             this.toastRepository.showDanger("Passwords don't match");
             return;
         }
+        this.inviteUser.updateNewsFlag = true
+        this.inviteUser.commFlag = true
+        this.inviteUser.planFlag = true
         this.userRepository.inviteUser(this.inviteUser).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);

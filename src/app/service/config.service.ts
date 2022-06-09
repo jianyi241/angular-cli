@@ -16,6 +16,7 @@ import {ComparisonStatus} from "../model/enums/comparison-status";
 import {PlatformStatus} from "../model/enums/platform-status";
 import {GroupStatus} from "../model/enums/group-status";
 import {SupplierStatus} from "../model/enums/supplier-status";
+import {PropStatus} from "../model/enums/prop-status";
 type EditModule = 'platform' | 'configuration'
 @Injectable({
     providedIn: 'root'
@@ -111,6 +112,14 @@ export class ConfigService {
         archive: GroupStatus.Archive.value
     }
 
+    propStatus = {
+        normal: PropStatus.Normal.value,
+        insert: PropStatus.Insert.value,
+        update: PropStatus.Update.value,
+        archive: PropStatus.Archive.value
+    }
+
+    platformLoading: boolean = false
 
     currentVersion: Version = new Version()
 

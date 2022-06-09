@@ -76,7 +76,7 @@
                         <div class="menu-name">Users & subscription</div>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="currentUserService.isAdviceUser()">
+                <ng-container *ngIf="currentUserService.isAdviceUser() && (currentUserService.authorities()[0].roleName === configService.roles.owner || currentUserService.authorities()[0].roleName === configService.roles.accountAdmin)">
                     <div class="menu-item" (click)="toPage('/advice-practices/advice-tab/overview/' + currentUserService.currentUser().companyId)">
                         <img src="./assets/img/icon/icon-setting.svg" class="menu-icon" />
                         <div class="menu-name">Users & subscription</div>

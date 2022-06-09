@@ -71,6 +71,9 @@ export class SignupModalComponent implements OnInit {
         //     this.toastRepository.showDanger("Please agree to join the research team and be invited to participate in occasional surveys");
         //     return;
         // }
+        this.signup.updateNewsFlag = true
+        this.signup.commFlag = true
+        this.signup.planFlag = true
         this.userRepository.signup(this.signup).subscribe(res => {
             if (res.statusCode != 200) {
                 if (res.statusCode == 201) {

@@ -120,12 +120,14 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
     }
 
     saveProp(prop: PropertyVo): void {
+        this.configService.platformLoading = true
         this.focusService.deleteFocus();
         let productProp = {...prop.productPropVo};
         productProp.shProductId = this.product.id;
         productProp.shPropertyId = prop.id;
         this.platformRepository.saveProductProp(productProp).subscribe(res => {
             prop.productPropVo = res.data;
+            this.configService.platformLoading = false
         })
     }
 

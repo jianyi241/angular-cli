@@ -81,15 +81,18 @@ export class EsgProductComponent implements OnInit {
     }
 
     saveProp(prop: PropertyVo) {
+        this.configService.platformLoading = true
         let productProp = {...prop.productPropVo};
         productProp.shProductId = this.product.id;
         productProp.shPropertyId = prop.id;
         this.platformRepository.saveProductProp(productProp).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
+                this.configService.platformLoading = false
                 return;
             }
             prop.productPropVo = res.data;
+            this.configService.platformLoading = false
         })
     }
 

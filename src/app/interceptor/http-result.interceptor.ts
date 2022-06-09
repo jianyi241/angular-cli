@@ -15,6 +15,7 @@ import {ToastRepository} from "../repository/toast-repository";
 import {SaveService} from "../service/save.service";
 import {Constants} from "../model/constants";
 import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
+import {ConfigService} from "../service/config.service";
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
 
     constructor(private storage: LocalStorageObServable,
                 private saveService: SaveService,
+                private configService: ConfigService,
                 private toastRepository: ToastRepository,
                 private ngxLoadingSpinnerService: NgxLoadingSpinnerService,
                 private router: Router) {
@@ -69,6 +71,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
                     this.saveService.delete(baseUrl);
                 }
                 this.ngxLoadingSpinnerService.hide();
+                this.configService.platformLoading = false
                 this.toastRepository.showDanger(error.statusText);
                 throw error;
             })
