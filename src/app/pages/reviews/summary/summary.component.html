@@ -3,7 +3,7 @@
     <div class="summary-container" appTableScroll>
         <div class="summary__title module-wrapper">
             <div class="sub-head-review">
-                <div class="title">Step 5 - Summary</div>
+                <div class="title">Step {{this.reviewService.comparison.analyseVoList.length + 2}} - Summary</div>
             </div>
             <div class="personnel-wrapper">
                 <div class="personnel-info">
@@ -89,7 +89,7 @@
                             {{item ? '96%' : ''}}
                         </div>
                     </div>
-                    <div class="table-row table-row__feature--analysis" *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
+                    <div class="table-row table-row__feature--analysis"   *ngIf="choiceAnalysis.includes(configService.analysisType.feature)">
                         <div class="table-column table-column-title">
                             Feature analysis
                         </div>
@@ -128,7 +128,7 @@
                         </div>
                         <div class="table-column table-column-value" *ngFor="let item of list">
                             <div class="analysis-wrapper" *ngIf="item">
-                                <div class="html-content" [innerHTML]="getPlatformAnalysis()"></div>
+                                <div class="html-content" [innerHTML]="getPlatformAnalysis()" ></div>
                                 <button class="btn btn-outline-purple-light btn-small"
                                         #pPlatform='ngbPopover'
                                         container="body" [autoClose]="'outside'"
