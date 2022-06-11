@@ -158,22 +158,22 @@ export class SummaryComponent implements OnInit {
    }
 
    getProperties(groups: Array<GroupInfo>): void {
-       if (!groups || groups.length == 0) {
-           return;
-       }
-       const list = JSON.parse(JSON.stringify(groups))
-       let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
-       list.forEach(i => {
-           if (i.properties && i.properties.length) {
-               this.businessProperties.push(...i.properties.filter(_i => propIds.includes(_i.id)));
-           } else {
-               if (i.subList) {
-                   this.getProperties(i.subList)
+       const recursion = (groups) => {
+           if (!groups || groups.length == 0) return;
+           const list = JSON.parse(JSON.stringify(groups))
+           let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
+           list.forEach(i => {
+               console.log('i ', i)
+               if (i.properties && i.properties.length) {
+                   this.businessProperties.push(...i.properties.filter(_i => propIds.includes(_i.id)));
+               } else if (i.subList) {
+                   recursion(i.subList)
                } else if (i.groups) {
-                   this.getProperties(i.groups)
+                   recursion(i.groups)
                }
-           }
-       });
+           })
+       }
+       recursion(groups)
    }
 
     showFeatureFlag(product) {
