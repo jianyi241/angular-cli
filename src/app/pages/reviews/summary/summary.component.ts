@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
-import {Router, ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ReviewService} from "../../../service/review.service";
 import {arr1ToArr2} from "../../../utils/array";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
@@ -161,30 +161,23 @@ export class SummaryComponent implements OnInit {
         })
    }
 
-   getProperties(comparisonTabs: Array<GroupInfo>) {
-       const list = JSON.parse(JSON.stringify(comparisonTabs))
-       if (comparisonTabs && comparisonTabs.length) {
-            list.forEach((item, index) => {
-                if (item.properties) {
-                    if (item.properties && item.properties.length) {
-                        const list = item.properties.filter(_item => {
-                            let properties = this.comparisonProducts.map(item => item.productPropVoList).flat()
-                            const flag = properties.find(__item => __item.shPropertyId === _item.id)
-                            if (flag) {
-                                return _item
-                            }
-                        })
-                        this.businessProperties.push(...list)
-                    }
-                } else {
-                    if (item.subList) {
-                        this.getProperties(item.subList)
-                    } else if (item.groups) {
-                        this.getProperties(item.groups)
-                    }
-                }
-            })
-        }
+   getProperties(groups: Array<GroupInfo>): void {
+       const list = JSON.parse(JSON.stringify(groups))
+       if (!groups || groups.length == 0) {
+           return;
+       }
+       let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
+       list.forEach(i => {
+           if (i.properties && i.properties.length) {
+               this.businessProperties.push(i.properties.filter(_i => propIds.includes(_i.id)));
+           } else {
+               if (i.subList) {
+                   this.getProperties(i.subList)
+               } else if (i.groups) {
+                   this.getProperties(i.groups)
+               }
+           }
+       });
    }
 
     showFeatureFlag(product) {
