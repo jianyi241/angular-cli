@@ -95,12 +95,12 @@ export class SummaryComponent implements OnInit {
     }
 
    getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
-           const obj = list.find(item => item.shAnalyseId === shAnalysisId)
-           if (typeof obj != 'undefined') {
-               return obj
-           } else {
-               return ''
-           }
+       const obj = list.find(item => item.shAnalyseId === shAnalysisId)
+       if (typeof obj != 'undefined') {
+           return obj
+       } else {
+           return ''
+       }
    }
 
    getTabTypeNameByTabType(tabType: number): string {
