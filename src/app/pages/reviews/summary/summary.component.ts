@@ -162,10 +162,11 @@ export class SummaryComponent implements OnInit {
    }
 
    getProperties(groups: Array<GroupInfo>): void {
-       const list = JSON.parse(JSON.stringify(groups))
        if (!groups || groups.length == 0) {
            return;
        }
+
+       const list = JSON.parse(JSON.stringify(groups))
        let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
        list.forEach(i => {
            if (i.properties && i.properties.length) {
