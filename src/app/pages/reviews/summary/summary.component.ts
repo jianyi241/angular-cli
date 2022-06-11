@@ -95,16 +95,12 @@ export class SummaryComponent implements OnInit {
     }
 
    getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
-       if (list && list.length) {
            const obj = list.find(item => item.shAnalyseId === shAnalysisId)
            if (typeof obj != 'undefined') {
                return obj
            } else {
                return ''
            }
-       } else {
-           return ''
-       }
    }
 
    getTabTypeNameByTabType(tabType: number): string {
@@ -165,12 +161,11 @@ export class SummaryComponent implements OnInit {
        if (!groups || groups.length == 0) {
            return;
        }
-
        const list = JSON.parse(JSON.stringify(groups))
        let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
        list.forEach(i => {
            if (i.properties && i.properties.length) {
-               this.businessProperties.push(i.properties.filter(_i => propIds.includes(_i.id)));
+               this.businessProperties.push(...i.properties.filter(_i => propIds.includes(_i.id)));
            } else {
                if (i.subList) {
                    this.getProperties(i.subList)
@@ -214,13 +209,11 @@ export class SummaryComponent implements OnInit {
         }
         if (windowWidth <= 1540) {
             if (this.section != 3) {
-                console.log('column -> 3')
                 this.section = 3
                 this.convertList()
             }
         } else {
             if (this.section != 4) {
-                console.log('column -> 4')
                 this.section = 4
                 this.convertList()
             }
@@ -229,7 +222,6 @@ export class SummaryComponent implements OnInit {
 
     convertList() {
         let _list = arr1ToArr2(JSON.parse(JSON.stringify(this.comparisonProducts)), this.section)
-        console.log(_list)
         _list[_list.length - 1].length = this.section
         this.comparisonTwoProducts = _list
     }
@@ -338,6 +330,9 @@ export class SummaryComponent implements OnInit {
     }
 
     saveComparisonInfo(pComment: NgbPopover): void {
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
+            return;
+        }
         this.reviewRepository.saveComparison(this.comparisonInfo).subscribe(res => {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
@@ -351,8 +346,6 @@ export class SummaryComponent implements OnInit {
 
     openPopover(pComment: NgbPopover) {
         pComment.open();
-        let isOpen = pComment.isOpen();
-        console.log('open', isOpen)
     }
 
     getProductPropValue(propertyList: Array<ProductPropInfo> ,prop: PropertyInfo): string {
