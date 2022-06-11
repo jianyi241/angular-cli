@@ -172,7 +172,8 @@ import {DisableModalComponent} from "./advice-reviews/modal/disable-modal/disabl
         ToggleClassDirective,
         BackTopDirective,
         ArrayFilterPipe,
-        SortingWidgetComponent
+        SortingWidgetComponent,
+        DateFormatPipe
     ]
 })
 export class SystemModule {

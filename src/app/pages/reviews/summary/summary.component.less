@@ -40,6 +40,8 @@
           > .personnel-info_avatar {
             width: 29px;
             height: 29px;
+            border-radius: 50%;
+            overflow: hidden;
             margin-right: 8px;
 
             > img {
@@ -211,11 +213,11 @@
               line-height: 1.6 !important;
             }
 
-            &.table-row__new--flows--in--last--12months, &.table-row__fua, &.table-row__recent--financial--year {
-              > .table-column-value {
-                font: normal 700 16px 'Epilogue';
+              .table-column-value {
+                /deep/ .status-txt {
+                  font: normal 700 16px 'Epilogue';
+                }
               }
-            }
 
             &.table-row__ownership--structure {
               > .table-column-value {
@@ -320,7 +322,6 @@
     }
 
     > .summary__remarks, > .summary__disclaimer {
-      background-color: #FFFFFF;
       padding-bottom: 48px;
 
       > .remark-content {
@@ -335,7 +336,12 @@
       }
     }
 
+    > .summary__remarks {
+      padding-top: 48px;
+    }
+
     > .summary__disclaimer {
+      background-color: #F2F2F2;
       padding-top: 48px;
     }
 
@@ -421,7 +427,8 @@
     }
 
     > .summary__features--included--review, > .summary__metrics--included--review {
-      margin-top: 40px;
+      background-color: #FAFAFA;
+      padding-top: 40px;
 
       > .lists {
         position: relative;

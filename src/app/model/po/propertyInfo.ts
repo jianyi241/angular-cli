@@ -41,5 +41,9 @@ export class PropertyInfo extends BaseModel {
      * 1:long text 2:Short text 3:Boolean  4:Integer  5:Attachment
      */
     type?: number;
+    comparisonPropertyId?: string;
+    analyseId?: string;
+    analyseName?: string;
+    selected?: boolean;
 }
 

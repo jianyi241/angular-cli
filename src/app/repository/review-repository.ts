@@ -17,6 +17,8 @@ import {ComparisonCommentInfo} from "../model/po/comparisonCommentInfo";
 import {ComparisonSaveTemplateInfo, ComparisonTemplateInfo} from "../model/po/comparisonTemplateInfo";
 import {ComparisonProductInfo} from "../model/po/comparisonProductInfo";
 import {SelectionCondition} from "../model/condition/selection-condition";
+import ComparisonSummary from "../model/po/comparisonSummary";
+import FinalAnalyse from "../model/po/finalAnalyse";
 
 @Injectable({
     providedIn: 'root'
@@ -103,5 +105,13 @@ export class ReviewRepository {
 
     saveFeatureTemplate(templateInfo:ComparisonSaveTemplateInfo){
         return this.http.post<HttpResult<ComparisonSaveTemplateInfo>>(environment.baseURL + `/compare/saveFeatureTemplate`, templateInfo);
+    }
+
+    getSummary(comparisonId: string): Observable<HttpResult<ComparisonSummary>> {
+        return this.http.get<HttpResult<ComparisonSummary>>(environment.baseURL + `/compare/getSummary/${comparisonId}`);
+    }
+
+    saveOrUpdateFinalAnalyse(condition: FinalAnalyse): Observable<HttpResult<FinalAnalyse>> {
+        return this.http.post<HttpResult<FinalAnalyse>>(environment.baseURL + '/compare/saveOrUpdateFinalAnalyse', condition);
     }
 }

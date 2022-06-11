@@ -13,6 +13,8 @@
 
 import {Attachment} from "../attachment";
 import {BaseModel} from "./baseModel";
+import FinalAnalyse from "./finalAnalyse";
+import {ComparisonCommentInfo} from "./comparisonCommentInfo";
 
 /**
  * sh_product_prop表
@@ -37,5 +39,10 @@ export class ProductPropInfo extends BaseModel{
     type?: string;
     versionId?: string;
     vsFlag?: boolean;
+    productName?: string;
+    matchPercent?: number;
+    productPropVoList?: Array<ProductPropInfo> = new Array<ProductPropInfo>();
+    comments: Array<ComparisonCommentInfo> = new Array<ComparisonCommentInfo>();
+    finalAnalyse: FinalAnalyse = new FinalAnalyse();
 }
 

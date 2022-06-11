@@ -1,10 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {ReviewService} from "../../../service/review.service";
 import {arr1ToArr2} from "../../../utils/array";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {ComparisonVo} from "../../../model/vo/comparisonVo";
+import {ToastRepository} from "../../../repository/toast-repository";
+import {ComparisonCommentInfo} from "../../../model/po/comparisonCommentInfo";
+import {GroupInfo} from "../../../model/po/groupInfo";
+import {PropertyInfo} from "../../../model/po/propertyInfo";
+import {TabType} from "../../../model/enums/tab-type";
+import {environment} from "../../../../environments/environment";
+import {SaveService} from "../../../service/save.service";
+import {Constants} from "../../../model/constants";
+import FinalAnalyse from "../../../model/po/finalAnalyse";
+import {ProductPropInfo} from "../../../model/po/productPropInfo";
+
+interface SingleGroup {
+    tabType?: number;
+    tabTypeName?: string;
+    groupId?: string;
+    groupName?: string;
+    subGroupId?: string;
+    subGroupName?: string;
+    selectCount: number;
+    totalCount: number;
+    properties: Array<PropertyInfo>;
+}
 
 @Component({
     selector: 'app-summary',
@@ -16,65 +39,205 @@ export class SummaryComponent implements OnInit {
     reviewNextObservable: any;
     reviewBackObservable: any;
     reviewLeaveObservable: any;
-    idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
-    superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
-    mockPlatformData: Array<any> = []
+    config = {...Constants.EDITOR_CONFIG};
     section: number = 4
-    choiceAnalysis:Array<string> = ["Feature analysis","Business metric analysis","Fee analysis"]
-    featuresIncludedReviewList: Array<Array<number>> = [[1,2,3,4,5],[1,2,3],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5],[1,2,3,4,5,6,7],[1,2],[1,2,3,4,5,6],[2,3,4,5,9]]
-    modalMockVal: string = `BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
-                        BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week.
-                        BT is confident that issues dogging its Panorama wealth platform have been resolved,
-                        July were delayed and a separate error led to the platform being offline for an entire week.`
+    comparisonInfo: ComparisonVo
+    comparisonProducts = []
+    comparisonTwoProducts = []
+    platformCounts = {
+        totalCount: 0,
+        activeCount: 0
+    }
+    comparisonGroups = []
+    businessProperties: Array<PropertyInfo> = new Array<PropertyInfo>();
+    featureGroupsList: Array<SingleGroup> = new Array<SingleGroup>();
+    businessGroupList: Array<SingleGroup> = new Array<SingleGroup>();
+    businessCounts = {
+        totalCount: 0,
+        activeCount: 0
+    }
+    featureProperties: GroupInfo = new GroupInfo();
+    currentCommit: ComparisonCommentInfo = new ComparisonCommentInfo();
+    currentFinalAnalysis: FinalAnalyse = new FinalAnalyse();
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
-                private router: Router) {
+                private toastRepository: ToastRepository,
+                private router: Router,
+                private activatedRoute: ActivatedRoute,
+                private saveService: SaveService) {
     }
 
     ngOnInit(): void {
         this.subscribe();
-        this.getPlatformSelectedList()
+        if (window.innerWidth <= 1540) {
+            this.section = 3
+        } else {
+            this.section = 4
+        }
         window.addEventListener('resize',(e: UIEvent) => {
             const windowWidth = window.innerWidth
-            this.updateViewList(windowWidth)
+            this.updateViewList(windowWidth, false)
+        })
+        this.comparisonInfo = this.reviewService.comparison
+        this.activatedRoute.params.subscribe(res => {
+            if (res.id) {
+                this.comparisonInfo.id = res.id
+            }
+        })
+        this.initPageData()
+    }
+
+    includeAnalysis(name: string): boolean {
+        const idx = this.comparisonInfo.analyseVoList.findIndex(item => item.name === name)
+        return idx >=0 ? true : false
+    }
+
+   getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
+       if (list && list.length) {
+           const obj = list.find(item => item.shAnalyseId === shAnalysisId)
+           if (typeof obj != 'undefined') {
+               return obj
+           } else {
+               return ''
+           }
+       } else {
+           return ''
+       }
+   }
+
+   getTabTypeNameByTabType(tabType: number): string {
+       const type = TabType.Values().find(item => item.value === tabType)
+       return type.name
+   }
+
+   getSingleGroupList(list: Array<GroupInfo>,key: string): void {
+        list.forEach(item => {
+            if (item.properties) {
+                this[key].push({
+                    tabType: item.tabType,
+                    tabTypeName: this.getTabTypeNameByTabType(item.tabType),
+                    groupId: '',
+                    groupName: '',
+                    subGroupId: '',
+                    subGroupName: '',
+                    selectCount: key === 'featureGroupsList' ? item.selectedPropCount : item.properties.filter(item => item.selected).length,
+                    totalCount: key === 'featureGroupsList' ? item.totalPropCount : item.properties.length,
+                    properties: item.properties
+                })
+            } else if (item.groups) {
+                item.groups.forEach(_item => {
+                    if (_item.properties) {
+                        this[key].push({
+                            tabType: item.tabType,
+                            tabTypeName: this.getTabTypeNameByTabType(item.tabType),
+                            groupId: _item.id,
+                            groupName: _item.name,
+                            subGroupId: '',
+                            subGroupName: '',
+                            selectCount: _item.properties.filter(item => item.selected).length,
+                            totalCount: _item.properties.length,
+                            properties: _item.properties
+                        })
+                    } else if (key === 'featureGroupsList' && _item.subList) {
+                        _item.subList.forEach(__item => {
+                            this[key].push({
+                                tabType: item.tabType,
+                                groupId: _item.id,
+                                groupName: _item.name,
+                                subGroupId: __item.id,
+                                subGroupName: __item.name,
+                                selectCount: __item.selectedPropCount,
+                                totalCount: __item.totalPropCount,
+                                properties: __item.properties
+                            })
+                        })
+                    } else if (_item.groups){
+                        this.getSingleGroupList(_item.groups, key)
+                    }
+                })
+            }
+        })
+   }
+
+   getProperties(comparisonTabs: Array<GroupInfo>) {
+       const list = JSON.parse(JSON.stringify(comparisonTabs))
+       if (comparisonTabs && comparisonTabs.length) {
+            list.forEach((item, index) => {
+                if (item.properties) {
+                    if (item.properties && item.properties.length) {
+                        const list = item.properties.filter(_item => {
+                            let properties = this.comparisonProducts.map(item => item.productPropVoList).flat()
+                            const flag = properties.find(__item => __item.shPropertyId === _item.id)
+                            if (flag) {
+                                return _item
+                            }
+                        })
+                        this.businessProperties.push(...list)
+                    }
+                } else {
+                    if (item.subList) {
+                        this.getProperties(item.subList)
+                    } else if (item.groups) {
+                        this.getProperties(item.groups)
+                    }
+                }
+            })
+        }
+   }
+
+    showFeatureFlag(product) {
+        return product.showFlag || (product.shProductId === this.reviewService.comparison.mainPlatformId)
+    }
+
+    getSummaryInfo() {
+        this.reviewRepository.getSummary(this.comparisonInfo.id).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'get data error')
+                return
+            }
+
+            this.comparisonProducts = res.data.products.filter(res => this.showFeatureFlag(res))
+            this.updateViewList(window.innerWidth, true)
+            this.platformCounts = {
+                totalCount: res.data.products.length,
+                activeCount: this.comparisonProducts.length
+            }
+            this.comparisonGroups = res.data.comparisonTabs
+            const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value,TabType.information.value].includes(item.tabType))
+            this.getProperties(businessGroups)
+            const featureGroups = res.data.comparisonTabs.find(item => item.tabType === TabType.features.value)
+            this.getSingleGroupList([featureGroups], 'featureGroupsList');
+            this.getSingleGroupList(businessGroups, 'businessGroupList');
+            this.featureProperties = res.data.comparisonTabs[res.data.comparisonTabs.length - 1]
         })
     }
 
-    getPlatformAnalysis() {
-        return `
-            Feature spotlight: Manage cash reserves and<br/> automate investing with Cash Settings. Feature<br/> spotlight: Manage cash reserves and automate<br/> investing with Cash Settings
-        `
-    }
-
-    getPlatformSelectedList() {
-        let list = [1,2,3,4,5,6,7]
-        let _list = arr1ToArr2(JSON.parse(JSON.stringify(list)), 4)
-        _list[_list.length - 1].length = 4
-        this.mockPlatformData = _list
-        console.log('mockPlatformData ', this.mockPlatformData)
-        console.log('flat mockPlatformData ', this.mockPlatformData.flat())
-    }
-
-    updateViewList(windowWidth: number) {
+    updateViewList(windowWidth: number, init = false) {
+        if (init) {
+            this.convertList()
+        }
         if (windowWidth <= 1540) {
             if (this.section != 3) {
                 console.log('column -> 3')
                 this.section = 3
-                let _list = arr1ToArr2(this.mockPlatformData.flat(), this.section)
-                _list[_list.length - 1].length = this.section
-                this.mockPlatformData = _list
+                this.convertList()
             }
         } else {
             if (this.section != 4) {
                 console.log('column -> 4')
                 this.section = 4
-                let _list = arr1ToArr2(this.mockPlatformData.flat(), this.section)
-                _list[_list.length - 1].length = this.section
-                this.mockPlatformData = _list
+                this.convertList()
             }
         }
+    }
+
+    convertList() {
+        let _list = arr1ToArr2(JSON.parse(JSON.stringify(this.comparisonProducts)), this.section)
+        console.log(_list)
+        _list[_list.length - 1].length = this.section
+        this.comparisonTwoProducts = _list
     }
 
     ngOnDestroy(): void {
@@ -115,17 +278,95 @@ export class SummaryComponent implements OnInit {
         })
     }
 
+    initPageData():void {
+        this.getSummaryInfo()
+    }
+
+    openFinalAnalysisPopover(pComment: NgbPopover,finalAnalysis: FinalAnalyse,shProductId: string): void {
+        if (!finalAnalysis || (typeof finalAnalysis.id) === 'undefined') {
+            Object.assign(this.currentFinalAnalysis, {
+                ...finalAnalysis,
+                shComparisonId: this.comparisonInfo.id,
+                shProductId: shProductId,
+                finalAnalyse: ''
+            })
+        } else {
+            this.currentFinalAnalysis = JSON.parse(JSON.stringify(finalAnalysis))
+        }
+        this.openPopover(pComment)
+    }
+
+    saveFinalAnalysis(pComment: NgbPopover) {
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateFinalAnalyse`)) {
+            return;
+        }
+        this.reviewRepository.saveOrUpdateFinalAnalyse(this.currentFinalAnalysis).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'save failed.')
+                pComment.close();
+                return
+            }
+            this.toastRepository.showSuccess('save successfully.')
+            this.getSummaryInfo()
+            pComment.close();
+        })
+    }
+
+
+    openCommentPopover(pComment: NgbPopover, commentInfo: ComparisonCommentInfo, {shProductId,shAnalyseId}): void {
+        if (!commentInfo) {
+            this.currentCommit = {
+                shComparisonId: this.comparisonInfo.id,
+                shProductId: shProductId,
+                shAnalyseId: shAnalyseId,
+                comment: ''
+            }
+        } else {
+            this.currentCommit = JSON.parse(JSON.stringify(commentInfo))
+        }
+        this.openPopover(pComment)
+    }
+
+    saveComment(pComment: NgbPopover) {
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
+            return;
+        }
+        this.reviewRepository.saveComment(this.currentCommit).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'save failed.')
+                pComment.close();
+                return
+            }
+            this.toastRepository.showSuccess('save successfully.')
+            this.getSummaryInfo()
+            pComment.close();
+        })
+    }
+
+    saveComparisonInfo(pComment: NgbPopover): void {
+        this.reviewRepository.saveComparison(this.comparisonInfo).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'save failed.')
+                pComment.close();
+                return
+            }
+            this.toastRepository.showSuccess('save successfully.')
+            pComment.close();
+        })
+    }
+
     openPopover(pComment: NgbPopover) {
         pComment.open();
         let isOpen = pComment.isOpen();
         console.log('open', isOpen)
     }
 
-    closeComment(pComment: NgbPopover) {
-        // if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
-        //     return;
-        // }
-        pComment.close();
+    getProductPropValue(propertyList: Array<ProductPropInfo> ,prop: PropertyInfo): string {
+        const obj = propertyList.find(item => item.shPropertyId === prop.id)
+        if (obj) {
+            return obj.propValue
+        } else {
+            return ''
+        }
     }
-
 }

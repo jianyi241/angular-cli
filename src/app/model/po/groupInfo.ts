@@ -37,5 +37,8 @@ export class GroupInfo extends BaseModel{
     readOnly?: boolean;
     attachmentVo: Attachment = new Attachment();
     totalPropCount?: number;
+    groups: Array<GroupInfo> = new Array<GroupInfo>();
+    properties?: Array<PropertyInfo> = new Array<PropertyInfo>();
+    selectedPropCount?: number;
 }
 
