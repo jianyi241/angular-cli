@@ -182,11 +182,11 @@ export class SummaryComponent implements OnInit {
         this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
-
     subscribe(): void {
+        this.saveSubscribe();
         this.nextSubscribe();
         this.backSubscribe();
-        this.saveSubscribe();
+        this.leaveSubscribe();
     }
 
     nextSubscribe(): void {

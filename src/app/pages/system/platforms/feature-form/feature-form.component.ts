@@ -15,6 +15,9 @@ import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {FileRepository} from "../../../../repository/file-repository";
 import {PropStatus} from "../../../../model/enums/prop-status";
 import {FocusService} from "../../../../service/focus.service";
+import {Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
+
 
 @Component({
     selector: 'app-feature-form',
@@ -29,6 +32,7 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
     config = {...Constants.EDITOR_CONFIG};
     routerSubscription: any;
     activatedRouteSubscription: any;
+    private subject = new Subject<any>();
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -120,15 +124,18 @@ export class FeatureFormComponent implements OnInit, OnDestroy {
     }
 
     saveProp(prop: PropertyVo): void {
-        this.configService.platformLoading = true
-        this.focusService.deleteFocus();
-        let productProp = {...prop.productPropVo};
-        productProp.shProductId = this.product.id;
-        productProp.shPropertyId = prop.id;
-        this.platformRepository.saveProductProp(productProp).subscribe(res => {
-            prop.productPropVo = res.data;
-            this.configService.platformLoading = false
-        })
+        // this.subject.pipe(debounceTime(200)).subscribe(() => {
+        //     console.log('操作', prop.propValue)
+            this.configService.platformLoading = true
+            this.focusService.deleteFocus();
+            let productProp = {...prop.productPropVo};
+            productProp.shProductId = this.product.id;
+            productProp.shPropertyId = prop.id;
+            this.platformRepository.saveProductProp(productProp).subscribe(res => {
+                prop.productPropVo = res.data;
+                this.configService.platformLoading = false
+            })
+        // })
     }
 
     groupDotFlag(group: GroupVo): boolean {

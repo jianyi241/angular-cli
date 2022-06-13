@@ -43,6 +43,7 @@ export class ReviewService {
     }
 
     leave(): void {
+        console.log('back list')
         this.leaveReviewSubject.next();
     }
 
