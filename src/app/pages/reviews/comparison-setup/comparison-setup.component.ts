@@ -190,7 +190,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             return true;
         }
 
-        if (this.showFeeProduct() && comparison.feeProducts.length == 0) {
+        if (!comparison.id && this.showFeeProduct() && comparison.feeProducts.length == 0) {
             this.toastRepository.showDanger('Fee platforms is required.');
             return true;
         }
