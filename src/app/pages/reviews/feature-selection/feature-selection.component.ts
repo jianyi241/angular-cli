@@ -78,13 +78,11 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
                 private ref: ChangeDetectorRef,
                 private modalService: NgbModal,
                 private router: Router) {
-
     }
 
     ngOnInit(): void {
         this.init();
         this.detectChangeInterval = setInterval(() => {
-            console.log("interval count refresh selection page")
             this.ref.detectChanges();
         }, 100);
     }
@@ -192,6 +190,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     slideChange(event: any): void {
         this.subGroups = this.featureForm[event.realIndex].subList || [];
+        //初始化Slide Page时要即时刷新
+        this.ref.detectChanges();
+        //
         this.acc && this.acc.expandAll();
         this.currentIndex = event.realIndex;
     }
