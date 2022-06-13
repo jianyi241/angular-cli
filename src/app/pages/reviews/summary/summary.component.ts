@@ -50,8 +50,8 @@ export class SummaryComponent implements OnInit {
     }
     comparisonGroups = []
     businessProperties: Array<PropertyInfo> = new Array<PropertyInfo>();
-    featureGroupsList: Array<SingleGroup> = new Array<SingleGroup>();
-    businessGroupList: Array<SingleGroup> = new Array<SingleGroup>();
+    featureGroupsList: Array<GroupInfo> = new Array<GroupInfo>();
+    businessGroupList: Array<GroupInfo> = new Array<GroupInfo>();
     businessCounts = {
         totalCount: 0,
         activeCount: 0
@@ -103,107 +103,72 @@ export class SummaryComponent implements OnInit {
        }
    }
 
-   getTabTypeNameByTabType(tabType: number): string {
-       const type = TabType.Values().find(item => item.value === tabType)
-       return type.name
+   getParentGroupName(parentId: string): string {
+       if (!parentId) return ''
+       const featureGroup = this.comparisonGroups.find(item => item.tabType === TabType.features.value).groups.find(e => e.id === parentId)
+       return featureGroup ? featureGroup.name : ''
    }
 
-   getSingleGroupList(list: Array<GroupInfo>,key: string): void {
-        list.forEach(item => {
-            if (item.properties) {
-                this[key].push({
-                    tabType: item.tabType,
-                    tabTypeName: this.getTabTypeNameByTabType(item.tabType),
-                    groupId: '',
-                    groupName: '',
-                    subGroupId: '',
-                    subGroupName: '',
-                    selectCount: key === 'featureGroupsList' ? item.selectedPropCount : item.properties.filter(item => item.selected).length,
-                    totalCount: key === 'featureGroupsList' ? item.totalPropCount : item.properties.length,
-                    properties: item.properties
-                })
-            } else if (item.groups) {
-                item.groups.forEach(_item => {
-                    if (_item.properties) {
-                        this[key].push({
-                            tabType: item.tabType,
-                            tabTypeName: this.getTabTypeNameByTabType(item.tabType),
-                            groupId: _item.id,
-                            groupName: _item.name,
-                            subGroupId: '',
-                            subGroupName: '',
-                            selectCount: _item.properties.filter(item => item.selected).length,
-                            totalCount: _item.properties.length,
-                            properties: _item.properties
-                        })
-                    } else if (key === 'featureGroupsList' && _item.subList) {
-                        _item.subList.forEach(__item => {
-                            this[key].push({
-                                tabType: item.tabType,
-                                groupId: _item.id,
-                                groupName: _item.name,
-                                subGroupId: __item.id,
-                                subGroupName: __item.name,
-                                selectCount: __item.selectedPropCount,
-                                totalCount: __item.totalPropCount,
-                                properties: __item.properties
-                            })
-                        })
-                    } else if (_item.groups){
-                        this.getSingleGroupList(_item.groups, key)
+   getTabTypeName(tabType: number): string {
+       const type = TabType.Values().find(e => e.value === tabType)
+       return type ? type.name : ''
+   }
+
+   getPropertiesCountOrSelectCount(properties: Array<PropertyInfo>,type: string) {
+       if (type === 'selected') return properties.filter(e => e.selected).length
+       return properties.length
+   }
+
+    getGroupOrPropertiesList(list: Array<GroupInfo>,key: string): void {
+        if (!list || !list.length) return;
+        let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
+        const recursion = (list: Array<GroupInfo>) => {
+            return list.flatMap(e => {
+                if (e.properties) {
+                    if (key === 'businessProperties') {
+                        const arr = e.properties.filter(_i => propIds.includes(_i.id))
+                        if (arr.length) return arr
+                    } else {
+                        return e
                     }
-                })
-            }
-        })
-   }
+                } else if (e.groups) {
+                    return recursion(e.groups)
+                } else if (e.subList) {
+                    return recursion(e.subList)
+                }
+            }).filter(e => (typeof e) !== 'undefined')
+        }
+        this[key] = recursion(list)
+    }
 
-   getProperties(groups: Array<GroupInfo>): void {
-       const recursion = (groups) => {
-           if (!groups || groups.length == 0) return;
-           const list = JSON.parse(JSON.stringify(groups))
-           let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
-           list.forEach(i => {
-               console.log('i ', i)
-               if (i.properties && i.properties.length) {
-                   this.businessProperties.push(...i.properties.filter(_i => propIds.includes(_i.id)));
-               } else if (i.subList) {
-                   recursion(i.subList)
-               } else if (i.groups) {
-                   recursion(i.groups)
-               }
-           })
-       }
-       recursion(groups)
-   }
-
-    showFeatureFlag(product) {
+    showFeatureFlag(product): void {
         return product.showFlag || (product.shProductId === this.reviewService.comparison.mainPlatformId)
     }
 
-    getSummaryInfo() {
+    getSummaryInfo(): void {
         this.reviewRepository.getSummary(this.comparisonInfo.id).subscribe(res => {
             if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg || 'get data error')
-                return
+                this.toastRepository.showDanger(res.msg || 'get data error');
+                return;
             }
 
-            this.comparisonProducts = res.data.products.filter(res => this.showFeatureFlag(res))
-            this.updateViewList(window.innerWidth, true)
+            this.comparisonProducts = res.data.products.filter(res => this.showFeatureFlag(res));
+            this.updateViewList(window.innerWidth, true);
             this.platformCounts = {
                 totalCount: res.data.products.length,
                 activeCount: this.comparisonProducts.length
             }
-            this.comparisonGroups = res.data.comparisonTabs
-            const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value,TabType.information.value].includes(item.tabType))
-            this.getProperties(businessGroups)
-            const featureGroups = res.data.comparisonTabs.find(item => item.tabType === TabType.features.value)
-            this.getSingleGroupList([featureGroups], 'featureGroupsList');
-            this.getSingleGroupList(businessGroups, 'businessGroupList');
-            this.featureProperties = res.data.comparisonTabs[res.data.comparisonTabs.length - 1]
+            this.comparisonGroups = res.data.comparisonTabs;
+            const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value,TabType.information.value].includes(item.tabType));
+            const featureGroups = res.data.comparisonTabs.filter(item => item.tabType === TabType.features.value);
+            this.featureProperties = JSON.parse(JSON.stringify(featureGroups))[0];
+            this.getGroupOrPropertiesList(businessGroups, 'businessProperties');
+            this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
+            this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
         })
     }
 
-    updateViewList(windowWidth: number, init = false) {
+    updateViewList(windowWidth: number, init = false): void {
         if (init) {
             this.convertList()
         }
@@ -220,7 +185,7 @@ export class SummaryComponent implements OnInit {
         }
     }
 
-    convertList() {
+    convertList(): void{
         let _list = arr1ToArr2(JSON.parse(JSON.stringify(this.comparisonProducts)), this.section)
         _list[_list.length - 1].length = this.section
         this.comparisonTwoProducts = _list
@@ -282,7 +247,7 @@ export class SummaryComponent implements OnInit {
         this.openPopover(pComment)
     }
 
-    saveFinalAnalysis(pComment: NgbPopover) {
+    saveFinalAnalysis(pComment: NgbPopover): void {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateFinalAnalyse`)) {
             return;
         }
@@ -313,7 +278,7 @@ export class SummaryComponent implements OnInit {
         this.openPopover(pComment)
     }
 
-    saveComment(pComment: NgbPopover) {
+    saveComment(pComment: NgbPopover): void {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
             return;
         }
@@ -344,16 +309,12 @@ export class SummaryComponent implements OnInit {
         })
     }
 
-    openPopover(pComment: NgbPopover) {
+    openPopover(pComment: NgbPopover): void {
         pComment.open();
     }
 
     getProductPropValue(propertyList: Array<ProductPropInfo> ,prop: PropertyInfo): string {
         const obj = propertyList.find(item => item.shPropertyId === prop.id)
-        if (obj) {
-            return obj.propValue
-        } else {
-            return ''
-        }
+        return obj ? obj.propValue : ''
     }
 }

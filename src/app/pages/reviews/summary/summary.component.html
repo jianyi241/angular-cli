@@ -264,10 +264,11 @@
                 <div class="list" *ngFor="let group of featureGroupsList">
                     <div class="list-title">
                         <div class="list-title-left">
-                            {{group.groupName}} > <span>{{group.subGroupName}}</span>
+                            {{getParentGroupName(group.parentId)}} >
+                            <span>{{group.name}}</span>
                         </div>
                         <div class="list-title-right">
-                            {{group.selectCount}}/{{group.totalCount}} selected
+                            {{group.selectedPropCount}}/{{group.totalPropCount}} selected
                         </div>
                     </div>
                     <div class="list-item" *ngFor="let item of group.properties">
@@ -290,11 +291,11 @@
                 <div class="list" *ngFor="let list of businessGroupList">
                     <div class="list-title">
                         <div class="list-title-left">
-                            {{list.tabTypeName}}
-                            <span [hidden]="!list.groupName">/{{list.groupName}}</span>
+                            {{getTabTypeName(list.tabType)}}
+                            <span [hidden]="!list.name">/{{list.name}}</span>
                         </div>
                         <div class="list-title-right">
-                            {{list.selectCount}}/{{list.totalCount}} selected
+                            {{getPropertiesCountOrSelectCount(list.properties, 'selected')}}/{{getPropertiesCountOrSelectCount(list.properties, 'all')}} selected
                         </div>
                     </div>
                     <div class="list-item" *ngFor="let item of list.properties">
