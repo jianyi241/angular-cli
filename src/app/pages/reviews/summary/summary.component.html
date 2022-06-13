@@ -117,7 +117,8 @@
                                 <ng-template #popPlatformContent>
                                     <div class="comment-popover">
                                         <div class="title">{{getDynamicAnalysis(analysis.shAnalyseId, item.comments) ? 'Edit' : 'Add'}}</div>
-                                        <ckeditor [(ngModel)]="currentCommit.comment" [config]="config"></ckeditor>
+<!--                                        <ckeditor [(ngModel)]="currentCommit.comment" [config]="config"></ckeditor>-->
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="currentCommit.comment"></textarea>
                                         <div class="comment-footer" style="margin-top: 16px">
                                             <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                                     (click)="pPlatform.close()">Cancel
@@ -149,7 +150,8 @@
                                 <ng-template #popPlatformContent>
                                     <div class="comment-popover">
                                         <div class="title">{{item.finalAnalyse?.finalAnalyse ? 'Edit' : 'Add'}}</div>
-                                        <ckeditor [(ngModel)]="currentFinalAnalysis.finalAnalyse" [config]="config"></ckeditor>
+<!--                                        <ckeditor [(ngModel)]="currentFinalAnalysis.finalAnalyse" [config]="config"></ckeditor>-->
+                                        <textarea class="form-control xs-mb-16" [(ngModel)]="currentFinalAnalysis.finalAnalyse"></textarea>
                                         <div class="comment-footer" style="margin-top: 16px">
                                             <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                                     (click)="pPlatform.close()">Cancel
@@ -238,29 +240,31 @@
                 <div class="title">Disclaimer</div>
                 <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
             </div>
-            <div class="remark-content" [innerHtml]="comparisonInfo.disclaimer"></div>
-            <button class="btn btn-outline-purple-light btn-small"
-                    #pDisclaimer='ngbPopover'
-                    container="body" [autoClose]="'outside'"
-                    popoverClass="table-comment-popover"
-                    triggers="manual"
-                    (click)="openPopover(pDisclaimer)"
-                    placement="top auto"
-                    [ngbPopover]="popDisclaimerContent">
-                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-            </button>
-            <ng-template #popDisclaimerContent>
-                <div class="comment-popover">
-                    <div class="title">Edit</div>
-                    <ckeditor [(ngModel)]="comparisonInfo.disclaimer" [config]="config"></ckeditor>
-                    <div class="comment-footer" style="margin-top: 16px">
-                        <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
-                                (click)="pDisclaimer.close()">Cancel
-                        </button>
-                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pDisclaimer)">Save</button>
-                    </div>
-                </div>
-            </ng-template>
+            <div class="remark-content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+<!--            <button class="btn btn-outline-purple-light btn-small"-->
+<!--                    #pDisclaimer='ngbPopover'-->
+<!--                    container="body" [autoClose]="'outside'"-->
+<!--                    popoverClass="table-comment-popover"-->
+<!--                    triggers="manual"-->
+<!--                    (click)="openPopover(pDisclaimer)"-->
+<!--                    placement="top auto"-->
+<!--                    [ngbPopover]="popDisclaimerContent">-->
+<!--                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit-->
+<!--            </button>-->
+<!--            <ng-template #popDisclaimerContent>-->
+<!--                <div class="comment-popover">-->
+<!--                    <div class="title">Edit</div>-->
+<!--                    <ckeditor [(ngModel)]="comparisonInfo.disclaimer" [config]="config"></ckeditor>-->
+<!--                    <div class="comment-footer" style="margin-top: 16px">-->
+<!--                        <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"-->
+<!--                                (click)="pDisclaimer.close()">Cancel-->
+<!--                        </button>-->
+<!--                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pDisclaimer)">Save</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </ng-template>-->
         </div>
         <div class="summary__decision--making--process module-wrapper">
             <div class="title-info">

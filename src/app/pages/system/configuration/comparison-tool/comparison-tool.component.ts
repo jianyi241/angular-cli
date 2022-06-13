@@ -195,8 +195,8 @@ export class ComparisonToolComponent implements OnInit, OnDestroy {
     }
 
     dropGroup($event: CdkDragDrop<GroupInfo, any>) {
-        let cur = this.subGroups[$event.previousIndex];
-        let tar = this.subGroups[$event.currentIndex];
+        let cur = this.moveGroups[$event.previousIndex];
+        let tar = this.moveGroups[$event.currentIndex];
         let sort = new Sort(cur.id, $event.previousIndex, tar.id, $event.currentIndex);
         console.log(`Tar => ${tar.name}-${$event.currentIndex}, Cur => ${cur.name}-${$event.previousIndex}`);
         moveItemInArray(this.moveGroups, $event.previousIndex, $event.currentIndex);
