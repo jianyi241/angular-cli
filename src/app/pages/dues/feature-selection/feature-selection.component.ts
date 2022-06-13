@@ -38,6 +38,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     reviewSaveObservable: any;
     reviewLeaveObservable: any;
     saveTemplateObservable: any;
+    detectChangeInterval: any;
 
     currentIndex: number = 0;
     config = {
@@ -85,6 +86,10 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.init();
+        this.detectChangeInterval = setInterval(() => {
+            console.log("interval count refresh selection page")
+            this.ref.detectChanges();
+        }, 100);
     }
 
     ngOnDestroy(): void {
@@ -94,6 +99,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
         this.saveTemplateObservable && this.saveTemplateObservable.unsubscribe();
         this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
+        clearInterval(this.detectChangeInterval);
     }
 
 
@@ -211,28 +217,24 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     slideChange(event: any): void {
         this.subGroups = this.featureForm[event.realIndex].subList || [];
-        this.ref.detectChanges();
         this.acc && this.acc.expandAll();
         this.currentIndex = event.realIndex;
     }
 
     selectProp(prop: PropertyVo) {
         prop.compChecked = true;
-        this.ref.detectChanges();
         this.selectionProperty(prop.id, true, SelectionType.Property.value, prop.essential);
     }
 
     unSelectProp(prop: PropertyVo) {
         prop.compChecked = false;
         prop.essential = false;
-        this.ref.detectChanges();
         this.selectionProperty(prop.id, false, SelectionType.Property.value, prop.essential);
     }
 
     essential(prop: PropertyVo, event?: any) {
         event && event.stopPropagation();
         prop.essential = !prop.essential;
-        this.ref.detectChanges();
     }
 
     selectGroupAll(group: GroupVo): void {
@@ -240,11 +242,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
         group.subList.forEach(s => {
             s.propertyVoList.forEach(p => p.compChecked = true);
         });
-        this.ref.detectChanges();
     }
 
     deselectGroupAll(group: GroupVo): void {
-        this.ref.detectChanges();
         const modalRef = this.modalService.open(DueTipComponent, {
             backdrop: 'static',
             size: 'small',
@@ -268,13 +268,11 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     selectSubGroupAll(subGroup: GroupVo): void {
         this.selectionProperty(subGroup.id, true, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = true);
-        this.ref.detectChanges();
     }
 
     deselectSubGroupAll(subGroup: GroupVo): void {
         this.selectionProperty(subGroup.id, false, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = false);
-        this.ref.detectChanges();
     }
 
     selectionProperty(id: string, flag: boolean, type: string, essential?: boolean) {

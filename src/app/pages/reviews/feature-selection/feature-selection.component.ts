@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import SwiperCore, {Pagination} from "swiper";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {GroupVo} from "../../../model/vo/groupVo";
@@ -25,7 +25,7 @@ SwiperCore.use([Pagination]);
     styleUrls: ['./feature-selection.component.less']
 
 })
-export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FeatureSelectionComponent implements OnInit, OnDestroy {
     @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
     @ViewChild('acc') acc: NgbAccordion;
     featureForm: Array<GroupVo> = new Array<GroupVo>();
@@ -67,6 +67,7 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
 
         },
     };
+    detectChangeInterval: any;
 
     constructor(private reviewRepository: ReviewRepository,
                 public reviewService: ReviewService,
@@ -77,10 +78,15 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
                 private ref: ChangeDetectorRef,
                 private modalService: NgbModal,
                 private router: Router) {
+
     }
 
     ngOnInit(): void {
         this.init();
+        this.detectChangeInterval = setInterval(() => {
+            console.log("interval count refresh selection page")
+            this.ref.detectChanges();
+        }, 100);
     }
 
     ngOnDestroy(): void {
@@ -89,14 +95,8 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
         this.reviewBackObservable && this.reviewBackObservable.unsubscribe();
         this.reviewSaveObservable && this.reviewSaveObservable.unsubscribe();
         this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
-
+        clearInterval(this.detectChangeInterval);
     }
-
-    ngAfterViewInit(): void {
-    }
-
-
-
 
     init(): void {
         this.subscribe();
@@ -192,27 +192,23 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
 
     slideChange(event: any): void {
         this.subGroups = this.featureForm[event.realIndex].subList || [];
-        this.ref.detectChanges();
         this.acc && this.acc.expandAll();
         this.currentIndex = event.realIndex;
     }
 
     selectProp(prop: PropertyVo) {
         prop.compChecked = true;
-        this.ref.detectChanges();
         this.selectionProperty(prop.id, true, SelectionType.Property.value);
     }
 
     unSelectProp(prop: PropertyVo) {
         prop.compChecked = false;
-        this.ref.detectChanges();
         this.selectionProperty(prop.id, false, SelectionType.Property.value);
     }
 
     essential(prop: PropertyVo, event: any) {
         event.stopPropagation();
         prop.essential = !prop.essential;
-        this.ref.detectChanges();
     }
 
     selectGroupAll(group: GroupVo): void {
@@ -220,11 +216,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
         group.subList.forEach(s => {
             s.propertyVoList.forEach(p => p.compChecked = true);
         });
-        this.ref.detectChanges();
     }
 
     deselectGroupAll(group: GroupVo): void {
-        this.ref.detectChanges();
         const modalRef = this.modalService.open(ReviewTipComponent, {
             backdrop: 'static',
             size: 'small',
@@ -248,13 +242,11 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy, AfterViewIn
     selectSubGroupAll(subGroup: GroupVo): void {
         this.selectionProperty(subGroup.id, true, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = true);
-        this.ref.detectChanges();
     }
 
     deselectSubGroupAll(subGroup: GroupVo): void {
         this.selectionProperty(subGroup.id, false, SelectionType.SubGroup.value);
         subGroup.propertyVoList.forEach(p => p.compChecked = false);
-        this.ref.detectChanges();
     }
 
     selectionProperty(id: string, flag: boolean, type: string) {
