@@ -17,18 +17,6 @@ import {Constants} from "../../../model/constants";
 import FinalAnalyse from "../../../model/po/finalAnalyse";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 
-interface SingleGroup {
-    tabType?: number;
-    tabTypeName?: string;
-    groupId?: string;
-    groupName?: string;
-    subGroupId?: string;
-    subGroupName?: string;
-    selectCount: number;
-    totalCount: number;
-    properties: Array<PropertyInfo>;
-}
-
 @Component({
     selector: 'app-summary',
     templateUrl: './summary.component.html',
