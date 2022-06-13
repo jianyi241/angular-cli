@@ -86,7 +86,7 @@ export class SummaryComponent implements OnInit {
                 this.comparisonInfo.id = res.id
             }
         })
-        this.initPageData()
+        this.getSummaryInfo()
     }
 
     includeAnalysis(name: string): boolean {
@@ -96,11 +96,7 @@ export class SummaryComponent implements OnInit {
 
    getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
        const obj = list.find(item => item.shAnalyseId === shAnalysisId)
-       if (typeof obj != 'undefined') {
-           return obj
-       } else {
-           return ''
-       }
+       return (typeof obj) != 'undefined' ? obj : ''
    }
 
    getParentGroupName(parentId: string): string {
@@ -227,10 +223,6 @@ export class SummaryComponent implements OnInit {
         this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
             this.router.navigateByUrl('/supplier/comparisons-list');
         })
-    }
-
-    initPageData():void {
-        this.getSummaryInfo()
     }
 
     openFinalAnalysisPopover(pComment: NgbPopover,finalAnalysis: FinalAnalyse,shProductId: string): void {

@@ -264,7 +264,7 @@
                 <div class="list" *ngFor="let group of featureGroupsList">
                     <div class="list-title">
                         <div class="list-title-left">
-                            {{getParentGroupName(group.parentId)}} >
+                            {{getParentGroupName(group.parentId) ? getParentGroupName(group.parentId) + ' >' : ''}}
                             <span>{{group.name}}</span>
                         </div>
                         <div class="list-title-right">
