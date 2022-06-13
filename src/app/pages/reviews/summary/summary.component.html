@@ -7,7 +7,20 @@
             </div>
             <div class="personnel-wrapper">
                 <div class="personnel-info">
-                    <div class="personnel-info_title">{{comparisonInfo.adviserName}}’s review performed in Q{{comparisonInfo.updateTime | dateFormat : 'Q YYYY'}}</div>
+                    <div class="personnel-info_title">
+                        {{comparisonInfo.adviserName}}’s review performed in Q{{comparisonInfo.updateTime | dateFormat : 'Q YYYY'}}
+                        <div class="status">
+                            <ng-container *ngIf="!comparisonInfo.archived">
+                                <label class="label label-green xs-pl-16 xs-pr-16"
+                                       *ngIf="comparisonInfo.status == configService.comparisonStatus.completed">Completed</label>
+                                <label class="label label-blue xs-pl-16 xs-pr-16"
+                                       *ngIf="comparisonInfo.status == configService.comparisonStatus.inProgress">In
+                                    progress</label>
+                            </ng-container>
+                            <label class="label label-red xs-pl-16 xs-pr-16"
+                                   *ngIf="comparisonInfo.archived">Archived</label>
+                        </div>
+                    </div>
                     <div class="personnel-info_base">
                         <div class="personnel-info personnel-info_avatar">
                             <img [src]="comparisonInfo.attachmentVo?.visitUrl || './assets/img/unassgin.svg'" />
@@ -151,7 +164,7 @@
                 </div>
             </div>
         </div>
-        <div class="summary__business--metrics module-wrapper">
+        <div class="summary__business--metrics module-wrapper" *ngIf="includeAnalysis(configService.analysisType.metric)">
             <div class="metrics-title-info">
                 <div class="title metrics-title">
                     Business metrics <span>of selected platforms</span>
