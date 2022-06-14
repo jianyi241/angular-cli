@@ -156,9 +156,6 @@ export class SummaryComponent implements OnInit {
             this.getGroupOrPropertiesList(businessGroups, 'businessProperties');
             this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
             this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
-            setTimeout(() => {
-                console.log('businessGroupList ', this.businessGroupList)
-            }, 400)
         })
     }
 
