@@ -103,7 +103,8 @@
                         </div>
                         <div class="table-column table-column-value" *ngFor="let item of list">
                             <div class="analysis-wrapper" *ngIf="item">
-                                <div class="html-content" [innerHTML]="getDynamicAnalysis(analysis.shAnalyseId, item.comments).comment"></div>
+                                <div class="html-content" *ngIf="getDynamicAnalysis(analysis.shAnalyseId, item.comments).comment" [innerHTML]="getDynamicAnalysis(analysis.shAnalyseId, item.comments).comment"></div>
+                                <div class="html-content" *ngIf="!getDynamicAnalysis(analysis.shAnalyseId, item.comments).comment" >No data</div>
                                 <button class="btn btn-outline-purple-light btn-small"
                                         #pPlatform='ngbPopover'
                                         container="body" [autoClose]="'outside'"
@@ -136,7 +137,8 @@
                         </div>
                         <div class="table-column table-column-value" *ngFor="let item of list">
                             <div class="analysis-wrapper" *ngIf="item">
-                                <div class="html-content" [innerHTML]="item ? item.finalAnalyse?.finalAnalyse : ''"></div>
+                                <div class="html-content" *ngIf="item.finalAnalyse?.finalAnalyse" [innerHTML]="item.finalAnalyse?.finalAnalyse"></div>
+                                <div class="html-content" *ngIf="!item.finalAnalyse?.finalAnalyse" >No data</div>
                                 <button class="btn btn-outline-purple-light btn-small"
                                         #pPlatform='ngbPopover'
                                         container="body" [autoClose]="'outside'"
@@ -198,6 +200,9 @@
                                         <span class="status-yes" *ngIf="getProductPropValue(item.productPropVoList, prop) === 'yes'" style="color: #219653">Yes</span>
                                         <span class="status-no" *ngIf="getProductPropValue(item.productPropVoList, prop) === 'no'" style="color: #EB5757">No</span>
                                     </div>
+                                </div>
+                                <div *ngIf="!getProductPropValue(item.productPropVoList, prop)">
+                                    No data
                                 </div>
                             </div>
                         </div>

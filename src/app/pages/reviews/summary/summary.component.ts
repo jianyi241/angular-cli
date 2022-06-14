@@ -105,12 +105,12 @@ export class SummaryComponent implements OnInit {
 
     getGroupOrPropertiesList(list: Array<GroupInfo>,key: string): void {
         if (!list || !list.length) return;
-        let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
+        // let propIds = this.comparisonProducts.flatMap(p => p.productPropVoList).flatMap(pp => pp.shPropertyId);
         const recursion = (list: Array<GroupInfo>) => {
             return list.flatMap(e => {
                 if (e.properties) {
                     if (key === 'businessProperties') {
-                        const arr = e.properties.filter(_i => propIds.includes(_i.id))
+                        const arr = e.properties.filter(_i => _i.selected)
                         if (arr.length) return arr
                     } else {
                         return e
