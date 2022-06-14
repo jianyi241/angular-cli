@@ -47,6 +47,7 @@ export class SummaryComponent implements OnInit {
     featureProperties: GroupInfo = new GroupInfo();
     currentCommit: ComparisonCommentInfo = new ComparisonCommentInfo();
     currentFinalAnalysis: FinalAnalyse = new FinalAnalyse();
+    currentEditorText: string = ''
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -98,7 +99,8 @@ export class SummaryComponent implements OnInit {
        return type ? type.name : ''
    }
 
-   getPropertiesCountOrSelectCount(properties: Array<PropertyInfo>,type: string) {
+   getPropertiesCountOrSelectCount(properties: Array<PropertyInfo>,type: string): number {
+       if (!properties || !properties.length) return 0
        if (type === 'selected') return properties.filter(e => e.selected).length
        return properties.length
    }
@@ -116,7 +118,12 @@ export class SummaryComponent implements OnInit {
                         return e
                     }
                 } else if (e.groups) {
-                    return recursion(e.groups)
+                    if (key === 'businessGroupList') {
+                        e.properties = e.groups.flatMap(e => e.properties)
+                        return e
+                    } else {
+                        return recursion(e.groups)
+                    }
                 } else if (e.subList) {
                     return recursion(e.subList)
                 }
@@ -149,6 +156,9 @@ export class SummaryComponent implements OnInit {
             this.getGroupOrPropertiesList(businessGroups, 'businessProperties');
             this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
             this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
+            setTimeout(() => {
+                console.log('businessGroupList ', this.businessGroupList)
+            }, 400)
         })
     }
 
@@ -274,19 +284,28 @@ export class SummaryComponent implements OnInit {
         })
     }
 
-    saveComparisonInfo(pComment: NgbPopover): void {
+    saveComparisonInfo(pComment: NgbPopover, key: string): void {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
             return;
         }
-        this.reviewRepository.saveComparison(this.comparisonInfo).subscribe(res => {
+        const comparison = JSON.parse(JSON.stringify(this.comparisonInfo))
+        comparison[key] = this.currentEditorText
+        this.reviewRepository.saveComparison(comparison).subscribe(res => {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 pComment.close();
                 return
             }
+            this.comparisonInfo[key] = this.currentEditorText
             this.toastRepository.showSuccess('save successfully.')
             pComment.close();
         })
+    }
+
+    openEditorTextPopover(pComment: NgbPopover, key: string): void {
+        const comparison = JSON.parse(JSON.stringify(this.comparisonInfo))
+        this.currentEditorText = comparison[key]
+        pComment.open();
     }
 
     openPopover(pComment: NgbPopover): void {

@@ -52,7 +52,7 @@
                         container="body" [autoClose]="'outside'"
                         popoverClass="table-comment-popover"
                         triggers="manual"
-                        (click)="openPopover(pIntroduce)"
+                        (click)="openEditorTextPopover(pIntroduce,'objectives')"
                         placement="top auto"
                         [ngbPopover]="popIntroduceContent">
                     <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
@@ -61,12 +61,12 @@
                     <div class="comment-popover">
                         <div class="title">Edit</div>
 
-                        <ckeditor [(ngModel)]="comparisonInfo.objectives" [config]="config"></ckeditor>
+                        <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
                         <div class="comment-footer" style="margin-top: 16px">
                             <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                     (click)="pIntroduce.close()">Cancel
                             </button>
-                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pIntroduce)">Save</button>
+                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pIntroduce,'objectives')">Save</button>
                         </div>
                     </div>
                 </ng-template>
@@ -222,7 +222,7 @@
                     container="body" [autoClose]="'outside'"
                     popoverClass="table-comment-popover"
                     triggers="manual"
-                    (click)="openPopover(pRemark)"
+                    (click)="openEditorTextPopover(pRemark, 'remark')"
                     placement="top auto"
                     [ngbPopover]="popRemarkContent">
                 <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
@@ -230,12 +230,12 @@
             <ng-template #popRemarkContent>
                 <div class="comment-popover">
                     <div class="title">Edit</div>
-                    <ckeditor [(ngModel)]="comparisonInfo.remark" [config]="config"></ckeditor>
+                    <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
                     <div class="comment-footer" style="margin-top: 16px">
                         <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                 (click)="pRemark.close()">Cancel
                         </button>
-                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pRemark)">Save</button>
+                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pRemark, 'remark')">Save</button>
                     </div>
                 </div>
             </ng-template>
@@ -304,7 +304,7 @@
                 </div>
             </div>
         </div>
-        <div class="summary__metrics--included--review module-wrapper">
+        <div class="summary__metrics--included--review module-wrapper" *ngIf="includeAnalysis(configService.analysisType.metric)">
             <div class="title-info">
                 <div class="title title-large">Business metrics included in the review </div>
                 <div class="sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
@@ -314,7 +314,6 @@
                     <div class="list-title">
                         <div class="list-title-left">
                             {{getTabTypeName(list.tabType)}}
-                            <span [hidden]="!list.name">/{{list.name}}</span>
                         </div>
                         <div class="list-title-right">
                             {{getPropertiesCountOrSelectCount(list.properties, 'selected')}}/{{getPropertiesCountOrSelectCount(list.properties, 'all')}} selected
