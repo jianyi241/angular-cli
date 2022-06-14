@@ -24,7 +24,11 @@ export class FocusService {
         return this.focusQueue.length > 0;
     }
 
-    waitBlur(wait: any): void {
+    waitBlur(wait: () => void): void {
+        if (!this.hasFocus()) {
+            wait();
+            return;
+        }
         let count = 0;
         let interval = setInterval(() => {
             if (count == 0 && this.focusQueue.length == 0) {

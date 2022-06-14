@@ -106,7 +106,7 @@ export class ProductLayoutComponent implements OnInit {
         if (this.currentUserService.isAdminUser()) {
             if (type === 'reject' || type === 'approve') {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.Wait.value
-            }  else if (type === 'publish') {
+            } else if (type === 'publish') {
                 return this.version.type === 'Draft' && this.version.versionStatus === VersionStatus.WaitPublish.value && this.version.publishPlatformFlag
             } else if (type === 'edit') {
                 return this.version.type === 'Publish'
@@ -149,7 +149,7 @@ export class ProductLayoutComponent implements OnInit {
             }
         }
         if (this.currentUserService.isAdminUser()) {
-            if (this.version.versionStatus === VersionStatus.Wait.value){
+            if (this.version.versionStatus === VersionStatus.Wait.value) {
                 info = {
                     tipCls: '',
                     textCls: '',
@@ -273,17 +273,15 @@ export class ProductLayoutComponent implements OnInit {
         }
         //设置定时器, 解决失焦问题
         //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件
-        if (this.focusService.hasFocus()) {
-            this.focusService.waitBlur(() => {
-                this.publish()
-            });
-        } else {
+        this.focusService.waitBlur(() => {
             this.publish();
-        }
+        });
     }
 
     private publish(): void {
+        this.loadingService.show()
         this.platformRepository.publishProduct(this.product.id).subscribe(res => {
+            this.loadingService.hide()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
@@ -305,9 +303,14 @@ export class ProductLayoutComponent implements OnInit {
     chooseTab(tab: string): void {
         if (tab === TabType.feesAndRates.name) return
         this.currentTab = this.configService.converterTabToRouter(tab);
-        setTimeout(() => {
+        // setTimeout(() => {
+        //     this.router.navigateByUrl(`/platform/product-tab/${this.currentTab}/${this.product.id}/${this.version.id}`);
+        // }, 300)
+        //设置定时器, 解决失焦问题
+        //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件
+        this.focusService.waitBlur(() => {
             this.router.navigateByUrl(`/platform/product-tab/${this.currentTab}/${this.product.id}/${this.version.id}`);
-        }, 300)
+        });
     }
 
     isChange(tabType: number): boolean {
@@ -386,6 +389,7 @@ export class ProductLayoutComponent implements OnInit {
         }, err => {
         })
     }
+
     getVersionNoParams(): void {
         this.versionRepository.supplierVersion().subscribe(res => {
             this.version = res.data || this.version;
