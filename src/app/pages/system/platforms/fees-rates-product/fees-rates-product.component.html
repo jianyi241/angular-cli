@@ -1,99 +1,120 @@
 <div class="form-content">
     <div class="form-group-custom form-content-column">
         <div class="form-column-left">
-            <!--*ngIf="configService.isEditable(version.type)"-->
-            <div class="title">Products <span class="link-new" *ngIf="false" (click)="saveProduct()">+ New</span></div>
-            <div class="sub-title" [ngClass]="{'active': subProduct.id == subProductItem.id}" (click)="chooseGroup(subProductItem)" *ngFor="let subProductItem of feeRate.subProductVos">
-                {{subProductItem.name}}
+            <div class="title">Products <span class="link-new" *ngIf="configService.isEditable(version.type)" (click)="importProduct()">+ New</span></div>
+            <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
+                <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+                    <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
+                        <ng-container *ngIf="!configService.isArchive(group.status, version.type)">
+                            <ng-template ngbPanelHeader let-opened="opened">
+                                <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
+                                        [title]="group.name">
+                                    <div class="text">{{group.name}}</div>
+                                    <!--<span class="label-number xs-ml-6">7 new</span>-->
+<!--                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>-->
+                                    <span class="icon-block icon-arr-up-purple icon-15"></span>
+                                </button>
+                            </ng-template>
+
+                            <ng-template ngbPanelContent>
+                                <div class="main-sub-menu"
+                                     *ngFor="let subGroupItem of group.subList">
+                                    <div class="sub-title"
+                                         *ngIf="!configService.isArchive(subGroupItem.status, version.type)"
+                                         [title]="subGroupItem.name">
+                                        <!--                                         (click)="chooseSubGroup(subGroupItem)"-->
+                                        <div class="text">{{subGroupItem.name}}</div>
+                                        <!--<span class="badge badge-theme xs-ml-6">2</span>-->
+<!--                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>-->
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </ngb-panel>
+                </ngb-accordion>
             </div>
         </div>
 
-
         <div class="form-column-right">
             <div class="form-column-title">
-                <label class="control-label">Retirement solutions </label>
-                <p class="info">This is product fee information that you can update anytime.</p>
+                <label class="control-label">BT Asgard Full </label>
+                <p class="info">This is product fee information. If you’d like to edit this, please contact <a href="https://recep@suitabilityhub.com">recep@suitabilityhub.com.</a></p>
             </div>
-
-            <div class="form-sub-group" *ngFor="let group of subProduct.groupVos; let groupIndex = index">
-                <div class="form-sub-left">
-                    <div class="title">{{group.name}}</div>
-                    <div class="text" [innerHTML]="group.description"></div>
+            <div class="table-list">
+                <div class="table-wrapper">
+                    <div class="table">
+                        <div class="t-head">
+                            <div class="tr">
+                                <div class="th th__admin--fees">Admin fees</div>
+                                <div class="th th__idps">IDPS</div>
+                                <div class="th th__super">Superannuation/Pension</div>
+                            </div>
+                        </div>
+                        <div class="t-body">
+                            <div class="tr" *ngFor="let fee of [1,2,3,4]">
+                                <div class="td td__fees">Minimum tiered admin fee ($)</div>
+                                <div class="td td__value">N/A</div>
+                                <div class="td td__value">N/A</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-sub-right">
-                    <app-prop-view [model]="prop"
-                                   [prop_class]="configService.getColorByStatus(prop.status, prop.productPropVo.status, version.type)"
-                                   [index]="groupIndex+'_'+propIndex"
-                                   [type]="prop.type"
-                                   [hidden]="configService.isArchive(prop.status, version.type)"
-                                   [tabType]="configService.tabType.information"
-                                   [editable]="configService.isEditable(version.type, prop.status)"
-                                   (prop_change)="saveProp(prop)"
-                                   *ngFor="let prop of group.propertyVoList; let propIndex = index"></app-prop-view>
-                    <!--<div class="form-three-group">
-                        <label class="control-label control-label-custom">Effective date of fees and rates</label>
-                        <ng-select disabled class="select-single" placeholder="Effective date of fees and rates"  dropdownPosition="bottom">
-                            <ng-option>value1</ng-option>
-                            <ng-option>value2</ng-option>
-                            <ng-option>value3</ng-option>
-                        </ng-select>
+                <div class="table-wrapper">
+                    <div class="table">
+                        <div class="t-head">
+                            <div class="tr">
+                                <div class="th th__admin--fees">Other account fees</div>
+                                <div class="th th__idps">IDPS</div>
+                                <div class="th th__super">Superannuation/Pension</div>
+                            </div>
+                        </div>
+                        <div class="t-body">
+                            <div class="tr" *ngFor="let fee of [1,2,3,4]">
+                                <div class="td td__fees">Minimum tiered admin fee ($)</div>
+                                <div class="td td__value">N/A</div>
+                                <div class="td td__value">N/A</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Platform pricing</label>
-                        <input type="text" class="form-control" placeholder="Platform pricing"/>
+                </div>
+                <div class="table-wrapper">
+                    <div class="table-title">Other product fees and information</div>
+                    <div class="table">
+                        <div class="t-head">
+                            <div class="tr">
+                                <div class="th th__admin--fees">Minimums</div>
+                                <div class="th th__idps"></div>
+                                <div class="th th__super"></div>
+                            </div>
+                        </div>
+                        <div class="t-body">
+                            <div class="tr" *ngFor="let fee of [1,2,3]">
+                                <div class="td td__fees">Minimum initial deposit</div>
+                                <div class="td td__value">$80.00</div>
+                                <div class="td td__value"></div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Minimum fee</label>
-                        <input type="text" class="form-control" placeholder="Minimum fee"/>
+                </div>
+                <div class="table-wrapper">
+                    <div class="table">
+                        <div class="t-head">
+                            <div class="tr">
+                                <div class="th th__admin--fees">Fee grouping</div>
+                                <div class="th th__idps"></div>
+                                <div class="th th__super"></div>
+                            </div>
+                        </div>
+                        <div class="t-body">
+                            <div class="tr" *ngFor="let fee of [1,2,3]">
+                                <div class="td td__fees">Fee grouping</div>
+                                <div class="td td__value">$80.00</div>
+                                <div class="td td__value"></div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Minimum account balance</label>
-                        <input type="text" class="form-control" placeholder="Minimum account balance"/>
-                    </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Minimum transaction size</label>
-                        <input type="text" class="form-control" placeholder="Minimum transaction size"/>
-                    </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Fee aggregation</label>
-                        <input type="text" class="form-control" placeholder="Fee aggregation"/>
-                    </div>-->
-
                 </div>
             </div>
-
-            <!--<div class="form-sub-group">
-                <div class="form-sub-left">
-                    <div class="title">Rates</div>
-                    <div class="text">Introduce your product rate info quickly to users by fill up rates details</div>
-                </div>
-
-                <div class="form-sub-right">
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Cash account interest rate</label>
-                        <input type="text" class="form-control" placeholder="Cash account interest rate"/>
-                    </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Charges on cash balance</label>
-                        <input type="text" class="form-control" placeholder="Charges on cash balance"/>
-                    </div>
-
-                    <div class="form-three-group">
-                        <label class="control-label control-label-custom">Effective cash rate</label>
-                        <input type="text" class="form-control" placeholder="Effective cash rate"/>
-                    </div>
-
-                </div>
-            </div>-->
-
         </div>
     </div>
 </div>

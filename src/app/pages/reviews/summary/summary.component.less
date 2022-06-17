@@ -99,63 +99,134 @@
     }
 
     > .summary__introduce {
-      padding: 32px;
+      display: flex;
+      padding: 0;
+      > .module-left ,> .module-right {
+        flex: 1;
+        padding: 32px;
 
-      > .introduce-title-info > .info-title {
-        font: normal 600 20px 'ClashDisplay';
-        line-height: 1.2;
-        color: #4640DE;
+        > .title-info > .info-title {
+          font: normal 600 20px 'ClashDisplay';
+          line-height: 1.2;
+          color: #4640DE;
+        }
+
+        > .title-info > .info-sub-title {
+          font: normal 400 13px 'Epilogue';
+          line-height: 1.6;
+          color: #515B6F;
+        }
       }
 
-      > .introduce-title-info > .info-sub-title {
-        font: normal 400 13px 'Epilogue';
-        line-height: 1.6;
-        color: #515B6F;
-      }
+      > .module-left {
 
-      > .introduce-from-info {
-        display: flex;
-        align-items: center;
-        font: normal 400 16px 'Epilogue';
-        color: #25324B;
-        line-height: 1.6;
-        margin-top: 24px;
+        > .introduce-from-info {
+          display: flex;
+          align-items: center;
+          font: normal 400 16px 'Epilogue';
+          color: #25324B;
+          line-height: 1.6;
+          margin-top: 24px;
 
-        > .from-info__avatar {
-          width: 24px;
-          height: 24px;
-          margin-right: 8px;
+          > .from-info__avatar {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
 
-          > img {
-            width: 100%;
-            height: 100%;
+            > img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          > .from-info__name {
+            font-weight: 700;
+            margin-right: 6px;
           }
         }
 
-        > .from-info__name {
-          font-weight: 700;
-          margin-right: 6px;
+        > .introduce-content {
+          position: relative;
+          margin-top: 34px;
+
+          > .introduce-content__target {
+            display: flex;
+            align-items: center;
+            height: 38px;
+            font: normal 600 14px 'Epilogue';
+            color: #25324B;
+            box-shadow: 0px 1px 0px #D6DDEB;
+          }
+
+          > .introduce-content__text {
+            font: normal 400 14px 'Epilogue';
+            line-height: 1.6;
+            color: #515B6F;
+            padding: 12px 0;
+          }
         }
       }
 
-      > .introduce-content {
-        position: relative;
-        margin-top: 34px;
-
-        > .introduce-content__target {
-          display: flex;
-          align-items: center;
-          height: 38px;
-          font: normal 600 14px 'Epilogue';
-          color: #25324B;
-          box-shadow: 0px 1px 0px #D6DDEB;
-        }
-
-        > .introduce-content__text {
-          font: normal 400 14px 'Epilogue';
-          line-height: 1.6;
-          color: #515B6F;
-          padding: 12px 0;
+      > .module-right {
+        > .account-content {
+          position: relative;
+          margin-top: 34px;
+          > .entity-wrapper {
+            > .entity-total {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              height: 38px;
+              font: normal 600 14px 'Epilogue';
+              color: #25324B;
+              box-shadow: 0px 1px 0px #D6DDEB;
+              .label {
+                color: #515B6F;
+                font-weight: 400;
+              }
+            }
+            > .entity-list {
+              margin-top: 12px;
+              > .list-item {
+                margin-bottom: 16px;
+                font: normal 400 14px 'Epilogue';
+                line-height: 1.6;
+              }
+              .item-title {
+                font-weight: 700;
+                margin-bottom: 4px;
+              }
+              .entity-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+                &.flex-start {
+                  align-items: flex-start;
+                  .item-label {
+                    flex-basis: 250px;
+                  }
+                }
+              }
+              .item-value {
+                flex: 1;
+                font: normal 600 14px 'Epilogue';
+                line-height: 1.6;
+                word-wrap: break-word;
+              }
+              .item-values {
+                display: flex;
+                font-weight: 600;
+                line-height: 1;
+                > .value {
+                  padding: 2px 4px 0 4px;
+                  margin-right: 4px;
+                  background: #E0E0E0;
+                  border-radius: 3px;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -243,7 +314,6 @@
         > .table-row {
           display: flex;
           border-bottom: 1px solid #D6DDEB;
-
           > .table-column {
             flex: 1;
 
@@ -267,8 +337,7 @@
 
           &.table-row__platform {
             flex-basis: 43px;
-            background-color: #D6DDEB;
-
+            background-color: #D6DDEB !important;
             > .table-column-value {
               display: flex;
               align-items: center;
@@ -277,7 +346,6 @@
               > img {
                 width: 24px;
                 height: 23px;
-                background-color: #5C6BC0;
                 margin-right: 8px;
               }
             }

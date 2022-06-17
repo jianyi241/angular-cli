@@ -301,7 +301,7 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     chooseTab(tab: string): void {
-        if (tab === TabType.feesAndRates.name) return
+        // if (tab === TabType.feesAndRates.name) return
         this.currentTab = this.configService.converterTabToRouter(tab);
         //设置定时器, 解决失焦问题
         //当页面控件保留焦点时点击按钮, 会先触发按钮点击事件然后触发失焦保存事件

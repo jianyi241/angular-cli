@@ -16,6 +16,7 @@ import {SaveService} from "../../../service/save.service";
 import {Constants} from "../../../model/constants";
 import FinalAnalyse from "../../../model/po/finalAnalyse";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
+import {AnalysisType} from "../../../model/enums/analysis-type";
 
 @Component({
     selector: 'app-summary',
@@ -204,8 +205,18 @@ export class SummaryComponent implements OnInit {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/fee-comparison/${this.reviewService.comparison.id}`);
-        })
+                const fee = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.fee.value)
+                const metric = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.metric.value)
+                const feature = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.feature.value)
+                if (fee) {
+                    this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
+                } else if (metric) {
+                    this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
+                } else if (feature) {
+                    this.reviewService.preStep(AnalysisType.metric);
+                }
+            }
+        )
     }
 
     saveSubscribe(): void {

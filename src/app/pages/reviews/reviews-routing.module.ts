@@ -10,6 +10,7 @@ import {AuthActivateChildGuard} from "../../config/auth-activate-child-guard";
 import {ComparisonSetupComponent} from "./comparison-setup/comparison-setup.component";
 import {MetricSelectionComponent} from "./metric-selection/metric-selection.component";
 import {SummaryComponent} from "./summary/summary.component";
+import {FeeReviewComponent} from "./fee-review/fee-review.component";
 
 const routes: Routes = [
     {
@@ -41,6 +42,10 @@ const routes: Routes = [
             {
                 path: 'fee-comparison/:id',
                 component: FeeComparisonComponent,
+            },
+            {
+                path: 'fee-review/:id',
+                component: FeeReviewComponent,
             },
             {
                 path: 'summary/:id',

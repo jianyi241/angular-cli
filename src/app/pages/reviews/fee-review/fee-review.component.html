@@ -1,0 +1,110 @@
+<div class="loading-bar has-load"></div>
+
+<div class="table-main-content" appTableScroll>
+    <div class="sub-head-review">
+        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.fee)}} - Fee calculator</div>
+    </div>
+    <div class="fee-content">
+        <div class="container-left">
+            <div class="platform-charts module-wrapper">
+                <div class="module-title">
+                    Platform fees by average total portfolio value in the year ahead
+                </div>
+                <div class="charts-wrapper">
+                    <div class="left-title">
+                        Platforms
+                    </div>
+                    <div class="charts-y__axis">
+                        <div class="label" *ngFor="let i of [1,2,3,4,5]">
+                            <div class="label-left">
+                                <img src="./assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                                <img src="https://img2.baidu.com/it/u=3990732507,3148015412&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="label-icon"/>
+                            </div>
+                            <div class="label-right">
+                                <div class="label-type">BT Panorama</div>
+                                <div class="label-title">Individual{{i}} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts-container">
+                        <div class="charts" id="container">
+                        </div>
+                        <div class="charts-summary">
+                            <div class="summary-left">
+                                <div class="mark">$</div>
+                                Current portfolio value
+                            </div>
+                            <div class="summary-right">Total portfolio value (thousands)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="total-cast-charts module-wrapper">
+                <div class="module-title">
+                    Total cost by average admin fee for the year ahead
+                </div>
+                <div class="charts-wrapper">
+                    <div class="left-title">
+                        Total platform fee for the year ahead($)
+                    </div>
+                    <div class="charts-container">
+                        <div class="charts" id="totalCastCharts"></div>
+                        <div class="charts-summary">
+                            <div class="summary-left">
+                            </div>
+                            <div class="summary-right">Total portfolio value (thousands)</div>
+                        </div>
+                        <div class="charts-legend">
+                            <div class="legend-item" *ngFor="let item of totalCastData">
+                                <div class="item-line" [style]="{'--bg-color': item.color}"></div>
+                                <div class="item-text">
+                                    <div class="item-produce">{{item.product}}</div>
+                                    <div class="item-name">{{item.name}}</div>
+                                </div>
+                                <div class="item-logo-wrapper">
+                                    <img [src]="item.logo" class="item-logo"/>
+                                    <img src="./assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-right">
+            <div class="business-metric-list">
+                <div class="item">
+                    <img src="https://img2.baidu.com/it/u=3990732507,3148015412&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="item-logo"/>
+                    <div class="item-name">BT Panorama</div>
+                    <div class="item-btn-group">
+                        <button class="btn btn-outline-purple-light btn-small"
+                                #pPlatform='ngbPopover'
+                                container="body" [autoClose]="'outside'"
+                                popoverClass="table-comment-popover"
+                                triggers="manual"
+                                (click)="openCommentPopover(pPlatform)"
+                                placement="top auto" [ngbPopover]="popPlatformContent">
+                            <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
+                            Comment
+                        </button>
+                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
+                            <img src="./assets/img/icon/icon-delete-red.svg">
+                        </button>
+                        <ng-template #popPlatformContent>
+                            <div class="comment-popover">
+                                <div class="title">{{'Add Comment'}}</div>
+                                <textarea class="form-control xs-mb-16" [(ngModel)]="text"></textarea>
+                                <div class="comment-footer" style="margin-top: 16px">
+                                    <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                            (click)="pPlatform.close()">Cancel
+                                    </button>
+                                    <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeCommentPopover(pPlatform)">Save</button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

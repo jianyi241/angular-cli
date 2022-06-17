@@ -13,6 +13,8 @@ import {TabType} from "../../../../model/enums/tab-type";
 import {ProductFormVo, SubProductFormVo} from "../../../../model/vo/productFormVo";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
 import {SubProduct} from "../../../../model/po/subProduct";
+import {GroupVo} from "../../../../model/vo/groupVo";
+import {PromiseType} from "protractor/built/plugins";
 
 @Component({
     selector: 'app-fees-rates-product',
@@ -22,6 +24,8 @@ import {SubProduct} from "../../../../model/po/subProduct";
 export class FeesRatesProductComponent implements OnInit, OnDestroy {
     product: ProductInfo = new ProductInfo();
     version: Version = new Version();
+    feature: ProductFormVo = new ProductFormVo();
+    subGroup: GroupVo = new GroupVo();
     feeRate: ProductFormVo = new ProductFormVo();
     subProduct: SubProductFormVo = new SubProductFormVo();
     routerSubscription: any;
@@ -62,13 +66,26 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         })
     }
 
+    // getProductPropList(): void {
+    //     this.platformRepository.getProductPropList(TabType.feesAndRates.value, this.product.id, this.version.id).subscribe(res => {
+    //         this.feeRate = Object.assign(this.feeRate, res.data);
+    //         if (this.feeRate && this.feeRate.subProductVos && this.feeRate.subProductVos.length > 0) {
+    //             this.chooseGroup(this.feeRate.subProductVos[0]);
+    //         }
+    //     });
+    // }
+
     getProductPropList(): void {
-        this.platformRepository.getProductPropList(TabType.feesAndRates.value, this.product.id, this.version.id).subscribe(res => {
-            this.feeRate = Object.assign(this.feeRate, res.data);
-            if (this.feeRate && this.feeRate.subProductVos && this.feeRate.subProductVos.length > 0) {
-                this.chooseGroup(this.feeRate.subProductVos[0]);
+        this.platformRepository.getProductPropList(TabType.features.value, this.product.id, this.version.id).subscribe(res => {
+            this.feature = Object.assign(this.feature, res.data);
+            if (this.feature && this.feature.groupVoList && this.feature.groupVoList.length > 0) {
+                if (this.feature.groupVoList[0].subList && this.feature.groupVoList[0].subList.length > 0)
+                    this.chooseSubGroup(this.feature.groupVoList[0].subList[0]);
             }
         });
+    }
+    chooseSubGroup(group: GroupVo) {
+        this.subGroup = group;
     }
 
     getVersion() {
@@ -111,13 +128,46 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         sub.name = 'New Product'
         sub.shProductId = this.product.id;
         sub.versionId = this.version.id;
-        this.platformRepository.saveSubProduct(sub).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            this.getProductPropList();
-            this.toastRepository.showSuccess("Create Successfully.");
-        });
+        // this.platformRepository.saveSubProduct(sub).subscribe(res => {
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg);
+        //         return;
+        //     }
+        //     this.getProductPropList();
+        //     this.toastRepository.showSuccess("Create Successfully.");
+        // });
+        this.toastRepository.showSuccess("Create Successfully.");
+    }
+
+    importProduct() {
+        this.uploadFile().then(res => {
+            console.log('upload file res ', res)
+        }).catch(err => {
+            console.log('upload file err ', err)
+        })
+    }
+
+    uploadFile(): Promise<{success: boolean, data: any}> {
+        return new Promise((resolve, reject) => {
+            const fileInput = document.createElement('input')
+            document.body.appendChild(fileInput)
+            fileInput.type = 'file'
+            fileInput.click()
+            fileInput.addEventListener('change', () => {
+                try {
+                    resolve({
+                        success: true,
+                        data: fileInput.files[0]
+                    })
+                } catch (err) {
+                    reject({
+                        success: false,
+                        data: 'failed'
+                    })
+                } finally {
+                    document.body.removeChild(fileInput)
+                }
+            })
+        })
     }
 }

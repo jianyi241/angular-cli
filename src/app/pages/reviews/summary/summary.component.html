@@ -33,43 +33,117 @@
             </div>
         </div>
         <div class="summary__introduce module-wrapper">
-            <div class="introduce-title-info">
-                <div class="info-title">This review is for</div>
-                <div class="info-sub-title">The client profile information</div>
-            </div>
-            <div class="introduce-from-info">
-                <div class="from-info__avatar">
-                    <img src="./assets/img/icon/icon-member.svg" />
+            <div class="module-left">
+                <div class="title-info">
+                    <div class="info-title">This analysis is for</div>
+                    <div class="info-sub-title">The client profile information</div>
                 </div>
-                <div class="from-info__name">{{comparisonInfo.adviserName}}</div>
-                <div class="from-info__address">from {{comparisonInfo.practiceName}}</div>
-            </div>
-            <div class="introduce-content">
-                <div class="introduce-content__target">Objectives</div>
-                <div class="introduce-content__text" [innerHTML]="comparisonInfo.objectives"></div>
-                <button class="btn btn-outline-purple-light btn-small"
-                        #pIntroduce='ngbPopover'
-                        container="body" [autoClose]="'outside'"
-                        popoverClass="table-comment-popover"
-                        triggers="manual"
-                        (click)="openEditorTextPopover(pIntroduce,'objectives')"
-                        placement="top auto"
-                        [ngbPopover]="popIntroduceContent">
-                    <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
-                </button>
-                <ng-template #popIntroduceContent>
-                    <div class="comment-popover">
-                        <div class="title">Edit</div>
+                <div class="introduce-from-info">
+                    <div class="from-info__avatar">
+                        <img src="./assets/img/icon/icon-member.svg" />
+                    </div>
+                    <div class="from-info__name">{{comparisonInfo.adviserName}}</div>
+                    <div class="from-info__address">from {{comparisonInfo.practiceName}}</div>
+                </div>
+                <div class="introduce-content">
+                    <div class="introduce-content__target">Objectives</div>
+                    <div class="introduce-content__text" [innerHTML]="comparisonInfo.objectives"></div>
+                    <button class="btn btn-outline-purple-light btn-small"
+                            #pIntroduce='ngbPopover'
+                            container="body" [autoClose]="'outside'"
+                            popoverClass="table-comment-popover"
+                            triggers="manual"
+                            (click)="openEditorTextPopover(pIntroduce,'objectives')"
+                            placement="top auto"
+                            [ngbPopover]="popIntroduceContent">
+                        <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit
+                    </button>
+                    <ng-template #popIntroduceContent>
+                        <div class="comment-popover">
+                            <div class="title">Edit</div>
 
-                        <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
-                        <div class="comment-footer" style="margin-top: 16px">
-                            <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
-                                    (click)="pIntroduce.close()">Cancel
-                            </button>
-                            <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pIntroduce,'objectives')">Save</button>
+                            <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
+                            <div class="comment-footer" style="margin-top: 16px">
+                                <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
+                                        (click)="pIntroduce.close()">Cancel
+                                </button>
+                                <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pIntroduce,'objectives')">Save</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="module-right">
+                <div class="title-info">
+                    <div class="info-title">Portfolio details</div>
+                    <div class="info-sub-title">Platform accounts</div>
+                </div>
+                <div class="account-content">
+                    <div class="entity-wrapper">
+                        <div class="entity-total">
+                            <div class="total-left">Assets</div>
+                            <div class="total-right">
+                                <span class="label">Total assets</span>
+                                <span class="value">$123,000</span>
+                            </div>
+                        </div>
+                        <div class="entity-list">
+                            <div class="list-item" *ngFor="let i of [1,2]">
+                                <div class="item-title">Entity{{i}}</div>
+                                <div class="entity-content">
+                                    <div class="entity-item">
+                                        <div class="item-label">Value of IDPS accounts</div>
+                                        <div class="item-values">
+                                            <div class="value">$12,000</div>
+                                            <div class="value">$45,000</div>
+                                            <div class="value">$8,000</div>
+                                            <div class="value">$3,000</div>
+                                            <div class="value">$20,000</div>
+                                        </div>
+                                    </div>
+                                    <div class="entity-item">
+                                        <div class="item-label">Value of Super/Pension accounts</div>
+                                        <div class="item-values">
+                                            <div class="value">$12,000</div>
+                                            <div class="value">$45,000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </ng-template>
+                    <div class="entity-wrapper" style="margin-top: 28px">
+                        <div class="entity-total">
+                            <div class="total-left">Platform holdings and transactions</div>
+                            <div class="total-right">
+                            </div>
+                        </div>
+                        <div class="entity-list">
+                            <div class="list-item">
+                                <div class="entity-content">
+                                    <div class="entity-item flex-start">
+                                        <div class="item-label">Products held through the platform</div>
+                                        <div class="item-value">
+                                            Managed funds (held outside managed accounts), Managed accounts (SMA or MDA models), International listed investments (held outside managed accounts), Australian listed investments (held outside managed accounts), Unlisted bonds, Retail insurance
+                                        </div>
+                                    </div>
+                                    <div class="entity-item">
+                                        <div class="item-label">Total number of different investments held</div>
+                                        <div class="item-value">9</div>
+                                    </div>
+                                    <div class="entity-item">
+                                        <div class="item-label">Number of transactions outside managed accounts</div>
+                                        <div class="item-value">9</div>
+                                    </div>
+                                    <div class="entity-item">
+                                        <div class="item-label">Number of transactions within managed accounts</div>
+                                        <div class="item-value">9</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="summary__platform module-wrapper">
@@ -84,7 +158,7 @@
                             Platform
                         </div>
                         <div class="table-column table-column-value" *ngFor="let item of list">
-                            <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
+                            <img [src]="item.attachmentVo?.visitUrl" *ngIf="item && item.attachmentVo?.visitUrl" />
                             {{item ? item.productName : ''}}
                         </div>
                     </div>
@@ -97,7 +171,8 @@
                         </div>
                     </div>
                     <!-- 这几项为动态字段 -->
-                    <div class="table-row table-row__feature--analysis" *ngFor="let analysis of comparisonInfo.analyseVoList" [hidden]="analysis.stepSort === 3">
+                    <div class="table-row table-row__feature--analysis" [style]="{background: idx % 2 != 0 ? '#FFFFFF' : '#FAFAFA'}" *ngFor="let analysis of comparisonInfo.analyseVoList;let idx = index">
+<!--                        [hidden]="analysis.stepSort === 3"-->
                         <div class="table-column table-column-title">
                             {{analysis.name}}
                         </div>
@@ -131,7 +206,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-row table-row__final--analysis">
+                    <div class="table-row table-row__final--analysis" [style]="{background: comparisonInfo.analyseVoList.length % 2 != 0 ? '#FFFFFF' : '#FAFAFA'}">
                         <div class="table-column table-column-title">
                             Final analysis
                         </div>
@@ -184,11 +259,11 @@
                             Platform
                         </div>
                         <div class="table-column table-column-value" *ngFor="let item of list">
-                            <img src="./assets/img/icon/icon-platform-dollar.svg" *ngIf="item" />
+                            <img [src]="item.attachmentVo?.visitUrl" *ngIf="item && item.attachmentVo?.visitUrl" />
                             {{item ? item.productName : ''}}
                         </div>
                     </div>
-                    <div class="table-row table-row__ownership--structure" *ngFor="let prop of businessProperties">
+                    <div class="table-row table-row__ownership--structure" [style]="{background: idx %2 != 0 ? '#FAFAFA' : '#FFFFFF'}" *ngFor="let prop of businessProperties;let idx = index">
                         <div class="table-column table-column-title">
                             {{prop.name}}
                         </div>

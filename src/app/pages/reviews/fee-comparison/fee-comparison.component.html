@@ -2,75 +2,98 @@
 
 <div class="table-main-content">
     <div class="sub-head-review">
-        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.fee)}} - Fee calculator</div>
+        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.fee)}} - Fee review</div>
     </div>
 
     <div class="form-content">
-        <div style="text-align: center">
-            Summary function coming in stage 2 of SuitabilityHub beta.
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left" style="width: 100%">
+                <label class="control-label">Welcome! </label>
+                <p class="info">You can fill as much or as little of the fee calculator as you like. We will use the information you provide to simulate an estimated cost for each platform. Most fields are not compulsory, but the more you fill out, the more comprehensive our fee estimates.</p>
+            </div>
         </div>
-<!--        <div class="form-group-custom form-group-custom-reset">
+        <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">Approximately how much do you expect to have in each account</label>
-                <p class="info">(average balance for next 12 months)</p>
+                <label class="control-label">What do you expect the average holding balance of each account will be for the next 12 months?</label>
+                <p class="info">Please enter the approximate number, and consider any deposits and withdrawals you expect in the coming year</p>
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column">
-                    <div class="column-6">
-                        <div class="column-group" *ngFor="let idps of idpsArr; let idpsIndex = index">
-                            <div class="form-group">
-                                <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
-                                <div class="input-group_unit">
-                                    <span class="unit">$</span>
-                                    <input type="number" class="form-control" [(ngModel)]="idps.value" />
-                                </div>
-                                <span class="icon-block icon-delete icon-19" (click)="removeIdps(idpsIndex)"
-                                      *ngIf="idpsIndex > 0"></span>
-                            </div>
+                <div class="form-group-column" *ngFor="let item of memberArray;let idx = index">
+                    <div class="column-top">
+                        <div class="top-left">
+                            <img class="title-icon" src="./assets/img/icon/icon-member.svg" />
+                            <span class="title-text">Family member/entity{{idx + 1}}</span>
                         </div>
-                        <div class="column-group">
-                            <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                    (click)="addIdps()">
-                                <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
-                            </button>
+                        <div class="top-right">
+                            <span class="label">Total assets</span>
+                            <span class="value">${{getFamilyGroupTotalAssets(item)}}</span>
+                            <span class="remove-btn tx-bold" *ngIf="idx > 0" (click)="removeMember(idx)">Remove</span>
+                        </div>
+                    </div>
+                    <div class="column-bottom">
+                    <div class="column-6">
+                        <div class="column-group" >
+                            <div class="form-group" *ngFor="let idps of item.idpsArr; let idpsIndex = index">
+                                <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
+                                <div class="form-input-wrapper">
+                                    <div class="input-group_unit">
+                                        <span class="unit">$</span>
+                                        <input type="number" class="form-control input-number" [(ngModel)]="idps.value" />
+                                    </div>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeIdps(idx,idpsIndex)" *ngIf="idpsArr.length > 0"></span>
+                                </div>
+                            </div>
+                            <div class="column-group" style="padding-right: 0">
+                                <button class="btn btn-outline-purple-light btn-with-icon btn-block"
+                                        (click)="addIdps(idx)">
+                                    <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="column-6">
-                        <div class="column-group" *ngFor="let superItem of superArr; let superIndex = index">
-                            <div class="form-group">
+                        <div class="column-group">
+                            <div class="form-group" *ngFor="let superItem of item.superArr; let superIndex = index">
                                 <label class="control-label control-label-custom">Super/Pension
                                     {{superIndex + 1}}</label>
-                                <div class="input-group_unit">
-                                    <span class="unit">$</span>
-                                    <input type="number" class="form-control" [(ngModel)]="superItem.value" />
+                                <div class="form-input-wrapper">
+                                    <div class="input-group_unit">
+                                        <span class="unit">$</span>
+                                        <input type="number" class="form-control input-number" [(ngModel)]="superItem.value" />
+                                    </div>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeSuper(idx, superIndex)" *ngIf="idpsArr.length > 0"></span>
                                 </div>
-                                <span class="icon-block icon-delete icon-19" (click)="removeSuper(superIndex)"
-                                      *ngIf="superIndex > 0"></span>
                             </div>
-                        </div>
-
-                        <div class="column-group">
-                            <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                    (click)="addSuper()">
-                                <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
-                            </button>
+                                <div class="column-group"  style="padding-right: 0">
+                                    <button class="btn btn-outline-purple-light btn-with-icon btn-block"
+                                            (click)="addSuper(idx)">
+                                        <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="total-amount">
-                    <div class="text">Total value of investments and super</div>
-                    <div class="amount" title="$150,000">{{totalValue() | currency}}</div>
+                <div class="form-edit-group">
+                    <button class="btn btn-outline-purple-light btn-with-icon btn-block"
+                            (click)="addFamilyGroup()">
+                        <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Family member/entity
+                    </button>
+                    <div class="tip-error">At least one account must have a balance</div>
+                    <div class="total-amount" style="margin-top: 0">
+                        <div class="text">Total value of investments and super</div>
+                        <div class="amount" title="$150,000">{{totalValue() | currency}}</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">Which of the following will you hold through the platform?</label>
-                <p class="info"></p>
+                <label class="control-label">Which of the following will be held through the platform?</label>
+                <p class="info">Please select all the different solutions you expect your client to hold. This will determine which fees we include in our modelling</p>
             </div>
 
             <div class="form-group-right">
@@ -82,26 +105,39 @@
             </div>
         </div>
 
-
-
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">Approximately how much do you intend to hold in each investment
-                    class</label>
-                <p class="info"></p>
+                <label class="control-label">Across all accounts, approximately how much do you expect will be held in each investment class?</label>
+                <p class="info">Please estimate the average total holding size for the next 12 months. For non-managed account options, specify the amount that will be held outside managed accounts only. We will pro rata the fees charged for holding the non-cash investments across your client's IDPS and Super accounts. If you leave these fields blank, we will not include the cost of holding these investments in our fee estimates</p>
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column">
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">{{item.name}}</label>
-                            <div class="input-group_unit">
-                                <span class="unit">$</span>
-                                <input type="number" class="form-control" />
-                            </div>
+                <div class="column-2">
+                    <div class="form-group" *ngFor="let item of investmentClassesAccount; let idx = index">
+                        <label class="control-label control-label-custom">{{item.label}}</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [ngModel]="item.value"/>
                         </div>
                     </div>
+                </div>
+                <div class="tip-error">
+                    <div>Total balance in this section exceeds the total account balances specified above</div>
+                    <div>Cash balance for IDPS accounts exceeds the total balance of IDPS accounts specified above</div>
+                    <div>Cash balance for Super/Pension accounts exceeds the total balance of Super/Pension accounts specified above</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-custom form-group-custom-reset">
+            <div class="form-group-left">
+                <label class="control-label">How many different funds, listed investments and managed account models will be held across all accounts?</label>
+                <p class="info">Please estimate the total number of holdings. For example, if you have a portfolio with eight managed accounts plus shares in one company, the total is 9. The figure you provide will affect the fee tiering used by some platforms. If you leave these fields blank, some admin fees may appear slightly larger than they actually are</p>
+            </div>
+            <div class="form-group-right">
+                <div class="form-group">
+                    <label class="control-label control-label-custom">Number of individual holdings</label>
+                    <input type="text" class="form-control input-number" style="width: 265px"/>
                 </div>
             </div>
         </div>
@@ -109,86 +145,73 @@
 
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">In total, how many different funds, individual stocks and managed
-                    account models do you intend to hold? (across all portfolios) </label>
-                <p class="info"></p>
+                <label class="control-label">In the next 12 months, what is the total number of transactions you expect outside SMA/MDAs, and what is your anticipated average transaction size?</label>
+                <p class="info">Please count all transactions that you expect will happen outside the managed account structure. This includes any ad hoc trades you place plus any transactions from automatic buy, sell and rebalancing facilities. We will use this to estimate the transaction fees charged. If you leave these fields blank, we will not include transaction fees in our fee estimates</p>
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column">
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                            <input type="number" class="form-control form-control-amount" />
+                <div class="column-2">
+                    <div class="form-group" *ngFor="let item of averageTransactionSize; let idx = index">
+                        <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">{{item.label}}</label>
+                        <div [ngClass]="[item.type==='number' ? 'input-group_unit' : 'input-group']">
+                            <span class="unit" *ngIf="item.type==='number'">$</span>
+                            <input [type]="item.type" class="form-control input-number"  [ngModel]="item.value"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">In total, how many transactions do you expect will occur in the next 12
-                    months <span class="tx-line">outside SMA/MDAs</span>, and what do you anticipate will be the average transaction
-                    size?</label>
-                <p class="info">(including transactions from any rebalancing)</p>
+                <label class="control-label">In the next 12 months, what is the total number of transactions you expect within the SMAs/MDAs your client holds, and what is your anticipated average transaction size?</label>
+                <p class="info">Please count all transactions that you expect will happen within the managed account structure. Most platforms have a different fee for transactions that occur within a managed accounts than for those outside managed accounts. This can be difficult for you to estimate, as each manager varies in their trading activity. If you leave these fields blank, we will not include managed account transaction fees in our fee estimates</p>
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column">
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                            <input type="number" class="form-control form-control-amount" />
+                <div class="column-2">
+                    <div class="form-group" *ngFor="let item of clientAverageTransactionSize; let idx = index">
+                        <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">{{item.label}}</label>
+                        <div [ngClass]="[item.type==='number' ? 'input-group_unit' : 'input-group']">
+                            <span class="unit" *ngIf="item.type==='number'">$</span>
+                            <input [type]="item.type" class="form-control input-number"  [ngModel]="item.value"/>
                         </div>
                     </div>
-
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
-                            <div class="input-group_unit">
-                                <span class="unit">$</span>
-                                <input type="number" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
-
-
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
-                <label class="control-label">In total, how many transactions do you expect will occur in the next 12
-                    months <span class="tx-line">within SMA/MDAs</span>, and what do you anticipate will be the average transaction size
-                    ?</label>
-                <p class="info">(including transactions from any rebalancing)</p>
+                <label class="control-label">The retail insurance policies that will be held through platform accounts:</label>
+                <p class="info">Some platforms charge an admin fee for holding insurance. If you leave these fields blank, we will not include the admin fees on insurance in our fee estimates</p>
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column">
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">Number of {{item.name}}</label>
-                            <input type="number" class="form-control form-control-amount" />
-                        </div>
-                    </div>
-
-                    <div class="column-6">
-                        <div class="form-group" [hidden]="!item.value" *ngFor="let item of platformItems">
-                            <label class="control-label control-label-custom">Average value of each {{item.name}}</label>
-                            <div class="input-group_unit">
-                                <span class="unit">$</span>
+                <div class="column-2">
+                    <div class="column">
+                        <div class="form-group">
+                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Number of retail insurance policies in IDPS</label>
+                            <div class="input-group">
                                 <input type="text" class="form-control" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Number of retail insurance policies in Super</label>
+                            <div class="input-group_unit">
+                                <span class="unit">$</span>
+                                <input type="text" class="form-control input-number" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Average annual premium of policies in Super</label>
+                            <div class="input-group_unit">
+                                <span class="unit">$</span>
+                                <input type="text" class="form-control input-number" />
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
-        </div>-->
-
+        </div>
     </div>
 </div>

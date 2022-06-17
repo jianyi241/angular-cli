@@ -25,8 +25,8 @@
     line-height: 26px;
     color:#25324B;
     height: 74px;
-    padding-right: 47px;
-
+    padding-right: 16px;
+    border-bottom: 1px solid #E0E5F0;
     .link-new{
       font-weight: 600;
       color: #4640DE;
@@ -63,6 +63,47 @@
   @media screen and (max-width: 890px){
     padding-left: 0;
   }
+  .table-list {
+    position: relative;
+    margin-top: 32px;
+    .table-wrapper {
+      margin-bottom: 32px;
+      .table-title {
+        font: normal 600 16px 'Epilogue';
+        line-height: 46px;
+      }
+      .table {
+        border-left: 1px solid #D6DDEB;
+        border-right: 1px solid #D6DDEB;
+        .tr {
+          display: flex;
+          align-items: center;
+          > .th,> .td {
+            flex: 1 0 0;
+            padding: 0 16px;
+          }
+        }
+        > .t-head > .tr {
+          font: normal 600 12px 'Epilogue';
+          height: 39px;
+          background: #D6DDEB;
+        }
+        > .t-body > .tr {
+          height: 58px;
+          border-bottom: 1px solid #D6DDEB;
+          .td__fees {
+            font: normal 600 12px 'Epilogue';
+          }
+          .td__value {
+            font: normal 700 16px 'Epilogue';
+          }
+          &:nth-child(odd) {
+            background: #F8F8FD;
+          }
+        }
+      }
+    }
+  }
 }
 
 .form-column-title{
@@ -84,6 +125,11 @@
     line-height: 19.2px;
     color: #25324B;
     margin-top: 4px;
+    a {
+      font-weight: bold;
+      color: #4640DE;
+      text-decoration: underline;
+    }
   }
 }
 

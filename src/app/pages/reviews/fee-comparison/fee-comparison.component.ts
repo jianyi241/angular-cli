@@ -5,6 +5,12 @@ import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 
+ interface FamilyMember {
+     id?: string,
+     idpsArr?: Array<{ name: string, value: number }>,
+     superArr?: Array<{ name: string, value: number }>,
+ }
+
 @Component({
     selector: 'app-fee-comparison',
     templateUrl: './fee-comparison.component.html',
@@ -17,14 +23,107 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     reviewLeaveObservable: any;
     idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
     superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
+    memberArray: Array<FamilyMember> = [{
+        id: '',
+        idpsArr: [{name: '', value: 0}],
+        superArr: [{name: '', value: 0}]
+    }]
     platformItems: Array<{ name: string, value: boolean }> = [
-        {name: 'Retail insurance', value: false},
-        {name: 'Australian direct shares', value: false},
-        {name: 'International direct shares', value: false},
-        {name: 'Unlisted bonds', value: false},
+        {name: 'Managed funds (held outside managed accounts)', value: false},
         {name: 'Managed accounts (SMA or MDA models)', value: false},
-        {name: 'Non-custody solution', value: false},
+        {name: 'Australian listed investments (held outside managed accounts)', value: false},
+        {name: 'International listed investments (held outside managed accounts)', value: false},
+        {name: 'Unlisted bonds', value: false},
+        {name: 'Retail insurance', value: false},
     ];
+    investmentClassesAccount: Array<{label: string,value: number}> = [
+        {
+            label: 'Cash in IDPS accounts',
+            value: null
+        },{
+            label: 'Cash in Super/Pension accounts',
+            value: null
+        },{
+            label: 'Managed funds',
+            value: null
+        },{
+            label: 'Managed accounts',
+            value: null
+        },{
+            label: 'Australian listed investments',
+            value: null
+        },{
+            label: 'International listed investments',
+            value: null
+        },{
+            label: 'Unlisted bonds',
+            value: null
+        }
+    ]
+
+    averageTransactionSize: Array<{label: string,type: string,value: number}> = [
+        {
+            label: 'Number of managed fund transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each managed fund transaction',
+            type: 'number',
+            value: null
+        },{
+            label: 'Number of Australian listed investment transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each Australian listed investment transaction',
+            type: 'number',
+            value: null
+        },{
+            label: 'Number of international listed investment transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each international listed investment transaction',
+            type: 'number',
+            value: null
+        },{
+            label: 'Number of unlisted bond/fixed income transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each unlisted bonds/fixed income transaction',
+            type: 'number',
+            value: null
+        }
+    ]
+
+    clientAverageTransactionSize: Array<{label: string,type: string,value: number}> = [
+        {
+            label: 'Number of managed fund transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each managed fund transaction',
+            type: 'number',
+            value: null
+        },{
+            label: 'Number of Australian listed investment transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each Australian listed investment transaction',
+            type: 'number',
+            value: null
+        },{
+            label: 'Number of international listed investment transactions',
+            type: 'text',
+            value: null
+        },{
+            label: 'Average value of each international listed investment transaction',
+            type: 'number',
+            value: null
+        }
+    ]
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -53,7 +152,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.router.navigateByUrl(`/review/summary/${this.reviewService.comparison.id}`);
+            this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
         });
     }
 
@@ -75,37 +174,59 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         })
     }
 
-    addIdps() {
-        this.idpsArr.push({
+    addIdps(idx: number) {
+        this.memberArray[idx].idpsArr.push({
             name: '',
-            value: 0,
+            value: null,
         });
     }
 
-    addSuper() {
-        this.superArr.push({
+    addSuper(idx: number) {
+        this.memberArray[idx].superArr.push({
             name: '',
-            value: 0,
+            value: null,
         });
+    }
+
+    getFamilyGroupTotalAssets(member: FamilyMember): string {
+        const idpsSum = member.idpsArr.map(i => i.value).reduce((a,b) => a + b, 0)
+        const superSum = member.superArr.map(i => i.value).reduce((a,b) => a + b, 0)
+        const sum = idpsSum + superSum
+        if (sum > 0) {
+            return sum.toFixed(3)
+        } else {
+            return '0'
+        }
     }
 
     totalValue(): number {
-        let superTotal = this.superArr.map(s => s.value).reduce((a, b) => a + b);
-        let idpsTotal = this.idpsArr.map(s => s.value).reduce((a, b) => a + b);
-        return idpsTotal + superTotal;
+        const total: number = this.memberArray.map((e) => Number(this.getFamilyGroupTotalAssets(e))).reduce((a, b) => a + b, 0)
+        return total
     }
 
-    removeSuper(superIndex: number) {
+    removeSuper(idx: number, superIndex: number) {
         if (superIndex == 0) {
             return;
         }
-        this.superArr.splice(superIndex, 1);
+        this.memberArray[idx].superArr.splice(superIndex, 1);
     }
 
-    removeIdps(idpsIndex: number) {
+    removeIdps(idx: number,idpsIndex: number) {
         if (idpsIndex == 0) {
             return;
         }
-        this.idpsArr.splice(idpsIndex, 1);
+        this.memberArray[idx].idpsArr.splice(idpsIndex, 1);
+    }
+
+    addFamilyGroup() {
+        this.memberArray.push({
+            id: '',
+            idpsArr: [],
+            superArr: [],
+        })
+    }
+
+    removeMember(idx: number): void{
+        this.memberArray.splice(idx, 1);
     }
 }

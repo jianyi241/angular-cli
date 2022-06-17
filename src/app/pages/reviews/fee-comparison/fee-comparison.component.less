@@ -31,3 +31,83 @@
 .review-content {
   position: relative;
 }
+.form-group-column {
+  flex-direction: column;
+  margin: 0 0 16px 0;
+
+  .column-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 58px;
+    padding: 16px;
+    background: #D6DDEB;
+    > .top-left {
+      font: normal 400 16px 'Epilogue';
+      color: #25324B;
+      > img.title-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    }
+    > .top-right {
+      font: normal 400 14px 'Epilogue';
+      color: #25324B;
+      > .label {
+        color: #515B6F;
+      }
+      > .value {
+        font-weight: 600;
+        color: #25324B;
+      }
+      > .remove-btn {
+        color: #EB5757;
+        cursor: pointer;
+        margin-left: 16px;
+      }
+    }
+  }
+  .column-bottom {
+    display: flex;
+    background: #F8F8FD;
+    > .column-6 {
+      flex: 1;
+      padding: 0;
+      > .column-group {
+        padding: 16px;
+        .form-input-wrapper{
+          display: flex;
+          align-items: center;
+          > .icon-delete-red {
+            margin-left: 16px;
+            cursor: pointer;
+          }
+        }
+        .input-number {
+          width: 225px;
+        }
+      }
+    }
+  }
+}
+.form-group-right {
+  .column-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+  }
+}
+.tip-error {
+  color: #FF151F;
+  > div {
+    margin-bottom: 4px;
+  }
+}
+.form-edit-group {
+  .tip-error {
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+}
+

@@ -21,6 +21,7 @@ import {ReviewTipComponent} from './review-tip/review-tip.component';
 import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import {SummaryComponent} from "./summary/summary.component";
 import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
+import { FeeReviewComponent } from './fee-review/fee-review.component';
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -38,7 +39,8 @@ import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
         SummaryComponent,
         // EllipsisDirective,
         ReviewTipComponent,
-        PopoverCustomDirective],
+        PopoverCustomDirective,
+        FeeReviewComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
