@@ -106,4 +106,16 @@ export class PlatformRepository {
     getPlatformViewByTabType<T>(productId: string,tabType: number): Observable<HttpResult<PlatformView<T>>> {
         return this.http.get<HttpResult<PlatformView<T>>>(`${environment.baseURL}/product/getPlatformViewByTabType/${productId}/${tabType}`);
     }
+
+    importFeeData({productId,versionId, file}):Observable<HttpResult<any>> {
+        const body = new FormData();
+        body.append('file', file)
+        body.append('productId', productId)
+        body.append('versionId', versionId)
+        return this.http.post<HttpResult<any>>(environment.baseURL + '/product/importFee',body, {});
+    }
+
+    getFeeProducts({productId,versionId}): Observable<HttpResult<any>> {
+        return this.http.get<HttpResult<any>>(environment.baseURL + `/product/getFeesProducts/${productId}/${versionId}`);
+    }
 }
