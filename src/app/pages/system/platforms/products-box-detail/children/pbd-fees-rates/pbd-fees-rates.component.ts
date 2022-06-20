@@ -16,6 +16,9 @@ import {TabType} from "../../../../../../model/enums/tab-type";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {PropertyVo} from "../../../../../../model/vo/PropertyVo";
 import {PropStatus} from "../../../../../../model/enums/prop-status";
+import PlatformView from "../../../../../../model/po/platformView";
+import PlatformInformation from "../../../../../../model/po/platformInformation";
+import PlatformOverview from "../../../../../../model/po/platformOverview";
 
 @Component({
   selector: 'app-pbd-fees-rates',
@@ -24,6 +27,9 @@ import {PropStatus} from "../../../../../../model/enums/prop-status";
 })
 export class PbdFeesRatesComponent implements OnInit {
 
+  versionId: string;
+  productId: string;
+  platformOverviewInfo: PlatformOverview = new PlatformOverview();
   product: ProductInfo = new ProductInfo();
   version: Version = new Version();
   feature: ProductFormVo = new ProductFormVo();
@@ -89,10 +95,18 @@ export class PbdFeesRatesComponent implements OnInit {
     });
   }
 
+  getFreezeData(): void {
+    this.platformRepository.getPlatformFreezeData(this.productId, 1).subscribe(res => {
+      this.platformOverviewInfo = res.data;
+    }, err => {
+    });
+  }
+
   parseRouterParam(): void {
-    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(res => {
-      this.product.id = res['productId'];
-      this.version.id = res[Constants.VERSION];
+    this.activatedRoute.params.subscribe(res => {
+      this.versionId = res['version']
+      this.productId = res['id']
+      this.getFreezeData()
     })
   }
 

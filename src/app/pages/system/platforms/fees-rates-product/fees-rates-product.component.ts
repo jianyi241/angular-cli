@@ -64,6 +64,9 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
             this.product.id = res['productId'];
             this.version.id = res[Constants.VERSION];
         })
+        this.activatedRoute.queryParams.subscribe(res => {
+            this.product.name = res.name
+        })
     }
 
     // getProductPropList(): void {
@@ -142,6 +145,12 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
     importProduct() {
         this.uploadFile().then(res => {
             console.log('upload file res ', res)
+            this.platformRepository.importFeeData({productId: this.product.id,versionId: this.version.id,file: res.data}).subscribe(res => {
+                if (res.statusCode !== 200) {
+                    this.toastRepository.showDanger(res.msg || 'Import failed.')
+                }
+                this.toastRepository.showSuccess('Import successfully.')
+            })
         }).catch(err => {
             console.log('upload file err ', err)
         })

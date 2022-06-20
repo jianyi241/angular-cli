@@ -1,7 +1,7 @@
 <div class="form-content">
     <div class="form-group-custom form-content-column">
         <div class="form-column-left">
-            <div class="title">Products <span class="link-new" *ngIf="configService.isEditable(version.type)" (click)="importProduct()">+ New</span></div>
+            <div class="title">Products <span class="link-new" *ngIf="configService.isEditable(version.type)" (click)="importProduct()">+ Import</span></div>
             <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
                 <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
                     <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
@@ -37,7 +37,7 @@
 
         <div class="form-column-right">
             <div class="form-column-title">
-                <label class="control-label">BT Asgard Full </label>
+                <label class="control-label">{{product.name}} Full </label>
                 <p class="info">This is product fee information. If you’d like to edit this, please contact <a href="https://recep@suitabilityhub.com">recep@suitabilityhub.com.</a></p>
             </div>
             <div class="table-list">
