@@ -110,6 +110,7 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
             const fileInput = document.createElement('input')
             document.body.appendChild(fileInput)
             fileInput.type = 'file'
+            fileInput.accept = '.xls,.xlsx'
             fileInput.click()
             fileInput.addEventListener('change', () => {
                 try {
