@@ -21,7 +21,9 @@ export class PlatformFeeChartsComponent implements OnInit {
       i[2]=Math.floor(Math.random() * (100 - 1)) + 1
       return i
     })
-    this.initCharts(data)
+    setTimeout(() => {
+      this.initCharts(data)
+    }, 200)
     window.addEventListener('resize',(e:UIEvent) => {
       this.platformCharts.resize()
     })

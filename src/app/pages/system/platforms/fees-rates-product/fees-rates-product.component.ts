@@ -9,10 +9,6 @@ import {PlatformRepository} from "../../../../repository/platform-repository";
 import {ProductInfo} from "../../../../model/po/productInfo";
 import {Version} from "../../../../model/po/version";
 import {Constants} from "../../../../model/constants";
-import {TabType} from "../../../../model/enums/tab-type";
-import {ProductFormVo, SubProductFormVo} from "../../../../model/vo/productFormVo";
-import {PropertyVo} from "../../../../model/vo/PropertyVo";
-import {GroupVo} from "../../../../model/vo/groupVo";
 import {PlatformFee} from "../../../../model/po/platformFee";
 
 @Component({
