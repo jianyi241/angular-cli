@@ -243,6 +243,30 @@
                 </div>
             </div>
         </div>
+        <div class="summary__fee--charts module-wrapper">
+            <div class="title-info">
+                <div class="title">
+                    Fee estimates <span>of selected platforms</span>
+                </div>
+                <div class="sub-title">
+                    <div class="info-sub-title">xxxx xxxxx xxxx xxxxxxx xxxxxx</div>
+                </div>
+            </div>
+            <div class="charts-content">
+                <div class="content-wrapper">
+                    <div class="content-title">
+                        Total cost by average admin fee for the year ahead
+                    </div>
+                    <app-total-cost-charts></app-total-cost-charts>
+                </div>
+                <div class="content-wrapper">
+                    <div class="content-title">
+                        Platform fees by average total portfolio value in the year ahead
+                    </div>
+                    <app-platform-fee-charts *ngIf="platformChartsData" [data]="platformChartsData" #platformFeeChartsComponent></app-platform-fee-charts>
+                </div>
+            </div>
+        </div>
         <div class="summary__business--metrics module-wrapper" *ngIf="includeAnalysis(configService.analysisType.metric)">
             <div class="metrics-title-info">
                 <div class="title metrics-title">

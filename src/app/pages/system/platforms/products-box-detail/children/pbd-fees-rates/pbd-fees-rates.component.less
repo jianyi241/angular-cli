@@ -9,7 +9,20 @@
   padding-top:0;
   height: 100%;
 }
-
+.main-menu {
+  font: normal 500 13px 'Epilogue';
+  .menu-item{
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 8px;
+    cursor: pointer;
+    &.menu-active {
+      background: #F8F8FD;
+      height: 64px;
+    }
+  }
+}
 .form-column-left{
   width: 306px;
   min-width: 240px;

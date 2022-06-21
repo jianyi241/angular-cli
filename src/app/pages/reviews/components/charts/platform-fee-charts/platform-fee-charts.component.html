@@ -1,0 +1,29 @@
+<div class="charts-wrapper">
+    <div class="left-title">
+        Platforms
+    </div>
+    <div class="charts-y__axis">
+        <div class="label" *ngFor="let i of [1,2,3,4,5]">
+            <div class="label-left">
+                <img src="../../../../../../assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                <img src="https://img2.baidu.com/it/u=3990732507,3148015412&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="label-icon"/>
+            </div>
+            <div class="label-right">
+                <div class="label-type">BT Panorama</div>
+                <div class="label-title">Individual{{i}} </div>
+                <img src="../../../../../../assets/img/icon/icon-warning-red.svg" class="warn-icon"/>
+            </div>
+        </div>
+    </div>
+    <div class="charts-container">
+        <div class="charts" id="container">
+        </div>
+        <div class="charts-summary">
+            <div class="summary-left">
+                <div class="mark">$</div>
+                Current portfolio value
+            </div>
+            <div class="summary-right">Total portfolio value (thousands)</div>
+        </div>
+    </div>
+</div>

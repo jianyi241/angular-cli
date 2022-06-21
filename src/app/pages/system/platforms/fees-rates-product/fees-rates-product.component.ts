@@ -12,9 +12,8 @@ import {Constants} from "../../../../model/constants";
 import {TabType} from "../../../../model/enums/tab-type";
 import {ProductFormVo, SubProductFormVo} from "../../../../model/vo/productFormVo";
 import {PropertyVo} from "../../../../model/vo/PropertyVo";
-import {SubProduct} from "../../../../model/po/subProduct";
 import {GroupVo} from "../../../../model/vo/groupVo";
-import {PromiseType} from "protractor/built/plugins";
+import {PlatformFee} from "../../../../model/po/platformFee";
 
 @Component({
     selector: 'app-fees-rates-product',
@@ -24,12 +23,11 @@ import {PromiseType} from "protractor/built/plugins";
 export class FeesRatesProductComponent implements OnInit, OnDestroy {
     product: ProductInfo = new ProductInfo();
     version: Version = new Version();
-    feature: ProductFormVo = new ProductFormVo();
-    subGroup: GroupVo = new GroupVo();
-    feeRate: ProductFormVo = new ProductFormVo();
-    subProduct: SubProductFormVo = new SubProductFormVo();
-    routerSubscription: any;
+    fees: Array<PlatformFee> = new Array<PlatformFee>();
+    currentIndex: number = 0
     activatedRouteSubscription: any;
+    routerSubscription: any;
+
 
     constructor(private route: Router,
                 private activatedRoute: ActivatedRoute,
@@ -40,7 +38,6 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                 private fileRepository: FileRepository,
                 private platformRepository: PlatformRepository) {
     }
-
 
     ngOnInit(): void {
         this.subscribe();
@@ -69,32 +66,17 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         })
     }
 
-    // getProductPropList(): void {
-    //     this.platformRepository.getProductPropList(TabType.feesAndRates.value, this.product.id, this.version.id).subscribe(res => {
-    //         this.feeRate = Object.assign(this.feeRate, res.data);
-    //         if (this.feeRate && this.feeRate.subProductVos && this.feeRate.subProductVos.length > 0) {
-    //             this.chooseGroup(this.feeRate.subProductVos[0]);
-    //         }
-    //     });
-    // }
-
     getProductPropList(): void {
-        this.platformRepository.getProductPropList(TabType.features.value, this.product.id, this.version.id).subscribe(res => {
-            this.feature = Object.assign(this.feature, res.data);
-            if (this.feature && this.feature.groupVoList && this.feature.groupVoList.length > 0) {
-                if (this.feature.groupVoList[0].subList && this.feature.groupVoList[0].subList.length > 0)
-                    this.chooseSubGroup(this.feature.groupVoList[0].subList[0]);
+        this.platformRepository.getFeeProducts({productId: this.product.id,versionId: this.version.id}).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'Get products info failed.')
             }
-        });
-    }
-    chooseSubGroup(group: GroupVo) {
-        this.subGroup = group;
+            this.fees = res.data
+        })
     }
 
-    getVersion() {
-        if (this.version.id == Constants.VERSION) {
-            return;
-        }
+    getVersion(): void {
+        if (this.version.id === Constants.VERSION) return;
         this.versionRepository.versionById(this.version.id).subscribe(res => {
             this.version = res.data || this.version;
             this.configService.currentVersion = res.data || this.version
@@ -107,39 +89,6 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                 this.init();
             }
         });
-    }
-
-    chooseGroup(subProduct: SubProductFormVo) {
-        this.subProduct = subProduct;
-    }
-
-    saveProp(prop: PropertyVo) {
-        let productProp = {...prop.productPropVo};
-        productProp.shProductId = this.subProduct.id;
-        productProp.shPropertyId = prop.id;
-        this.platformRepository.saveProductProp(productProp).subscribe(res => {
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            prop.productPropVo = res.data;
-        })
-    }
-
-    saveProduct() {
-        let sub = new SubProduct();
-        sub.name = 'New Product'
-        sub.shProductId = this.product.id;
-        sub.versionId = this.version.id;
-        // this.platformRepository.saveSubProduct(sub).subscribe(res => {
-        //     if (res.statusCode != 200) {
-        //         this.toastRepository.showDanger(res.msg);
-        //         return;
-        //     }
-        //     this.getProductPropList();
-        //     this.toastRepository.showSuccess("Create Successfully.");
-        // });
-        this.toastRepository.showSuccess("Create Successfully.");
     }
 
     importProduct() {
@@ -178,5 +127,10 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                 }
             })
         })
+    }
+
+    chooseMenu(i: number) {
+        this.currentIndex = i
+        this.getProductPropList()
     }
 }

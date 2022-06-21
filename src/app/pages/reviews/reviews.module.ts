@@ -22,6 +22,8 @@ import {NgxValidatorModule} from "@why520crazy/ngx-validator";
 import {SummaryComponent} from "./summary/summary.component";
 import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
 import { FeeReviewComponent } from './fee-review/fee-review.component';
+import { PlatformFeeChartsComponent } from './components/charts/platform-fee-charts/platform-fee-charts.component';
+import { TotalCostChartsComponent } from './components/charts/total-cost-charts/total-cost-charts.component';
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -40,7 +42,9 @@ import { FeeReviewComponent } from './fee-review/fee-review.component';
         // EllipsisDirective,
         ReviewTipComponent,
         PopoverCustomDirective,
-        FeeReviewComponent],
+        FeeReviewComponent,
+        PlatformFeeChartsComponent,
+        TotalCostChartsComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,

@@ -19,6 +19,7 @@ import {ComparisonProductInfo} from "../model/po/comparisonProductInfo";
 import {SelectionCondition} from "../model/condition/selection-condition";
 import ComparisonSummary from "../model/po/comparisonSummary";
 import FinalAnalyse from "../model/po/finalAnalyse";
+import {ComparisonFeeInfo} from "../model/po/comparisonFeeInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -113,5 +114,13 @@ export class ReviewRepository {
 
     saveOrUpdateFinalAnalyse(condition: FinalAnalyse): Observable<HttpResult<FinalAnalyse>> {
         return this.http.post<HttpResult<FinalAnalyse>>(environment.baseURL + '/compare/saveOrUpdateFinalAnalyse', condition);
+    }
+
+    getFeeInfo(comparisonId: string): Observable<HttpResult<ComparisonFeeInfo>> {
+        return this.http.get<HttpResult<ComparisonFeeInfo>>(environment.baseURL + `/compare/queryFeeTabInfo/${comparisonId}`);
+    }
+
+    saveOrUpdateComparisonFee(comparisonFeeInfo: ComparisonFeeInfo): Observable<HttpResult<ComparisonFeeInfo>> {
+        return this.http.post<HttpResult<ComparisonFeeInfo>>(environment.baseURL + '/compare/saveOrUpdateComparisonFee', comparisonFeeInfo);
     }
 }

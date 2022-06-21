@@ -2,113 +2,51 @@
     <div class="form-group-custom form-content-column">
         <div class="form-column-left">
             <div class="title">Products <span class="link-new" *ngIf="configService.isEditable(version.type)" (click)="importProduct()">+ Import</span></div>
-            <div class="main-menu" *ngIf="feature.groupVoList.length > 0">
-                <ngb-accordion #a="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
-                    <ngb-panel *ngFor="let group of feature.groupVoList,let i =index " id="ngb-panel-{{i}}">
-                        <ng-container *ngIf="!configService.isArchive(group.status, version.type)">
-                            <ng-template ngbPanelHeader let-opened="opened">
-                                <button class="title btn-clear" ngbPanelToggle [class.collapsed]="opened"
-                                        [title]="group.name">
-                                    <div class="text">{{group.name}}</div>
-                                    <!--<span class="label-number xs-ml-6">7 new</span>-->
-<!--                                    <span class="dot" *ngIf="groupDotFlag(group)"></span>-->
-                                    <span class="icon-block icon-arr-up-purple icon-15"></span>
-                                </button>
-                            </ng-template>
-
-                            <ng-template ngbPanelContent>
-                                <div class="main-sub-menu"
-                                     *ngFor="let subGroupItem of group.subList">
-                                    <div class="sub-title"
-                                         *ngIf="!configService.isArchive(subGroupItem.status, version.type)"
-                                         [title]="subGroupItem.name">
-                                        <!--                                         (click)="chooseSubGroup(subGroupItem)"-->
-                                        <div class="text">{{subGroupItem.name}}</div>
-                                        <!--<span class="badge badge-theme xs-ml-6">2</span>-->
-<!--                                        <span class="dot" *ngIf="groupDotFlag(subGroupItem)"></span>-->
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </ng-container>
-                    </ngb-panel>
-                </ngb-accordion>
+            <div class="main-menu" *ngIf="fees.length > 0">
+                <div class="menu-item" [ngClass]="{'menu-active': currentIndex === i}" *ngFor="let fee of fees,let i =index " (click)="chooseMenu(i)">
+                    {{fee.name}}
+                </div>
             </div>
         </div>
 
         <div class="form-column-right">
             <div class="form-column-title">
-                <label class="control-label">{{product.name}} Full </label>
+                <label class="control-label">{{product.name}} {{fees[currentIndex]?.name}} </label>
                 <p class="info">This is product fee information. If you’d like to edit this, please contact <a href="https://recep@suitabilityhub.com">recep@suitabilityhub.com.</a></p>
             </div>
             <div class="table-list">
-                <div class="table-wrapper">
+                <div class="table-wrapper" *ngFor="let section of fees[currentIndex]?.sections">
                     <div class="table">
                         <div class="t-head">
                             <div class="tr">
-                                <div class="th th__admin--fees">Admin fees</div>
+                                <div class="th th__fees">{{section.name}}</div>
                                 <div class="th th__idps">IDPS</div>
                                 <div class="th th__super">Superannuation/Pension</div>
                             </div>
                         </div>
                         <div class="t-body">
-                            <div class="tr" *ngFor="let fee of [1,2,3,4]">
-                                <div class="td td__fees">Minimum tiered admin fee ($)</div>
-                                <div class="td td__value">N/A</div>
-                                <div class="td td__value">N/A</div>
+                            <div class="tr" *ngFor="let prop of section.properties">
+                                <div class="td td__fees">{{prop.name}}</div>
+                                <div class="td td__value">{{prop.idps}}</div>
+                                <div class="td td__value">{{prop.superPension}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="table-wrapper">
+                <div class="table-title" *ngIf="fees[currentIndex]?.others && fees[currentIndex]?.others.length">Other product fees and information</div>
+                <div class="table-wrapper" *ngFor="let other of fees[currentIndex]?.others">
                     <div class="table">
                         <div class="t-head">
                             <div class="tr">
-                                <div class="th th__admin--fees">Other account fees</div>
-                                <div class="th th__idps">IDPS</div>
-                                <div class="th th__super">Superannuation/Pension</div>
-                            </div>
-                        </div>
-                        <div class="t-body">
-                            <div class="tr" *ngFor="let fee of [1,2,3,4]">
-                                <div class="td td__fees">Minimum tiered admin fee ($)</div>
-                                <div class="td td__value">N/A</div>
-                                <div class="td td__value">N/A</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-wrapper">
-                    <div class="table-title">Other product fees and information</div>
-                    <div class="table">
-                        <div class="t-head">
-                            <div class="tr">
-                                <div class="th th__admin--fees">Minimums</div>
+                                <div class="th th__fees">{{other.name}}</div>
                                 <div class="th th__idps"></div>
                                 <div class="th th__super"></div>
                             </div>
                         </div>
                         <div class="t-body">
-                            <div class="tr" *ngFor="let fee of [1,2,3]">
-                                <div class="td td__fees">Minimum initial deposit</div>
-                                <div class="td td__value">$80.00</div>
-                                <div class="td td__value"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-wrapper">
-                    <div class="table">
-                        <div class="t-head">
-                            <div class="tr">
-                                <div class="th th__admin--fees">Fee grouping</div>
-                                <div class="th th__idps"></div>
-                                <div class="th th__super"></div>
-                            </div>
-                        </div>
-                        <div class="t-body">
-                            <div class="tr" *ngFor="let fee of [1,2,3]">
-                                <div class="td td__fees">Fee grouping</div>
-                                <div class="td td__value">$80.00</div>
+                            <div class="tr" *ngFor="let prop of other.properties">
+                                <div class="td td__fees">{{prop.name}}</div>
+                                <div class="td td__value">{{prop.propValue}}</div>
                                 <div class="td td__value"></div>
                             </div>
                         </div>

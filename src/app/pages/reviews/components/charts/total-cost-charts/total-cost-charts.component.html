@@ -1,0 +1,26 @@
+<div class="charts-wrapper">
+    <div class="left-title">
+        Total platform fee for the year ahead($)
+    </div>
+    <div class="charts-container">
+        <div class="charts" id="totalCastCharts"></div>
+        <div class="charts-summary">
+            <div class="summary-left">
+            </div>
+            <div class="summary-right">Total portfolio value (thousands)</div>
+        </div>
+        <div class="charts-legend">
+            <div class="legend-item" *ngFor="let item of totalCastData">
+                <div class="item-line" [style]="{'--bg-color': item.color}"></div>
+                <div class="item-text">
+                    <div class="item-produce">{{item.product}}</div>
+                    <div class="item-name">{{item.name}}</div>
+                </div>
+                <div class="item-logo-wrapper">
+                    <img [src]="item.logo" class="item-logo"/>
+                    <img src="./assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

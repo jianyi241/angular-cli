@@ -4,12 +4,13 @@ import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {Router} from "@angular/router";
 import {AnalysisType} from "../../../model/enums/analysis-type";
-
- interface FamilyMember {
-     id?: string,
-     idpsArr?: Array<{ name: string, value: number }>,
-     superArr?: Array<{ name: string, value: number }>,
- }
+import {ComparisonFeeInfo} from "../../../model/po/comparisonFeeInfo";
+import {ActivatedRoute} from "@angular/router";
+import {ToastRepository} from "../../../repository/toast-repository";
+import {ComparisonMemberInfo} from "../../../model/po/comparisonMemberInfo";
+import {ComparisonMemberValueInfo} from "../../../model/po/comparisonMemberValueInfo";
+import {ComparisonMemberValueType} from "../../../model/enums/comparison-member-value-type";
+import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
 
 @Component({
     selector: 'app-fee-comparison',
@@ -21,118 +22,22 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     reviewBackObservable: any;
     reviewSaveObservable: any;
     reviewLeaveObservable: any;
-    idpsArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
-    superArr: Array<{ name: string, value: number }> = [{name: '', value: 0}];
-    memberArray: Array<FamilyMember> = [{
-        id: '',
-        idpsArr: [{name: '', value: 0}],
-        superArr: [{name: '', value: 0}]
-    }]
-    platformItems: Array<{ name: string, value: boolean }> = [
-        {name: 'Managed funds (held outside managed accounts)', value: false},
-        {name: 'Managed accounts (SMA or MDA models)', value: false},
-        {name: 'Australian listed investments (held outside managed accounts)', value: false},
-        {name: 'International listed investments (held outside managed accounts)', value: false},
-        {name: 'Unlisted bonds', value: false},
-        {name: 'Retail insurance', value: false},
-    ];
-    investmentClassesAccount: Array<{label: string,value: number}> = [
-        {
-            label: 'Cash in IDPS accounts',
-            value: null
-        },{
-            label: 'Cash in Super/Pension accounts',
-            value: null
-        },{
-            label: 'Managed funds',
-            value: null
-        },{
-            label: 'Managed accounts',
-            value: null
-        },{
-            label: 'Australian listed investments',
-            value: null
-        },{
-            label: 'International listed investments',
-            value: null
-        },{
-            label: 'Unlisted bonds',
-            value: null
-        }
-    ]
-
-    averageTransactionSize: Array<{label: string,type: string,value: number}> = [
-        {
-            label: 'Number of managed fund transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each managed fund transaction',
-            type: 'number',
-            value: null
-        },{
-            label: 'Number of Australian listed investment transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each Australian listed investment transaction',
-            type: 'number',
-            value: null
-        },{
-            label: 'Number of international listed investment transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each international listed investment transaction',
-            type: 'number',
-            value: null
-        },{
-            label: 'Number of unlisted bond/fixed income transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each unlisted bonds/fixed income transaction',
-            type: 'number',
-            value: null
-        }
-    ]
-
-    clientAverageTransactionSize: Array<{label: string,type: string,value: number}> = [
-        {
-            label: 'Number of managed fund transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each managed fund transaction',
-            type: 'number',
-            value: null
-        },{
-            label: 'Number of Australian listed investment transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each Australian listed investment transaction',
-            type: 'number',
-            value: null
-        },{
-            label: 'Number of international listed investment transactions',
-            type: 'text',
-            value: null
-        },{
-            label: 'Average value of each international listed investment transaction',
-            type: 'number',
-            value: null
-        }
-    ]
+    comparisonFeeInfo: ComparisonFeeInfo = new ComparisonFeeInfo();
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private reviewRepository: ReviewRepository,
-                private router: Router) {
+                private router: Router,
+                private activatedRoute: ActivatedRoute,
+                private toastRepository: ToastRepository) {
     }
 
     ngOnInit(): void {
         this.subscribe();
+        this.activatedRoute.params.subscribe(res => {
+            this.comparisonFeeInfo.comparisonId = res.id
+            this.getFeeInfo()
+        })
     }
 
     ngOnDestroy(): void {
@@ -152,6 +57,8 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
+            const check = this.checkError()
+            if (!check.totalCheck || !check.idpsCheck || !check.superCheck) return
             this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
         });
     }
@@ -174,59 +81,129 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         })
     }
 
-    addIdps(idx: number) {
-        this.memberArray[idx].idpsArr.push({
-            name: '',
-            value: null,
-        });
-    }
-
-    addSuper(idx: number) {
-        this.memberArray[idx].superArr.push({
-            name: '',
-            value: null,
-        });
-    }
-
-    getFamilyGroupTotalAssets(member: FamilyMember): string {
-        const idpsSum = member.idpsArr.map(i => i.value).reduce((a,b) => a + b, 0)
-        const superSum = member.superArr.map(i => i.value).reduce((a,b) => a + b, 0)
-        const sum = idpsSum + superSum
-        if (sum > 0) {
-            return sum.toFixed(3)
-        } else {
-            return '0'
-        }
-    }
-
-    totalValue(): number {
-        const total: number = this.memberArray.map((e) => Number(this.getFamilyGroupTotalAssets(e))).reduce((a, b) => a + b, 0)
-        return total
-    }
-
-    removeSuper(idx: number, superIndex: number) {
-        if (superIndex == 0) {
-            return;
-        }
-        this.memberArray[idx].superArr.splice(superIndex, 1);
-    }
-
-    removeIdps(idx: number,idpsIndex: number) {
-        if (idpsIndex == 0) {
-            return;
-        }
-        this.memberArray[idx].idpsArr.splice(idpsIndex, 1);
-    }
-
-    addFamilyGroup() {
-        this.memberArray.push({
-            id: '',
-            idpsArr: [],
-            superArr: [],
+    getFeeInfo(): void {
+        this.reviewRepository.getFeeInfo(this.comparisonFeeInfo.comparisonId).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'get fee info failed.')
+            }
+            if (!!res.data) {
+                this.comparisonFeeInfo = res.data
+            } else {
+                // console.log('this.comparisonFeeInfo ', this.comparisonFeeInfo)
+                // this.addMember()
+            }
         })
     }
 
+    saveOrUpdateFeeInfo(): void {
+        if (this.getMemberTotalBalance() > 99999999) {
+            this.toastRepository.showDanger('Account max value in this is 99999999.')
+            return
+        }
+        this.reviewRepository.saveOrUpdateComparisonFee(this.comparisonFeeInfo).subscribe(res => {
+            if (res.statusCode !== 200) {
+                this.toastRepository.showDanger(res.msg || 'save failed.')
+            }
+            this.comparisonFeeInfo = res.data
+        })
+    }
+
+    onBlur() {
+        this.saveOrUpdateFeeInfo()
+    }
+
+    getMemberBalance(member: ComparisonMemberInfo, type: string = 'all'): number {
+        let sum = member.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)
+        if (type === ComparisonMemberValueType.idps.value || type === ComparisonMemberValueType.super.value) {
+         sum = member.memberValues.filter(r => r.type === type).map(i => i.balance).reduce((a,b) => a + b, 0)
+        }
+        return !sum ? 0 : sum
+    }
+
+    getMemberTotalBalance(type: string = 'all'): number {
+        if (!this.comparisonFeeInfo.members) return 0
+        let total: number = this.comparisonFeeInfo.members.map((e) => this.getMemberBalance(e)).reduce((a, b) => a + b, 0)
+        if (type === ComparisonMemberValueType.idps.value || type === ComparisonMemberValueType.super.value) {
+            total = this.comparisonFeeInfo.members.map((e) => this.getMemberBalance(e, type)).reduce((a, b) => a + b, 0)
+        }
+        return total
+    }
+
+    checkError(): {totalCheck: boolean,idpsCheck: boolean,superCheck: boolean} {
+        const heldProps = [{
+            propName: 'idpsCashBalance',
+            valid: this.getMemberTotalBalance(ComparisonMemberValueType.idps.value) > 0
+        }, {
+            propName: 'superCashBalance',
+            valid: this.getMemberTotalBalance(ComparisonMemberValueType.super.value) > 0
+        },{
+            propName: 'mfBalanceI',
+            valid: this.comparisonFeeInfo.chooseMf
+        },{
+            propName: 'auBalanceI',
+            valid: this.comparisonFeeInfo.chooseAu
+        },{
+            propName: 'intlBalanceI',
+            valid: this.comparisonFeeInfo.chooseIntl
+        },{
+            propName: 'maBalanceI',
+            valid: this.comparisonFeeInfo.chooseMa
+        },{
+            propName: 'bondBalanceI',
+            valid: this.comparisonFeeInfo.chooseBond
+        }]
+        const heldTotalBalance = heldProps.map(i =>
+            this.comparisonFeeInfo[i.propName] && i.valid ? this.comparisonFeeInfo[i.propName] : 0
+        ).reduce((a, b) => a + b,0)
+        const idpsCashBalance = this.comparisonFeeInfo.idpsCashBalance ? this.comparisonFeeInfo.idpsCashBalance : 0
+        const superCashBalance = this.comparisonFeeInfo.superCashBalance ? this.comparisonFeeInfo.superCashBalance : 0
+        return {
+            totalCheck: heldTotalBalance <= this.getMemberTotalBalance(),
+            idpsCheck: this.getMemberTotalBalance(ComparisonMemberValueType.idps.value) ? idpsCashBalance <= this.getMemberTotalBalance(ComparisonMemberValueType.idps.value) : true,
+            superCheck: this.getMemberTotalBalance(ComparisonMemberValueType.super.value) ? superCashBalance <= this.getMemberTotalBalance(ComparisonMemberValueType.super.value) : true,
+        }
+    }
+
+    removeMemberValue(idx: number, name:string): void {
+        const index: number = this.comparisonFeeInfo.members[idx].memberValues.findIndex(i => i.name === name);
+        if (index === -1) return
+        this.comparisonFeeInfo.members[idx].memberValues.splice(index, 1);
+        this.saveOrUpdateFeeInfo()
+    }
+
+    addMemberValue(idx: number, type: string): void {
+        const _name = type === ComparisonMemberValueType.idps.value ? 'IDPS' : 'Super/Pension'
+        const memberValues = this.comparisonFeeInfo.members[idx].memberValues.filter(i => i.type === type)
+        let num = 1
+        if (memberValues && memberValues.length) {
+            num = memberValues.length + 1
+        }
+        this.comparisonFeeInfo.members[idx].memberValues.push({
+            name:`${_name} ${num}`,
+            balance: null,
+            type: type
+        })
+        this.saveOrUpdateFeeInfo()
+    }
+
+    addMember() {
+        let num = 1
+        if (this.comparisonFeeInfo.members && this.comparisonFeeInfo.members.length) {
+            num = this.comparisonFeeInfo.members.length + 1
+        }
+        this.comparisonFeeInfo.members.push({
+            name: `Family member/entity ${num}`,
+            memberValues: []
+        })
+        this.saveOrUpdateFeeInfo()
+    }
+
     removeMember(idx: number): void{
-        this.memberArray.splice(idx, 1);
+        this.comparisonFeeInfo.members.splice(idx, 1)
+        this.saveOrUpdateFeeInfo()
+    }
+
+    getMemberValuesByType(memberValues: Array<ComparisonMemberValueInfo>, type: string): Array<ComparisonMemberValueInfo> {
+        return memberValues.filter(i => i.type === type)
     }
 }

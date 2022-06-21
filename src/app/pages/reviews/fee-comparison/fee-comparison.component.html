@@ -19,34 +19,35 @@
             </div>
 
             <div class="form-group-right">
-                <div class="form-group-column" *ngFor="let item of memberArray;let idx = index">
+                <div class="form-group-column" *ngFor="let member of comparisonFeeInfo.members;let idx = index">
                     <div class="column-top">
                         <div class="top-left">
                             <img class="title-icon" src="./assets/img/icon/icon-member.svg" />
-                            <span class="title-text">Family member/entity{{idx + 1}}</span>
+                            <span class="title-text">{{member.name}}</span>
                         </div>
                         <div class="top-right">
                             <span class="label">Total assets</span>
-                            <span class="value">${{getFamilyGroupTotalAssets(item)}}</span>
+                            <span class="value">${{ getMemberBalance(member) ? getMemberBalance(member).toFixed(3).replace('.',',') : 0}}</span>
                             <span class="remove-btn tx-bold" *ngIf="idx > 0" (click)="removeMember(idx)">Remove</span>
                         </div>
                     </div>
                     <div class="column-bottom">
                     <div class="column-6">
                         <div class="column-group" >
-                            <div class="form-group" *ngFor="let idps of item.idpsArr; let idpsIndex = index">
-                                <label class="control-label control-label-custom">IDPS {{idpsIndex + 1}}</label>
+                            <div class="form-group" *ngFor="let idps of getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps); let idpsIndex = index">
+                                <label class="control-label control-label-custom">{{idps.name}}</label>
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <input type="number" class="form-control input-number" [(ngModel)]="idps.value" />
+                                        <input type="number" class="form-control input-number" [(ngModel)]="idps.balance" (blur)="onBlur()"/>
                                     </div>
-                                    <span class="icon-block icon-delete-red icon-16" (click)="removeIdps(idx,idpsIndex)" *ngIf="idpsArr.length > 0"></span>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx,idps.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length > 0"></span>
                                 </div>
                             </div>
                             <div class="column-group" style="padding-right: 0">
                                 <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                        (click)="addIdps(idx)">
+                                        [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length === 6"
+                                        (click)="addMemberValue(idx, reviewService.comparisonMemberValueType.idps)">
                                     <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
                                 </button>
                             </div>
@@ -55,20 +56,20 @@
 
                     <div class="column-6">
                         <div class="column-group">
-                            <div class="form-group" *ngFor="let superItem of item.superArr; let superIndex = index">
-                                <label class="control-label control-label-custom">Super/Pension
-                                    {{superIndex + 1}}</label>
+                            <div class="form-group" *ngFor="let superItem of getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super); let superIndex = index">
+                                <label class="control-label control-label-custom">{{superItem.name}}</label>
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <input type="number" class="form-control input-number" [(ngModel)]="superItem.value" />
+                                        <input type="number" class="form-control input-number" [(ngModel)]="superItem.balance" (blur)="onBlur()"/>
                                     </div>
-                                    <span class="icon-block icon-delete-red icon-16" (click)="removeSuper(idx, superIndex)" *ngIf="idpsArr.length > 0"></span>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx, superItem.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length > 0"></span>
                                 </div>
                             </div>
                                 <div class="column-group"  style="padding-right: 0">
                                     <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                            (click)="addSuper(idx)">
+                                            [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length === 6"
+                                            (click)="addMemberValue(idx, reviewService.comparisonMemberValueType.super)">
                                         <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
                                     </button>
                                 </div>
@@ -78,13 +79,14 @@
                 </div>
                 <div class="form-edit-group">
                     <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                            (click)="addFamilyGroup()">
+                            [hidden]="comparisonFeeInfo.members.length === 6"
+                            (click)="addMember()">
                         <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Family member/entity
                     </button>
-                    <div class="tip-error">At least one account must have a balance</div>
-                    <div class="total-amount" style="margin-top: 0">
+                    <div class="tip-error" *ngIf="getMemberTotalBalance() === 0">At least one account must have a balance</div>
+                    <div class="total-amount" style="margin-top: 12px">
                         <div class="text">Total value of investments and super</div>
-                        <div class="amount" title="$150,000">{{totalValue() | currency}}</div>
+                        <div class="amount">{{  getMemberTotalBalance() ? getMemberTotalBalance().toFixed(3).replace('.',',') : 0}}</div>
                     </div>
                 </div>
             </div>
@@ -97,10 +99,35 @@
             </div>
 
             <div class="form-group-right">
-                <div class="check-box check-box-purple" *ngFor="let item of platformItems; let itemIndex = index">
-                    <input type="checkbox" [(ngModel)]="item.value" name="retailInsurance"
-                           id="platform-{{itemIndex}}" />
-                    <label for="platform-{{itemIndex}}">{{item.name}}</label>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseMf" name="retailInsurance"
+                           id="chooseMf" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseMf">Managed funds (held outside managed accounts)</label>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseMa" name="retailInsurance"
+                           id="chooseMa" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseMa">Managed accounts (SMA or MDA models)</label>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseAu" name="retailInsurance"
+                           id="chooseAu" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseAu">Australian listed investments (held outside managed accounts)</label>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseIntl" name="retailInsurance"
+                           id="chooseIntl" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseIntl">International listed investments (held outside managed accounts)</label>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseBond" name="retailInsurance"
+                           id="chooseBond" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseBond">Unlisted bonds</label>
+                </div>
+                <div class="check-box check-box-purple">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseRetIns" name="retailInsurance"
+                           id="chooseRetIns" (change)="saveOrUpdateFeeInfo()"/>
+                    <label for="chooseRetIns">Retail insurance</label>
                 </div>
             </div>
         </div>
@@ -113,18 +140,60 @@
 
             <div class="form-group-right">
                 <div class="column-2">
-                    <div class="form-group" *ngFor="let item of investmentClassesAccount; let idx = index">
-                        <label class="control-label control-label-custom">{{item.label}}</label>
+                    <div class="form-group" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.idps) > 0">
+                        <label class="control-label control-label-custom">Cash in IDPS accounts</label>
                         <div class="input-group_unit">
                             <span class="unit">$</span>
-                            <input type="number" class="form-control input-number"  [ngModel]="item.value"/>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.idpsCashBalance" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.super) > 0">
+                        <label class="control-label control-label-custom">Cash in Super/Pension accounts</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.superCashBalance" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseMf">
+                        <label class="control-label control-label-custom">Managed funds</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.mfBalanceI" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseMa">
+                        <label class="control-label control-label-custom">Managed accounts</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.maBalanceI" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseAu">
+                        <label class="control-label control-label-custom">Australian listed investments</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.auBalanceI" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseIntl">
+                        <label class="control-label control-label-custom">International listed investments</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.intlBalanceI" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseBond">
+                        <label class="control-label control-label-custom">Unlisted bonds</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.bondBalanceI" (blur)="onBlur()"/>
                         </div>
                     </div>
                 </div>
                 <div class="tip-error">
-                    <div>Total balance in this section exceeds the total account balances specified above</div>
-                    <div>Cash balance for IDPS accounts exceeds the total balance of IDPS accounts specified above</div>
-                    <div>Cash balance for Super/Pension accounts exceeds the total balance of Super/Pension accounts specified above</div>
+                    <div *ngIf="!checkError().totalCheck">Total balance in this section exceeds the total account balances specified above</div>
+                    <div *ngIf="!checkError().idpsCheck">Cash balance for IDPS accounts exceeds the total balance of IDPS accounts specified above</div>
+                    <div *ngIf="!checkError().superCheck">Cash balance for Super/Pension accounts exceeds the total balance of Super/Pension accounts specified above</div>
                 </div>
             </div>
         </div>
@@ -137,7 +206,7 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Number of individual holdings</label>
-                    <input type="text" class="form-control input-number" style="width: 265px"/>
+                    <input type="text" class="form-control input-number" style="width: 265px"  [(ngModel)]="comparisonFeeInfo.holdingsNumber" (blur)="onBlur()"/>
                 </div>
             </div>
         </div>
@@ -151,18 +220,63 @@
 
             <div class="form-group-right">
                 <div class="column-2">
-                    <div class="form-group" *ngFor="let item of averageTransactionSize; let idx = index">
-                        <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">{{item.label}}</label>
-                        <div [ngClass]="[item.type==='number' ? 'input-group_unit' : 'input-group']">
-                            <span class="unit" *ngIf="item.type==='number'">$</span>
-                            <input [type]="item.type" class="form-control input-number"  [ngModel]="item.value"/>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseMf">
+                        <label class="control-label control-label-custom align-end">Number of managed fund transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.mfTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseMf">
+                        <label class="control-label control-label-custom align-end">Average value of each managed fund transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.mfAvg" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseAu">
+                        <label class="control-label control-label-custom align-end">Number of Australian listed investment transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.auTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseAu">
+                        <label class="control-label control-label-custom align-end">Average value of each Australian listed investment transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.auAvg" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseIntl">
+                        <label class="control-label control-label-custom align-end">Number of international listed investment transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.intlTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseIntl">
+                        <label class="control-label control-label-custom align-end">Average value of each international listed investment transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.intlAvg" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseBond">
+                        <label class="control-label control-label-custom align-end">Number of unlisted bond/fixed income transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.bondTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="comparisonFeeInfo.chooseBond">
+                        <label class="control-label control-label-custom align-end">Average value of each unlisted bonds/fixed income transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.bondAvg" (blur)="onBlur()"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group-custom form-group-custom-reset">
+        <div class="form-group-custom form-group-custom-reset" *ngIf="comparisonFeeInfo.chooseMa">
             <div class="form-group-left">
                 <label class="control-label">In the next 12 months, what is the total number of transactions you expect within the SMAs/MDAs your client holds, and what is your anticipated average transaction size?</label>
                 <p class="info">Please count all transactions that you expect will happen within the managed account structure. Most platforms have a different fee for transactions that occur within a managed accounts than for those outside managed accounts. This can be difficult for you to estimate, as each manager varies in their trading activity. If you leave these fields blank, we will not include managed account transaction fees in our fee estimates</p>
@@ -170,17 +284,49 @@
 
             <div class="form-group-right">
                 <div class="column-2">
-                    <div class="form-group" *ngFor="let item of clientAverageTransactionSize; let idx = index">
-                        <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">{{item.label}}</label>
-                        <div [ngClass]="[item.type==='number' ? 'input-group_unit' : 'input-group']">
-                            <span class="unit" *ngIf="item.type==='number'">$</span>
-                            <input [type]="item.type" class="form-control input-number"  [ngModel]="item.value"/>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Number of managed fund transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maMfTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Average value of each managed fund transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maMfAvg" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Number of Australian listed investment transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maAuTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Average value of each Australian listed investment transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maAuAvg" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Number of international listed investment transactions</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maIntlTransactions" (blur)="onBlur()"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label control-label-custom align-end">Average value of each international listed investment transaction</label>
+                        <div class="input-group_unit">
+                            <span class="unit">$</span>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maIntlAvg" (blur)="onBlur()"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group-custom form-group-custom-reset">
+        <div class="form-group-custom form-group-custom-reset" *ngIf="comparisonFeeInfo.chooseRetIns">
             <div class="form-group-left">
                 <label class="control-label">The retail insurance policies that will be held through platform accounts:</label>
                 <p class="info">Some platforms charge an admin fee for holding insurance. If you leave these fields blank, we will not include the admin fees on insurance in our fee estimates</p>
@@ -190,23 +336,23 @@
                 <div class="column-2">
                     <div class="column">
                         <div class="form-group">
-                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Number of retail insurance policies in IDPS</label>
+                            <label class="control-label control-label-custom align-end">Number of retail insurance policies in IDPS</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control"  [(ngModel)]="comparisonFeeInfo.idpsNumRetIns" (blur)="onBlur()"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Number of retail insurance policies in Super</label>
+                            <label class="control-label control-label-custom align-end">Number of retail insurance policies in Super</label>
                             <div class="input-group_unit">
                                 <span class="unit">$</span>
-                                <input type="text" class="form-control input-number" />
+                                <input type="text" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.superNumRetIns" (blur)="onBlur()"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label control-label-custom" style="height: 50px;align-items: flex-end">Average annual premium of policies in Super</label>
+                            <label class="control-label control-label-custom align-end">Average annual premium of policies in Super</label>
                             <div class="input-group_unit">
                                 <span class="unit">$</span>
-                                <input type="text" class="form-control input-number" />
+                                <input type="text" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.premiumAvg" (blur)="onBlur()"/>
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ import {ProductAccessVo} from "../model/vo/productAccessVo";
 import {Page} from "../model/vo/page";
 import {ProductCondition} from "../model/condition/product-condition";
 import PlatformView from "../model/po/platformView";
+import {PlatformFee} from "../model/po/platformFee";
 
 @Injectable({
     providedIn: 'root'
@@ -115,7 +116,7 @@ export class PlatformRepository {
         return this.http.post<HttpResult<any>>(environment.baseURL + '/product/importFee',body, {});
     }
 
-    getFeeProducts({productId,versionId}): Observable<HttpResult<any>> {
-        return this.http.get<HttpResult<any>>(environment.baseURL + `/product/getFeesProducts/${productId}/${versionId}`);
+    getFeeProducts({productId,versionId}): Observable<HttpResult<Array<PlatformFee>>> {
+        return this.http.get<HttpResult<Array<PlatformFee>>>(environment.baseURL + `/product/getFeesProducts/${productId}/${versionId}`);
     }
 }

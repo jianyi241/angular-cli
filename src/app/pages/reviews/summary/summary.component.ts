@@ -17,6 +17,7 @@ import {Constants} from "../../../model/constants";
 import FinalAnalyse from "../../../model/po/finalAnalyse";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {AnalysisType} from "../../../model/enums/analysis-type";
+import {PlatformFeeChartsOptions} from "../../../model/vo/chartsVo";
 
 @Component({
     selector: 'app-summary',
@@ -49,6 +50,21 @@ export class SummaryComponent implements OnInit {
     currentCommit: ComparisonCommentInfo = new ComparisonCommentInfo();
     currentFinalAnalysis: FinalAnalyse = new FinalAnalyse();
     currentEditorText: string = ''
+    platformChartsData: PlatformFeeChartsOptions = {
+        min: 1,
+        max: 100,
+        seriesData: [[0,0,1],[1,0,2],[2,0,3],[3,0,4],[4,0,5],[5,0,6],[6,0,7],[7,0,8],[8,0,9],[9,0,10],
+            [0,1,10],[1,1,9],[2,1,8],[3,1,7],[4,1,6],[5,1,5],[6,1,4],[7,1,3],[8,1,2],[9,1,1],
+            [0,2,10],[1,2,9],[2,2,8],[3,2,7],[4,2,6],[5,2,5],[6,2,4],[7,2,3],[8,2,2],[9,2,1],
+            [0,3,10],[1,3,9],[2,3,8],[3,3,7],[4,3,6],[5,3,5],[6,3,4],[7,3,3],[8,3,2],[9,3,1],
+            [0,4,10],[1,4,9],[2,4,8],[3,4,7],[4,4,6],[5,4,5],[6,4,4],[7,4,3],[8,4,2],[9,4,1]],
+        xAxisValues: ['1', '2', '3', '4', '5', '6', '7', '8', '9','10'],
+        yAxisValues: new Array(5).fill({
+            name: 'Individual11',
+            product: 'BT Panorama',
+            logo: 'https://img1.baidu.com/it/u=2427267416,2184425688&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+        })
+    }
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,

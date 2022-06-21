@@ -5,6 +5,7 @@ import {AnalysisType} from "../model/enums/analysis-type";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ReviewTipComponent} from "../pages/reviews/review-tip/review-tip.component";
+import {ComparisonMemberValueType} from "../model/enums/comparison-member-value-type";
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,11 @@ export class ReviewService {
     leaveReviewObservable = this.leaveReviewSubject.asObservable();
     comparison: ComparisonVo;
     cacheSaveData: Array<any> = [];
+
+    comparisonMemberValueType = {
+        idps: ComparisonMemberValueType.idps.value,
+        super: ComparisonMemberValueType.super.value
+    }
 
     constructor(private router: Router, private modalService: NgbModal) {
     }
