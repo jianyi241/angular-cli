@@ -95,6 +95,7 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                     this.toastRepository.showDanger(res.msg || 'Import failed.')
                 }
                 this.toastRepository.showSuccess('Import successfully.')
+                this.getProductPropList()
             })
         }).catch(err => {
             console.log('upload file err ', err)
