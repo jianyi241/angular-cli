@@ -1,11 +1,10 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ReviewService} from "../../../service/review.service";
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
-import {PlatformFeeChartsOptions} from "../../../model/vo/chartsVo";
 import {PlatformFeeChartsComponent} from "../components/charts/platform-fee-charts/platform-fee-charts.component";
 import {TotalCostChartsComponent} from "../components/charts/total-cost-charts/total-cost-charts.component";
 import {ToastRepository} from "../../../repository/toast-repository";
@@ -114,12 +113,10 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
         this.toastRepository.showDanger(res.msg || 'get data failed.')
         return
       }
-      if (!!res.data) {
+      if (res.data) {
         this.feeReviewData = res.data
         this.platformFeeChartsComponent.setChartsData(this.feeReviewData)
         this.totalCostChartsComponent.setChartsData(this.feeReviewData)
-      } else {
-        console.log('getFeeReviewChartData no data')
       }
     })
   }

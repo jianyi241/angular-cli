@@ -90,11 +90,8 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'get fee info failed.')
             }
-            if (!!res.data) {
+            if (res.data) {
                 this.comparisonFeeInfo = res.data
-            } else {
-                // console.log('this.comparisonFeeInfo ', this.comparisonFeeInfo)
-                // this.addMember()
             }
         })
     }
