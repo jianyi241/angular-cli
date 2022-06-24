@@ -61,6 +61,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     feeFormData: ComparisonFeeInfo = new ComparisonFeeInfo();
     feeHeldPlatformChoose: string = ''
     feeTotalAssets: string = ''
+    feeOutsideManagedAccounts: number = 0
+    feeWithinManagedAccounts: number = 0
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -200,6 +202,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         this.feeHeldPlatformChoose = feeArray.toString()
         const _feeTotalAssets = this.feeFormData.members.map(m => m.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)).reduce((a,b) => a + b, 0)
         this.feeTotalAssets = dealThousands(_feeTotalAssets.toString())
+        this.feeOutsideManagedAccounts = ['mfTransactions','auTransactions','intlTransactions','bondTransactions'].map(i => this.feeFormData[i]).reduce((a, b) => a + b, 0)
+        this.feeWithinManagedAccounts = ['maMfTransactions','maAuTransactions','maIntlTransactions'].map(i => this.feeFormData[i]).reduce((a, b) => a + b, 0)
     }
 
     updateViewList(windowWidth: number, init = false): void {
