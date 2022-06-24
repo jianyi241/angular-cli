@@ -86,7 +86,7 @@
                     <div class="tip-error" *ngIf="getMemberTotalBalance() === 0">At least one account must have a balance</div>
                     <div class="total-amount" style="margin-top: 12px">
                         <div class="text">Total value of investments and super</div>
-                        <div class="amount">{{formatAmount(getMemberTotalBalance())}}</div>
+                        <div class="amount">${{formatAmount(getMemberTotalBalance())}}</div>
                     </div>
                 </div>
             </div>
@@ -181,11 +181,10 @@
             <div class="form-group-right">
                 <div class="form-group">
                     <label class="control-label control-label-custom">Number of individual holdings</label>
-                    <input type="text" class="form-control input-number" style="width: 265px"  [(ngModel)]="comparisonFeeInfo.holdingsNumber" (blur)="onBlur()"/>
+                    <input type="number" class="form-control input-number" style="width: 265px"  [(ngModel)]="comparisonFeeInfo.holdingsNumber" (blur)="onBlur()"/>
                 </div>
             </div>
         </div>
-
 
         <div class="form-group-custom form-group-custom-reset">
             <div class="form-group-left">
@@ -198,7 +197,7 @@
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseMf">
                         <label class="control-label control-label-custom align-end">Number of managed fund transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.mfTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.mfTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseMf">
@@ -211,7 +210,7 @@
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseAu">
                         <label class="control-label control-label-custom align-end">Number of Australian listed investment transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.auTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.auTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseAu">
@@ -224,7 +223,7 @@
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseIntl">
                         <label class="control-label control-label-custom align-end">Number of international listed investment transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.intlTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.intlTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseIntl">
@@ -237,7 +236,7 @@
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseBond">
                         <label class="control-label control-label-custom align-end">Number of unlisted bond/fixed income transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.bondTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.bondTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="comparisonFeeInfo.chooseBond">
@@ -262,7 +261,7 @@
                     <div class="form-group">
                         <label class="control-label control-label-custom align-end">Number of managed fund transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maMfTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maMfTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -275,7 +274,7 @@
                     <div class="form-group">
                         <label class="control-label control-label-custom align-end">Number of Australian listed investment transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maAuTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maAuTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -288,7 +287,7 @@
                     <div class="form-group">
                         <label class="control-label control-label-custom align-end">Number of international listed investment transactions</label>
                         <div class="input-group">
-                            <input type="text" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maIntlTransactions" (blur)="onBlur()"/>
+                            <input type="number" class="form-control input-number"   [(ngModel)]="comparisonFeeInfo.maIntlTransactions" (blur)="onBlur()"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -313,21 +312,20 @@
                         <div class="form-group">
                             <label class="control-label control-label-custom align-end">Number of retail insurance policies in IDPS</label>
                             <div class="input-group">
-                                <input type="text" class="form-control"  [(ngModel)]="comparisonFeeInfo.idpsNumRetIns" (blur)="onBlur()"/>
+                                <input type="number" class="form-control"  [(ngModel)]="comparisonFeeInfo.idpsNumRetIns" (blur)="onBlur()"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label control-label-custom align-end">Number of retail insurance policies in Super</label>
-                            <div class="input-group_unit">
-                                <span class="unit">$</span>
-                                <input type="text" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.superNumRetIns" (blur)="onBlur()"/>
+                            <div class="input-group">
+                                <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.superNumRetIns" (blur)="onBlur()"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label control-label-custom align-end">Average annual premium of policies in Super</label>
                             <div class="input-group_unit">
                                 <span class="unit">$</span>
-                                <input type="text" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.premiumAvg" (blur)="onBlur()"/>
+                                <input type="number" class="form-control input-number"  [(ngModel)]="comparisonFeeInfo.premiumAvg" (blur)="onBlur()"/>
                             </div>
                         </div>
                     </div>

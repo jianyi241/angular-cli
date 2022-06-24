@@ -58,7 +58,10 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
             const check = this.checkError()
-            if (!check.totalCheck || !check.idpsCheck || !check.superCheck || this.getMemberTotalBalance() <= 0) return
+            if (!check.totalCheck || !check.idpsCheck || !check.superCheck || this.getMemberTotalBalance() <= 0) {
+                this.toastRepository.showDanger('please check data')
+                return
+            }
             this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
         });
     }

@@ -8,7 +8,7 @@ import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {PlatformFeeChartsComponent} from "../components/charts/platform-fee-charts/platform-fee-charts.component";
 import {TotalCostChartsComponent} from "../components/charts/total-cost-charts/total-cost-charts.component";
 import {ToastRepository} from "../../../repository/toast-repository";
-import {FeeReviewChart} from "../../../model/po/feeReviewChart";
+import {FeeReviewChart, Platform} from "../../../model/po/feeReviewChart";
 import {CompareMetricVo} from "../../../model/vo/compareMetircVo";
 import {ComparisonProductVo} from "../../../model/vo/comparisonProductVo";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
@@ -28,9 +28,7 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
   reviewLeaveObservable: any;
   comparisonId: string
   hideHaveWarning: boolean = false
-  feeReviewData: FeeReviewChart
-  // 右侧列表
-  compareData: CompareMetricVo = new CompareMetricVo();
+  feeReviewData: FeeReviewChart = new FeeReviewChart()
 
   constructor(public reviewService: ReviewService,
               public configService: ConfigService,
@@ -54,7 +52,6 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
   ngAfterViewInit() {
     this.activatedRoute.params.subscribe(res => {
       this.comparisonId = res.id
-      this.getMetricComparison()
       this.getFeeReviewChartsData()
     })
   }
@@ -100,13 +97,6 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
     })
   }
 
-  getMetricComparison(): void {
-    if (!this.comparisonId) return
-    this.reviewRepository.getMetricComparison(this.comparisonId).subscribe(res => {
-      this.compareData = res.data
-    });
-  }
-
   getFeeReviewChartsData(): void {
     this.reviewRepository.queryFeeReviewCharts(this.comparisonId).subscribe(res => {
       if (res.statusCode !== 200) {
@@ -121,7 +111,7 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
     })
   }
 
-  saveComment(product: ComparisonProductVo, pComment: NgbPopover) {
+  saveComment(product: Platform, pComment: NgbPopover) {
     if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
       return;
     }
@@ -144,31 +134,31 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
     this.totalCostChartsComponent.setChartsData(this.feeReviewData, this.hideHaveWarning)
   }
 
-  isMainProduct(product: ComparisonProductVo): boolean {
-    return this.reviewService.comparison.mainPlatformId == product.shProductId;
+  isMainProduct(platform: Platform): boolean {
+    return this.reviewService.comparison.mainPlatformId == platform.shProductId;
   }
 
-  removePlatform(product: ComparisonProductVo) {
-    product.showFlag = false;
-    this.changeProduct(product, (data) => {
-      product.id = data.id;
+  removePlatform(platform: Platform) {
+    platform.showFlag = false;
+    this.changeProduct(platform, (data) => {
+      platform.id = data.id;
     }, () => {
-      product.showFlag = true;
+      platform.showFlag = true;
     });
   }
 
-  resetPlatform(product: ComparisonProductVo) {
-    product.showFlag = true;
-    this.changeProduct(product, (data) => {
-      product.id = data.id;
+  resetPlatform(platform: Platform) {
+    platform.showFlag = true;
+    this.changeProduct(platform, (data) => {
+      platform.id = data.id;
     }, () => {
-      product.showFlag = false;
+      platform.showFlag = false;
     });
   }
 
-  changeProduct(product: ComparisonProductVo, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
-    product.shComparisonId = this.reviewService.comparison.id;
-    this.reviewRepository.changeProduct(product).subscribe(res => {
+  changeProduct(platform: Platform, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
+    platform.shComparisonId = this.reviewService.comparison.id;
+    this.reviewRepository.changeProduct(platform).subscribe(res => {
       if (res.statusCode != 200) {
         this.toastRepository.showDanger(res.msg);
         error && error();
@@ -178,19 +168,19 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
     })
   }
 
-  removeOrResetForm(product: ComparisonProductVo) {
-    if (product.showFlag) {
-      this.removePlatform(product)
+  removeOrResetForm(platform: Platform) {
+    if (platform.showFlag) {
+      this.removePlatform(platform)
     } else {
-      this.resetPlatform(product)
+      this.resetPlatform(platform)
     }
   }
 
-  getComment(product: ComparisonProductVo, pPlatform: NgbPopover) {
+  getComment(platform: Platform, pPlatform: NgbPopover) {
     let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
-    product.comparisonComment = new ComparisonCommentInfo();
-    this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, product.shProductId).subscribe(res => {
-      Object.assign(product.comparisonComment, res.data);
+    platform.comparisonComment = new ComparisonCommentInfo();
+    this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, platform.shProductId).subscribe(res => {
+      Object.assign(platform.comparisonComment, res.data);
       pPlatform.open();
     })
   }

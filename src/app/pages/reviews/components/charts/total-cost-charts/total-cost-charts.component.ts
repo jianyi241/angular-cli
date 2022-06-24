@@ -32,15 +32,16 @@ export class TotalCostChartsComponent implements OnInit {
   setChartsData(data: FeeReviewChart, hideWarning: boolean = false) {
     const colors = ['#7C77E9', '#17B726', '#1890FF', '#7938C9', '#EDA114']
     const xAxisValues = data.scopes.map(i => i / 1000)
-    const seriesData: Array<FeeReviewChartsProduct> = []
+    let seriesData: Array<FeeReviewChartsProduct> = []
     let products = data.platforms.flatMap(i => i.products.flatMap(p => {
       return {...p, visitUrl: i.attachmentVo?.visitUrl}
     }))
     if (hideWarning) {
       products = products.filter(f => !f.warning)
     }
-    products.forEach((p,idx) => {
-      seriesData.unshift({
+
+    seriesData = products.map((p, idx) => {
+      return {
         platformName: p.platformName,
         produceName: p.name,
         warning: p.warning,
@@ -49,7 +50,7 @@ export class TotalCostChartsComponent implements OnInit {
         visitUrl: p.visitUrl,
         lineData: p.scopes.map(pv => Number.parseFloat(pv.value.toFixed(2))),
         lineColor: idx <=4 ? colors[idx] : this.getRandomColor()
-      })
+      }
     })
     this.legendData = seriesData
     const totalBalance = data.totalBalance / 1000
