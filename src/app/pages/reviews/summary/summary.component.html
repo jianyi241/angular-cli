@@ -26,7 +26,7 @@
                             <img [src]="comparisonInfo.attachmentVo?.visitUrl || './assets/img/unassgin.svg'" />
                         </div>
                         <div class="personnel-info personnel-info_name">{{comparisonInfo.userName}}</div>|
-                        <div class="personnel-info personnel-info_start">Data valid on {{comparisonInfo.updateTime  | dateFormat : 'hh:mma DD MMM YYYY'}}</div>|
+                        <div class="personnel-info personnel-info_start">Data valid on {{comparisonInfo.updateTime  | dateFormat : 'DD MMM YYYY'}}</div>|
                         <div class="personnel-info personnel-info_end">Created at {{comparisonInfo.createTime  | dateFormat : 'hh:mma DD MMM YYYY'}}</div>
                     </div>
                 </div>
