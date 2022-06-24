@@ -123,7 +123,8 @@ export class PlatformFeeChartsComponent implements OnInit {
               fontFamily: 'Epilogue',
               fontWeight: 400,
             }
-          }
+          },
+          interval: 0
         }
       },
       yAxis: {

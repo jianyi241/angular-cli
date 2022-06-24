@@ -155,6 +155,9 @@ export class TotalCostChartsComponent implements OnInit {
           lineStyle: {
             type: 'solid'
           }
+        },
+        axisLabel: {
+          interval: 0  //设置间隔为0
         }
       },
       yAxis: {
