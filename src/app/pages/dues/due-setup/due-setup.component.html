@@ -20,7 +20,7 @@
                         </label>
                         <ng-select class="select-single" placeholder="Select adviser" dropdownPosition="bottom"
                                    [(ngModel)]="dueService.due.userId">
-                            <ng-option *ngFor="let user of adviserUsers" [value]="user.id">
+                            <ng-option *ngFor="let user of adviserUsers" [value]="user.id" [disabled]="user.status == configService.userStatus.disable">
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
                                         <img [src]="user.avatar?.visitUrl"/>

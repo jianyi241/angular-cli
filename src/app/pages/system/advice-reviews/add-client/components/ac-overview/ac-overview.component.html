@@ -92,7 +92,7 @@
                 <div>Adviser name<span class="label-required">*</span></div>
             </label>
             <ng-select class="select-single" [(ngModel)]="client.userId" placeholder="Select adviser" dropdownPosition="bottom">
-                <ng-option *ngFor="let item of adviserUsers" [value]="item.id">{{item.firstName + ' '+item.lastName}}</ng-option>
+                <ng-option *ngFor="let item of adviserUsers" [value]="item.id" [disabled]="item.status == configService.userStatus.disable">{{item.firstName + ' '+item.lastName}}</ng-option>
             </ng-select>
         </div>
     </div>

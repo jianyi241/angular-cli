@@ -21,7 +21,7 @@
                         <ng-select class="select-single" placeholder="Select owner" dropdownPosition="bottom"
                                    (change)="changeOwner()"
                                    [(ngModel)]="reviewService.comparison.userId">
-                            <ng-option *ngFor="let user of supplierUsers" [value]="user.id">
+                            <ng-option *ngFor="let user of supplierUsers" [value]="user.id" [disabled]="user.status == configService.userStatus.disable">
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
                                         <img [src]="user.avatar?.visitUrl"/>
