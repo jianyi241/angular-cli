@@ -1,0 +1,22 @@
+<div class="number-input" *ngIf="!onlyInput">
+    <div class="form-group">
+        <label class="control-label control-label-custom">{{label}}</label>
+        <div [ngClass]="[showDollar ? 'input-group_unit' : 'input-group']">
+            <span class="unit" *ngIf="showDollar">$</span>
+            <input type="number" class="form-control input-number"
+                [(ngModel)]="value"
+                (ngModelChange)="input()"
+                [ngModelOptions]="{ standalone: true }"
+                (blur)="onBlur()"
+            />
+        </div>
+    </div>
+</div>
+<input type="number" class="form-control input-number"
+       [(ngModel)]="value"
+       (ngModelChange)="input()"
+       [ngModelOptions]="{ standalone: true }"
+       (blur)="onBlur()"
+       *ngIf="onlyInput"
+/>
+
