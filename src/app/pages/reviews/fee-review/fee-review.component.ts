@@ -102,7 +102,6 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
   }
 
   getMetricComparison(): void {
-    console.log('review service comparison id ', this.comparisonId)
     if (!this.comparisonId) return
     this.reviewRepository.getMetricComparison(this.comparisonId).subscribe(res => {
       this.compareData = res.data
