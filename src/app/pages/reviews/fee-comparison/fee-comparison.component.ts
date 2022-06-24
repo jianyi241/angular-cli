@@ -47,7 +47,6 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         this.reviewLeaveObservable && this.reviewLeaveObservable.unsubscribe();
     }
 
-
     subscribe(): void {
         this.saveSubscribe();
         this.nextSubscribe();
@@ -100,8 +99,9 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     }
 
     saveOrUpdateFeeInfo(): void {
-        if (this.getMemberTotalBalance() > 99999999) {
-            this.toastRepository.showDanger('Account max value in this is 99999999.')
+        const check = this.checkError()
+        if (!check.totalCheck || !check.idpsCheck || !check.superCheck || this.getMemberTotalBalance() <= 0) {
+            this.toastRepository.showDanger('please check data')
             return
         }
         this.reviewRepository.saveOrUpdateComparisonFee(this.comparisonFeeInfo).subscribe(res => {
@@ -113,10 +113,16 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         })
     }
 
-    onBlur() {
-        setTimeout(() => {
-            this.saveOrUpdateFeeInfo()
-        }, 300)
+    onBlur(balance: number = 0) {
+        if (balance > 99999999) {
+            this.toastRepository.showDanger('that value max 99999999.')
+            return
+        }
+        this.saveOrUpdateFeeInfo()
+    }
+
+    numberBlur() {
+        this.saveOrUpdateFeeInfo()
     }
 
     getMemberBalance(member: ComparisonMemberInfo, type: string = 'all'): number {

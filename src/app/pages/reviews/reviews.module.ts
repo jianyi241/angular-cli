@@ -24,6 +24,7 @@ import {PopoverCustomDirective} from "../../directive/popover-custom.directive";
 import { FeeReviewComponent } from './fee-review/fee-review.component';
 import { PlatformFeeChartsComponent } from './components/charts/platform-fee-charts/platform-fee-charts.component';
 import { TotalCostChartsComponent } from './components/charts/total-cost-charts/total-cost-charts.component';
+import { NumberInputComponent } from './components/number-input/number-input.component';
 
 // import {EllipsisDirective} from "../../directive/ellipsis.directive";
 
@@ -44,7 +45,8 @@ import { TotalCostChartsComponent } from './components/charts/total-cost-charts/
         PopoverCustomDirective,
         FeeReviewComponent,
         PlatformFeeChartsComponent,
-        TotalCostChartsComponent],
+        TotalCostChartsComponent,
+        NumberInputComponent],
     imports: [
         CommonModule,
         ReviewsRoutingModule,
