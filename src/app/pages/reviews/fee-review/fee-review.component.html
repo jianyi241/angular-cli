@@ -2,7 +2,18 @@
 
 <div class="table-main-content" appTableScroll>
     <div class="sub-head-review">
-        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.fee)}} - Fee calculator</div>
+        <div class="title">Step {{reviewService.getCurrentAnaStep(configService.analysisType.fee)}} - Fee calculator
+        </div>
+        <div class="filter-content">
+            <div class="switch-button xs-ml-16">
+                <div class="switch-text" [ngClass]="{'active': !hideHaveWarning}" (click)="changeHideHaveWarning(false)">
+                    All
+                </div>
+                <div class="switch-text" [ngClass]="{'active': hideHaveWarning}" (click)="changeHideHaveWarning(true)">Hide
+                    products have warning sign
+                </div>
+            </div>
+        </div>
     </div>
     <div class="fee-content">
         <div class="container-left">
@@ -10,43 +21,50 @@
                 <div class="module-title">
                     Platform fees by average total portfolio value in the year ahead
                 </div>
-                <app-platform-fee-charts *ngIf="platformChartsData" [data]="platformChartsData" #platformFeeChartsComponent></app-platform-fee-charts>
+                <app-platform-fee-charts [chartsId]="'feeReviewPlatformCharts'"
+                                         #platformFeeChartsComponent></app-platform-fee-charts>
             </div>
             <div class="total-cast-charts module-wrapper">
                 <div class="module-title">
                     Total cost by average admin fee for the year ahead
                 </div>
-                <app-total-cost-charts #totalCostChartsComponent></app-total-cost-charts>
+                <app-total-cost-charts [chartsId]="'feeReviewCostCharts'"
+                                       #totalCostChartsComponent></app-total-cost-charts>
             </div>
         </div>
         <div class="container-right">
-            <div class="business-metric-list">
-                <div class="item">
-                    <img src="https://img2.baidu.com/it/u=3990732507,3148015412&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="item-logo"/>
-                    <div class="item-name">BT Panorama</div>
+            <div class="business-metric-list" *ngIf="compareData.comparisonProductVos.length">
+                <div class="item" *ngFor="let product of compareData.comparisonProductVos">
+                    <div class="item-content">
+                        <img [src]="product.attachmentVo?.visitUrl" class="item-logo" />
+                        <div class="item-name">{{product.productName}}</div>
+                    </div>
                     <div class="item-btn-group">
                         <button class="btn btn-outline-purple-light btn-small"
                                 #pPlatform='ngbPopover'
                                 container="body" [autoClose]="'outside'"
                                 popoverClass="table-comment-popover"
                                 triggers="manual"
-                                (click)="openCommentPopover(pPlatform)"
+                                (click)="getComment(product, pPlatform)"
                                 placement="top auto" [ngbPopover]="popPlatformContent">
                             <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
                             Comment
                         </button>
-                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn">
-                            <img src="./assets/img/icon/icon-delete-red.svg">
+                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" *ngIf="!isMainProduct(product)" (click)="removeOrResetForm(product)" style="margin-left: 4px !important;">
+                            <span class="icon-block icon-trash icon-20" *ngIf="product.showFlag"></span>
+                            <span class="icon-block icon-reset-red icon-20" *ngIf="!product.showFlag"></span>
                         </button>
                         <ng-template #popPlatformContent>
                             <div class="comment-popover">
                                 <div class="title">{{'Add Comment'}}</div>
-                                <textarea class="form-control xs-mb-16" [(ngModel)]="text"></textarea>
+                                <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
                                 <div class="comment-footer" style="margin-top: 16px">
                                     <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                             (click)="pPlatform.close()">Cancel
                                     </button>
-                                    <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="closeCommentPopover(pPlatform)">Save</button>
+                                    <button class="btn btn-block btn-purple tx-16 xs-ml-8"
+                                            (click)="saveComment(product, pPlatform)">Save
+                                    </button>
                                 </div>
                             </div>
                         </ng-template>

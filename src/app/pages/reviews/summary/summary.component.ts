@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ConfigService} from "../../../service/config.service";
 import {ReviewRepository} from "../../../repository/review-repository";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -18,13 +18,20 @@ import FinalAnalyse from "../../../model/po/finalAnalyse";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {PlatformFeeChartsOptions} from "../../../model/vo/chartsVo";
+import {PlatformFeeChartsComponent} from "../components/charts/platform-fee-charts/platform-fee-charts.component";
+import {TotalCostChartsComponent} from "../components/charts/total-cost-charts/total-cost-charts.component";
+import {FeeReviewChart} from "../../../model/po/feeReviewChart";
+import {ComparisonFeeInfo} from "../../../model/po/comparisonFeeInfo";
+import {ComparisonMemberValueInfo} from "../../../model/po/comparisonMemberValueInfo";
+import ComparisonSummary from "../../../model/po/comparisonSummary";
+import {contain} from "echarts/types/src/scale/helper";
 
 @Component({
     selector: 'app-summary',
     templateUrl: './summary.component.html',
     styleUrls: ['./summary.component.less']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, AfterViewInit {
     reviewSaveObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
@@ -49,22 +56,12 @@ export class SummaryComponent implements OnInit {
     featureProperties: GroupInfo = new GroupInfo();
     currentCommit: ComparisonCommentInfo = new ComparisonCommentInfo();
     currentFinalAnalysis: FinalAnalyse = new FinalAnalyse();
-    currentEditorText: string = ''
-    platformChartsData: PlatformFeeChartsOptions = {
-        min: 1,
-        max: 100,
-        seriesData: [[0,0,1],[1,0,2],[2,0,3],[3,0,4],[4,0,5],[5,0,6],[6,0,7],[7,0,8],[8,0,9],[9,0,10],
-            [0,1,10],[1,1,9],[2,1,8],[3,1,7],[4,1,6],[5,1,5],[6,1,4],[7,1,3],[8,1,2],[9,1,1],
-            [0,2,10],[1,2,9],[2,2,8],[3,2,7],[4,2,6],[5,2,5],[6,2,4],[7,2,3],[8,2,2],[9,2,1],
-            [0,3,10],[1,3,9],[2,3,8],[3,3,7],[4,3,6],[5,3,5],[6,3,4],[7,3,3],[8,3,2],[9,3,1],
-            [0,4,10],[1,4,9],[2,4,8],[3,4,7],[4,4,6],[5,4,5],[6,4,4],[7,4,3],[8,4,2],[9,4,1]],
-        xAxisValues: ['1', '2', '3', '4', '5', '6', '7', '8', '9','10'],
-        yAxisValues: new Array(5).fill({
-            name: 'Individual11',
-            product: 'BT Panorama',
-            logo: 'https://img1.baidu.com/it/u=2427267416,2184425688&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
-        })
-    }
+    currentEditorText: string = '';
+    // fee相关
+    feeChartData: FeeReviewChart = null;
+    feeFormData: ComparisonFeeInfo = new ComparisonFeeInfo();
+    feeHeldPlatformChoose: string = ''
+    feeTotalAssets: number = 0
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -92,6 +89,16 @@ export class SummaryComponent implements OnInit {
                 this.comparisonInfo.id = res.id
             }
         })
+        // this.getSummaryInfo()
+    }
+
+    @ViewChild('platformFeeChartsComponent')
+    platformFeeChartsComponent: PlatformFeeChartsComponent
+
+    @ViewChild('totalCostChartsComponent')
+    totalCostChartsComponent: TotalCostChartsComponent
+
+    ngAfterViewInit() {
         this.getSummaryInfo()
     }
 
@@ -160,6 +167,7 @@ export class SummaryComponent implements OnInit {
                 return;
             }
 
+            this.getFeeInfo(res.data)
             this.comparisonProducts = res.data.products.filter(res => this.showFeatureFlag(res));
             this.updateViewList(window.innerWidth, true);
             this.platformCounts = {
@@ -174,6 +182,27 @@ export class SummaryComponent implements OnInit {
             this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
             this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
         })
+    }
+
+    getFeeInfo(data: ComparisonSummary): void {
+        this.feeChartData = {platforms: data.products, totalBalance: data.totalBalance, scopes: data.scopes}
+        if (this.includeAnalysis(AnalysisType.fee.value)) {
+            this.platformFeeChartsComponent.setChartsData(this.feeChartData)
+            this.totalCostChartsComponent.setChartsData(this.feeChartData)
+        }
+        this.feeFormData = data.fee
+        // @ts-ignore
+        const feeArray = Object.entries(this.feeFormData).map((i, idx) => {
+            const obj = this.reviewService.finalPlatformHoldingsAndTransactions.find(k => k.key === i[0])
+            if (obj && i[1]) {
+                return obj.value
+            }
+        }).filter(f => f)
+        this.feeHeldPlatformChoose = feeArray.toString()
+        this.feeTotalAssets = this.feeFormData.members.map(m => m.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)).reduce((a,b) => a + b, 0)
+        console.log('totalAssets ', this.feeTotalAssets)
+
+
     }
 
     updateViewList(windowWidth: number, init = false): void {
@@ -339,5 +368,9 @@ export class SummaryComponent implements OnInit {
     getProductPropValue(propertyList: Array<ProductPropInfo> ,prop: PropertyInfo): string {
         const obj = propertyList.find(item => item.shPropertyId === prop.id)
         return obj ? obj.propValue : ''
+    }
+
+    getMemberValuesByType(memberValues: Array<ComparisonMemberValueInfo>, type: string): Array<ComparisonMemberValueInfo> {
+        return memberValues.filter(i => i.type === type)
     }
 }

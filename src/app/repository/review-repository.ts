@@ -20,6 +20,7 @@ import {SelectionCondition} from "../model/condition/selection-condition";
 import ComparisonSummary from "../model/po/comparisonSummary";
 import FinalAnalyse from "../model/po/finalAnalyse";
 import {ComparisonFeeInfo} from "../model/po/comparisonFeeInfo";
+import {FeeReviewChart} from "../model/po/feeReviewChart";
 
 @Injectable({
     providedIn: 'root'
@@ -104,7 +105,7 @@ export class ReviewRepository {
         return this.http.put<HttpResult<ComparisonProductInfo>>(environment.baseURL + `/compare/changeProduct`, product);
     }
 
-    saveFeatureTemplate(templateInfo:ComparisonSaveTemplateInfo){
+    saveFeatureTemplate(templateInfo: ComparisonSaveTemplateInfo) {
         return this.http.post<HttpResult<ComparisonSaveTemplateInfo>>(environment.baseURL + `/compare/saveFeatureTemplate`, templateInfo);
     }
 
@@ -123,4 +124,9 @@ export class ReviewRepository {
     saveOrUpdateComparisonFee(comparisonFeeInfo: ComparisonFeeInfo): Observable<HttpResult<ComparisonFeeInfo>> {
         return this.http.post<HttpResult<ComparisonFeeInfo>>(environment.baseURL + '/compare/saveOrUpdateComparisonFee', comparisonFeeInfo);
     }
+
+    queryFeeReviewCharts(comparisonId: string): Observable<HttpResult<FeeReviewChart>> {
+        return this.http.get<HttpResult<FeeReviewChart>>(environment.baseURL + `/compare/queryFeeReviewChart/${comparisonId}`);
+    }
 }
+

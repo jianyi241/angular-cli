@@ -1,22 +1,38 @@
-<div class="charts-wrapper">
+<div class="charts-wrapper" *ngIf="chartsHeight > 0">
     <div class="left-title">
         Platforms
     </div>
-    <div class="charts-y__axis">
-        <div class="label" *ngFor="let i of [1,2,3,4,5]">
+    <div class="charts-y__axis" [ngStyle]="{'height.px': chartsHeight}">
+        <div class="label" *ngFor="let i of yAxisData">
             <div class="label-left">
-                <img src="../../../../../../assets/img/icon/icon-main-text.svg" class="main-icon"/>
-                <img src="https://img2.baidu.com/it/u=3990732507,3148015412&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="label-icon"/>
+                <img *ngIf="i.mainFlag" src="../../../../../../assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                <img [src]="i.visitUrl" class="label-icon"/>
             </div>
             <div class="label-right">
-                <div class="label-type">BT Panorama</div>
-                <div class="label-title">Individual{{i}} </div>
-                <img src="../../../../../../assets/img/icon/icon-warning-red.svg" class="warn-icon"/>
+                <div class="label-type">{{i.platformName}}</div>
+                <div class="label-title">{{i.produceName}} </div>
+                <div class="tooltip-wrapper">
+                    <ng-template #popContent>
+                        <div class="cell-popover">
+                            <span class="icon-block icon-close icon-13" (click)="p.close()"></span>
+                            <div class="info">
+                                <div class="info-title">Messing investment options</div>
+                                <div class="info-ul">
+                                    <ul>
+                                        <li *ngFor="let txt of i.warningMessage">{{txt}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <img [hidden]="!i.warning" src="../../../../../../assets/img/icon/icon-warning-red.svg" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
+                         placement="right auto" [ngbPopover]="popContent" class="warn-icon"/>
+                </div>
             </div>
         </div>
     </div>
-    <div class="charts-container">
-        <div class="charts" id="container">
+    <div class="charts-container" [ngStyle]="{'height.px': chartsHeight}">
+        <div class="charts" [id]="this.chartsId" [ngStyle]="{'height.px': chartsHeight}">
         </div>
         <div class="charts-summary">
             <div class="summary-left">

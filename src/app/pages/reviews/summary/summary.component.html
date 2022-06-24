@@ -61,7 +61,6 @@
                     <ng-template #popIntroduceContent>
                         <div class="comment-popover">
                             <div class="title">Edit</div>
-
                             <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
                             <div class="comment-footer" style="margin-top: 16px">
                                 <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
@@ -73,7 +72,7 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="module-right">
+            <div class="module-right" *ngIf="includeAnalysis(configService.analysisType.fee)">
                 <div class="title-info">
                     <div class="info-title">Portfolio details</div>
                     <div class="info-sub-title">Platform accounts</div>
@@ -84,28 +83,23 @@
                             <div class="total-left">Assets</div>
                             <div class="total-right">
                                 <span class="label">Total assets</span>
-                                <span class="value">$123,000</span>
+                                <span class="value">${{ feeTotalAssets ? feeTotalAssets.toFixed(2).replace('.',',') : 0}}</span>
                             </div>
                         </div>
                         <div class="entity-list">
-                            <div class="list-item" *ngFor="let i of [1,2]">
-                                <div class="item-title">Entity{{i}}</div>
+                            <div class="list-item" *ngFor="let member of feeFormData.members">
+                                <div class="item-title">{{member.name}}</div>
                                 <div class="entity-content">
                                     <div class="entity-item">
                                         <div class="item-label">Value of IDPS accounts</div>
                                         <div class="item-values">
-                                            <div class="value">$12,000</div>
-                                            <div class="value">$45,000</div>
-                                            <div class="value">$8,000</div>
-                                            <div class="value">$3,000</div>
-                                            <div class="value">$20,000</div>
+                                            <div class="value" *ngFor="let idps of getMemberValuesByType(member.memberValues,reviewService.comparisonMemberValueType.idps)">${{idps.balance}}</div>
                                         </div>
                                     </div>
                                     <div class="entity-item">
                                         <div class="item-label">Value of Super/Pension accounts</div>
                                         <div class="item-values">
-                                            <div class="value">$12,000</div>
-                                            <div class="value">$45,000</div>
+                                            <div class="value" *ngFor="let super of getMemberValuesByType(member.memberValues,reviewService.comparisonMemberValueType.super)">${{super.balance}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +118,7 @@
                                     <div class="entity-item flex-start">
                                         <div class="item-label">Products held through the platform</div>
                                         <div class="item-value">
-                                            Managed funds (held outside managed accounts), Managed accounts (SMA or MDA models), International listed investments (held outside managed accounts), Australian listed investments (held outside managed accounts), Unlisted bonds, Retail insurance
+                                            {{feeHeldPlatformChoose}}
                                         </div>
                                     </div>
                                     <div class="entity-item">
@@ -243,7 +237,7 @@
                 </div>
             </div>
         </div>
-        <div class="summary__fee--charts module-wrapper">
+        <div class="summary__fee--charts module-wrapper" *ngIf="includeAnalysis(configService.analysisType.fee)">
             <div class="title-info">
                 <div class="title">
                     Fee estimates <span>of selected platforms</span>
@@ -257,13 +251,13 @@
                     <div class="content-title">
                         Total cost by average admin fee for the year ahead
                     </div>
-                    <app-total-cost-charts></app-total-cost-charts>
+                    <app-total-cost-charts [chartsId]="'summaryCostCharts'" #totalCostChartsComponent></app-total-cost-charts>
                 </div>
                 <div class="content-wrapper">
                     <div class="content-title">
                         Platform fees by average total portfolio value in the year ahead
                     </div>
-                    <app-platform-fee-charts *ngIf="platformChartsData" [data]="platformChartsData" #platformFeeChartsComponent></app-platform-fee-charts>
+                    <app-platform-fee-charts [chartsId]="'summaryPlatformCharts'" #platformFeeChartsComponent></app-platform-fee-charts>
                 </div>
             </div>
         </div>
@@ -347,28 +341,6 @@
             <div class="remark-content">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
-<!--            <button class="btn btn-outline-purple-light btn-small"-->
-<!--                    #pDisclaimer='ngbPopover'-->
-<!--                    container="body" [autoClose]="'outside'"-->
-<!--                    popoverClass="table-comment-popover"-->
-<!--                    triggers="manual"-->
-<!--                    (click)="openPopover(pDisclaimer)"-->
-<!--                    placement="top auto"-->
-<!--                    [ngbPopover]="popDisclaimerContent">-->
-<!--                <span class="icon-block icon-pen icon-14 xs-mr-4"></span>Edit-->
-<!--            </button>-->
-<!--            <ng-template #popDisclaimerContent>-->
-<!--                <div class="comment-popover">-->
-<!--                    <div class="title">Edit</div>-->
-<!--                    <ckeditor [(ngModel)]="comparisonInfo.disclaimer" [config]="config"></ckeditor>-->
-<!--                    <div class="comment-footer" style="margin-top: 16px">-->
-<!--                        <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"-->
-<!--                                (click)="pDisclaimer.close()">Cancel-->
-<!--                        </button>-->
-<!--                        <button class="btn btn-block btn-purple tx-16 xs-ml-8" (click)="saveComparisonInfo(pDisclaimer)">Save</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </ng-template>-->
         </div>
         <div class="summary__decision--making--process module-wrapper">
             <div class="title-info">

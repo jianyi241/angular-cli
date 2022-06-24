@@ -53,6 +53,26 @@ export class ReviewService {
         this.leaveReviewSubject.next();
     }
 
+    finalPlatformHoldingsAndTransactions = [{
+        key: 'chooseAu',
+        value: 'Australian listed investments (held outside managed accounts)'
+    },{
+        key: 'chooseMf',
+        value: 'Managed funds (held outside managed accounts)'
+    },{
+        key: 'chooseMa',
+        value: 'Managed accounts (SMA or MDA models)'
+    },{
+        key: 'chooseIntl',
+        value: 'International listed investments (held outside managed accounts)'
+    },{
+        key: 'chooseBond',
+        value: 'Unlisted bonds'
+    },{
+        key: 'chooseRetIns',
+        value: 'Retail insurance'
+    }]
+
     dealLeave(data: any[]): void {
         let cache = this.cacheSaveData.join(',');
         let curr = data.join(',');

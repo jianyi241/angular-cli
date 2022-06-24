@@ -110,7 +110,9 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     }
 
     onBlur() {
-        this.saveOrUpdateFeeInfo()
+        setTimeout(() => {
+            this.saveOrUpdateFeeInfo()
+        }, 300)
     }
 
     getMemberBalance(member: ComparisonMemberInfo, type: string = 'all'): number {

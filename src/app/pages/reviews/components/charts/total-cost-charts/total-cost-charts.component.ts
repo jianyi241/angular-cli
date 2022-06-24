@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as echarts from "echarts";
+import {FeeReviewChart} from "../../../../../model/po/feeReviewChart";
+import {FeeReviewChartsProduct, TotalCostChartsOptions} from "../../../../../model/vo/chartsVo";
+import {ReviewService} from "../../../../../service/review.service";
 
 @Component({
   selector: 'app-total-cost-charts',
@@ -7,83 +10,86 @@ import * as echarts from "echarts";
   styleUrls: ['./total-cost-charts.component.less']
 })
 export class TotalCostChartsComponent implements OnInit {
-  totalCastCharts: any
-  totalCastData = [
-    {
-      name: 'Individual',
-      product: 'BT Panorama',
-      data: [120, 132, 101, 134, 90, 230, 210, 230, 210],
-      color: '#7C77E9',
-      logo: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F85%2F03%2Faf%2F8503af9a8b0ca227a0bd9be9ddc76e84.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657848848&t=ed9f99e59f7fcb63a66116259c19dfe6',
-      mainFlag: false
-    },
-    {
-      name: 'Individual1',
-      product: 'BT Panorama',
-      data: [120,220, 182, 191, 234, 290, 330, 310, 210],
-      color: '#17B726',
-      logo: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F85%2F03%2Faf%2F8503af9a8b0ca227a0bd9be9ddc76e84.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657848848&t=ed9f99e59f7fcb63a66116259c19dfe6',
-      mainFlag: true
-    },
-    {
-      name: 'Individual2',
-      product: 'BT Panorama',
-      data: [11, 22, 33, 44, 55, 66, 77, 99, 111],
-      color: '#1890FF',
-      logo: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F85%2F03%2Faf%2F8503af9a8b0ca227a0bd9be9ddc76e84.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657848848&t=ed9f99e59f7fcb63a66116259c19dfe6',
-      mainFlag: true
-    },
-    {
-      name: 'Individual3',
-      product: 'Netwealth',
-      data: [111, 132, 19, 34, 9, 23, 21, 240, 187],
-      color: '#7938C9',
-      logo: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F85%2F03%2Faf%2F8503af9a8b0ca227a0bd9be9ddc76e84.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657848848&t=ed9f99e59f7fcb63a66116259c19dfe6',
-      mainFlag: false
-    },
-    {
-      name: 'Individual4',
-      product: 'BT Panorama',
-      data: [155, 133, 126, 178, 230, 236, 120, 240, 170],
-      color: '#EDA114',
-      logo: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2F85%2F03%2Faf%2F8503af9a8b0ca227a0bd9be9ddc76e84.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657848848&t=ed9f99e59f7fcb63a66116259c19dfe6',
-      mainFlag: false
-    }
-  ]
-  constructor() { }
+  totalCastCharts: any = null
+  legendData: Array<FeeReviewChartsProduct> = new Array<FeeReviewChartsProduct>()
+
+  @Input()
+  chartsId: string
+  constructor(private reviewService: ReviewService) { }
 
   ngOnInit(): void {
-    this.initCharts()
     window.addEventListener('resize',(e:UIEvent) => {
-      this.totalCastCharts.resize()
+      if (this.totalCastCharts) {
+        this.totalCastCharts.resize()
+      }
     })
   }
 
-  initCharts() {
-    const data = this.totalCastData
-    const seriesData: any = data.map(e => {
+  getRandomColor(): string{
+    return '#'+('00000'+ (Math.random()*0x1000000<<0).toString(16)).substr(-6);
+  }
+
+  setChartsData(data: FeeReviewChart, hideWarning: boolean = false) {
+    const colors = ['#7C77E9', '#17B726', '#1890FF', '#7938C9', '#EDA114']
+    const xAxisValues = data.scopes.map(i => i / 1000)
+    const seriesData: Array<FeeReviewChartsProduct> = []
+    let products = data.platforms.flatMap(i => i.products.flatMap(p => {
+      return {...p, visitUrl: i.attachmentVo?.visitUrl}
+    }))
+    if (hideWarning) {
+      products = products.filter(f => !f.warning)
+    }
+    products.forEach((p,idx) => {
+      seriesData.unshift({
+        platformName: p.platformName,
+        produceName: p.name,
+        warning: p.warning,
+        warningMessage: p.warningMessage,
+        mainFlag: p.shProductId == this.reviewService.comparison.mainPlatformId,
+        visitUrl: p.visitUrl,
+        lineData: p.scopes.map(pv => Number.parseFloat(pv.value.toFixed(2))),
+        lineColor: idx <=4 ? colors[idx] : this.getRandomColor()
+      })
+    })
+    this.legendData = seriesData
+    const totalBalance = data.totalBalance / 1000
+    const max = (): number => {
+      const data = seriesData.flatMap(i => i.lineData).sort((a, b) => a - b)
+      return data[data.length - 1]
+    }
+    const markIndex = xAxisValues.findIndex(x => x === totalBalance)
+    setTimeout(() => {
+      this.initCharts({seriesData, xAxisValues, markIndex, totalBalance , max: max()})
+    }, 50)
+  }
+
+  initCharts({seriesData, xAxisValues, markIndex, totalBalance, max}: TotalCostChartsOptions) {
+    const data: any = seriesData.map(e => {
       return {
-        name: `${e.name}_||_${e.product}_||_${e.logo}`,
+        name: `${e.platformName}_||_${e.produceName}_||_${e.visitUrl}`,
         type: 'line',
         // stack: 'Total',
         showSymbol: true,
         symbol: 'circle',     //设定为实心点
         symbolSize: e.mainFlag ? 11 : 6,   //设定实心点的大小
         itemStyle: {
-          color: e.color,
+          color: e.lineColor,
         },
         lineStyle: {
           type: 'solid',
-          color: e.color,
-          width: e.mainFlag ? 4 : 2
+          color: e.lineColor,
+          width: e.mainFlag ? 4 : 2 // 主产品加粗
         },
-        data: e.data
+        data: e.lineData
       }
     })
-    console.log('seriesData ', seriesData)
     // @ts-ignore
-    const chartDom: HTMLElement = document.getElementById('totalCastCharts');
-    this.totalCastCharts = echarts.init(chartDom);
+    if (this.totalCastCharts == null) {
+      const chartDom: HTMLElement = document.getElementById(this.chartsId);
+      this.totalCastCharts = echarts.init(chartDom);
+    } else {
+      this.totalCastCharts.clear()
+    }
     let option;
     option = {
       title: {
@@ -106,8 +112,8 @@ export class TotalCostChartsComponent implements OnInit {
                     </div>
                     <div style=";width: 6px;height: 6px;border-radius: 50%;background-color: ${params.color}"></div>
                 </div>
-                <div style="vertical-align: text-top;padding: 0 8px 8px 8px !important;color: #25324B;font: normal 400 12px 'Epilogue';line-height: 1.5;word-wrap: break-word;word-break: break-word;white-space: pre-line;">
-                    <span style="font-weight: 700;">$${params.value}</span> total cost at $300k of the total investment value
+                <div style="vertical-align: text-top;padding: 0 8px 8px 8px !important;color: #25324B;font: normal 400 12px 'Epilogue';line-height: 1.5;word-wrap: break-word;word-break: break-word;white-space: pre-line;margin-top: -10px">
+                    <span style="font-weight: 700;">$${params.value}</span> total cost at $${params.name} of the total investment value
                 </div>
             </div>
           `
@@ -137,7 +143,7 @@ export class TotalCostChartsComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: [0, 50, 100, 150,160, 200, 250, 300, 350, 400],
+        data: xAxisValues,
         splitLine: {
           show: true,
           lineStyle: {
@@ -171,7 +177,7 @@ export class TotalCostChartsComponent implements OnInit {
         }
       },
       series: [
-        ...seriesData,
+        ...data,
         {
           name: 'Current portfolio value',
           type: 'line',
@@ -187,7 +193,7 @@ export class TotalCostChartsComponent implements OnInit {
                 return `
                   <div style='color: #25324B;padding: 7px 12px;background: #d6ddeb;border-radius: 4px;box-shadow: 0 0 2px #DEDEDE;text-align: center;;'>
                     <div style="font: normal 400 12px 'Epilogue';line-height: 20px">${params.name}</div>
-                    <div style="font: normal 600 16px 'Epilogue';line-height: 20px">$160 (K)</div>
+                    <div style="font: normal 600 16px 'Epilogue';line-height: 20px">$${totalBalance} (K)</div>
                   </div>
                 `
               },
@@ -220,10 +226,10 @@ export class TotalCostChartsComponent implements OnInit {
               [
                 {
                   name: 'Current portfolio value',
-                  coord: [4, 0]
+                  coord: [markIndex, 0]
                 },
                 {
-                  coord: [4, 330]
+                  coord: [markIndex, max]
                 }
               ]
             ]

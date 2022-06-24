@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as echarts from "echarts";
 import {EChartsOption} from "echarts/types/dist/shared";
-import {PlatformFeeChartsOptions} from "../../../../../model/vo/chartsVo";
+import { FeeReviewChartsProduct, PlatformFeeChartsOptions} from "../../../../../model/vo/chartsVo";
+import {FeeReviewChart} from "../../../../../model/po/feeReviewChart";
+import {ReviewService} from "../../../../../service/review.service";
 @Component({
   selector: 'app-platform-fee-charts',
   templateUrl: './platform-fee-charts.component.html',
@@ -9,47 +11,68 @@ import {PlatformFeeChartsOptions} from "../../../../../model/vo/chartsVo";
 })
 export class PlatformFeeChartsComponent implements OnInit {
 
-  platformCharts: any
-  constructor() { }
+  platformCharts: any = null
+  yAxisData: Array<FeeReviewChartsProduct> = new Array<FeeReviewChartsProduct>()
+  chartsHeight: number = 0
+  constructor(private reviewService: ReviewService) { }
 
   @Input()
-  data: PlatformFeeChartsOptions
+  chartsId: string
 
   ngOnInit(): void {
-    let _data = this.data.seriesData
-    const data = _data.map(i => {
-      i[2]=Math.floor(Math.random() * (100 - 1)) + 1
-      return i
-    })
-    setTimeout(() => {
-      this.initCharts(data)
-    }, 200)
     window.addEventListener('resize',(e:UIEvent) => {
-      this.platformCharts.resize()
+      if (this.platformCharts) {
+        this.platformCharts.resize()
+      }
     })
   }
 
-  initCharts(data) {
-    console.log('init charts...')
-    // @ts-ignore
-    const chartDom:HTMLElement = document.getElementById('container');
-    this.platformCharts = echarts.init(chartDom);
-    let option: EChartsOption;
-    const { xAxisValues, yAxisValues, min, max } = this.data
+  setChartsData(data: FeeReviewChart, hideWarning: boolean = false) {
+    const xAxisValues = data.scopes.map(i => i / 1000)
+    const yAxisValues: Array<FeeReviewChartsProduct> = []
+    const seriesData: Array<Array<number>> = []
+    let products = data.platforms.flatMap(i => i.products.flatMap(p => {
+      return {...p, visitUrl: i.attachmentVo?.visitUrl}
+    }))
+    if (hideWarning) {
+      products = products.filter(f => !f.warning)
+    }
+    products.forEach((p,idx) => {
+        yAxisValues.unshift({
+          platformName: p.platformName,
+          produceName: p.name,
+          warning: p.warning,
+          warningMessage: p.warningMessage,
+          mainFlag: p.shProductId == this.reviewService.comparison.mainPlatformId,
+          visitUrl: p.visitUrl
+        })
+        const scopes = p.scopes.map((s, sIdx) => {
+          return [sIdx, idx, s.value]
+        })
+        seriesData.push(...scopes)
+    })
+    const totalBalance = data.totalBalance / 1000
+    const allValues = seriesData.flatMap(i => i[2]).sort((a, b) => a - b)
+    this.chartsHeight = yAxisValues.length * 56 + 60 // 每项高度56
+    setTimeout(() => {
+      this.initCharts({xAxisValues,yAxisValues,seriesData,min: allValues[0], max: allValues[allValues.length - 1],totalBalance})
+    },50)
+  }
 
-    // .map(function (item) {
-    //   return [item[1], item[0], item[2] || '-'];
-    // });
-    console.log('data ', JSON.stringify(data))
+  initCharts({xAxisValues, yAxisValues, min, max, seriesData, totalBalance}: PlatformFeeChartsOptions) {
+    this.yAxisData = yAxisValues
+    if (this.platformCharts == null) {
+      const chartDom:HTMLElement = document.getElementById(this.chartsId);
+      this.platformCharts = echarts.init(chartDom);
+    } else {
+      this.platformCharts.clear()
+    }
+    let option: EChartsOption;
     option = {
       backgroundColor: '#FFFFFF',
       tooltip: {
         show: true,
         position: 'top',
-        // formatter: (params: any) => {
-        //   console.log('params ', params)
-        //   return params.data[2]
-        // }
       },
       grid: {
         width: 'auto',
@@ -73,8 +96,8 @@ export class PlatformFeeChartsComponent implements OnInit {
         },
         axisLabel: {
           formatter: function(val: any) {
-            if (val == 3) {
-              return '{a|3}'
+            if (val == totalBalance) {
+              return `{a|${val}}`
             } else {
               return `{b|${val}}`
             }
@@ -121,14 +144,8 @@ export class PlatformFeeChartsComponent implements OnInit {
         },
         axisLabel: {
           show: false,
-          interval: "auto",
           inside: false,
-          // formatter: function (value: any, index: number) {
-          //   const item = JSON.parse(value)
-          //   return item.name
-          // }
         },
-        data: yAxisValues,
         splitArea: {
           show: true
         },
@@ -156,7 +173,7 @@ export class PlatformFeeChartsComponent implements OnInit {
         {
           name: 'Platforms',
           type: 'heatmap',
-          data: data,
+          data: seriesData,
           tooltip: {
             show: false
           },
@@ -170,13 +187,6 @@ export class PlatformFeeChartsComponent implements OnInit {
               return '$'+e.data[2].toFixed(1)
             }
           },
-          // emphasis: {
-          //   itemStyle: {
-          //     shadowBlur: 2,
-          //     // shadowColor: 'rgba(0,0,0,.4)',
-          //     borderRadius: 5
-          //   }
-          // },
           itemStyle: {
             // @ts-ignore
             borderRadius: 5,
@@ -187,7 +197,8 @@ export class PlatformFeeChartsComponent implements OnInit {
         }
       ]
     };
-    option && this.platformCharts.setOption(option);
+    option && this.platformCharts.setOption(option, true);
+    this.platformCharts.resize()
   }
 
 }

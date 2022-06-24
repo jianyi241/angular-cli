@@ -11,6 +11,7 @@
       flex: 1;
       display: flex;
       align-items: flex-start;
+      width: 100%;
       font-family: 'Epilogue';
       margin-bottom: 4px;
       padding-bottom: 10px;
@@ -32,27 +33,60 @@
         }
       }
       > .label-right {
+        flex: 1;
         position: relative;
         font-size: 12px;
+        text-align: left;
         > .label-type {
+          max-width: 70px;
           font-weight: 400;
           line-height: 1;
           color: #7C8493;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          white-space: nowrap;
         }
         > .label-title {
+          max-width: 70px;
           font-weight: 600;
           font-size: 12px;
           line-height: 1;
           color: #25324B;
           margin-top: 5px;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          white-space: nowrap;
         }
-        .warn-icon {
+        .tooltip-wrapper {
           position: absolute;
           width: 18px;
           height: 18px;
           right: -30px;
           top: 50%;
           transform: translateY(-50%);
+          z-index: 99999;
+          /deep/ .popover {
+            width: 350px;
+          }
+          .cell-popover {
+            width: 350px;
+            .info-title{
+              font: normal 700 16px 'Epilogue';
+            }
+            .info-ul {
+              font: normal 400 14px 'Epilogue';
+              color: #9ea1ad;
+              margin-top: 15px;
+              li {
+                padding: 5px 0;
+              }
+            }
+          }
+        }
+        .warn-icon {
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
         }
       }
     }
@@ -60,7 +94,6 @@
   .charts-container {
     position: relative;
     flex: 1;
-    height: 340px;
     > .charts {
       width: 100%;
       height: 100%;
