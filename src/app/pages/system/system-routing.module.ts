@@ -50,6 +50,7 @@ import {PbdFeesRatesComponent} from "./platforms/products-box-detail/children/pb
 import {PbdFindBdmComponent} from "./platforms/products-box-detail/children/pbd-find-bdm/pbd-find-bdm.component";
 import {ReviewListComponent} from "./advice-reviews/review-list/review-list.component";
 import {AddClientComponent} from "./advice-reviews/add-client/add-client.component";
+import {NewsListComponent} from "./news/news-list/news-list.component";
 
 const routes: Routes = [
     {
@@ -299,6 +300,18 @@ const routes: Routes = [
             {
                 path: '',
                 component: ProfileComponent
+            }
+        ]
+    },
+    {
+        path: 'news',
+        canActivate: [AuthActivateGuard],
+        canActivateChild: [AuthActivateChildGuard],
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'news-list',
+                component: NewsListComponent,
             }
         ]
     }

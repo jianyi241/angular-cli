@@ -5,11 +5,11 @@
         </a>
 
         <div class="menu" *ngIf="currentUserService.isAdminUser()">
+            <a [routerLink]="['/news/news-list']" routerLinkActive="active">News & updates</a>
             <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
             <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
             <a [routerLink]="['/configuration/configuration-tab']" routerLinkActive="active">SuitabilityHub configurator</a>
-<!--            <a>News & updates</a>-->
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">

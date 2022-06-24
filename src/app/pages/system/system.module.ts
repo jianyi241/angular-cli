@@ -82,6 +82,7 @@ import {ClientTableComponent} from './advice-reviews/review-list/components/clie
 import {ReviewTableComponent} from "./advice-reviews/review-list/components/review-table/review-table.component";
 import {KanbanBoardComponent} from "./advice-reviews/review-list/components/kanban-board/kanban-board.component";
 import {DisableModalComponent} from "./advice-reviews/modal/disable-modal/disable-modal.component";
+import { NewsListComponent } from './news/news-list/news-list.component';
 
 @NgModule({
     declarations: [
@@ -154,7 +155,8 @@ import {DisableModalComponent} from "./advice-reviews/modal/disable-modal/disabl
         ReviewTableComponent,
         ClientTableComponent,
         KanbanBoardComponent,
-        DisableModalComponent
+        DisableModalComponent,
+        NewsListComponent
     ],
     imports: [
         CommonModule,
