@@ -27,7 +27,7 @@
                         </div>
                         <div class="top-right">
                             <span class="label">Total assets</span>
-                            <span class="value">${{ getMemberBalance(member) ? getMemberBalance(member).toFixed(3).replace('.',',') : 0}}</span>
+                            <span class="value">${{ formatAmount(getMemberBalance(member))}}</span>
                             <span class="remove-btn tx-bold" *ngIf="idx > 0" (click)="removeMember(idx)">Remove</span>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     <div class="tip-error" *ngIf="getMemberTotalBalance() === 0">At least one account must have a balance</div>
                     <div class="total-amount" style="margin-top: 12px">
                         <div class="text">Total value of investments and super</div>
-                        <div class="amount">{{  getMemberTotalBalance() ? getMemberTotalBalance().toFixed(3).replace('.',',') : 0}}</div>
+                        <div class="amount">{{formatAmount(getMemberTotalBalance())}}</div>
                     </div>
                 </div>
             </div>
@@ -99,35 +99,10 @@
             </div>
 
             <div class="form-group-right">
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseMf" name="retailInsurance"
-                           id="chooseMf" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseMf">Managed funds (held outside managed accounts)</label>
-                </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseMa" name="retailInsurance"
-                           id="chooseMa" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseMa">Managed accounts (SMA or MDA models)</label>
-                </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseAu" name="retailInsurance"
-                           id="chooseAu" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseAu">Australian listed investments (held outside managed accounts)</label>
-                </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseIntl" name="retailInsurance"
-                           id="chooseIntl" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseIntl">International listed investments (held outside managed accounts)</label>
-                </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseBond" name="retailInsurance"
-                           id="chooseBond" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseBond">Unlisted bonds</label>
-                </div>
-                <div class="check-box check-box-purple">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo.chooseRetIns" name="retailInsurance"
-                           id="chooseRetIns" (change)="saveOrUpdateFeeInfo()"/>
-                    <label for="chooseRetIns">Retail insurance</label>
+                <div class="check-box check-box-purple" *ngFor="let item of reviewService.finalPlatformHoldingsAndTransactions">
+                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo[item.key]" [name]="item.key"
+                           [id]="item.key" (change)="saveOrUpdateFeeInfo()"/>
+                    <label [for]="item.key">{{item.value}}</label>
                 </div>
             </div>
         </div>

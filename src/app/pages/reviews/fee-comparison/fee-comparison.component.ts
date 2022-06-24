@@ -10,7 +10,7 @@ import {ToastRepository} from "../../../repository/toast-repository";
 import {ComparisonMemberInfo} from "../../../model/po/comparisonMemberInfo";
 import {ComparisonMemberValueInfo} from "../../../model/po/comparisonMemberValueInfo";
 import {ComparisonMemberValueType} from "../../../model/enums/comparison-member-value-type";
-import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
+import {dealThousands} from "../../../utils/amount-format";
 
 @Component({
     selector: 'app-fee-comparison',
@@ -79,6 +79,10 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
             this.router.navigateByUrl('/supplier/comparisons-list');
         })
+    }
+
+    formatAmount(amount: number): string {
+        return dealThousands(amount.toString());
     }
 
     getFeeInfo(): void {

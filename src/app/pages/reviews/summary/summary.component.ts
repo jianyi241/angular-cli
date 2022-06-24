@@ -17,14 +17,13 @@ import {Constants} from "../../../model/constants";
 import FinalAnalyse from "../../../model/po/finalAnalyse";
 import {ProductPropInfo} from "../../../model/po/productPropInfo";
 import {AnalysisType} from "../../../model/enums/analysis-type";
-import {PlatformFeeChartsOptions} from "../../../model/vo/chartsVo";
 import {PlatformFeeChartsComponent} from "../components/charts/platform-fee-charts/platform-fee-charts.component";
 import {TotalCostChartsComponent} from "../components/charts/total-cost-charts/total-cost-charts.component";
 import {FeeReviewChart} from "../../../model/po/feeReviewChart";
 import {ComparisonFeeInfo} from "../../../model/po/comparisonFeeInfo";
 import {ComparisonMemberValueInfo} from "../../../model/po/comparisonMemberValueInfo";
 import ComparisonSummary from "../../../model/po/comparisonSummary";
-import {contain} from "echarts/types/src/scale/helper";
+import {dealThousands} from "../../../utils/amount-format";
 
 @Component({
     selector: 'app-summary',
@@ -61,7 +60,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     feeChartData: FeeReviewChart = null;
     feeFormData: ComparisonFeeInfo = new ComparisonFeeInfo();
     feeHeldPlatformChoose: string = ''
-    feeTotalAssets: number = 0
+    feeTotalAssets: string = ''
 
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
@@ -199,10 +198,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
             }
         }).filter(f => f)
         this.feeHeldPlatformChoose = feeArray.toString()
-        this.feeTotalAssets = this.feeFormData.members.map(m => m.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)).reduce((a,b) => a + b, 0)
-        console.log('totalAssets ', this.feeTotalAssets)
-
-
+        const _feeTotalAssets = this.feeFormData.members.map(m => m.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)).reduce((a,b) => a + b, 0)
+        this.feeTotalAssets = dealThousands(_feeTotalAssets.toString())
     }
 
     updateViewList(windowWidth: number, init = false): void {

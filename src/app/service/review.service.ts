@@ -54,14 +54,14 @@ export class ReviewService {
     }
 
     finalPlatformHoldingsAndTransactions = [{
-        key: 'chooseAu',
-        value: 'Australian listed investments (held outside managed accounts)'
-    },{
         key: 'chooseMf',
         value: 'Managed funds (held outside managed accounts)'
     },{
         key: 'chooseMa',
         value: 'Managed accounts (SMA or MDA models)'
+    },{
+        key: 'chooseAu',
+        value: 'Australian listed investments (held outside managed accounts)'
     },{
         key: 'chooseIntl',
         value: 'International listed investments (held outside managed accounts)'
