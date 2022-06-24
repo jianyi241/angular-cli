@@ -105,7 +105,6 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
     uploadFile(): Promise<{success: boolean, data: any}> {
         return new Promise((resolve, reject) => {
             const fileInput = document.createElement('input')
-            document.body.appendChild(fileInput)
             fileInput.type = 'file'
             fileInput.accept = '.xls,.xlsx'
             fileInput.click()
@@ -121,7 +120,6 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                         data: 'failed'
                     })
                 } finally {
-                    document.body.removeChild(fileInput)
                 }
             })
         })
