@@ -5,23 +5,77 @@
         </div>
     </div>
     <div class="content-wrapper">
-        <div class="condition-list-wrapper">
+        <div class="condition-list-wrapper scroll-style">
             <div class="drop-list">
-                <div class="drop-item">
-                    <div class="item-text">
-                        <div class="item-name">Products</div>
-                        <div class="item-down-icon"></div>
+                <div class="drop-item" *ngFor="let group of conditionOptions;let idx = index">
+                    <div class="item-text" (click)="expandOptions(idx)">
+                        <div class="item-name">{{group.name}}</div>
+                        <div class="item-down-icon" [ngClass]="{'active': expandedList.includes(idx)}"></div>
                     </div>
-                    <div class="item-list"></div>
+                    <div class="item-list" [ngStyle]="{'height.px': expandedList.includes(idx) ? (group.options.length * 42) + 20 : 0}">
+                        <div class="checkbox-option-item" *ngFor="let option of group.options">
+                            <div class="check-box check-box-purple">
+                                <input type="checkbox" name="CommunicationPreferences" [id]="option.name" [(ngModel)]="option.value"/>
+                                <label [for]="option.name">{{option.label}}</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="news-list-wrapper">
             <div class="search-wrapper">
                 <div class="search-content w-310">
-                    <input type="text" placeholder="Search a keyword" class="form-control ng-untouched ng-pristine ng-valid" />
+                    <input type="text" (blur)="searchList()" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
+                    <span class="icon icon-search icon-16"  (click)="searchList()"></span>
                 </div>
                 <button class="btn btn-purple btn-with-icon xs-ml-24">Create post</button>
+            </div>
+            <div class="news-list scroll-style">
+                <div class="news-item" *ngFor="let i of [1,2,3,4,5];let idx = index;">
+                    <div class="item-logo">
+                        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202009%2F23%2F20200923185609_rQUdj.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1658715908&t=2092f0f49a23b6ef929d97c86295c82b" alt="">
+                    </div>
+                    <div class="item-content">
+                        <div class="item-content-top">
+                            <div class="item-base-info">
+                                <div class="item-name">Major Outage Update{{i}}</div>
+                                <div class="item-status">
+                                    <div class="label label-blue" style="padding: 4px 12px;">Pending</div>
+                                </div>
+                            </div>
+                            <div class="item-edit-group">
+                                <button class="btn btn-text-danger">Reject</button>
+                                <button class="btn btn-small btn-outline-purple-light" style="border: 1px solid #4640DE;padding: 10px 24px;">Accept</button>
+                                <div class="edit-group-line"></div>
+                                <button class="btn btn-text-danger">
+                                    <span class="icon-block icon-14 icon-pen-red"></span>Edit
+                                </button>
+                                <button class="btn btn-small btn-outline-purple-light" style="color: #EB5757">
+                                    <span class="icon-block icon-14 icon-delete-red xs-mr-10"></span>Delete
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-content-main">
+                            <div class="item-content-platform">
+                                <div class="item-platform">BT Panorama</div>
+                                <div class="separation-point"></div>
+                                <div class="item-product">Compact</div>
+                                <div class="separation-point"></div>
+                                <div class="item-date">17 Feb 2022</div>
+                            </div>
+                            <div class="item-images">
+                                <app-horizontal-image-list [domId]="'images_'+idx" [imageList]="imageList"></app-horizontal-image-list>
+<!--                                <div class="change-btn prev-btn" *ngIf="imagesOffset" (click)="changeImages($event,'prev')"></div>-->
+<!--                                <div class="item-image-list" [ngStyle]="{'left.px': imagesOffset}">-->
+<!--                                    <div class="item-image-wrapper" [innerHTML]="img" *ngFor="let img of imagesList"></div>-->
+<!--&lt;!&ndash;                                    <img [src]="url" alt="" *ngFor="let url of imagesList" />&ndash;&gt;-->
+<!--                                </div>-->
+<!--                                <div class="change-btn next-btn" *ngIf="showNextImagesBtn('images_'+idx)" (click)="changeImages($event,'next')"></div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

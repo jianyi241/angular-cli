@@ -1,0 +1,38 @@
+.horizontal-images {
+  position: relative;
+  overflow-x: hidden;
+  .change-btn {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    cursor: pointer;
+    &.prev-btn {
+      left: 1px;
+      background: #FFFFFF url("../../../../../assets/img/icon/icon-arr-right-white-black.svg") center center/ 65% no-repeat;
+      transform: rotate(180deg);
+    }
+    &.next-btn {
+      right: 1px;
+      background: #FFFFFF url("../../../../../assets/img/icon/icon-arr-right-white-black.svg") center center/ 65% no-repeat;
+    }
+  }
+  .item-image-list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    white-space: nowrap;
+    transition: left .3s ease-in;
+    > .item-image-wrapper {
+      display: inline-block;
+      /deep/ img {
+        border-radius: 4px;
+        margin-right: 8px;
+        cursor: pointer;
+      }
+    }
+  }
+}

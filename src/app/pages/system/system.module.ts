@@ -82,7 +82,8 @@ import {ClientTableComponent} from './advice-reviews/review-list/components/clie
 import {ReviewTableComponent} from "./advice-reviews/review-list/components/review-table/review-table.component";
 import {KanbanBoardComponent} from "./advice-reviews/review-list/components/kanban-board/kanban-board.component";
 import {DisableModalComponent} from "./advice-reviews/modal/disable-modal/disable-modal.component";
-import { NewsListComponent } from './news/news-list/news-list.component';
+import {NewsListComponent} from './news/news-list/news-list.component'
+import {HorizontalImageListComponent} from "./components/horizontal-image-list/horizontal-image-list.component";
 
 @NgModule({
     declarations: [
@@ -156,7 +157,8 @@ import { NewsListComponent } from './news/news-list/news-list.component';
         ClientTableComponent,
         KanbanBoardComponent,
         DisableModalComponent,
-        NewsListComponent
+        NewsListComponent,
+        HorizontalImageListComponent
     ],
     imports: [
         CommonModule,

@@ -67,14 +67,13 @@ import {DueLayoutComponent} from "./common/due-layout/due-layout.component";
         ModalModule.forRoot(),
         NgxFileDropModule,
         CKEditorModule,
-        SystemModule,
         ReviewsModule,
         DuesModule,
         NgbAccordionModule
     ],
     providers: [
 
-        { provide: APP_BASE_HREF, useValue: '/' },
+        {provide: APP_BASE_HREF, useValue: '/'},
         {
             provide: OWL_DATE_TIME_LOCALE, useValue: 'en-au'
         },
