@@ -113,14 +113,6 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         })
     }
 
-    onBlur(balance: number = 0) {
-        if (balance > 99999999) {
-            this.toastRepository.showDanger('that value max 99999999.')
-            return
-        }
-        this.saveOrUpdateFeeInfo()
-    }
-
     numberBlur() {
         this.saveOrUpdateFeeInfo()
     }
