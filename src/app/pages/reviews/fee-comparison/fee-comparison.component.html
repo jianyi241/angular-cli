@@ -40,7 +40,7 @@
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <app-number-input [(value)]="idps.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
+                                        <app-number-input [label]="idps.name" [(value)]="idps.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
                                     </div>
                                     <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx,idps.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length > 0"></span>
                                 </div>
@@ -62,7 +62,7 @@
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <app-number-input [(value)]="superItem.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
+                                        <app-number-input [label]="superItem.name" [(value)]="superItem.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
                                     </div>
                                     <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx, superItem.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length > 0"></span>
                                 </div>
