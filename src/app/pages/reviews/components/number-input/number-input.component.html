@@ -8,6 +8,7 @@
                 (ngModelChange)="input()"
                 [ngModelOptions]="{ standalone: true }"
                 (blur)="onBlur()"
+                (focus)="onFocus()"
             />
         </div>
     </div>
@@ -17,6 +18,7 @@
        (ngModelChange)="input()"
        [ngModelOptions]="{ standalone: true }"
        (blur)="onBlur()"
+       (focus)="onFocus()"
        *ngIf="onlyInput"
 />
 

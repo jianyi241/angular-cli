@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToastRepository} from "../../../../repository/toast-repository";
+import {FocusService} from "../../../../service/focus.service";
 
 @Component({
   selector: 'app-number-input',
@@ -33,13 +34,19 @@ export class NumberInputComponent implements OnInit {
   blur = new EventEmitter<number>()
 
   constructor(private toastRepository: ToastRepository,
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef,
+              private focusService: FocusService) { }
 
   ngOnInit(): void {
   }
 
   onBlur() {
+    this.focusService.deleteFocus()
     this.blur.emit(this.value)
+  }
+
+  onFocus() {
+    this.focusService.addFocus();
   }
 
   input() {
