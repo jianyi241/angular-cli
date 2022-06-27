@@ -19,6 +19,7 @@ import {CurrentUserService} from '../../../../service/current-user.service';
 import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 import {VersionStatus} from "../../../../model/enums/version-status";
 import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
+import {FileRepository} from "../../../../repository/file-repository";
 
 declare type TipInfo = {
     show: boolean,
@@ -52,7 +53,8 @@ export class ProductLayoutComponent implements OnInit {
                 private versionRepository: VersionRepository,
                 private ngbModal: NgbModal,
                 public currentUserService: CurrentUserService,
-                private loadingService: NgxLoadingSpinnerService
+                private loadingService: NgxLoadingSpinnerService,
+                private fileRepository: FileRepository
     ) {
     }
 
@@ -395,5 +397,9 @@ export class ProductLayoutComponent implements OnInit {
             this.version.type = this.version.type || VersionType.Publish.value;
             this.chooseTab(TabType.overview.name);
         })
+    }
+
+    downloadProductTemplate() {
+        this.fileRepository.downloadFile('/file/download/productTemplate', "Platform_Level_Upload.xlsx");
     }
 }

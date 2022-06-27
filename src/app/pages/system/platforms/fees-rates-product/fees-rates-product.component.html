@@ -4,7 +4,7 @@
             <div class="title">Products
                 <div class="btn-group">
                     <span class="link-new" *ngIf="configService.isEditable(version.type) && currentUserService.isAdminUser()" (click)="importProduct()">+ Import</span>
-                    <span class="link-new" *ngIf="configService.isEditable(version.type) && currentUserService.isAdminUser()" (click)="downloadProductTemplate()">Download</span>
+<!--                    <span class="link-new" *ngIf="configService.isEditable(version.type) && currentUserService.isAdminUser()" (click)="downloadProductTemplate()">Download</span>-->
                 </div>
             </div>
             <div class="main-menu" *ngIf="fees.length > 0">
