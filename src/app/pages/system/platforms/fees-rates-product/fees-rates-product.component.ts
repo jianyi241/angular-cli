@@ -10,6 +10,8 @@ import {ProductInfo} from "../../../../model/po/productInfo";
 import {Version} from "../../../../model/po/version";
 import {Constants} from "../../../../model/constants";
 import {PlatformFee} from "../../../../model/po/platformFee";
+import {CurrentUserService} from "../../../../service/current-user.service";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'app-fees-rates-product',
@@ -32,7 +34,8 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
-                private platformRepository: PlatformRepository) {
+                private platformRepository: PlatformRepository,
+                public currentUserService: CurrentUserService) {
     }
 
     ngOnInit(): void {
@@ -60,6 +63,10 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         this.activatedRoute.queryParams.subscribe(res => {
             this.product.name = res.name
         })
+    }
+
+    downloadProductTemplate(): void {
+        window.location.href = `${environment.baseURL}/file/download/productTemplate`
     }
 
     getProductPropList(): void {

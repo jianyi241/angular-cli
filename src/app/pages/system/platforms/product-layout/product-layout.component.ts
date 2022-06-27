@@ -239,9 +239,7 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     getProjectButtonFlag() {
-        console.log('getProductButtonFlag ===> ')
         this.platformRepository.getProductButtonFlag({productId: this.product.id}).subscribe(res => {
-            console.log('getProductButtonFlag res ===> ', res)
             this.supplierSubmitType = res.msg
         }, err => {
         })

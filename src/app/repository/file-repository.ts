@@ -14,4 +14,9 @@ export class FileRepository {
         body.append('files', file);
         return this.http.post<HttpResult<any>>(environment.baseURL + `/file/upload/${dir}`, body, {}).toPromise();
     }
+
+    // 下载fees模板
+    // public downloadProductTemplate(): Promise<HttpResult<any>> {
+    //     return this.http.get<HttpResult<any>>(environment.baseURL + `/file/download/productTemplate`).toPromise<HttpResult<any>>();
+    // }
 }
