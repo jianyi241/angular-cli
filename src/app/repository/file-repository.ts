@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpResult } from '../model/common/http-result';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpResult} from '../model/common/http-result';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FileRepository {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     public uploadFile(dir, file): any {
         const body = new FormData();
@@ -15,8 +16,18 @@ export class FileRepository {
         return this.http.post<HttpResult<any>>(environment.baseURL + `/file/upload/${dir}`, body, {}).toPromise();
     }
 
-    // 下载fees模板
-    // public downloadProductTemplate(): Promise<HttpResult<any>> {
-    //     return this.http.get<HttpResult<any>>(environment.baseURL + `/file/download/productTemplate`).toPromise<HttpResult<any>>();
-    // }
+    downloadFile(url: string, fileName: string) {
+        let newVar = this.http.get(environment.baseURL + url, {responseType: 'blob'});
+        newVar.subscribe((data) => {
+            let dataUrl = window.URL.createObjectURL(data);
+            let link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = dataUrl;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(dataUrl);
+            document.body.removeChild(link);
+        })
+    }
 }

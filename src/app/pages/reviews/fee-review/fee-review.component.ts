@@ -9,8 +9,6 @@ import {PlatformFeeChartsComponent} from "../components/charts/platform-fee-char
 import {TotalCostChartsComponent} from "../components/charts/total-cost-charts/total-cost-charts.component";
 import {ToastRepository} from "../../../repository/toast-repository";
 import {FeeReviewChart, Platform} from "../../../model/po/feeReviewChart";
-import {CompareMetricVo} from "../../../model/vo/compareMetircVo";
-import {ComparisonProductVo} from "../../../model/vo/comparisonProductVo";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 import {environment} from "../../../../environments/environment";
 import {SaveService} from "../../../service/save.service";
@@ -116,7 +114,7 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
       return;
     }
     product.comparisonComment.shComparisonId = this.reviewService.comparison.id;
-    let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+    let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.fee.value);
     product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
     product.comparisonComment.shProductId = product.shProductId;
     this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
