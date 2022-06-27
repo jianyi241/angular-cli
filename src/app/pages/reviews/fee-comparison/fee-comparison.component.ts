@@ -99,11 +99,6 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     }
 
     saveOrUpdateFeeInfo(): void {
-        const check = this.checkError()
-        if (!check.totalCheck || !check.idpsCheck || !check.superCheck || this.getMemberTotalBalance() <= 0) {
-            this.toastRepository.showDanger('please check data')
-            return
-        }
         this.reviewRepository.saveOrUpdateComparisonFee(this.comparisonFeeInfo).subscribe(res => {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
