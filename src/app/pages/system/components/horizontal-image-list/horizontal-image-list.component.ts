@@ -31,13 +31,17 @@ export class HorizontalImageListComponent implements OnInit {
     let totalWidth: number = 0
     this.imageDomList = this.imageList.map(i => {
       const img = new Image()
+      console.log('image ', img, '---- ', img.width, '---- ', img.height)
       img.src = i
-      const height = this.height
-      const width = (height / img.height) * img.width
-      console.log('width ', width)
-      img.height = height
-      img.width = Math.round(width)
-      totalWidth += img.width + 8
+      img.onload = () => {
+        console.log('img onload res ')
+        const height = this.height
+        const width = (height / img.height) * img.width
+        console.log('width ', width)
+        img.height = height
+        img.width = Math.round(width)
+        totalWidth += img.width + 8
+      }
       console.log('image width ', img.width)
       return img.outerHTML
     })
@@ -58,7 +62,7 @@ export class HorizontalImageListComponent implements OnInit {
 
   showNextImagesBtn() {
     let imageContainerWidth = document.getElementById(this.domId).clientWidth
-    console.log('imageContainerWidth ', imageContainerWidth)
+    // console.log('imageContainerWidth ', imageContainerWidth)
     let imageListWidth = this.imageListWidth
     let offsetWidth = Math.abs(this.imagesOffset - imageListWidth)
     if (imageListWidth < imageContainerWidth) {
