@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CreatePostModalComponent} from "../modal/create-post-modal/create-post-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 interface ConditionOptionsGroup {
   name: string,
@@ -92,9 +94,10 @@ export class NewsListComponent implements OnInit {
     'https://img1.baidu.com/it/u=963199490,1397250471&fm=253&fmt=auto&app=138&f=JPEG?w=658&h=370'
   ]
 
-  constructor() { }
+  constructor(public ngbModal: NgbModal) { }
 
   ngOnInit(): void {
+      this.showCreatePostModal()
   }
 
   expandOptions(idx: number) {
@@ -108,5 +111,13 @@ export class NewsListComponent implements OnInit {
 
   searchList() {
 
+  }
+
+  showCreatePostModal(): void {
+    const modalRef = this.ngbModal.open(CreatePostModalComponent, {
+      size: 'w644',
+      windowClass: 'tip-popup-modal',
+      centered: true
+    });
   }
 }

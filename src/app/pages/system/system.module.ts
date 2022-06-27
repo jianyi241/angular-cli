@@ -84,6 +84,7 @@ import {KanbanBoardComponent} from "./advice-reviews/review-list/components/kanb
 import {DisableModalComponent} from "./advice-reviews/modal/disable-modal/disable-modal.component";
 import {NewsListComponent} from './news/news-list/news-list.component'
 import {HorizontalImageListComponent} from "./components/horizontal-image-list/horizontal-image-list.component";
+import { CreatePostModalComponent } from './news/modal/create-post-modal/create-post-modal.component';
 
 @NgModule({
     declarations: [
@@ -158,7 +159,8 @@ import {HorizontalImageListComponent} from "./components/horizontal-image-list/h
         KanbanBoardComponent,
         DisableModalComponent,
         NewsListComponent,
-        HorizontalImageListComponent
+        HorizontalImageListComponent,
+        CreatePostModalComponent
     ],
     imports: [
         CommonModule,
