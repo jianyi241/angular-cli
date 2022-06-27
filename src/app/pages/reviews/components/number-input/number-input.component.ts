@@ -1,6 +1,7 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToastRepository} from "../../../../repository/toast-repository";
 import {FocusService} from "../../../../service/focus.service";
+import {fakeAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-number-input',
@@ -19,13 +20,19 @@ export class NumberInputComponent implements OnInit {
   maxLength: number = 8
 
   @Input()
-  value: number
+  value: any
 
   @Output()
   valueChange = new EventEmitter<number>()
 
   @Input()
   label: string
+
+  @Input()
+  name: string
+
+  @Input()
+  id: string
 
   @Input()
   showDollar: boolean = true
@@ -38,25 +45,30 @@ export class NumberInputComponent implements OnInit {
               private focusService: FocusService) { }
 
   ngOnInit(): void {
+    if (this.value == 0) {
+      this.value = ''
+    }
   }
 
   onBlur() {
     this.focusService.deleteFocus()
-    this.blur.emit(this.value)
+    setTimeout(() => {
+      this.blur.emit(this.value)
+    }, 50)
   }
 
   onFocus() {
     this.focusService.addFocus();
   }
 
-  input() {
+  onInput() {
     if (this.value > this.maxValue) {
       // this.toastRepository.showDanger(`The maximum length of ${this.label} cannot exceed ${this.maxLength} digits`)
       this.toastRepository.showDanger(`${this.label} maximum value cannot exceed ${this.maxValue}`)
       this.cdr.detectChanges()
       this.value = Number.parseFloat(this.value.toString().slice(0, this.maxLength))
     } else {
-      this.valueChange.emit(this.value)
+      this.valueChange.emit(Number(this.value))
     }
   }
 }

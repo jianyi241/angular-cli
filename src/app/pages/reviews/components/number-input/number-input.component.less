@@ -1,3 +1,24 @@
+.number-input-wrapper {
+  position: relative;
+  .input-placeholder {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 41px;
+    width: calc(100% - 2px);
+    top: 1px;
+    left: 1px;
+    font: normal 400 16px 'Epilogue';
+    color: #BBBBBB;
+    padding: 0 16px;
+    background: #FFFFFF;
+    &.short-placeholder {
+      width: calc(100% - 42px);
+      left: 41px;
+    }
+  }
+}
+
 input[type=number] {
   font-weight: 600;
   font-size: 16px;
