@@ -175,7 +175,7 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
   }
 
   getComment(platform: Platform, pPlatform: NgbPopover) {
-    let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+    let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.fee.value);
     platform.comparisonComment = new ComparisonCommentInfo();
     this.reviewRepository.getComment(this.reviewService.comparison.id, analyseInfo.shAnalyseId, platform.shProductId).subscribe(res => {
       Object.assign(platform.comparisonComment, res.data);
