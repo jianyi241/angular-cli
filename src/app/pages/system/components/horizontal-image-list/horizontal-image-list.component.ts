@@ -42,12 +42,29 @@ export class HorizontalImageListComponent implements OnInit {
         img.width = Math.round(width)
         totalWidth += img.width + 8
       }
+      // this.getImageSize()
       console.log('image width ', img.width)
       return img.outerHTML
     })
     this.imageListWidth = totalWidth
     console.log('imgList ', this.imageList)
     console.log('total image width ', totalWidth.toFixed(2))
+  }
+
+  getImageSize(url) {
+    return new Promise(function (resolve, reject) {
+      let image = new Image();
+      image.onload = function () {
+        resolve({
+          width: image.width,
+          height: image.height
+        });
+      };
+      image.onerror = function () {
+        reject(new Error('error'));
+      };
+      image.src = url;
+    });
   }
 
   changeImages(type: string) {
