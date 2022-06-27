@@ -77,6 +77,7 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
     }
 
     onDisable(): void {
+        console.log('thisRouterUrl ', this.router.url)
         const modalRef = this.modalService.open(TipModalComponent, {
             backdrop: 'static',
             size: 'small',
@@ -97,10 +98,6 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
             this.save(false, msg);
         }, (reason) => {
         });
-    }
-
-    onEnable(): void {
-
     }
 
     save(tip: boolean = true, msg?: string) {
@@ -132,6 +129,7 @@ export class AdviceLayoutComponent implements OnInit, OnDestroy {
                 this.toastRepository.showSuccess(msg || 'Save Successfully.')
             } else {
                 //Disable, Archive
+                this.practiceService.refreshTeam()
                 this.toastRepository.showDanger(msg);
                 // this.router.navigateByUrl()
             }

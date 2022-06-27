@@ -83,6 +83,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
                 this.toastRepository.showSuccess(msg || 'Save Successfully.')
             } else {
                 //Disable, Archive
+                this.supplierService.refreshTeam()
                 this.toastRepository.showDanger(msg);
             }
             if (!this.supplierService.supplier.id) {
@@ -91,7 +92,6 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
                 return;
             }
             this.supplierService.supplier = res.data;
-
         });
     }
 

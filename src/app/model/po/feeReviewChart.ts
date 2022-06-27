@@ -1,4 +1,5 @@
 import {Attachment} from "../attachment";
+import {ComparisonCommentInfo} from "./comparisonCommentInfo";
 
 export interface Product {
     id?: string
@@ -11,11 +12,15 @@ export interface Product {
     warning?: boolean
 }
 
-interface Platform {
+export interface Platform {
+    id?: string
     shProductId?: string
     productName?: string
     attachmentVo?: Attachment
     products?: Array<Product>
+    comparisonComment?: ComparisonCommentInfo
+    showFlag?: boolean
+    shComparisonId?: string
 }
 
 export class FeeReviewChart {

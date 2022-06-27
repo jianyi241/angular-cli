@@ -10,6 +10,7 @@ import {ProductInfo} from "../../../../model/po/productInfo";
 import {Version} from "../../../../model/po/version";
 import {Constants} from "../../../../model/constants";
 import {PlatformFee} from "../../../../model/po/platformFee";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 @Component({
     selector: 'app-fees-rates-product',
@@ -32,7 +33,8 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 private versionRepository: VersionRepository,
                 private fileRepository: FileRepository,
-                private platformRepository: PlatformRepository) {
+                private platformRepository: PlatformRepository,
+                public currentUserService: CurrentUserService) {
     }
 
     ngOnInit(): void {
@@ -62,8 +64,15 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         })
     }
 
+    downloadProductTemplate(): void {
+        this.fileRepository.downloadFile('/file/download/productTemplate', "Platform_Level_Upload.xlsx");
+    }
+
     getProductPropList(): void {
-        this.platformRepository.getFeeProducts({productId: this.product.id,versionId: this.version.id}).subscribe(res => {
+        this.platformRepository.getFeeProducts({
+            productId: this.product.id,
+            versionId: this.version.id
+        }).subscribe(res => {
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'Get products info failed.')
             }
@@ -90,7 +99,11 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
     importProduct() {
         this.uploadFile().then(res => {
             console.log('upload file res ', res)
-            this.platformRepository.importFeeData({productId: this.product.id,versionId: this.version.id,file: res.data}).subscribe(res => {
+            this.platformRepository.importFeeData({
+                productId: this.product.id,
+                versionId: this.version.id,
+                file: res.data
+            }).subscribe(res => {
                 if (res.statusCode !== 200) {
                     this.toastRepository.showDanger(res.msg || 'Import failed.')
                 }
@@ -102,7 +115,7 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         })
     }
 
-    uploadFile(): Promise<{success: boolean, data: any}> {
+    uploadFile(): Promise<{ success: boolean, data: any }> {
         return new Promise((resolve, reject) => {
             const fileInput = document.createElement('input')
             fileInput.type = 'file'

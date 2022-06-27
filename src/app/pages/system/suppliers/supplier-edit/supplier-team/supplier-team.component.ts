@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TeamRepository} from "../../../../../repository/team-repository";
 import {SupplierService} from "../../../../../service/supplier.service";
 import {Page} from "../../../../../model/vo/page";
@@ -14,7 +14,8 @@ import {ConfigService} from "../../../../../service/config.service";
     templateUrl: './supplier-team.component.html',
     styleUrls: ['./supplier-team.component.less']
 })
-export class SupplierTeamComponent implements OnInit {
+export class SupplierTeamComponent implements OnInit,OnDestroy {
+    supplierRefreshObservable: any
     teamPage: Page<TeamInfo> = new Page<TeamInfo>();
     condition: TeamCondition = new TeamCondition(1, 10);
 
@@ -27,10 +28,15 @@ export class SupplierTeamComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.subscribe()
         this.activatedRoute.params.subscribe(params => {
             this.condition.companyId = params['id'];
             this.getTeamList();
         })
+    }
+
+    ngOnDestroy() {
+        this.supplierRefreshObservable && this.supplierRefreshObservable.unsubscribe()
     }
 
     getTeamList(): void {
@@ -72,5 +78,15 @@ export class SupplierTeamComponent implements OnInit {
             this.condition.accountType = '';
         }
         this.getTeamList();
+    }
+
+    subscribe() {
+        this.refreshTeamSubscribe()
+    }
+
+    refreshTeamSubscribe(): void {
+        this.supplierRefreshObservable = this.supplierService.refreshTeamObservable.subscribe(res => {
+            this.getTeamList()
+        })
     }
 }

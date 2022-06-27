@@ -38,7 +38,7 @@ export class PlatformFeeChartsComponent implements OnInit {
       products = products.filter(f => !f.warning)
     }
     products.forEach((p,idx) => {
-        yAxisValues.unshift({
+        yAxisValues.push({
           platformName: p.platformName,
           produceName: p.name,
           warning: p.warning,
@@ -47,9 +47,9 @@ export class PlatformFeeChartsComponent implements OnInit {
           visitUrl: p.visitUrl
         })
         const scopes = p.scopes.map((s, sIdx) => {
-          return [sIdx, idx, s.value]
+          return [sIdx, (products.length - (1 + idx)), s.value]
         })
-        seriesData.push(...scopes)
+        seriesData.unshift(...scopes)
     })
     const totalBalance = data.totalBalance / 1000
     const allValues = seriesData.flatMap(i => i[2]).sort((a, b) => a - b)

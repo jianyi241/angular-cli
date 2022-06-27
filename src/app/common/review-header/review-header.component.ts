@@ -11,6 +11,8 @@ import {Commons} from "../../utils/Commons";
 import {ComparisonStatus} from "../../model/enums/comparison-status";
 import {ToastRepository} from "../../repository/toast-repository";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {TabType} from "../../model/enums/tab-type";
+import {FocusService} from "../../service/focus.service";
 
 @Component({
     selector: 'app-review-header',
@@ -26,7 +28,8 @@ export class ReviewHeaderComponent implements OnInit {
                 public reviewService: ReviewService,
                 private modalService: NgbModal,
                 private currentUserService: CurrentUserService,
-                private reviewRepository: ReviewRepository,) {
+                private reviewRepository: ReviewRepository,
+                private focusService: FocusService) {
         this.reviewService.comparison = new ComparisonVo();
         this.reviewService.comparison.companyId = this.currentUserService.currentUser().companyId;
     }
@@ -52,15 +55,21 @@ export class ReviewHeaderComponent implements OnInit {
     }
 
     save(callback?: () => void) {
-        this.reviewService.save(callback);
+        this.focusService.waitBlur(() => {
+            this.reviewService.save(callback);
+        });
     }
 
     next() {
-        this.reviewService.next();
+        this.focusService.waitBlur(() => {
+            this.reviewService.next();
+        });
     }
 
     goBack() {
-        this.reviewService.back();
+        this.focusService.waitBlur(() => {
+            this.reviewService.back();
+        });
     }
 
     getDynamicAnaName(analysis: ComparisonAnalyseInfo): string {

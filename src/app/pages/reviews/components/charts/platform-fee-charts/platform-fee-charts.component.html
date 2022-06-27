@@ -5,7 +5,7 @@
     <div class="charts-y__axis" [ngStyle]="{'height.px': chartsHeight}">
         <div class="label" *ngFor="let i of yAxisData">
             <div class="label-left">
-                <img *ngIf="i.mainFlag" src="../../../../../../assets/img/icon/icon-main-text.svg" class="main-icon"/>
+                <img *ngIf="i.mainFlag" src="./assets/img/icon/icon-main-text.svg" class="main-icon"/>
                 <img [src]="i.visitUrl" class="label-icon"/>
             </div>
             <div class="label-right">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </ng-template>
-                    <img [hidden]="!i.warning" src="../../../../../../assets/img/icon/icon-warning-red.svg" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
+                    <img [hidden]="!i.warning" src="./assets/img/icon/icon-warning-red.svg" #p="ngbPopover" popoverClass="table-cell-popover" [autoClose]="true"
                          placement="right auto" [ngbPopover]="popContent" class="warn-icon"/>
                 </div>
             </div>

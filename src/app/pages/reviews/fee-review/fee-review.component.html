@@ -33,11 +33,14 @@
             </div>
         </div>
         <div class="content-right">
-            <div class="business-metric-list" *ngIf="compareData.comparisonProductVos.length">
-                <div class="item" *ngFor="let product of compareData.comparisonProductVos">
+            <div class="business-metric-list" *ngIf="feeReviewData.platforms">
+                <div class="item" *ngFor="let platform of feeReviewData.platforms">
                     <div class="item-content">
-                        <img [src]="product.attachmentVo?.visitUrl" class="item-logo" />
-                        <div class="item-name">{{product.productName}}</div>
+                        <div class="item-logo">
+                            <img src="./assets/img/icon/icon-main-text.svg" class="main-icon" *ngIf="isMainProduct(platform)" />
+                            <img [src]="platform.attachmentVo?.visitUrl" class="item-logo-image" />
+                        </div>
+                        <div class="item-name">{{platform.productName}}</div>
                     </div>
                     <div class="item-btn-group">
                         <button class="btn btn-outline-purple-light btn-small"
@@ -45,25 +48,25 @@
                                 container="body" [autoClose]="'outside'"
                                 popoverClass="table-comment-popover"
                                 triggers="manual"
-                                (click)="getComment(product, pPlatform)"
+                                (click)="getComment(platform, pPlatform)"
                                 placement="top auto" [ngbPopover]="popPlatformContent">
                             <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
                             Comment
                         </button>
-                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" *ngIf="!isMainProduct(product)" (click)="removeOrResetForm(product)" style="margin-left: 4px !important;">
-                            <span class="icon-block icon-trash icon-20" *ngIf="product.showFlag"></span>
-                            <span class="icon-block icon-reset-red icon-20" *ngIf="!product.showFlag"></span>
+                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" *ngIf="!isMainProduct(platform)" (click)="removeOrResetForm(platform)" style="margin-left: 4px !important;">
+                            <span class="icon-block icon-trash icon-20" *ngIf="platform.showFlag"></span>
+                            <span class="icon-block icon-reset-red icon-20" *ngIf="!platform.showFlag"></span>
                         </button>
                         <ng-template #popPlatformContent>
                             <div class="comment-popover">
                                 <div class="title">{{'Add Comment'}}</div>
-                                <textarea class="form-control xs-mb-16" [(ngModel)]="product.comparisonComment.comment"></textarea>
+                                <textarea class="form-control xs-mb-16" [(ngModel)]="platform.comparisonComment.comment"></textarea>
                                 <div class="comment-footer" style="margin-top: 16px">
                                     <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                             (click)="pPlatform.close()">Cancel
                                     </button>
                                     <button class="btn btn-block btn-purple tx-16 xs-ml-8"
-                                            (click)="saveComment(product, pPlatform)">Save
+                                            (click)="saveComment(platform, pPlatform)">Save
                                     </button>
                                 </div>
                             </div>
