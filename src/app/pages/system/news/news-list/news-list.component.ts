@@ -91,14 +91,10 @@ export class NewsListComponent implements OnInit {
     'https://img1.baidu.com/it/u=963199490,1397250471&fm=253&fmt=auto&app=138&f=JPEG?w=658&h=370',
     'https://img1.baidu.com/it/u=963199490,1397250471&fm=253&fmt=auto&app=138&f=JPEG?w=658&h=370'
   ]
-  imagesList: Array<string> = []
-  imageListWidth: number = 0
-  imagesOffset: number = 0
 
   constructor() { }
 
   ngOnInit(): void {
-    // this.initImageList()
   }
 
   expandOptions(idx: number) {
@@ -113,51 +109,4 @@ export class NewsListComponent implements OnInit {
   searchList() {
 
   }
-
-  // initImageList(): void {
-  //   let totalWidth: number = 0
-  //   this.imagesList = this.imageList.map(i => {
-  //     const img = new Image()
-  //     img.src = i
-  //     let height = 172
-  //     let width = Number.parseFloat((height / img.height) * img.width)
-  //     // img.height = 172
-  //     console.log('width ', width)
-  //     img.height = height
-  //     img.width = Math.round(width)
-  //     totalWidth += Number.parseFloat(img.width + 8)
-  //     console.log('image width ', img.width)
-  //     return img.outerHTML
-  //   })
-  //   this.imageListWidth = totalWidth
-  //   console.log('imgList ', this.imagesList)
-  //   console.log('total image width ', totalWidth.toFixed(2))
-  // }
-
-  // changeImages($event: UIEvent, type: string) {
-  //   const baseWidth = $event.currentTarget.parentNode.clientWidth
-  //   if (type === 'prev') {
-  //     console.log('prev image-list ', $event.currentTarget.nextElementSibling.clientWidth)
-  //
-  //     this.imagesOffset += baseWidth
-  //   } else {
-  //     // if (!this.showNextImagesBtn($event, baseWidth)) return
-  //     this.imagesOffset -= baseWidth
-  //   }
-  //   console.log('left ', this.imagesOffset)
-  // }
-  //
-  // showNextImagesBtn(id: string): boolean {
-  //   let imageContainerWidth = document.getElementById(id).clientWidth
-  //   console.log('imageContainerWidth ', imageContainerWidth)
-  //   let imageListWidth = this.imageListWidth
-  //   let offsetWidth = Math.abs(this.imagesOffset - imageListWidth)
-  //   if (imageListWidth < imageContainerWidth) {
-  //     return false
-  //   } else if (offsetWidth > imageListWidth) {
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // }
 }

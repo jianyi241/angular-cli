@@ -1,7 +1,9 @@
 <div class="horizontal-images" [id]="domId" [ngStyle]="{'height.px': height}">
     <div class="change-btn prev-btn" *ngIf="imagesOffset" (click)="changeImages('prev')"></div>
     <div class="item-image-list" [ngStyle]="{'left.px': imagesOffset}">
-        <div class="item-image-wrapper" [innerHTML]="img" *ngFor="let img of imageDomList"></div>
+        <div class="item-image-wrapper" *ngFor="let img of imageInfoList" (click)="previewImage(img.url)">
+            <img [src]="img.url" [width]="img.width" [height]="img.height" >
+        </div>
     </div>
     <div class="change-btn next-btn" *ngIf="showNextImagesBtn()" (click)="changeImages('next')"></div>
 </div>

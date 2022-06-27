@@ -1,4 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PreviewImageModalComponent} from "../../platforms/modal/preview-image-modal/preview-image-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+
+interface ImageInfo {
+  url: string
+  title?: string
+  width: number
+  height: number
+}
 
 @Component({
   selector: 'app-horizontal-image-list',
@@ -7,11 +16,11 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class HorizontalImageListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ngbModal: NgbModal) { }
 
   imagesOffset: number = 0
   imageListWidth: number = 0
-  imageDomList: Array<string> = new Array<string>()
+  imageInfoList: Array<ImageInfo> = new Array<ImageInfo>()
 
   @Input()
   imageList: Array<string> = new Array<string>()
@@ -23,35 +32,40 @@ export class HorizontalImageListComponent implements OnInit {
   height: number = 172
 
   ngOnInit(): void {
-    console.log('...')
     this.initImageList()
   }
 
-  initImageList(): void {
-    let totalWidth: number = 0
-    this.imageDomList = this.imageList.map(i => {
-      const img = new Image()
-      console.log('image ', img, '---- ', img.width, '---- ', img.height)
-      img.src = i
-      img.onload = () => {
-        console.log('img onload res ')
-        const height = this.height
-        const width = (height / img.height) * img.width
-        console.log('width ', width)
-        img.height = height
-        img.width = Math.round(width)
-        totalWidth += img.width + 8
-      }
-      // this.getImageSize()
-      console.log('image width ', img.width)
-      return img.outerHTML
-    })
-    this.imageListWidth = totalWidth
-    console.log('imgList ', this.imageList)
-    console.log('total image width ', totalWidth.toFixed(2))
+  previewImage(imgUrl: string): void {
+    const modalRef = this.ngbModal.open(PreviewImageModalComponent, {
+      size: 'lg',
+      windowClass: 'tip-popup-modal',
+      centered: true
+    });
+    modalRef.componentInstance.imgUrl = imgUrl
   }
 
-  getImageSize(url) {
+  initImageList(): void {
+    this.imageListWidth = 0
+    this.imageList.forEach(async i => {
+      await this.getImageSize(i).then(res => {
+        if (res.width && res.height) {
+          const originHeight = res.height
+          const originWidth = res.width
+          let height = this.height
+          let width = Math.round((height / originHeight) * originWidth)
+              this.imageInfoList.push({
+                url: i,
+                height,
+                width
+              })
+          this.imageListWidth += width + 8
+        } else {
+        }
+      })
+    })
+  }
+
+  getImageSize(url): Promise<{width: number,height: number}> {
     return new Promise(function (resolve, reject) {
       let image = new Image();
       image.onload = function () {
@@ -73,15 +87,16 @@ export class HorizontalImageListComponent implements OnInit {
       this.imagesOffset += imageContainerWidth
     } else {
       this.imagesOffset -= imageContainerWidth
+      let imageListWidth = this.imageListWidth
+      let offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
     }
     console.log('left ', this.imagesOffset)
   }
 
   showNextImagesBtn() {
     let imageContainerWidth = document.getElementById(this.domId).clientWidth
-    // console.log('imageContainerWidth ', imageContainerWidth)
     let imageListWidth = this.imageListWidth
-    let offsetWidth = Math.abs(this.imagesOffset - imageListWidth)
+    let offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
     if (imageListWidth < imageContainerWidth) {
       return false
     } else if (offsetWidth > imageListWidth) {
