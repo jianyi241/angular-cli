@@ -68,7 +68,6 @@ export class ProductsBoxComponent implements OnInit {
       column: 'platform_name'
     }
     this.platformRepository.getProductList(this.productCondition).subscribe(res => {
-      console.log('res ', res);
       this.productList = res.data
     },err => {
     })

@@ -27,10 +27,21 @@
     white-space: nowrap;
     transition: left .3s ease-in;
     > .item-image-wrapper {
+      position: relative;
       display: inline-block;
-      /deep/ img {
+      .btn-img-remove {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        right: 13px;
+        top: 8px;
+        border-radius: 50%;
+        background: #EB5757 url("../../../../../assets/img/icon/icon-delete-white-sm.svg") center center/contain no-repeat;
+        cursor: pointer;
+      }
+      img {
         border-radius: 4px;
-        margin-right: 8px;
+        margin-right: 10px;
         cursor: pointer;
       }
     }

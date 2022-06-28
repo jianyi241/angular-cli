@@ -97,7 +97,6 @@ export class NewsListComponent implements OnInit {
   constructor(public ngbModal: NgbModal) { }
 
   ngOnInit(): void {
-      this.showCreatePostModal()
   }
 
   expandOptions(idx: number) {
@@ -119,5 +118,9 @@ export class NewsListComponent implements OnInit {
       windowClass: 'tip-popup-modal',
       centered: true
     });
+  }
+
+  nextPage() {
+    console.log('is bottom 0...')
   }
 }

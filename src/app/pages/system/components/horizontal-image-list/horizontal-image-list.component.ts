@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, EventEmitter, OnInit, Output} from '@angular/core';
 import {PreviewImageModalComponent} from "../../platforms/modal/preview-image-modal/preview-image-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
@@ -30,6 +30,12 @@ export class HorizontalImageListComponent implements OnInit {
 
   @Input()
   height: number = 172
+
+  @Input()
+  showDelete: boolean = false
+
+  @Output()
+  removeImageIndex = new EventEmitter<number>()
 
   ngOnInit(): void {
     this.initImageList()
@@ -87,16 +93,13 @@ export class HorizontalImageListComponent implements OnInit {
       this.imagesOffset += imageContainerWidth
     } else {
       this.imagesOffset -= imageContainerWidth
-      let imageListWidth = this.imageListWidth
-      let offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
     }
-    console.log('left ', this.imagesOffset)
   }
 
   showNextImagesBtn() {
-    let imageContainerWidth = document.getElementById(this.domId).clientWidth
-    let imageListWidth = this.imageListWidth
-    let offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
+    const imageContainerWidth = document.getElementById(this.domId).clientWidth
+    const imageListWidth = this.imageListWidth
+    const offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
     if (imageListWidth < imageContainerWidth) {
       return false
     } else if (offsetWidth > imageListWidth) {
@@ -104,5 +107,10 @@ export class HorizontalImageListComponent implements OnInit {
     } else {
       return true
     }
+  }
+
+  handleClickRemove($event: UIEvent, idx: number) {
+    $event.stopPropagation()
+    this.removeImageIndex.emit(idx)
   }
 }

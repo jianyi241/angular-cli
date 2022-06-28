@@ -11,7 +11,7 @@
                 <div class="select-group">
                     <img [src]="platform.visitUrl" class="select-logo" />
                     <div class="select-input">
-                        <labe>Platform</labe>
+                        <div class="select-label">Platform</div>
                         <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
                                    dropdownPosition="bottom">
                             <ng-option *ngFor="let option of platformOptions" [value]="option">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="select-group">
                     <div class="select-input">
-                        <labe>Product</labe>
+                        <div class="select-label">Product</div>
                         <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
                                    dropdownPosition="bottom">
                             <ng-option *ngFor="let option of platformOptions" [value]="option">
@@ -42,6 +42,34 @@
                 <ckeditor [(ngModel)]="longText" [config]="config"></ckeditor>
                 <div class="tip-info grey">Maximum 3,000 characters</div>
             </div>
+            <div class="upload-group">
+                <div class="upload-input">
+                    <div class="upload-label">
+                        <div class="title">Attach images</div>
+                        <div class="placeholder">(minimum 344px height)</div>
+                    </div>
+                    <div class="upload-file">
+                        <ngx-file-drop dropZoneLabel="Drop files here"
+                                       (onFileDrop)="droppedFile($event)"
+                                       [multiple]="false" [directory]="false"
+                                       [accept]="'.png,.svg,.gif,.jpg'">
+                            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
+                                <div class="upload-content"(click)="openFileSelector()">
+                                    <span class="icon-block icon-paper-clip icon-24"></span>
+                                    <div class="file-intro">Attach images</div>
+                                </div>
+                            </ng-template>
+                        </ngx-file-drop>
+                    </div>
+                </div>
+                <div class="preview-images">
+                    <app-horizontal-image-list *ngIf="imageList.length" domId="createPostImages" [imageList]="imageList" [height]="160" [showDelete]="true" (removeImageIndex)="removeImageByIndex($event)"></app-horizontal-image-list>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-block btn-purple" style="height: 50px">Create Post</button>
     </div>
 </div>
