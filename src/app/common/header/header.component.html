@@ -13,6 +13,7 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
+            <a [routerLink]="['/news/news-list']" routerLinkActive="active">News & updates</a>
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/supplier/comparisons-list']" routerLinkActive="active">Platform analysis</a>
         </div>

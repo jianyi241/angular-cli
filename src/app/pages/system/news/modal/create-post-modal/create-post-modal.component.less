@@ -30,6 +30,67 @@
       display: flex;
       flex-direction: column;
       row-gap: 32px;
+      .select-groups {
+        display: flex;
+        align-items: center;
+        column-gap: 32px;
+        .select-group {
+          display: flex;
+          align-items: center;
+          column-gap: 20px;
+          .select-logo {
+            width: 36px;
+            height: 36px;
+          }
+          .select-input {
+            height: 50px;
+            label {
+              height: 26px;
+              line-height: 1.6;
+              font: normal 400 16px 'Epilogue';
+              color: #515B6F;
+            }
+            /deep/ .ng-select.select-single {
+              .ng-value-label{
+                color: #25324B;
+                font: normal 600 20px 'Epilogue';
+              }
+              .ng-dropdown-panel {
+                width: 180%;
+              }
+              .ng-select-container {
+                width: 162px;
+                min-height: 26px;
+                height: 24px;
+                line-height: 0;
+                padding: 0;
+                border: none;
+                .ng-value img{
+                  width: 0 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        label {
+          font: normal 600 14px 'Epilogue';
+          color: #515B6F;
+        }
+        input[type=text] {
+          width: 100%;
+          height: 46px;
+        }
+        .tip-info {
+          &.grey {
+            color: #A8ADB7;
+            font: normal 400 12px 'Epilogue';
+          }
+        }
+      }
     }
   }
 }

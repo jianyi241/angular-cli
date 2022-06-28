@@ -1,5 +1,5 @@
 <div class="create-post-modal">
-    <div class="close-btn">
+    <div class="close-btn" (click)="close()">
         <img src="./assets/img/icon/icon-close-black-radius.svg" />
     </div>
     <div class="modal-title">
@@ -9,11 +9,38 @@
         <div class="form">
             <div class="select-groups">
                 <div class="select-group">
-                    <img src="" alt="" />
+                    <img [src]="platform.visitUrl" class="select-logo" />
                     <div class="select-input">
                         <labe>Platform</labe>
+                        <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
+                                   dropdownPosition="bottom">
+                            <ng-option *ngFor="let option of platformOptions" [value]="option">
+                                <img [src]="option.visitUrl" style="width: 36px;height: 36px;"/>
+                                {{option.propName}}
+                            </ng-option>
+                        </ng-select>
                     </div>
                 </div>
+                <div class="select-group">
+                    <div class="select-input">
+                        <labe>Product</labe>
+                        <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
+                                   dropdownPosition="bottom">
+                            <ng-option *ngFor="let option of platformOptions" [value]="option">
+                                <img [src]="option.visitUrl" style="width: 36px;height: 36px;"/>
+                                {{option.propName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <label class="control-label">Title</label>
+                <input type="text" class="form-control" placeholder="Enter the title of this post" name="practiceName" required />
+            </div>
+            <div class="input-group">
+                <ckeditor [(ngModel)]="longText" [config]="config"></ckeditor>
+                <div class="tip-info grey">Maximum 3,000 characters</div>
             </div>
         </div>
     </div>
