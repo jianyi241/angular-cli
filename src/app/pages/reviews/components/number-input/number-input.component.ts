@@ -29,9 +29,6 @@ export class NumberInputComponent implements OnInit {
   label: string
 
   @Input()
-  name: string
-
-  @Input()
   id: string
 
   @Input()
@@ -66,7 +63,7 @@ export class NumberInputComponent implements OnInit {
       // this.toastRepository.showDanger(`The maximum length of ${this.label} cannot exceed ${this.maxLength} digits`)
       this.toastRepository.showDanger(`${this.label} maximum value cannot exceed ${this.maxValue}`)
       this.cdr.detectChanges()
-      this.value = Number.parseFloat(this.value.toString().slice(0, this.maxLength))
+      this.value = Number(this.value.toString().slice(0, this.maxLength))
     } else {
       this.valueChange.emit(Number(this.value))
     }
