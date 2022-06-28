@@ -4,7 +4,7 @@
         <div [ngClass]="[showDollar ? 'input-group_unit' : 'input-group']">
             <span class="unit" *ngIf="showDollar">$</span>
             <input type="number" class="form-control input-number"
-                [name]="name"
+                [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="value"
                 (ngModelChange)="onInput()"
                 (blur)="onBlur()"
@@ -14,13 +14,10 @@
     </div>
 </div>
 <input type="number" class="form-control input-number"
-       [name]="name"
+       [ngModelOptions]="{ standalone: true }"
        [(ngModel)]="value"
        (ngModelChange)="onInput()"
        (blur)="onBlur()"
        (focus)="onFocus()"
        *ngIf="onlyInput"
 />
-
-<!--       [ngModelOptions]="{ standalone: true }"
--->
