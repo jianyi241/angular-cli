@@ -105,7 +105,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
 
     includeAnalysis(name: string): boolean {
         const idx = this.comparisonInfo.analyseVoList.findIndex(item => item.name === name)
-        return idx >=0 ? true : false
+        return idx >= 0
     }
 
    getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
