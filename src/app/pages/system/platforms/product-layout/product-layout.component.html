@@ -26,6 +26,11 @@
             <!--                <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('edit')"-->
             <!--                        (click)="editProduct()">Edit Product-->
             <!--                </button>-->
+
+            <button class="btn btn-purple xs-ml-24" *ngIf="currentUserService.isAdminUser()"
+                    (click)="downloadProductTemplate()">Download Template
+            </button>
+
             <button class="btn btn-outline-blue-light xs-ml-24" *ngIf="showEditButton('discard')"
                     (click)="discardConfirm()">Discard draft
             </button>

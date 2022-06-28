@@ -64,10 +64,6 @@ export class FeesRatesProductComponent implements OnInit, OnDestroy {
         })
     }
 
-    downloadProductTemplate(): void {
-        this.fileRepository.downloadFile('/file/download/productTemplate', "Platform_Level_Upload.xlsx");
-    }
-
     getProductPropList(): void {
         this.platformRepository.getFeeProducts({
             productId: this.product.id,

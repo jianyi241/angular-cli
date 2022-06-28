@@ -104,7 +104,9 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 return
             }
-            this.comparisonFeeInfo = res.data
+            if (!this.comparisonFeeInfo.id) {
+                this.comparisonFeeInfo.id = res.data.id
+            }
         })
     }
 
@@ -180,7 +182,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         }
         this.comparisonFeeInfo.members[idx].memberValues.push({
             name:`${_name} ${num}`,
-            balance: null,
+            balance: 0,
             type: type
         })
         this.saveOrUpdateFeeInfo()
