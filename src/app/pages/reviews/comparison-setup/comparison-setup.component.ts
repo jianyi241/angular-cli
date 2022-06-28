@@ -16,6 +16,9 @@ import {ComparisonAnalyseInfo} from "../../../model/po/comparisonAnalyseInfo";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 import {Commons} from "../../../utils/Commons";
 import {AnalysisType} from "../../../model/enums/analysis-type";
+import {CurrentUserService} from "../../../service/current-user.service";
+import {RoleType} from "../../../model/enums/role-type";
+import {RoleEnum} from "../../../model/enums/role-enum";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -39,7 +42,8 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private toastRepository: ToastRepository,
                 public reviewRepository: ReviewRepository,
-                private platformRepository: PlatformRepository) {
+                private platformRepository: PlatformRepository,
+                private current: CurrentUserService) {
     }
 
     ngOnInit(): void {
@@ -66,6 +70,18 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.nextSubscribe();
         this.backSubscribe();
         this.leaveSubscribe();
+    }
+    a():void {
+        let b = this.current.isAdminUser() || (this.current.isSupplierUser() && this.current.currentUser().owner);
+        let roleInfo = this.current.authorities().find(a => a.roleName == RoleEnum.User.name);
+    }
+    isNormalUser(): boolean {
+        const roleInfo = this.current.authorities().find(a => a.roleName == RoleEnum.User.name);
+        if (roleInfo) {
+            return true
+        } else {
+            return false
+        }
     }
 
     saveSubscribe(): void {
@@ -172,13 +188,15 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             this.toastRepository.showDanger('Analyse is required.');
             return true;
         }
-        if (!comparison.adviserName) {
-            this.toastRepository.showDanger('Adviser name is required.');
-            return true;
-        }
-        if (!comparison.practiceName) {
-            this.toastRepository.showDanger('Practice name is required.');
-            return true;
+        if (!this.isNormalUser()) {
+            if (!comparison.adviserName) {
+                this.toastRepository.showDanger('Adviser name is required.');
+                return true;
+            }
+            if (!comparison.practiceName) {
+                this.toastRepository.showDanger('Practice name is required.');
+                return true;
+            }
         }
         if (comparison.mainPlatformCheck && !comparison.mainPlatformId) {
             this.toastRepository.showDanger('Main platform is required.');

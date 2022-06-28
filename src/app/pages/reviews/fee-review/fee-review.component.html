@@ -48,12 +48,13 @@
                                 container="body" [autoClose]="'outside'"
                                 popoverClass="table-comment-popover"
                                 triggers="manual"
+                                [hidden]="!reviewService.isEdit()"
                                 (click)="getComment(platform, pPlatform)"
                                 placement="top auto" [ngbPopover]="popPlatformContent">
                             <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
                             Comment
                         </button>
-                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" *ngIf="!isMainProduct(platform)" (click)="removeOrResetForm(platform)" style="margin-left: 4px !important;">
+                        <button class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" *ngIf="!isMainProduct(platform) && reviewService.isEdit()" (click)="removeOrResetForm(platform)" style="margin-left: 4px !important;">
                             <span class="icon-block icon-trash icon-20" *ngIf="platform.showFlag"></span>
                             <span class="icon-block icon-reset-red icon-20" *ngIf="!platform.showFlag"></span>
                         </button>

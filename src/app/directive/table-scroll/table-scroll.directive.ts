@@ -27,7 +27,6 @@ export class TableScrollDirective implements OnInit  {
 
   @HostListener('scroll',['$event']) onScroll($event) {
     let scrollTop = $event.target.scrollTop;
-    console.log('...', scrollTop)
     let table_content_height =this.elementRef.nativeElement.clientHeight;
     let table_scroll_height =this.elementRef.nativeElement.scrollHeight;
     let element = this.elementRef.nativeElement;

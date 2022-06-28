@@ -29,7 +29,7 @@
                         <div class="top-right">
                             <span class="label">Total assets</span>
                             <span class="value">${{ formatAmount(getMemberBalance(member))}}</span>
-                            <span class="remove-btn tx-bold" *ngIf="idx > 0" (click)="removeMember(idx)">Remove</span>
+                            <span class="remove-btn tx-bold" *ngIf="idx > 0 && reviewService.isEdit()" (click)="removeMember(idx)">Remove</span>
                         </div>
                     </div>
                     <div class="column-bottom">
@@ -40,14 +40,14 @@
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <app-number-input [label]="idps.name" [id]="idps.name+idx" [(value)]="idps.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
+                                        <app-number-input [label]="idps.name" [disabled]="!reviewService.isEdit()" [id]="idps.name+idx" [(value)]="idps.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
                                     </div>
-                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx,idps.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length > 0"></span>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx,idps.name)" *ngIf="reviewService.isEdit()"></span>
                                 </div>
                             </div>
                             <div class="column-group" style="padding-right: 0">
                                 <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                        [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length === 6"
+                                        [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.idps).length === 6 || !reviewService.isEdit()"
                                         (click)="addMemberValue(idx, reviewService.comparisonMemberValueType.idps)">
                                     <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add IDPS
                                 </button>
@@ -62,14 +62,14 @@
                                 <div class="form-input-wrapper">
                                     <div class="input-group_unit">
                                         <span class="unit">$</span>
-                                        <app-number-input [label]="superItem.name" [(value)]="superItem.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
+                                        <app-number-input [label]="superItem.name" [disabled]="!reviewService.isEdit()" [(value)]="superItem.balance" [onlyInput]="true" (blur)="numberBlur()"></app-number-input>
                                     </div>
-                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx, superItem.name)" *ngIf="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length > 0"></span>
+                                    <span class="icon-block icon-delete-red icon-16" (click)="removeMemberValue(idx, superItem.name)" *ngIf="reviewService.isEdit()"></span>
                                 </div>
                             </div>
                                 <div class="column-group"  style="padding-right: 0">
                                     <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                                            [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length === 6"
+                                            [hidden]="getMemberValuesByType(member.memberValues, reviewService.comparisonMemberValueType.super).length === 6 || !reviewService.isEdit()"
                                             (click)="addMemberValue(idx, reviewService.comparisonMemberValueType.super)">
                                         <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Add Super
                                     </button>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-edit-group">
                     <button class="btn btn-outline-purple-light btn-with-icon btn-block"
-                            [hidden]="comparisonFeeInfo.members.length === 6"
+                            *ngIf="comparisonFeeInfo.members.length < 6 && reviewService.isEdit()"
                             (click)="addMember()">
                         <span class="icon-block icon-add-purple icon-16 xs-mr-8"></span>Family member/entity
                     </button>
@@ -101,7 +101,10 @@
 
             <div class="form-group-right">
                 <div class="check-box check-box-purple" *ngFor="let item of reviewService.finalPlatformHoldingsAndTransactions">
-                    <input type="checkbox" [(ngModel)]="comparisonFeeInfo[item.key]" [name]="item.key"
+                    <input type="checkbox"
+                           [(ngModel)]="comparisonFeeInfo[item.key]"
+                           [name]="item.key"
+                           [disabled]="!reviewService.isEdit()"
                            [id]="item.key" (change)="saveOrUpdateFeeInfo()"/>
                     <label [for]="item.key">{{item.value}}</label>
                 </div>
@@ -116,13 +119,13 @@
 
             <div class="form-group-right">
                 <div class="column-2">
-                    <app-number-input label="Cash in IDPS accounts" [(value)]="comparisonFeeInfo.idpsCashBalance" (blur)="numberBlur()" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.idps) > 0"></app-number-input>
-                    <app-number-input label="Cash in Super/Pension accounts" [(value)]="comparisonFeeInfo.superCashBalance" (blur)="numberBlur()" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.super) > 0"></app-number-input>
-                    <app-number-input label="Managed funds" [(value)]="comparisonFeeInfo.mfBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf"></app-number-input>
-                    <app-number-input label="Managed accounts" [(value)]="comparisonFeeInfo.maBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMa"></app-number-input>
-                    <app-number-input label="Australian listed investments" [(value)]="comparisonFeeInfo.auBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu"></app-number-input>
-                    <app-number-input label="International listed investments" [(value)]="comparisonFeeInfo.intlBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl"></app-number-input>
-                    <app-number-input label="Unlisted bonds" [(value)]="comparisonFeeInfo.bondBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
+                    <app-number-input label="Cash in IDPS accounts" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.idpsCashBalance" (blur)="numberBlur()" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.idps) > 0"></app-number-input>
+                    <app-number-input label="Cash in Super/Pension accounts" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.superCashBalance" (blur)="numberBlur()" *ngIf="getMemberTotalBalance(reviewService.comparisonMemberValueType.super) > 0"></app-number-input>
+                    <app-number-input label="Managed funds" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.mfBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf"></app-number-input>
+                    <app-number-input label="Managed accounts" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.maBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMa"></app-number-input>
+                    <app-number-input label="Australian listed investments" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.auBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu"></app-number-input>
+                    <app-number-input label="International listed investments" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.intlBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl"></app-number-input>
+                    <app-number-input label="Unlisted bonds" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.bondBalanceI" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
                 </div>
                 <div class="tip-error">
                     <div *ngIf="!checkError().totalCheck">Total balance in this section exceeds the total account balances specified above</div>
@@ -139,7 +142,7 @@
             </div>
             <div class="form-group-right">
                 <div class="column-2">
-                    <app-number-input label="Number of individual holdings" [showDollar]="false" style="width: 265px" [(value)]="comparisonFeeInfo.holdingsNumber" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Number of individual holdings" [disabled]="!reviewService.isEdit()" [showDollar]="false" style="width: 265px" [(value)]="comparisonFeeInfo.holdingsNumber" (blur)="numberBlur()"></app-number-input>
                 </div>
             </div>
         </div>
@@ -152,14 +155,14 @@
 
             <div class="form-group-right">
                 <div class="column-2 label-50">
-                    <app-number-input label="Number of managed fund transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.mfTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf" ></app-number-input>
-                    <app-number-input label="Average value of each managed fund transaction" [(value)]="comparisonFeeInfo.mfAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf" ></app-number-input>
-                    <app-number-input label="Number of Australian listed investment transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.auTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu" ></app-number-input>
-                    <app-number-input label="Average value of each Australian listed investment transaction" [(value)]="comparisonFeeInfo.auAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu" ></app-number-input>
-                    <app-number-input label="Number of international listed investment transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.intlTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl" ></app-number-input>
-                    <app-number-input label="Average value of each international listed investment transaction" [(value)]="comparisonFeeInfo.intlAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl" ></app-number-input>
-                    <app-number-input label="Number of unlisted bond/fixed income transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.bondTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
-                    <app-number-input label="Average value of each unlisted bonds/fixed income transaction" [(value)]="comparisonFeeInfo.bondAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
+                    <app-number-input label="Number of managed fund transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.mfTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf" ></app-number-input>
+                    <app-number-input label="Average value of each managed fund transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.mfAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseMf" ></app-number-input>
+                    <app-number-input label="Number of Australian listed investment transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.auTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu" ></app-number-input>
+                    <app-number-input label="Average value of each Australian listed investment transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.auAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseAu" ></app-number-input>
+                    <app-number-input label="Number of international listed investment transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.intlTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl" ></app-number-input>
+                    <app-number-input label="Average value of each international listed investment transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.intlAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseIntl" ></app-number-input>
+                    <app-number-input label="Number of unlisted bond/fixed income transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.bondTransactions" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
+                    <app-number-input label="Average value of each unlisted bonds/fixed income transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.bondAvg" (blur)="numberBlur()" *ngIf="comparisonFeeInfo.chooseBond" ></app-number-input>
                 </div>
             </div>
         </div>
@@ -172,12 +175,12 @@
 
             <div class="form-group-right">
                 <div class="column-2 label-50">
-                    <app-number-input label="Number of managed fund transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.maMfTransactions" (blur)="numberBlur()"></app-number-input>
-                    <app-number-input label="Average value of each managed fund transaction" [(value)]="comparisonFeeInfo.maMfAvg" (blur)="numberBlur()"></app-number-input>
-                    <app-number-input label="Number of Australian listed investment transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.maAuTransactions" (blur)="numberBlur()" ></app-number-input>
-                    <app-number-input label="Average value of each Australian listed investment transaction" [(value)]="comparisonFeeInfo.maAuAvg" (blur)="numberBlur()"></app-number-input>
-                    <app-number-input label="Number of international listed investment transactions"  [showDollar]="false" [(value)]="comparisonFeeInfo.maIntlTransactions" (blur)="numberBlur()"></app-number-input>
-                    <app-number-input label="Average value of each international listed investment transactio" [(value)]="comparisonFeeInfo.maIntlAvg" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Number of managed fund transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.maMfTransactions" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Average value of each managed fund transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.maMfAvg" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Number of Australian listed investment transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.maAuTransactions" (blur)="numberBlur()" ></app-number-input>
+                    <app-number-input label="Average value of each Australian listed investment transaction" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.maAuAvg" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Number of international listed investment transactions" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.maIntlTransactions" (blur)="numberBlur()"></app-number-input>
+                    <app-number-input label="Average value of each international listed investment transactio" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.maIntlAvg" (blur)="numberBlur()"></app-number-input>
                 </div>
             </div>
         </div>
@@ -190,9 +193,9 @@
             <div class="form-group-right">
                 <div class="column-2">
                     <div class="column">
-                        <app-number-input label="Number of retail insurance policies in IDPS" [showDollar]="false" [(value)]="comparisonFeeInfo.idpsNumRetIns" (blur)="numberBlur()"></app-number-input>
-                        <app-number-input label="Number of retail insurance policies in Super" [showDollar]="false" [(value)]="comparisonFeeInfo.superNumRetIns" (blur)="numberBlur()"></app-number-input>
-                        <app-number-input label="Average annual premium of policies in Super" [(value)]="comparisonFeeInfo.premiumAvg" (blur)="numberBlur()"></app-number-input>
+                        <app-number-input label="Number of retail insurance policies in IDPS" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.idpsNumRetIns" (blur)="numberBlur()"></app-number-input>
+                        <app-number-input label="Number of retail insurance policies in Super" [disabled]="!reviewService.isEdit()" [showDollar]="false" [(value)]="comparisonFeeInfo.superNumRetIns" (blur)="numberBlur()"></app-number-input>
+                        <app-number-input label="Average annual premium of policies in Super" [disabled]="!reviewService.isEdit()" [(value)]="comparisonFeeInfo.premiumAvg" (blur)="numberBlur()"></app-number-input>
                     </div>
                 </div>
             </div>

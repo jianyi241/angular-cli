@@ -143,6 +143,10 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     selectProp(prop: PropertyVo) {
+        if (!this.reviewService.isEdit()) {
+            // this.toastRepository.showDanger('Not editable.')
+            return
+        }
         prop.compChecked = !prop.compChecked;
         this.selectionProperty(prop.id, prop.compChecked, SelectionType.Property.value, prop.tabType);
     }

@@ -58,10 +58,11 @@
                         <div class="btn-control-box">
                             <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
+                                    [hidden]="!reviewService.isEdit()"
                                     (click)="getComment(product, pComment)"
                                     placement="top auto" [ngbPopover]="popCommentContent">Add comment
                             </button>
-                            <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
+                            <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product) && reviewService.isEdit()">
                                 <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
                                 <!-- reset icon-->
                                 <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>
@@ -184,10 +185,11 @@
                     <div class="btn-control-box">
                         <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover' container="body"
                                 [autoClose]="'outside'" popoverClass="table-comment-popover" placement="top auto"
+                                [hidden]="!reviewService.isEdit()"
                                 (click)="getComment(product,pComment)"
                                 [ngbPopover]="popCommentContent">Add comment
                         </button>
-                        <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product)">
+                        <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product) && reviewService.isEdit()">
                             <span class="icon-block icon-trash icon-20" (click)="removePlatform(product)" *ngIf="product.showFlag"></span>
                             <!-- reset icon-->
                             <span class="icon-block icon-reset-red icon-20" (click)="resetPlatform(product)" *ngIf="!product.showFlag"></span>

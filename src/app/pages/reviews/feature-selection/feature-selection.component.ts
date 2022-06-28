@@ -198,11 +198,13 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
     }
 
     selectProp(prop: PropertyVo) {
+        if (!this.reviewService.isEdit()) return
         prop.compChecked = true;
         this.selectionProperty(prop.id, true, SelectionType.Property.value);
     }
 
     unSelectProp(prop: PropertyVo) {
+        if (!this.reviewService.isEdit()) return
         prop.compChecked = false;
         this.selectionProperty(prop.id, false, SelectionType.Property.value);
     }

@@ -8,7 +8,7 @@
             <div class="personnel-wrapper">
                 <div class="personnel-info">
                     <div class="personnel-info_title">
-                        {{comparisonInfo.adviserName}}’s review performed in Q{{comparisonInfo.updateTime | dateFormat : 'Q YYYY'}}
+                        {{comparisonInfo.adviserName ? comparisonInfo.adviserName + '’s' : ''}} review performed in Q{{comparisonInfo.updateTime | dateFormat : 'Q YYYY'}}
                         <div class="status">
                             <ng-container *ngIf="!comparisonInfo.archived">
                                 <label class="label label-green xs-pl-16 xs-pr-16"
@@ -38,7 +38,7 @@
                     <div class="info-title">This analysis is for</div>
                     <div class="info-sub-title">The client profile information</div>
                 </div>
-                <div class="introduce-from-info">
+                <div class="introduce-from-info" *ngIf="comparisonInfo.adviserName && comparisonInfo.practiceName">
                     <div class="from-info__avatar">
                         <img src="./assets/img/icon/icon-member.svg" />
                     </div>
@@ -53,6 +53,7 @@
                             container="body" [autoClose]="'outside'"
                             popoverClass="table-comment-popover"
                             triggers="manual"
+                            [hidden]="!reviewService.isEdit()"
                             (click)="openEditorTextPopover(pIntroduce,'objectives')"
                             placement="top auto"
                             [ngbPopover]="popIntroduceContent">
@@ -179,6 +180,7 @@
                                         container="body" [autoClose]="'outside'"
                                         popoverClass="table-comment-popover"
                                         triggers="manual"
+                                        [hidden]="!reviewService.isEdit()"
                                         (click)="openCommentPopover(pPlatform, getDynamicAnalysis(analysis.shAnalyseId, item.comments),{shProductId: item.shProductId,shAnalyseId: analysis.shAnalyseId})"
                                         placement="top auto" [ngbPopover]="popPlatformContent">
                                     <span class="icon-block icon-14 xs-mr-4" [ngClass]="[getDynamicAnalysis(analysis.shAnalyseId, item.comments) ? 'icon-pen' : 'icon-add-purple']"></span>
@@ -213,6 +215,7 @@
                                         container="body" [autoClose]="'outside'"
                                         popoverClass="table-comment-popover"
                                         triggers="manual"
+                                        [hidden]="!reviewService.isEdit()"
                                         (click)="openFinalAnalysisPopover(pPlatform, item.finalAnalyse, item.shProductId)"
                                         placement="top auto" [ngbPopover]="popPlatformContent">
                                     <span class="icon-block icon-pen icon-14 xs-mr-4"></span>
@@ -315,6 +318,7 @@
                     container="body" [autoClose]="'outside'"
                     popoverClass="table-comment-popover"
                     triggers="manual"
+                    [hidden]="!reviewService.isEdit()"
                     (click)="openEditorTextPopover(pRemark, 'remark')"
                     placement="top auto"
                     [ngbPopover]="popRemarkContent">

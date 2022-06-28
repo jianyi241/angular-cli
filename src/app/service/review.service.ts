@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ReviewTipComponent} from "../pages/reviews/review-tip/review-tip.component";
 import {ComparisonMemberValueType} from "../model/enums/comparison-member-value-type";
+import {ComparisonStatus} from "../model/enums/comparison-status";
 
 @Injectable({
     providedIn: 'root'
@@ -146,6 +147,9 @@ export class ReviewService {
         this.cacheSaveData = data;
     }
 
-
+    isEdit(): boolean {
+        if (this.comparison.status === ComparisonStatus.Completed.value) return false
+        return true
+    }
 
 }

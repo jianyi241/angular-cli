@@ -11,8 +11,8 @@
                 <div class="swiper-head">
                     <img [src]="group.attachmentVo?.visitUrl" alt="">
 <!--                    <span class="icon-block icon-teleconference icon-40"></span>-->
-                    <div class="tip" (click)="selectGroupAll(group)" *ngIf="!hasSelect(group)">Select all features</div>
-                    <div class="tip tx-red" (click)="deselectGroupAll(group)" *ngIf="hasSelect(group)">Deselect all
+                    <div class="tip" (click)="selectGroupAll(group)" *ngIf="!hasSelect(group) && reviewService.isEdit()">Select all features</div>
+                    <div class="tip tx-red" (click)="deselectGroupAll(group)" *ngIf="hasSelect(group) && reviewService.isEdit()">Deselect all
                         features
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                                 <div class="features-list all-features">
                                     <div class="title">
                                         <h3>All features</h3>
-                                        <button (click)="selectSubGroupAll(subGroup)">Select all</button>
+                                        <button (click)="selectSubGroupAll(subGroup)" *ngIf="reviewService.isEdit()">Select all</button>
                                     </div>
                                     <ul>
                                         <li [hidden]="prop.compChecked" *ngFor="let prop of subGroup.propertyVoList"
@@ -105,7 +105,7 @@
                                 <div class="features-list features-selected">
                                     <div class="title">
                                         <h3>Features selected</h3>
-                                        <button (click)="deselectSubGroupAll(subGroup)">Deselect all</button>
+                                        <button (click)="deselectSubGroupAll(subGroup)" *ngIf="reviewService.isEdit()">Deselect all</button>
                                     </div>
                                     <p class="sub-title" [hidden]="checkSelectList(subGroup.propertyVoList)">You haven’t
                                         selected any features yet. Click on one of the

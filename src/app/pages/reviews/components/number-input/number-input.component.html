@@ -5,6 +5,7 @@
             <span class="unit" *ngIf="showDollar">$</span>
             <input type="number" class="form-control input-number"
                 [ngModelOptions]="{ standalone: true }"
+                [disabled]="disabled"
                 [(ngModel)]="value"
                 (ngModelChange)="onInput()"
                 (blur)="onBlur()"
@@ -15,6 +16,7 @@
 </div>
 <input type="number" class="form-control input-number"
        [ngModelOptions]="{ standalone: true }"
+       [disabled]="disabled"
        [(ngModel)]="value"
        (ngModelChange)="onInput()"
        (blur)="onBlur()"

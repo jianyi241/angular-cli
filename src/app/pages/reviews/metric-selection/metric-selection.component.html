@@ -13,8 +13,8 @@
                 {{getSelectionName(selection)}}
             </div>
 
-            <div class="btn-select" *ngIf="hasSelect(selection)" (click)="deselectAll(selection)">Deselect all</div>
-            <div class="btn-select" *ngIf="!hasSelect(selection)" (click)="selectAll(selection)">Select all</div>
+            <div class="btn-select" *ngIf="hasSelect(selection) && reviewService.isEdit()" (click)="deselectAll(selection)">Deselect all</div>
+            <div class="btn-select" *ngIf="!hasSelect(selection) && reviewService.isEdit()" (click)="selectAll(selection)">Select all</div>
         </div>
         <ng-container *ngIf="selection.tabType == configService.tabType.overview || selection.tabType == configService.tabType.esg">
             <div class="selection-body">

@@ -21,7 +21,6 @@ export class FocusService {
     }
 
     hasFocus(): boolean {
-        console.log('focusQueue ', this.focusQueue)
         return this.focusQueue.length > 0;
     }
 

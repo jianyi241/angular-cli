@@ -14,6 +14,9 @@ export class NumberInputComponent implements OnInit {
   onlyInput: boolean = false
 
   @Input()
+  disabled: boolean = false
+
+  @Input()
   maxValue: number = 99999999
 
   @Input()
