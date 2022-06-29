@@ -18,6 +18,7 @@ import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../../service/current-user.service";
 import {UserRepository} from "../../../../../repository/user-repository";
+import {Commons} from "../../../../../utils/Commons";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -85,7 +86,7 @@ export class EditSupplierTeamComponent implements OnInit {
     }
 
     updateStatus(): void {
-        const _team = JSON.parse(JSON.stringify(this.team))
+        const _team = Commons.deepCopy(this.team)
         if (_team.status === this.configService.userStatus.active) {
             _team.status = this.configService.userStatus.disable
         } else {

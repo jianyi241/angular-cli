@@ -88,7 +88,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
             prop.shComparisonId = this.reviewService.comparison.id;
             return prop;
         });
+        this.reviewService.showLoading()
         this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
@@ -171,7 +173,9 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
 
     selectionProperty(id: string, flag: boolean, type: string, tabType: number) {
         let condition = this.buildSelectionCondition(id, flag, type, tabType);
+        this.reviewService.showLoading()
         this.reviewRepository.metricPropertySelection(condition).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

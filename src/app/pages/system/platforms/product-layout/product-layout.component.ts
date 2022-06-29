@@ -20,6 +20,7 @@ import {NgxLoadingSpinnerService} from '@k-adam/ngx-loading-spinner';
 import {VersionStatus} from "../../../../model/enums/version-status";
 import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
 import {FileRepository} from "../../../../repository/file-repository";
+import {Commons} from "../../../../utils/Commons";
 
 declare type TipInfo = {
     show: boolean,
@@ -200,7 +201,7 @@ export class ProductLayoutComponent implements OnInit {
     }
 
     updateVersionStatus(status: string): void {
-        const _version = JSON.parse(JSON.stringify(this.version))
+        const _version = Commons.deepCopy(this.version)
         _version.versionStatus = status
         if (status === this.configService.versionStatus.frozen) {
             this.loadingService.show()

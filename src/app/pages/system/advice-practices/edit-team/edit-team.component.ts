@@ -12,6 +12,7 @@ import {FileRepository} from "../../../../repository/file-repository";
 import {TeamRepository} from "../../../../repository/team-repository";
 import {ConfigService} from "../../../../service/config.service";
 import {CompanyType} from "../../../../model/enums/company-type";
+import {Commons} from "../../../../utils/Commons";
 
 @Component({
     selector: 'app-edit-team',
@@ -65,7 +66,7 @@ export class EditTeamComponent implements OnInit {
     }
 
     updateStatus(): void {
-        const _team = JSON.parse(JSON.stringify(this.team))
+        const _team = Commons.deepCopy(this.team)
         if (_team.status === this.configService.userStatus.active) {
             _team.status = this.configService.userStatus.disable
         } else {

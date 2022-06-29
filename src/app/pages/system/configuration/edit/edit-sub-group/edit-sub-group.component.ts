@@ -15,6 +15,7 @@ import {GroupStatus} from "../../../../../model/enums/group-status";
 import {environment} from "../../../../../../environments/environment";
 import {SaveService} from "../../../../../service/save.service";
 import {take} from "rxjs/operators";
+import {Commons} from "../../../../../utils/Commons";
 
 @Component({
     selector: 'app-edit-sub-group',
@@ -117,7 +118,7 @@ export class EditSubGroupComponent implements OnInit {
     }
 
     updateStatus(status: string): void {
-        const _subGroup = JSON.parse(JSON.stringify(this.subGroup))
+        const _subGroup = Commons.deepCopy(this.subGroup)
         _subGroup.status = status;
         this.saveSubGroup(_subGroup);
     }

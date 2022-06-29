@@ -16,6 +16,7 @@ import {SaveService} from "../service/save.service";
 import {Constants} from "../model/constants";
 import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
 import {ConfigService} from "../service/config.service";
+import {ReviewService} from "../service/review.service";
 
 
 @Injectable()
@@ -25,6 +26,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
                 private saveService: SaveService,
                 private configService: ConfigService,
                 private toastRepository: ToastRepository,
+                private reviewService: ReviewService,
                 private ngxLoadingSpinnerService: NgxLoadingSpinnerService,
                 private router: Router) {
     }
@@ -72,6 +74,7 @@ export class HttpResultInterceptor implements HttpInterceptor {
                 }
                 this.ngxLoadingSpinnerService.hide();
                 this.configService.platformLoading = false
+                this.reviewService.hideLoading()
                 this.toastRepository.showDanger(error.statusText);
                 throw error;
             })

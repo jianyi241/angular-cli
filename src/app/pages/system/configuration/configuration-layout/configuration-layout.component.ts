@@ -16,6 +16,7 @@ import {PlatformRepository} from "../../../../repository/platform-repository";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmModalComponent} from "../../modal/confirm-modal/confirm-modal.component";
 import {NgxLoadingSpinnerService} from "@k-adam/ngx-loading-spinner";
+import {Commons} from "../../../../utils/Commons";
 
 @Component({
     selector: 'app-configuration-layout',
@@ -178,7 +179,7 @@ export class ConfigurationLayoutComponent implements OnInit {
     }
 
     pushSupplier(): void {
-        let version = JSON.parse(JSON.stringify(this.version))
+        let version = Commons.deepCopy(this.version)
         version.versionStatus = VersionStatus.WaitPublish.value
         this.versionRepository.updateVersionStatus(version).subscribe(res => {
             if (res.statusCode !== 200) {

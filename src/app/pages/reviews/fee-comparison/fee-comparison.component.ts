@@ -103,7 +103,9 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
     }
 
     saveOrUpdateFeeInfo(): void {
+        this.reviewService.showLoading()
         this.reviewRepository.saveOrUpdateComparisonFee(this.comparisonFeeInfo).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 return

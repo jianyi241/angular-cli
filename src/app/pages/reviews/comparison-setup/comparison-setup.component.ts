@@ -255,7 +255,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeMainPlatform() {
-        this.showChangeMainPlatformConfirm()
         let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.productName = mainPlatform?.name;
         this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
@@ -265,7 +264,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeCheckMain() {
-        this.showChangeMainPlatformConfirm()
         this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : null
         this.reviewService.comparison.productName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.productName : ''
     }

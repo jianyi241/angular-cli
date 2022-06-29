@@ -24,6 +24,7 @@ import {ComparisonFeeInfo} from "../../../model/po/comparisonFeeInfo";
 import {ComparisonMemberValueInfo} from "../../../model/po/comparisonMemberValueInfo";
 import ComparisonSummary from "../../../model/po/comparisonSummary";
 import {dealThousands} from "../../../utils/amount-format";
+import {Commons} from "../../../utils/Commons";
 
 @Component({
     selector: 'app-summary',
@@ -177,7 +178,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
             this.comparisonGroups = res.data.comparisonTabs;
             const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value,TabType.information.value].includes(item.tabType));
             const featureGroups = res.data.comparisonTabs.filter(item => item.tabType === TabType.features.value);
-            this.featureProperties = JSON.parse(JSON.stringify(featureGroups))[0];
+            this.featureProperties = Commons.deepCopy(featureGroups)[0];
             this.getGroupOrPropertiesList(businessGroups, 'businessProperties');
             this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
             this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
@@ -191,18 +192,20 @@ export class SummaryComponent implements OnInit, AfterViewInit {
             this.totalCostChartsComponent.setChartsData(this.feeChartData)
         }
         this.feeFormData = data.fee
-        // @ts-ignore
-        const feeArray = Object.entries(this.feeFormData).map((i, idx) => {
-            const obj = this.reviewService.finalPlatformHoldingsAndTransactions.find(k => k.key === i[0])
-            if (obj && i[1]) {
-                return obj.value
-            }
-        }).filter(f => f)
-        this.feeHeldPlatformChoose = feeArray.toString()
-        const _feeTotalAssets = this.feeFormData.members.map(m => m.memberValues.map(i => i.balance).reduce((a,b) => a + b, 0)).reduce((a,b) => a + b, 0)
+        this.feeHeldPlatformChoose = this.reviewService.finalPlatformHoldingsAndTransactions.filter(f => this.feeFormData[f.key]).map(i => i.value).toString()
+        const _feeTotalAssets = this.feeFormData.members.flatMap(m => m.memberValues.map(i => i.balance)).reduce((a,b) => a + b, 0)
         this.feeTotalAssets = dealThousands(_feeTotalAssets.toString())
-        this.feeOutsideManagedAccounts = ['mfTransactions','auTransactions','intlTransactions','bondTransactions'].map(i => this.feeFormData[i]).reduce((a, b) => a + b, 0)
-        this.feeWithinManagedAccounts = ['maMfTransactions','maAuTransactions','maIntlTransactions'].map(i => this.feeFormData[i]).reduce((a, b) => a + b, 0)
+        const {
+            mfTransactions,
+            auTransactions,
+            intlTransactions,
+            bondTransactions,
+            maMfTransactions,
+            maAuTransactions,
+            maIntlTransactions
+        } = this.feeFormData
+        this.feeOutsideManagedAccounts = mfTransactions + auTransactions + intlTransactions + bondTransactions
+        this.feeWithinManagedAccounts = maMfTransactions + maAuTransactions + maIntlTransactions
     }
 
     updateViewList(windowWidth: number, init = false): void {
@@ -222,8 +225,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         }
     }
 
-    convertList(): void{
-        let _list = arr1ToArr2(JSON.parse(JSON.stringify(this.comparisonProducts)), this.section)
+    convertList(): void {
+        let _list = arr1ToArr2(Commons.deepCopy(this.comparisonProducts), this.section)
         _list[_list.length - 1].length = this.section
         this.comparisonTwoProducts = _list
     }
@@ -285,7 +288,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
                 finalAnalyse: ''
             })
         } else {
-            this.currentFinalAnalysis = JSON.parse(JSON.stringify(finalAnalysis))
+            this.currentFinalAnalysis = Commons.deepCopy(finalAnalysis)
         }
         this.openPopover(pComment)
     }
@@ -294,7 +297,9 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateFinalAnalyse`)) {
             return;
         }
+        this.reviewService.showLoading()
         this.reviewRepository.saveOrUpdateFinalAnalyse(this.currentFinalAnalysis).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 pComment.close();
@@ -316,7 +321,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
                 comment: ''
             }
         } else {
-            this.currentCommit = JSON.parse(JSON.stringify(commentInfo))
+            this.currentCommit = Commons.deepCopy(commentInfo)
         }
         this.openPopover(pComment)
     }
@@ -325,7 +330,9 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComment`)) {
             return;
         }
+        this.reviewService.showLoading()
         this.reviewRepository.saveComment(this.currentCommit).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 pComment.close();
@@ -341,9 +348,11 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
             return;
         }
-        const comparison = JSON.parse(JSON.stringify(this.comparisonInfo))
+        const comparison = Commons.deepCopy(this.comparisonInfo)
         comparison[key] = this.currentEditorText
+        this.reviewService.showLoading()
         this.reviewRepository.saveComparison(comparison).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode !== 200) {
                 this.toastRepository.showDanger(res.msg || 'save failed.')
                 pComment.close();
@@ -356,7 +365,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     }
 
     openEditorTextPopover(pComment: NgbPopover, key: string): void {
-        const comparison = JSON.parse(JSON.stringify(this.comparisonInfo))
+        const comparison = Commons.deepCopy(this.comparisonInfo)
         this.currentEditorText = comparison[key]
         pComment.open();
     }

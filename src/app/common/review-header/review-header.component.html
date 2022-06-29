@@ -24,6 +24,11 @@
 
         <!--        <button class="btn btn-text-theme btn-with-info-icon" *ngIf="!isScrollFixed" (click)="saveTemplate()">Save as feature template <span-->
         <!--                class="icon-block icon-info-bold icon-14"></span></button>-->
+        <div class="save-loading" *ngIf="reviewService.isEdit()">
+            <img src="./assets/img/icon/icon-save-success.svg" class="success" [hidden]="reviewService.loading"/>
+            <img src="./assets/img/icon/icon-saving.svg" class="saving" [hidden]="!reviewService.loading"/>
+            {{reviewService.loading ? 'Saving...' : 'Saved '}}
+        </div>
         <button class="btn btn-outline-blue-light xs-ml-30" (click)="goBack()">Go back</button>
         <button class="btn btn-outline-blue-light xs-ml-30" (click)="save()" *ngIf="reviewService.isEdit()">Save</button>
         <!--        <button class="btn btn-outline-blue-light xs-ml-16">Load a template</button>-->

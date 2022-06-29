@@ -117,7 +117,9 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
     let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.fee.value);
     product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
     product.comparisonComment.shProductId = product.shProductId;
+    this.reviewService.showLoading()
     this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
+      this.reviewService.hideLoading()
       if (res.statusCode != 200) {
         this.toastRepository.showDanger(res.msg);
         return;
@@ -156,7 +158,9 @@ export class FeeReviewComponent implements OnInit,AfterViewInit {
 
   changeProduct(platform: Platform, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
     platform.shComparisonId = this.reviewService.comparison.id;
+    this.reviewService.showLoading()
     this.reviewRepository.changeProduct(platform).subscribe(res => {
+      this.reviewService.hideLoading()
       if (res.statusCode != 200) {
         this.toastRepository.showDanger(res.msg);
         error && error();

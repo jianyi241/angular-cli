@@ -15,6 +15,7 @@ import {VersionRepository} from "../../../../../repository/version-repository";
 import {GroupStatus} from "../../../../../model/enums/group-status";
 import {SaveService} from "../../../../../service/save.service";
 import {take} from "rxjs/operators";
+import {Commons} from "../../../../../utils/Commons";
 
 
 @Component({
@@ -132,7 +133,7 @@ export class EditGroupComponent implements OnInit {
     }
 
     updateStatus(status: string): void {
-        const _group = JSON.parse(JSON.stringify(this.group))
+        const _group = Commons.deepCopy(this.group)
         _group.status = status;
         this.saveGroup(_group);
     }

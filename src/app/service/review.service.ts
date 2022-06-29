@@ -29,6 +29,7 @@ export class ReviewService {
         idps: ComparisonMemberValueType.idps.value,
         super: ComparisonMemberValueType.super.value
     }
+    loading: boolean = false;
 
     constructor(private router: Router, private modalService: NgbModal) {
     }
@@ -52,6 +53,14 @@ export class ReviewService {
     leave(): void {
         console.log('back list')
         this.leaveReviewSubject.next();
+    }
+
+    showLoading(): void {
+        this.loading = true
+    }
+
+    hideLoading(): void {
+        this.loading = false
     }
 
     finalPlatformHoldingsAndTransactions = [{

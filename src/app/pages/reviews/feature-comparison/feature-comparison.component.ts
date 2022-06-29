@@ -241,7 +241,9 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
 
     changeProduct(product: ComparisonProductVo, callback?: (data: ComparisonProductInfo) => void, error?: () => void) {
         product.shComparisonId = this.reviewService.comparison.id;
+        this.reviewService.showLoading()
         this.reviewRepository.changeProduct(product).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 error && error();
@@ -268,7 +270,9 @@ export class FeatureComparisonComponent implements OnInit, OnDestroy {
         let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.feature.value);
         product.comparisonComment.shAnalyseId = analyseInfo.shAnalyseId;
         product.comparisonComment.shProductId = product.shProductId;
+        this.reviewService.showLoading()
         this.reviewRepository.saveComment(product.comparisonComment).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;

@@ -254,7 +254,9 @@ export class FeatureSelectionComponent implements OnInit, OnDestroy {
 
     selectionProperty(id: string, flag: boolean, type: string) {
         let condition = this.buildSelectionCondition(id, flag, type);
+        this.reviewService.showLoading()
         this.reviewRepository.featurePropertySelection(condition).subscribe(res => {
+            this.reviewService.hideLoading()
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
             }

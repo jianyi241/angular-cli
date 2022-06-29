@@ -14,6 +14,7 @@ import {VersionRepository} from "../../../../../repository/version-repository";
 import {PropType} from "../../../../../model/enums/prop-type";
 import {environment} from "../../../../../../environments/environment";
 import {SaveService} from "../../../../../service/save.service";
+import {Commons} from "../../../../../utils/Commons";
 
 @Component({
     selector: 'app-edit-prop',
@@ -116,7 +117,7 @@ export class EditPropComponent implements OnInit {
     }
 
     updateStatus(status: string): void {
-        const _prop = JSON.parse(JSON.stringify(this.prop))
+        const _prop = Commons.deepCopy(this.prop)
         _prop.status = status;
         this.saveProp(_prop);
     }
