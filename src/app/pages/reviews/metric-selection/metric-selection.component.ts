@@ -65,38 +65,39 @@ export class MetricSelectionComponent implements OnInit, OnDestroy {
     }
 
     private save(callback?: () => void) {
-        let props: Array<PropertyVo> = [];
-        this.metricSelections.forEach(selection => {
-            if (selection.tabType == TabType.information.value) {
-                props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
-            } else {
-                props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
-            }
-        })
-        if (this.validSave(props)) {
-            return;
-        }
-        if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
-            return;
-        }
-        let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
-        let comparisonProps = props.map(p => {
-            let prop = new ComparisonPropertyInfo();
-            prop.essential = p.essential;
-            prop.shPropertyId = p.id;
-            prop.shAnalyseId = analyseInfo.shAnalyseId;
-            prop.shComparisonId = this.reviewService.comparison.id;
-            return prop;
-        });
-        this.reviewService.showLoading()
-        this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
-            this.reviewService.hideLoading()
-            if (res.statusCode != 200) {
-                this.toastRepository.showDanger(res.msg);
-                return;
-            }
-            callback ? callback() : this.toastRepository.showSuccess('Save successfully.');
-        });
+        // let props: Array<PropertyVo> = [];
+        // this.metricSelections.forEach(selection => {
+        //     if (selection.tabType == TabType.information.value) {
+        //         props = props.concat(selection.groupVoList.flatMap(g => g.propertyVoList || []).filter(p => p.compChecked))
+        //     } else {
+        //         props = props.concat(selection.propertyVoList.filter(p => p.compChecked));
+        //     }
+        // })
+        // if (this.validSave(props)) {
+        //     return;
+        // }
+        // if (this.saveService.saveCheck(environment.baseURL + `/compare/saveComparisonProperty`)) {
+        //     return;
+        // }
+        // let analyseInfo = this.reviewService.comparison.analyseVoList.find(a => a.name == AnalysisType.metric.value);
+        // let comparisonProps = props.map(p => {
+        //     let prop = new ComparisonPropertyInfo();
+        //     prop.essential = p.essential;
+        //     prop.shPropertyId = p.id;
+        //     prop.shAnalyseId = analyseInfo.shAnalyseId;
+        //     prop.shComparisonId = this.reviewService.comparison.id;
+        //     return prop;
+        // });
+        // this.reviewService.showLoading()
+        // this.reviewRepository.saveComparisonProperty(comparisonProps).subscribe(res => {
+        //     this.reviewService.hideLoading()
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg);
+        //         return;
+        //     }
+            callback()
+                // ? callback() : this.toastRepository.showSuccess('Save successfully.');
+        // });
     }
 
     validSave(props: Array<PropertyVo>): boolean {
