@@ -81,7 +81,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         } else {
             this.section = 4
         }
-        window.addEventListener('resize',(e: UIEvent) => {
+        window.addEventListener('resize', (e: UIEvent) => {
             const windowWidth = window.innerWidth
             this.updateViewList(windowWidth, false)
         })
@@ -109,41 +109,51 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         return idx >= 0
     }
 
-   getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
-       const obj = list.find(item => item.shAnalyseId === shAnalysisId)
-       return (typeof obj) != 'undefined' ? obj : ''
-   }
+    getDynamicAnalysis(shAnalysisId: string, list: Array<ComparisonCommentInfo>): any {
+        const obj = list.find(item => item.shAnalyseId === shAnalysisId)
+        return (typeof obj) != 'undefined' ? obj : ''
+    }
 
-   getParentGroupName(parentId: string): string {
-       if (!parentId) return ''
-       const featureGroup = this.comparisonGroups.find(item => item.tabType === TabType.features.value).groups.find(e => e.id === parentId)
-       return featureGroup ? featureGroup.name : ''
-   }
+    getParentGroupName(parentId: string): string {
+        if (!parentId) return ''
+        const featureGroup = this.comparisonGroups.find(item => item.tabType === TabType.features.value).groups.find(e => e.id === parentId)
+        return featureGroup ? featureGroup.name : ''
+    }
 
-   getTabTypeName(tabType: number): string {
-       const type = TabType.Values().find(e => e.value === tabType)
-       return type ? type.name : ''
-   }
+    getTabTypeName(tabType: number): string {
+        const type = TabType.Values().find(e => e.value === tabType)
+        return type ? type.name : ''
+    }
 
-   getPropertiesCountOrSelectCount(properties: Array<PropertyInfo>,type: string): number {
-       if (!properties || !properties.length) return 0
-       if (type === 'selected') return properties.filter(e => e.selected).length
-       return properties.length
-   }
+    getPropertiesCountOrSelectCount(properties: Array<PropertyInfo>, type: string): number {
+        if (!properties || !properties.length) return 0
+        if (type === 'selected') return properties.filter(e => e.selected).length
+        return properties.length
+    }
 
-    getGroupOrPropertiesList(list: Array<GroupInfo>,key: string): void {
-        if (!list || !list.length) return;
-        const recursion = (list: Array<GroupInfo>) => {
+    getProperties(list: Array<GroupInfo>):Array<PropertyInfo> {
+        const recursion = (list: Array<GroupInfo>): Array<PropertyInfo> => {
+            return list.flatMap(i => {
+                if (i.properties) {
+                    return i.properties
+                } else if (i.groups) {
+                    recursion(i.groups)
+                } else if (i.subList) {
+                    recursion(i.subList)
+                }
+            })
+        }
+        return recursion(list)
+    }
+
+    getGroups(list: Array<GroupInfo>, type: string): Array<GroupInfo> {
+        // type: feature/metric
+        const recursion = (list: Array<GroupInfo>): Array<GroupInfo> => {
             return list.flatMap(e => {
                 if (e.properties) {
-                    if (key === 'businessProperties') {
-                        const arr = e.properties.filter(_i => _i.selected)
-                        if (arr.length) return arr
-                    } else {
                         return e
-                    }
                 } else if (e.groups) {
-                    if (key === 'businessGroupList') {
+                    if (type === 'metric') {
                         e.properties = e.groups.flatMap(e => e.properties)
                         return e
                     } else {
@@ -152,9 +162,9 @@ export class SummaryComponent implements OnInit, AfterViewInit {
                 } else if (e.subList) {
                     return recursion(e.subList)
                 }
-            }).filter(e => (typeof e) !== 'undefined')
+            })
         }
-        this[key] = recursion(list)
+        return recursion(list)
     }
 
     showFeatureFlag(product): void {
@@ -167,7 +177,6 @@ export class SummaryComponent implements OnInit, AfterViewInit {
                 this.toastRepository.showDanger(res.msg || 'get data error');
                 return;
             }
-
             this.getFeeInfo(res.data)
             this.comparisonProducts = res.data.products.filter(res => this.showFeatureFlag(res));
             this.updateViewList(window.innerWidth, true);
@@ -176,12 +185,14 @@ export class SummaryComponent implements OnInit, AfterViewInit {
                 activeCount: this.comparisonProducts.length
             }
             this.comparisonGroups = res.data.comparisonTabs;
-            const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value,TabType.information.value].includes(item.tabType));
+            const businessGroups = res.data.comparisonTabs.filter(item => [TabType.overview.value, TabType.esg.value, TabType.information.value].includes(item.tabType));
             const featureGroups = res.data.comparisonTabs.filter(item => item.tabType === TabType.features.value);
             this.featureProperties = Commons.deepCopy(featureGroups)[0];
-            this.getGroupOrPropertiesList(businessGroups, 'businessProperties');
-            this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
-            this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
+            this.businessProperties = this.getProperties(businessGroups).filter(p => p && p.selected);
+            // this.getGroupOrPropertiesList(featureGroups, 'featureGroupsList');
+            this.featureGroupsList = this.getGroups(featureGroups,'feature');
+            // this.getGroupOrPropertiesList(businessGroups, 'businessGroupList');
+            this.businessGroupList = this.getGroups(businessGroups,'metric')
         })
     }
 
@@ -193,7 +204,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         }
         this.feeFormData = data.fee
         this.feeHeldPlatformChoose = this.reviewService.finalPlatformHoldingsAndTransactions.filter(f => this.feeFormData[f.key]).map(i => i.value).toString()
-        const _feeTotalAssets = this.feeFormData.members.flatMap(m => m.memberValues.map(i => i.balance)).reduce((a,b) => a + b, 0)
+        const _feeTotalAssets = this.feeFormData.members.flatMap(m => m.memberValues.map(i => i.balance)).reduce((a, b) => a + b, 0)
         this.feeTotalAssets = dealThousands(_feeTotalAssets.toString())
         const {
             mfTransactions,
@@ -253,18 +264,17 @@ export class SummaryComponent implements OnInit, AfterViewInit {
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-                const fee = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.fee.value)
-                const metric = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.metric.value)
-                const feature = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.feature.value)
-                if (fee) {
-                    this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
-                } else if (metric) {
-                    this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
-                } else if (feature) {
-                    this.reviewService.preStep(AnalysisType.metric);
-                }
+            const fee = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.fee.value)
+            const metric = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.metric.value)
+            const feature = this.reviewService.comparison.analyseVoList.some(i => i.name === AnalysisType.feature.value)
+            if (fee) {
+                this.router.navigateByUrl(`/review/fee-review/${this.reviewService.comparison.id}`);
+            } else if (metric) {
+                this.router.navigateByUrl(`/review/metric-comparison/${this.reviewService.comparison.id}`);
+            } else if (feature) {
+                this.reviewService.preStep(AnalysisType.metric);
             }
-        )
+        })
     }
 
     saveSubscribe(): void {
@@ -279,7 +289,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         })
     }
 
-    openFinalAnalysisPopover(pComment: NgbPopover,finalAnalysis: FinalAnalyse,shProductId: string): void {
+    openFinalAnalysisPopover(pComment: NgbPopover, finalAnalysis: FinalAnalyse, shProductId: string): void {
         if (!finalAnalysis || (typeof finalAnalysis.id) === 'undefined') {
             Object.assign(this.currentFinalAnalysis, {
                 ...finalAnalysis,
@@ -311,8 +321,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         })
     }
 
-
-    openCommentPopover(pComment: NgbPopover, commentInfo: ComparisonCommentInfo, {shProductId,shAnalyseId}): void {
+    openCommentPopover(pComment: NgbPopover, commentInfo: ComparisonCommentInfo, {shProductId, shAnalyseId}): void {
         if (!commentInfo) {
             this.currentCommit = {
                 shComparisonId: this.comparisonInfo.id,
@@ -374,7 +383,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
         pComment.open();
     }
 
-    getProductPropValue(propertyList: Array<ProductPropInfo> ,prop: PropertyInfo): string {
+    getProductPropValue(propertyList: Array<ProductPropInfo>, prop: PropertyInfo): string {
         const obj = propertyList.find(item => item.shPropertyId === prop.id)
         return obj ? obj.propValue : ''
     }
