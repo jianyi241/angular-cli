@@ -81,7 +81,7 @@ export class TotalCostChartsComponent implements OnInit {
           color: e.lineColor,
           width: e.mainFlag ? 4 : 2 // 主产品加粗
         },
-        data: e.lineData
+        data: e.lineData.map(n => Number((n / 1000).toFixed(1)))
       }
     })
     // @ts-ignore

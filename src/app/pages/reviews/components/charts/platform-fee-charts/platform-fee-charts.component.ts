@@ -60,7 +60,12 @@ export class PlatformFeeChartsComponent implements OnInit {
     },50)
   }
 
+  formatBalance(balance: number): string {
+    return (balance / 1000).toFixed(1)
+  }
+
   initCharts({xAxisValues, yAxisValues, min, max, seriesData, totalBalance}: PlatformFeeChartsOptions) {
+    const that = this
     this.yAxisData = yAxisValues
     if (this.platformCharts == null) {
       const chartDom:HTMLElement = document.getElementById(this.chartsId);
@@ -186,7 +191,7 @@ export class PlatformFeeChartsComponent implements OnInit {
             fontWeight: 400,
             show: true,
             formatter: function(e: any) {
-              return `$${dealThousands(e.data[2]) }`
+              return `$${that.formatBalance(e.data[2])}`
             }
           },
           itemStyle: {
