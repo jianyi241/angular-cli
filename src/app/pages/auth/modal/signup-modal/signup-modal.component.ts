@@ -84,7 +84,7 @@ export class SignupModalComponent implements OnInit {
                         centered: true
                     });
                     existedModalComponent.result.then(modalRes => {
-                        window.open(`mailto:https://${res.data.account}`,'_blank')
+                        window.open(`mailto:${res.data.account}`,'_blank')
                     }).catch(err => {
                         console.log('error ', err)
                     })

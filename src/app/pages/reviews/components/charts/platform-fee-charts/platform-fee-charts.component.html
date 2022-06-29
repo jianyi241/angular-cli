@@ -9,8 +9,8 @@
                 <img [src]="i.visitUrl" class="label-icon"/>
             </div>
             <div class="label-right">
-                <div class="label-type">{{i.platformName}}</div>
-                <div class="label-title">{{i.produceName}} </div>
+                <div class="label-type" [title]="i.platformName">{{i.platformName}}</div>
+                <div class="label-title" [title]="i.produceName">{{i.produceName}} </div>
                 <div class="tooltip-wrapper">
                     <ng-template #popContent>
                         <div class="cell-popover">
@@ -36,7 +36,9 @@
         </div>
         <div class="charts-summary">
             <div class="summary-left">
-                <div class="mark">$</div>
+                <div class="mark">
+                    <span>$</span>
+                </div>
                 Current portfolio value
             </div>
             <div class="summary-right">Total portfolio value (thousands)</div>
