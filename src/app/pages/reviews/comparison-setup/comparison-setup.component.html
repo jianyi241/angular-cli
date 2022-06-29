@@ -129,7 +129,7 @@
 
                     <div class="form-group" *ngIf="reviewService.comparison.mainPlatformCheck">
                         <label class="control-label control-label-custom">
-                            <div>Select one from below<span class="label-required">*</span></div>
+                            <div>Select one platform from below<span class="label-required">*</span></div>
                         </label>
                         <ng-select class="select-single" [disabled]="!reviewService.isEdit()"
                                    (change)="changeMainPlatform()"
@@ -145,13 +145,13 @@
             <div class="form-group-custom form-group-custom-reset">
                 <div class="form-group-left">
                     <label class="control-label">Select other platforms</label>
-                    <p class="info"></p>
+                    <p class="info">In total, four platforms can be included in your analysis</p>
                 </div>
 
                 <div class="form-group-right">
                     <div class="form-group xs-mb-8">
                         <label class="control-label control-label-custom">
-                            <div>Select platforms to include in non-fee analysis<span class="label-required">*</span></div>
+                            <div>Select platforms to include in your analysis<span class="label-required">*</span></div>
                         </label>
                         <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
                                    (change)="changeNonFee()"
@@ -175,9 +175,7 @@
                     </div>
 
                     <div class="form-group">
-                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.nonFeeProductName">
-
-                        </textarea>
+                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.nonFeeProductName"></textarea>
                     </div>
                     <ng-container *ngIf="showFeeProduct()">
                         <div class="form-group xs-mb-8">

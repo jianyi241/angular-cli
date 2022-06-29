@@ -13,7 +13,6 @@ import {Constants} from "../../../model/constants";
 import {LocalStorageObServable} from "../../../observable/local-storage-observable";
 import {Router} from "@angular/router";
 import {AdminRepository} from "../../../repository/admin-repository";
-import {RoleType} from "../../../model/enums/role-type";
 import {ConfigService} from "../../../service/config.service";
 import {UserInfo} from "../../../model/po/userInfo";
 import {ProductAccessVo} from "../../../model/vo/productAccessVo";

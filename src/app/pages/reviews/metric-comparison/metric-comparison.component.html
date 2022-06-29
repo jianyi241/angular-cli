@@ -52,7 +52,7 @@
                             <button class="btn btn-outline-purple-light btn-edit" #pComment='ngbPopover'
                                     container="body" [autoClose]="'outside'" popoverClass="table-comment-popover"
                                     (click)="getComment(product, pComment)"
-                                    *ngIf="reviewService.isEdit()"
+                                    [hidden]="!reviewService.isEdit()"
                                     placement="top auto" [ngbPopover]="popCommentContent">Add comment
                             </button>
                             <button class="btn btn-outline-purple-light btn-trash" *ngIf="!isMainProduct(product) && reviewService.isEdit()">

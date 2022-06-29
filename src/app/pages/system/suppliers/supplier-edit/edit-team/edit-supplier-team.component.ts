@@ -17,6 +17,7 @@ import {HttpResult} from "../../../../../model/common/http-result";
 import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../../service/current-user.service";
+import {UserRepository} from "../../../../../repository/user-repository";
 
 @Component({
     selector: 'app-manage-supplier-users',
@@ -43,7 +44,8 @@ export class EditSupplierTeamComponent implements OnInit {
                 public configService: ConfigService,
                 private teamRepository: TeamRepository,
                 private ngbModal: NgbModal,
-                private currentUser: CurrentUserService) {
+                private currentUser: CurrentUserService,
+                private userRepository: UserRepository) {
         this.team.companyType = 2;
     }
 
@@ -226,5 +228,19 @@ export class EditSupplierTeamComponent implements OnInit {
             }
             this.toastRepository.showSuccess('The invitation email has been sent. Please check your inbox.');
         })
+    }
+
+    transOwner() {
+        console.log('teamid ', this.team.id, '---- ', this.currentUser.currentUser().id)
+        // this.userRepository.transOwnerShip(this.team.id).subscribe(res => {
+        //     if (res.statusCode != 200) {
+        //         this.toastRepository.showDanger(res.msg || 'operation failed')
+        //     }
+        //     this.team.owner = true
+        //     if (this.team.id === this.currentUser.currentUser().id) {
+        //         this.currentUser.updatePrincipal(this.currentUser)
+        //     }
+        //     this.toastRepository.showSuccess('Transfer successfully')
+        // },err => {})
     }
 }
