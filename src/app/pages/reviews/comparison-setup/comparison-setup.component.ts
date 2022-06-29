@@ -19,6 +19,8 @@ import {AnalysisType} from "../../../model/enums/analysis-type";
 import {CurrentUserService} from "../../../service/current-user.service";
 import {RoleType} from "../../../model/enums/role-type";
 import {RoleEnum} from "../../../model/enums/role-enum";
+import {ConfirmModalComponent} from "../../system/modal/confirm-modal/confirm-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -43,7 +45,8 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
                 private toastRepository: ToastRepository,
                 public reviewRepository: ReviewRepository,
                 private platformRepository: PlatformRepository,
-                private current: CurrentUserService) {
+                private currentUserService: CurrentUserService,
+                private ngbModal: NgbModal) {
     }
 
     ngOnInit(): void {
@@ -71,12 +74,9 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.backSubscribe();
         this.leaveSubscribe();
     }
-    a():void {
-        let b = this.current.isAdminUser() || (this.current.isSupplierUser() && this.current.currentUser().owner);
-        let roleInfo = this.current.authorities().find(a => a.roleName == RoleEnum.User.name);
-    }
+
     isNormalUser(): boolean {
-        const roleInfo = this.current.authorities().find(a => a.roleName == RoleEnum.User.name);
+        const roleInfo = this.currentUserService.authorities().find(a => a.roleName == RoleEnum.User.name);
         if (roleInfo) {
             return true
         } else {
@@ -255,6 +255,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeMainPlatform() {
+        this.showChangeMainPlatformConfirm()
         let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.productName = mainPlatform?.name;
         this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
@@ -264,6 +265,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeCheckMain() {
+        this.showChangeMainPlatformConfirm()
         this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : null
         this.reviewService.comparison.productName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.productName : ''
     }
@@ -278,5 +280,19 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     showFeeProduct(): boolean {
         return this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
+    }
+
+    showChangeMainPlatformConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        });
+        modalRef.componentInstance.modal = {
+            title: 'Are you sure change main platform?',
+            text: 'Changing the main platform will clear all Features, Business Metrics and/or Fee & Rates inputs and selections, as some platform data has since been updated.',
+            cancelText: 'No, do nothing',
+            confirmText: 'Yes, to change'
+        }
     }
 }

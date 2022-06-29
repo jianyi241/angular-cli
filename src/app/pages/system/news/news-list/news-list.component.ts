@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CreatePostModalComponent} from "../modal/create-post-modal/create-post-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CurrentUserService} from "../../../../service/current-user.service";
 
 interface ConditionOptionsGroup {
   name: string,
@@ -94,7 +95,8 @@ export class NewsListComponent implements OnInit {
     'https://img1.baidu.com/it/u=963199490,1397250471&fm=253&fmt=auto&app=138&f=JPEG?w=658&h=370'
   ]
 
-  constructor(public ngbModal: NgbModal) { }
+  constructor(public ngbModal: NgbModal,
+              private currentUserService: CurrentUserService) { }
 
   ngOnInit(): void {
   }
@@ -110,6 +112,10 @@ export class NewsListComponent implements OnInit {
 
   searchList() {
 
+  }
+
+  isAdminOrOwner(): boolean {
+    return this.currentUserService.isAdminUser() || (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().owner)
   }
 
   showCreatePostModal(): void {
