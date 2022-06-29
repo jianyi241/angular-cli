@@ -94,6 +94,10 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
             }
             if (res.data) {
                 this.comparisonFeeInfo = res.data
+            } else {
+                this.addMember(false)
+                this.addMemberValue(0, this.reviewService.comparisonMemberValueType.idps, false)
+                this.addMemberValue(0, this.reviewService.comparisonMemberValueType.super, false)
             }
         })
     }
@@ -173,7 +177,7 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
         this.saveOrUpdateFeeInfo()
     }
 
-    addMemberValue(idx: number, type: string): void {
+    addMemberValue(idx: number, type: string, isSave: boolean = true): void {
         const _name = type === ComparisonMemberValueType.idps.value ? 'IDPS' : 'Super/Pension'
         const memberValues = this.comparisonFeeInfo.members[idx].memberValues.filter(i => i.type === type)
         let num = 1
@@ -185,10 +189,12 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
             balance: 0,
             type: type
         })
-        this.saveOrUpdateFeeInfo()
+        if (isSave) {
+            this.saveOrUpdateFeeInfo()
+        }
     }
 
-    addMember() {
+    addMember(isSave: boolean = true) {
         let num = 1
         if (this.comparisonFeeInfo.members && this.comparisonFeeInfo.members.length) {
             num = this.comparisonFeeInfo.members.length + 1
@@ -197,7 +203,9 @@ export class FeeComparisonComponent implements OnInit, OnDestroy {
             name: `Family member/entity ${num}`,
             memberValues: []
         })
-        this.saveOrUpdateFeeInfo()
+        if (isSave) {
+            this.saveOrUpdateFeeInfo()
+        }
     }
 
     removeMember(idx: number): void{
