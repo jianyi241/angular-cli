@@ -20,6 +20,7 @@ import {RoleEnum} from "../../../model/enums/role-enum";
 import {ConfirmModalComponent} from "../../system/modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RoleType} from "../../../model/enums/role-type";
+import {FocusService} from "../../../service/focus.service";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -40,6 +41,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     constructor(public reviewService: ReviewService,
                 public configService: ConfigService,
                 private saveService: SaveService,
+                public focusService: FocusService,
                 private router: Router,
                 private toastRepository: ToastRepository,
                 public reviewRepository: ReviewRepository,
@@ -65,6 +67,9 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     subscribe(): void {
         this.initComparisonObservable = this.reviewService.initComparisonObservable.subscribe(() => {
+            setTimeout(() => {
+                this.focusService.initializationService();
+            }, 500)
             this.initSelectedAnalyseType();
             this.reviewService.cacheCurrentStepSaveData(this.buildCacheSaveData());
         });
@@ -73,6 +78,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.backSubscribe();
         this.leaveSubscribe();
     }
+
 
     isNormalUser(): boolean {
         return this.currentUserService.authorities().some(a => a.type == RoleType.SupplierUser.value && a.roleName == RoleEnum.User.name);
@@ -158,21 +164,38 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.reviewService.nextStep();
+            this.exitCurrentPage(() => {
+                this.reviewService.nextStep();
+            })
         });
     }
 
     backSubscribe(): void {
         this.reviewBackObservable = this.reviewService.backObservable.subscribe(() => {
-            this.reviewService.dealLeave(this.buildCacheSaveData(true));
+            this.exitCurrentPage(() => {
+                this.router.navigateByUrl('/supplier/comparisons-list');
+            })
         })
     }
 
     leaveSubscribe(): void {
         this.reviewLeaveObservable = this.reviewService.leaveReviewObservable.subscribe(() => {
-            this.reviewService.dealLeave(this.buildCacheSaveData(true));
+            this.exitCurrentPage(() => {
+                this.router.navigateByUrl('/supplier/comparisons-list');
+            })
         })
     }
+
+    exitCurrentPage(callback: () => void): void {
+        if (!this.reviewService.comparison.id) {
+            this.reviewService.dealLeave(this.buildCacheSaveData(true));
+        } else {
+            this.focusService.waitBlur(() => {
+                callback();
+            })
+        }
+    }
+
 
     initSelectedAnalyseType(): void {
         let analyses = this.reviewService.comparison.analyseVoList;

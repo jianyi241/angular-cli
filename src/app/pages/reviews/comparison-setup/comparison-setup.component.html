@@ -22,7 +22,8 @@
                                    [disabled]="!reviewService.isEdit()"
                                    (change)="changeOwner()"
                                    [(ngModel)]="reviewService.comparison.userId">
-                            <ng-option *ngFor="let user of supplierUsers" [value]="user.id" [disabled]="user.status == configService.userStatus.disable">
+                            <ng-option *ngFor="let user of supplierUsers" [value]="user.id"
+                                       [disabled]="user.status == configService.userStatus.disable">
                                 <div class="select-avatar-item">
                                     <div class="avatar-box">
                                         <img [src]="user.avatar?.visitUrl"/>
@@ -74,14 +75,18 @@
                         <label class="control-label control-label-custom">
                             <div>Adviser name<span class="label-required">*</span></div>
                         </label>
-                        <input type="text" placeholder="Enter adviser name" (blur)="changeSave()" [disabled]="!reviewService.isEdit()" [(ngModel)]="reviewService.comparison.adviserName" class="form-control"/>
+                        <input type="text" placeholder="Enter adviser name" (blur)="changeSave()"
+                               [disabled]="!reviewService.isEdit()" [(ngModel)]="reviewService.comparison.adviserName"
+                               class="form-control"/>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label control-label-custom">
                             <div>Practice name<span class="label-required">*</span></div>
                         </label>
-                        <input type="text" placeholder="Enter practice name" (blur)="changeSave()" [disabled]="!reviewService.isEdit()" [(ngModel)]="reviewService.comparison.practiceName" class="form-control"/>
+                        <input type="text" placeholder="Enter practice name" (blur)="changeSave()"
+                               [disabled]="!reviewService.isEdit()" [(ngModel)]="reviewService.comparison.practiceName"
+                               class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -94,7 +99,9 @@
                 </div>
 
                 <div class="form-group-right">
-                    <ckeditor [config]="config" (blur)="changeSave()" [readOnly]="!reviewService.isEdit()"  [(ngModel)]="reviewService.comparison.objectives"></ckeditor>
+                    <ckeditor [config]="config" (blur)="changeSave()"
+                              [readOnly]="!reviewService.isEdit()"
+                              [(ngModel)]="reviewService.comparison.objectives"></ckeditor>
                     <div class="tip-info">Maximum 5,000 characters</div>
                 </div>
             </div>
@@ -136,7 +143,8 @@
                                    (change)="changeMainPlatform()"
                                    placeholder="Enter name of product" dropdownPosition="bottom"
                                    [(ngModel)]="reviewService.comparison.mainPlatformId">
-                            <ng-option *ngFor="let product of products" [value]="product.id">{{product.name}}</ng-option>
+                            <ng-option *ngFor="let product of products"
+                                       [value]="product.id">{{product.name}}</ng-option>
                         </ng-select>
                     </div>
 
@@ -164,19 +172,23 @@
                                     {{items.length}}/{{products.length}} selected
                                 </div>
                             </ng-template>
-                            <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="(reviewService.comparison.mainPlatformId == product.id) || !reviewService.isEdit() || false">
-                                <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
+                            <ng-option *ngFor="let product of products" [value]="product.id"
+                                       [disabled]="(reviewService.comparison.mainPlatformId == product.id) || !reviewService.isEdit() || false">
+                                <div class="select-multiple-item"
+                                     [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
                                     <div class="check-item"></div>
                                     {{product.name}}
-<!--                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>-->
-                                    <span class="item-status state_yellow" *ngIf="reviewService?.comparison.mainPlatformId == product.id">Main</span>
+                                    <!--                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>-->
+                                    <span class="item-status state_yellow"
+                                          *ngIf="reviewService?.comparison.mainPlatformId == product.id">Main</span>
                                 </div>
                             </ng-option>
                         </ng-select>
                     </div>
 
                     <div class="form-group">
-                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.nonFeeProductName"></textarea>
+                        <textarea readonly placeholder="Platforms selected will be showing here" class="form-control"
+                                  [(ngModel)]="reviewService.comparison.nonFeeProductName"></textarea>
                     </div>
                 </div>
             </div>
