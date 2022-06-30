@@ -98,12 +98,18 @@ export class ReviewService {
             modalRef.componentInstance.btnCancelText = 'Clear and exit';
             modalRef.result.then(() => {
                 this.save(() => {
+                    this.cacheSaveData = [];
                     this.router.navigateByUrl('/supplier/comparisons-list');
+
                 });
             }).catch((flag) => {
-                flag && this.router.navigateByUrl('/supplier/comparisons-list');
+                if (flag) {
+                    this.cacheSaveData = [];
+                    this.router.navigateByUrl('/supplier/comparisons-list');
+                }
             })
         } else {
+            this.cacheSaveData = [];
             this.router.navigateByUrl('/supplier/comparisons-list');
         }
     }
