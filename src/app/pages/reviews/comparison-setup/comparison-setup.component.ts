@@ -17,10 +17,10 @@ import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 import {Commons} from "../../../utils/Commons";
 import {AnalysisType} from "../../../model/enums/analysis-type";
 import {CurrentUserService} from "../../../service/current-user.service";
-import {RoleType} from "../../../model/enums/role-type";
 import {RoleEnum} from "../../../model/enums/role-enum";
 import {ConfirmModalComponent} from "../../system/modal/confirm-modal/confirm-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RoleType} from "../../../model/enums/role-type";
 
 @Component({
     selector: 'app-comparison-setup',
@@ -76,8 +76,8 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     isNormalUser(): boolean {
-        const roleInfo = this.currentUserService.authorities().find(a => a.roleName == RoleEnum.User.name);
-        return !!roleInfo
+        const roleInfo = this.currentUserService.authorities().find(a => a.type == RoleType.SupplierUser.value && a.roleName == RoleEnum.User.name);
+        return !!roleInfo;
     }
 
     saveSubscribe(): void {
@@ -168,7 +168,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     buildCacheSaveData(leave?: boolean): any[] {
         let comparison = this.reviewService.comparison;
         let analyses = leave ? this.analyses.filter(a => a.checked).map(a => a.id) : comparison.analyseVoList.map(a => a.shAnalyseId);
-        return [comparison.userId, comparison.name, comparison.adviserName, comparison.practiceName, comparison.objectives, analyses];
+        return [comparison.userId, comparison.name, comparison.adviserName, comparison.practiceName, comparison.objectives, analyses].filter(i => i);
     }
 
     validSave(comparison: ComparisonVo): boolean {

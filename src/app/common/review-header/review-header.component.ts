@@ -11,7 +11,6 @@ import {Commons} from "../../utils/Commons";
 import {ComparisonStatus} from "../../model/enums/comparison-status";
 import {ToastRepository} from "../../repository/toast-repository";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {TabType} from "../../model/enums/tab-type";
 import {FocusService} from "../../service/focus.service";
 
 @Component({
@@ -51,6 +50,8 @@ export class ReviewHeaderComponent implements OnInit {
                 }
                 this.reviewService.initNotify();
             });
+        } else {
+            this.reviewService.initNotify();
         }
     }
 
