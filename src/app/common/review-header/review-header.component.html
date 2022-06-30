@@ -12,28 +12,35 @@
     </div>
 
     <div class="head-right">
-<!--        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">-->
-<!--            <div class="switch-text active">All</div>-->
-<!--            <div class="switch-text">Hide non-essential features</div>-->
-<!--        </div>-->
+        <!--        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">-->
+        <!--            <div class="switch-text active">All</div>-->
+        <!--            <div class="switch-text">Hide non-essential features</div>-->
+        <!--        </div>-->
 
-<!--        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">-->
-<!--            <div class="switch-text">All</div>-->
-<!--            <div class="switch-text active">Hide common features</div>-->
-<!--        </div>-->
+        <!--        <div class="switch-button xs-ml-16" *ngIf="isScrollFixed">-->
+        <!--            <div class="switch-text">All</div>-->
+        <!--            <div class="switch-text active">Hide common features</div>-->
+        <!--        </div>-->
 
         <!--        <button class="btn btn-text-theme btn-with-info-icon" *ngIf="!isScrollFixed" (click)="saveTemplate()">Save as feature template <span-->
         <!--                class="icon-block icon-info-bold icon-14"></span></button>-->
-        <div class="save-loading" *ngIf="reviewService.isEdit()">
+        <div class="save-loading" *ngIf="reviewService.isEdit() && reviewService.comparison.id">
             <img src="./assets/img/icon/icon-save-success.svg" class="success" [hidden]="reviewService.loading"/>
             <img src="./assets/img/icon/icon-saving.svg" class="saving" [hidden]="!reviewService.loading"/>
             {{reviewService.loading ? 'Saving...' : 'Saved '}}
         </div>
         <button class="btn btn-outline-blue-light xs-ml-30" (click)="goBack()">Go back</button>
-        <button class="btn btn-outline-blue-light xs-ml-30" (click)="save()" *ngIf="reviewService.isEdit() && !reviewService.comparison.id">Save</button>
+        <button class="btn btn-outline-blue-light xs-ml-30" (click)="save()"
+                *ngIf="reviewService.isEdit() && !reviewService.comparison.id">Save
+        </button>
         <!--        <button class="btn btn-outline-blue-light xs-ml-16">Load a template</button>-->
-        <button class="btn btn-purple xs-ml-16" *ngIf="reviewService.comparison.id && router.url.indexOf('summary') == -1" (click)="next()">Next</button>
-        <button class="btn btn-purple xs-ml-16" *ngIf="reviewService.comparison.id && router.url.indexOf('summary') != -1 && reviewService.isEdit()" (click)="complete()">Complete</button>
+        <button class="btn btn-purple xs-ml-16"
+                *ngIf="reviewService.comparison.id && router.url.indexOf('summary') == -1" (click)="next()">Next
+        </button>
+        <button class="btn btn-purple xs-ml-16"
+                *ngIf="reviewService.comparison.id && router.url.indexOf('summary') != -1 && reviewService.isEdit()"
+                (click)="complete()">Complete
+        </button>
     </div>
 </div>
 

@@ -177,36 +177,6 @@
                     <div class="form-group">
                         <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.nonFeeProductName"></textarea>
                     </div>
-                    <ng-container *ngIf="showFeeProduct()">
-                        <div class="form-group xs-mb-8">
-                            <label class="control-label control-label-custom">
-                                <div>Select platforms to include in fee analysis<span class="label-required">*</span></div>
-                            </label>
-                            <ng-select class="select-single" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
-                                       (change)="changeFee()"
-                                       [disabled]="!reviewService.isEdit()"
-                                       [(ngModel)]="reviewService.comparison.feeProducts"
-                                       placeholder="Enter name of platform" dropdownPosition="bottom">
-                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                                    <div class="ng-value ng-custom-value">
-                                        {{items.length}}/{{products.length}} selected
-                                    </div>
-                                </ng-template>
-                                <ng-option *ngFor="let product of products" [value]="product.id" [disabled]="reviewService?.comparison.mainPlatformId == product.id || !reviewService.isEdit()">
-                                    <div class="select-multiple-item" [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
-                                        <div class="check-item"></div>
-                                        {{product.name}}
-                                        <!--                                    <span class="icon-block icon-info-circle-purple icon-20 xs-ml-4 xs-mr-12" *ngIf="reviewService.comparison.mainPlatformId == product.id"></span>-->
-                                        <span class="item-status state_yellow" *ngIf="reviewService.comparison.mainPlatformId == product.id">Main</span>
-                                    </div>
-                                </ng-option>
-                            </ng-select>
-                        </div>
-
-                        <div class="form-group">
-                            <textarea readonly placeholder="Platforms selected will be showing here" class="form-control" [(ngModel)]="reviewService.comparison.feeProductName"></textarea>
-                        </div>
-                    </ng-container>
                 </div>
             </div>
 
