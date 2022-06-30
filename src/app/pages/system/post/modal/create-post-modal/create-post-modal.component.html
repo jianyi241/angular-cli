@@ -9,14 +9,20 @@
         <div class="form">
             <div class="select-groups">
                 <div class="select-group">
-                    <img [src]="platform.visitUrl" class="select-logo" />
+                    <img [src]="platform.attachmentVo?.visitUrl" class="select-logo" />
                     <div class="select-input">
                         <div class="select-label">Platform</div>
-                        <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
-                                   dropdownPosition="bottom">
+                        <ng-select class="select-single"
+                                   [searchable]="false"
+                                   [clearable]="false"
+                                   [(ngModel)]="platform"
+                                   (ngModelChange)="platformSelectChange($event)"
+                                   name="platformSelect"
+                                   dropdownPosition="bottom"
+                                   required>
                             <ng-option *ngFor="let option of platformOptions" [value]="option">
-                                <img [src]="option.visitUrl" style="width: 36px;height: 36px;"/>
-                                {{option.propName}}
+                                <img [src]="option.attachmentVo?.visitUrl" style="width: 36px;height: 36px;"/>
+                                {{option.platformName}}
                             </ng-option>
                         </ng-select>
                     </div>
@@ -24,22 +30,24 @@
                 <div class="select-group">
                     <div class="select-input">
                         <div class="select-label">Product</div>
-                        <ng-select class="select-single" [searchable]="false" [clearable]="false" name="practiceRole" required [(ngModel)]="platform"
-                                   dropdownPosition="bottom">
-                            <ng-option *ngFor="let option of platformOptions" [value]="option">
-                                <img [src]="option.visitUrl" style="width: 36px;height: 36px;"/>
-                                {{option.propName}}
-                            </ng-option>
+                        <ng-select class="select-single"
+                                   [searchable]="false"
+                                   [clearable]="false"
+                                   [(ngModel)]="product"
+                                   name="productSelect"
+                                   dropdownPosition="bottom"
+                                   required>
+                            <ng-option *ngFor="let option of productOptions" [value]="option">{{option.name}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
             </div>
             <div class="input-group">
                 <label class="control-label">Title</label>
-                <input type="text" class="form-control" placeholder="Enter the title of this post" name="practiceName" required />
+                <input type="text" class="form-control" placeholder="Enter the title of this post" name="practiceName" [(ngModel)]="postInfo.content.title" required />
             </div>
             <div class="input-group">
-                <ckeditor [(ngModel)]="longText" [config]="config"></ckeditor>
+                <ckeditor [(ngModel)]="postInfo.content.post" [config]="config"></ckeditor>
                 <div class="tip-info grey">Maximum 3,000 characters</div>
             </div>
             <div class="upload-group">
@@ -64,12 +72,12 @@
                     </div>
                 </div>
                 <div class="preview-images">
-                    <app-horizontal-image-list *ngIf="imageList.length" domId="createPostImages" [imageList]="imageList" [height]="160" [showDelete]="true" (removeImageIndex)="removeImageByIndex($event)"></app-horizontal-image-list>
+                    <app-horizontal-image-list *ngIf="postInfo.attachments.length && !this.uploading" domId="createPostImages" [attachmentList]="postInfo.attachments" [height]="160" [showDelete]="true" (removeImageIndex)="removeImageByIndex($event)"></app-horizontal-image-list>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-block btn-purple" style="height: 50px">Create Post</button>
+        <button class="btn btn-block btn-purple" style="height: 50px" (click)="saveOrUpdatePost()">Create Post</button>
     </div>
 </div>

@@ -7,6 +7,7 @@ import {RoleInfo} from "../model/po/roleInfo";
 import {Page} from "../model/vo/page";
 import PostInfo from "../model/po/postInfo";
 import {PostCondition} from "../model/condition/post-condition";
+import {GroupInfo} from "../model/po/groupInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -24,8 +25,12 @@ export class PostRepository {
         return this.http.post<HttpResult<PostInfo>>(environment.baseURL + '/v1/post/changeStatus', {id, archived, status})
     }
 
-    saveOrUpdatePost(id: string, archived: string, status: string): Observable<HttpResult<PostInfo>> {
-        return this.http.post<HttpResult<PostInfo>>(environment.baseURL + '/v1/post/saveOrUpdatePost', {id, archived, status})
+    saveOrUpdatePost(postInfo: PostInfo): Observable<HttpResult<PostInfo>> {
+        return this.http.post<HttpResult<PostInfo>>(environment.baseURL + '/v1/post/saveOrUpdatePost', postInfo)
+    }
+
+    getGroupOptions(): Observable<HttpResult<Array<GroupInfo>>> {
+        return this.http.get<HttpResult<Array<GroupInfo>>>(environment.baseURL + '/v1/post/groupOptions')
     }
 }
 

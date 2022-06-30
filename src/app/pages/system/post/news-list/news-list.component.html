@@ -12,11 +12,11 @@
                         <div class="item-name">{{group.name}}</div>
                         <div class="item-down-icon" [ngClass]="{'active': expandedList.includes(idx)}"></div>
                     </div>
-                    <div class="item-list" [ngStyle]="{'height.px': expandedList.includes(idx) ? (group.options.length * 42) + 20 : 0}">
+                    <div class="item-list" [style]="{'height': expandedList.includes(idx) ? (group.options.length * 42) + 20 +'px' : 0}">
                         <div class="checkbox-option-item" *ngFor="let option of group.options">
                             <div class="check-box check-box-purple">
-                                <input type="checkbox" name="CommunicationPreferences" [id]="option.name" [(ngModel)]="option.value"/>
-                                <label [for]="option.name">{{option.label}}</label>
+                                <input type="checkbox" name="CommunicationPreferences" [id]="group.key +'_'+option.value" [(ngModel)]="option.checked" (change)="conditionOptionsChange()"/>
+                                <label [for]="group.key +'_'+option.value">{{option.label}}</label>
                             </div>
                         </div>
                     </div>
@@ -26,13 +26,16 @@
         <div class="news-list-wrapper">
             <div class="search-wrapper">
                 <div class="search-content w-310">
-                    <input type="text" (blur)="searchList()" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
+                    <input type="text" [(ngModel)]="postCondition.keyword" (blur)="searchList()" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
                     <span class="icon icon-search icon-16"  (click)="searchList()"></span>
                 </div>
                 <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="showCreatePostModal()">Create post</button>
             </div>
-            <div class="news-list" *ngIf="0">
-                <div class="no-data">
+            <div class="news-list scroll-style" appListScroll (bottomed)="nextPage()">
+                <div class="list-loading" *ngIf="pageLoading">
+                    <img src="./assets/img/news-loading.svg" class="list-loading-img" />
+                </div>
+                <div class="no-data" *ngIf="!page.records.length && !pageLoading">
                     <img src="./assets/img/news-no-data.svg" class="no-data-img" />
                     <div class="no-data-title">
                         Oops!
@@ -42,23 +45,18 @@
                         to your search. Try again to find your post.
                     </div>
                 </div>
-            </div>
-            <div class="news-list" *ngIf="0">
-                <div class="list-loading">
-                    <img src="./assets/img/news-loading.svg" class="list-loading-img" />
-                </div>
-            </div>
-            <div class="news-list scroll-style" appListScroll (bottomed)="nextPage()" *ngIf="1">
-                <div class="news-item" *ngFor="let i of [1,2,3,4,5,6,7,8];let idx = index;">
+                <div class="news-item" *ngFor="let post of page.records;let idx = index;">
                     <div class="item-logo">
-                        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202009%2F23%2F20200923185609_rQUdj.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1658715908&t=2092f0f49a23b6ef929d97c86295c82b" alt="">
+                        <img [src]="post.attachment?.visitUrl" *ngIf="post.attachment && post.attachment?.visitUrl">
                     </div>
                     <div class="item-content">
                         <div class="item-content-top">
                             <div class="item-base-info">
-                                <div class="item-name">Major Outage Update{{i}}</div>
+                                <div class="item-name">{{post.content.title}}</div>
                                 <div class="item-status">
-                                    <div class="label label-blue" style="padding: 4px 12px;">Pending</div>
+                                    <div class="label label-blue" style="padding: 4px 12px;" *ngIf="postService.postStatus.pending === post.status">{{post.status}}</div>
+                                    <div class="label label-green" style="padding: 4px 12px;" *ngIf="postService.postStatus.published === post.status">{{post.status}}</div>
+                                    <div class="label label-red" style="padding: 4px 12px;" *ngIf="postService.postStatus.rejected === post.status">{{post.status}}</div>
                                 </div>
                             </div>
                             <div class="item-edit-group">
@@ -75,22 +73,21 @@
                         </div>
                         <div class="item-content-main">
                             <div class="item-content-platform">
-                                <div class="item-platform">BT Panorama</div>
+                                <div class="item-platform">{{post.platformName}}</div>
                                 <div class="separation-point"></div>
-                                <div class="item-product">Compact</div>
+                                <div class="item-product">{{post.productName}}</div>
                                 <div class="separation-point"></div>
-                                <div class="item-date">17 Feb 2022</div>
+                                <div class="item-date">{{post.updateTime}}17 Feb 2022</div>
                             </div>
-                            <div class="item-images">
-                                <app-horizontal-image-list [domId]="'images_'+idx" [imageList]="imageList"></app-horizontal-image-list>
+                            <div class="item-images" *ngIf="post.attachments && post.attachments.length">
+                                <app-horizontal-image-list [domId]="'images_'+idx" [attachmentList]="post.attachments"></app-horizontal-image-list>
                             </div>
-                            <div class="item-txt">
-                                <div class="txt-content">
-                                    BT is confident that issues dogging its Panorama wealth platform have been resolved, following a snafu where customer distributions in July were delayed and a separate error led to the platform being offline for an entire week
+                            <div class="item-txt" *ngIf="post.content">
+                                <div class="txt-content" [innerHTML]="post.content.post">
                                 </div>
                                 <div class="more-btn tx-purple tx-bold">Read more</div>
                             </div>
-                            <div class="item-table" *ngIf="0">
+                            <div class="item-table" *ngIf="post.features && post.features.length && postService.postType.platformUpdates === post.type">
                                 <div class="table">
                                     <div class="table-thead">
                                         <div class="tr">

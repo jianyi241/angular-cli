@@ -68,8 +68,8 @@ export class AcceptInvitationModalComponent implements OnInit {
         }
 
         // if(this.inviteUser.companyType!==2){
-        //     if (!this.news) {
-        //         this.toastRepository.showDanger("Please agree to have relevant news and updates sent to you.");
+        //     if (!this.post) {
+        //         this.toastRepository.showDanger("Please agree to have relevant post and updates sent to you.");
         //         return;
         //     }
         // }

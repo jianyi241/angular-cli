@@ -119,4 +119,12 @@ export class PlatformRepository {
     getFeeProducts({productId,versionId}): Observable<HttpResult<Array<PlatformFee>>> {
         return this.http.get<HttpResult<Array<PlatformFee>>>(environment.baseURL + `/product/getFeesProducts/${productId}/${versionId}`);
     }
+
+    getPlatformOptions(companyId: string): Observable<HttpResult<Array<ProductInfo>>> {
+        return this.http.get<HttpResult<Array<ProductInfo>>>(environment.baseURL + `/product/platformOptions/${companyId}`);
+    }
+
+    getProductOptions(platformId: string): Observable<HttpResult<Array<ProductInfo>>> {
+        return this.http.get<HttpResult<Array<ProductInfo>>>(environment.baseURL + `/product/productOptions/${platformId}`);
+    }
 }

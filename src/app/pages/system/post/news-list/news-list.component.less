@@ -17,7 +17,7 @@
     }
     .condition-list-wrapper {
       position: relative;
-      height: inherit;
+      height: calc(100vh - 162px);
       border-right: 1px solid #D6DDEB;
       overflow-y: auto;
       .drop-list {
@@ -52,13 +52,10 @@
           padding: 10px 0;
           transition: height .2s ease-in;
           overflow: hidden;
-          &.expand-list {
-            height: max-content;
-          }
           .checkbox-option-item {
             padding: 10px 0 10px 8px;
             .check-box {
-              height: 100%;
+              align-items: center;
               label {
                 font: normal 500 13px 'Epilogue';
                 color: #515B6F;
@@ -76,6 +73,7 @@
       justify-content: space-between;
     }
     .news-list {
+      position: relative;
       height: calc(100% - 150px);
       overflow-y: auto;
       //overflow-y: overlay;
@@ -101,9 +99,12 @@
         }
       }
       .list-loading {
+        position: absolute;
+        left: 50%;
+        top: 110px;
+        transform: translateX(-50%);
         display: flex;
         justify-content: center;
-        padding-top: 110px;
         > img.list-loading-img {
           width: 200px;
           height: 200px;

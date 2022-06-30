@@ -1,10 +1,10 @@
-import {Component, Input, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, Input, EventEmitter, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
 import {PreviewImageModalComponent} from "../../platforms/modal/preview-image-modal/preview-image-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Attachment} from "../../../../model/attachment";
 
 interface ImageInfo {
-  url: string
-  title?: string
+  attachment: Attachment
   width: number
   height: number
 }
@@ -14,7 +14,7 @@ interface ImageInfo {
   templateUrl: './horizontal-image-list.component.html',
   styleUrls: ['./horizontal-image-list.component.less']
 })
-export class HorizontalImageListComponent implements OnInit {
+export class HorizontalImageListComponent implements OnInit,OnChanges {
 
   constructor(private ngbModal: NgbModal) { }
 
@@ -23,7 +23,7 @@ export class HorizontalImageListComponent implements OnInit {
   imageInfoList: Array<ImageInfo> = new Array<ImageInfo>()
 
   @Input()
-  imageList: Array<string> = new Array<string>()
+  attachmentList: Array<Attachment> = new Array<Attachment>()
 
   @Input()
   domId: string = 'images'
@@ -38,7 +38,14 @@ export class HorizontalImageListComponent implements OnInit {
   removeImageIndex = new EventEmitter<number>()
 
   ngOnInit(): void {
-    this.initImageList()
+    if (this.attachmentList.length) {
+      this.initImageList()
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes ', changes['attachmentList.length'])
+
   }
 
   previewImage(imgUrl: string): void {
@@ -52,15 +59,15 @@ export class HorizontalImageListComponent implements OnInit {
 
   initImageList(): void {
     this.imageListWidth = 0
-    this.imageList.forEach(async i => {
-      await this.getImageSize(i).then(res => {
+    this.attachmentList.forEach(async i => {
+      await this.getImageSize(i.visitUrl).then(res => {
         if (res.width && res.height) {
           const originHeight = res.height
           const originWidth = res.width
           let height = this.height
           let width = Math.round((height / originHeight) * originWidth)
               this.imageInfoList.push({
-                url: i,
+                attachment: i,
                 height,
                 width
               })
@@ -100,13 +107,7 @@ export class HorizontalImageListComponent implements OnInit {
     const imageContainerWidth = document.getElementById(this.domId).clientWidth
     const imageListWidth = this.imageListWidth
     const offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
-    if (imageListWidth < imageContainerWidth) {
-      return false
-    } else if (offsetWidth > imageListWidth) {
-      return false
-    } else {
-      return true
-    }
+    return !((imageListWidth < imageContainerWidth) || (offsetWidth > imageListWidth))
   }
 
   handleClickRemove($event: UIEvent, idx: number): void {

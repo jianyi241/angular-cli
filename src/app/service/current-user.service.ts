@@ -19,7 +19,7 @@ export class CurrentUserService {
         },
         {
             type: RoleType.SupplierUser.value,
-            menus: ['/profile', '/platform', '/review', '/supplier/supplier-edit', '/supplier/edit-team', '/supplier/comparisons-list', '/news/news-list']
+            menus: ['/profile', '/platform', '/review', '/supplier/supplier-edit', '/supplier/edit-team', '/supplier/comparisons-list', '/post/news-list']
         },
         {
             type: RoleType.AdviceUser.value,

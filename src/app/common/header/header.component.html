@@ -5,7 +5,7 @@
         </a>
 
         <div class="menu" *ngIf="currentUserService.isAdminUser()">
-            <a [routerLink]="['/news/news-list']" routerLinkActive="active">News & updates</a>
+            <a [routerLink]="['/post/news-list']" routerLinkActive="active">News & updates</a>
             <a [routerLink]="['/platform/product']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/advice-practices']" routerLinkActive="active">Practices</a>
             <a [routerLink]="['/supplier/supplier-list']" routerLinkActive="active">Suppliers</a>
@@ -13,7 +13,7 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isSupplierUser()">
-            <a [routerLink]="['/news/news-list']" routerLinkActive="active">News & updates</a>
+            <a [routerLink]="['/post/news-list']" routerLinkActive="active">News & updates</a>
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/supplier/comparisons-list']" routerLinkActive="active">Platform analysis</a>
         </div>

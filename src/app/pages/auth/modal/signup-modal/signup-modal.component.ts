@@ -60,7 +60,7 @@ export class SignupModalComponent implements OnInit {
 
     existedModal(): void {
         // if (!this.signup.updateNewsFlag) {
-        //     this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and news sent to you.");
+        //     this.toastRepository.showDanger("Please agree to have SuitabilityHub product updates and post sent to you.");
         //     return;
         // }
         // if (!this.signup.commFlag) {

@@ -5,10 +5,11 @@ import {BaseModel} from "./baseModel";
 
 export default class PostInfo extends BaseModel{
     archived?: boolean;
-    attachments?: Array<Attachment>;
+    attachments?: Array<Attachment> = new Array<Attachment>();
+    attachment: Attachment;
     companyId?: string;
-    content?: PostContentInfo;
-    features?: Array<PostFeatureInfo>;
+    content?: PostContentInfo = new PostContentInfo();
+    features?: Array<PostFeatureInfo> = new Array<PostFeatureInfo>();
     platformName?: string;
     productId?: string;
     productName?: string;
