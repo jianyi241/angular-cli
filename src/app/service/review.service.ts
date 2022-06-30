@@ -34,6 +34,18 @@ export class ReviewService {
     constructor(private router: Router, private modalService: NgbModal) {
     }
 
+    initComparison(data: ComparisonVo): ComparisonVo {
+        Object.assign(this.comparison, data);
+        this.comparison.mainPlatformCheck = !!this.comparison.mainPlatformId;
+        let products = this.comparison.comparisonProductVoList;
+        if (products && products.length > 0) {
+            let nonFeeProducts = products.filter(p => !p.feeFlag);
+            this.comparison.nonFeeProducts = nonFeeProducts.map(p => p.shProductId);
+            this.comparison.nonFeeProductName = nonFeeProducts.map(p => p.productName).join(', ');
+        }
+        return this.comparison;
+    }
+
     next(): void {
         this.nextSubject.next();
     }
@@ -65,19 +77,19 @@ export class ReviewService {
     finalPlatformHoldingsAndTransactions = [{
         key: 'chooseMf',
         value: 'Managed funds (held outside managed accounts)'
-    },{
+    }, {
         key: 'chooseMa',
         value: 'Managed accounts (SMA or MDA models)'
-    },{
+    }, {
         key: 'chooseAu',
         value: 'Australian listed investments (held outside managed accounts)'
-    },{
+    }, {
         key: 'chooseIntl',
         value: 'International listed investments (held outside managed accounts)'
-    },{
+    }, {
         key: 'chooseBond',
         value: 'Unlisted bonds'
-    },{
+    }, {
         key: 'chooseRetIns',
         value: 'Retail insurance'
     }]

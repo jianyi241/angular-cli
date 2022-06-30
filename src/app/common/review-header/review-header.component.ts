@@ -37,17 +37,7 @@ export class ReviewHeaderComponent implements OnInit {
         let comparisonId = this.activatedRoute?.firstChild?.snapshot?.params['id'];
         if (comparisonId && comparisonId != Constants.NON_ID) {
             this.reviewRepository.getCompareDetail(comparisonId).subscribe(res => {
-                Object.assign(this.reviewService.comparison, res.data);
-                this.reviewService.comparison.mainPlatformCheck = !!this.reviewService.comparison.mainPlatformId;
-                let products = this.reviewService.comparison.comparisonProductVoList;
-                if (products && products.length > 0) {
-                    let feeProducts = products.filter(p => p.feeFlag);
-                    let nonFeeProducts = products.filter(p => !p.feeFlag);
-                    this.reviewService.comparison.feeProducts = feeProducts.map(p => p.shProductId);
-                    this.reviewService.comparison.feeProductName = feeProducts.map(p => p.productName).join(', ');
-                    this.reviewService.comparison.nonFeeProducts = nonFeeProducts.map(p => p.shProductId);
-                    this.reviewService.comparison.nonFeeProductName = nonFeeProducts.map(p => p.productName).join(', ');
-                }
+                this.reviewService.initComparison(res.data);
                 this.reviewService.initNotify();
             });
         } else {

@@ -15,7 +15,6 @@ import {environment} from "../../../../environments/environment";
 import {ComparisonAnalyseInfo} from "../../../model/po/comparisonAnalyseInfo";
 import {ComparisonProductInfo} from "../../../model/po/comparisonProductInfo";
 import {Commons} from "../../../utils/Commons";
-import {AnalysisType} from "../../../model/enums/analysis-type";
 import {CurrentUserService} from "../../../service/current-user.service";
 import {RoleEnum} from "../../../model/enums/role-enum";
 import {ConfirmModalComponent} from "../../system/modal/confirm-modal/confirm-modal.component";
@@ -87,14 +86,17 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     save(callback?: () => void) {
         let comparison = Commons.deepCopy(this.reviewService.comparison);
+        let isAdd = !comparison.id;
         if (this.validSave(comparison)) {
             return;
         }
         if (this.saveService.saveCheck(environment.baseURL + `/compare/saveOrUpdateComparison`)) {
             return;
         }
+        this.reviewService.loading = true;
         this.dealSaveData(comparison);
         this.reviewRepository.saveComparison(comparison).subscribe(res => {
+            this.reviewService.loading = false;
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg);
                 return;
@@ -103,12 +105,40 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             if (callback) {
                 callback();
             } else {
-                this.toastRepository.showSuccess('Save successfully.');
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                    this.router.navigate([`/review/comparison-setup/${this.reviewService.comparison.id}`]);
-                })
+                if (isAdd) {
+                    this.toastRepository.showSuccess('Save successfully.');
+                    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                        this.router.navigate([`/review/comparison-setup/${this.reviewService.comparison.id}`]);
+                    })
+                }
             }
         });
+    }
+
+    saveRelation() {
+        let comparison = Commons.deepCopy(this.reviewService.comparison);
+        if (this.validSave(comparison)) {
+            return;
+        }
+        if (this.saveService.saveCheck(environment.baseURL + `/compare/changeComparisonRelation`)) {
+            return;
+        }
+        this.reviewService.loading = true;
+        this.dealSaveData(comparison);
+        this.reviewRepository.changeComparisonRelation(comparison).subscribe(res => {
+            this.reviewService.loading = false;
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg);
+                return;
+            }
+            Object.assign(this.reviewService.comparison, res.data);
+        });
+    }
+
+    changeSave() {
+        if (this.reviewService.comparison.id) {
+            this.save();
+        }
     }
 
     dealSaveData(comparison) {
@@ -118,28 +148,17 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             analyse.name = a.name;
             return analyse;
         })
-        let feeProducts = comparison.feeProducts.map(f => {
+        comparison.comparisonProductVoList = comparison.nonFeeProducts.map(nf => {
             let product = new ComparisonProductInfo();
-            product.shProductId = f;
-            product.feeFlag = true;
+            product.shProductId = nf;
             return product;
-        });
-        let nonFeeProducts = comparison.nonFeeProducts.map(f => {
-            let product = new ComparisonProductInfo();
-            product.shProductId = f;
-            product.feeFlag = false;
-            return product;
-        });
-        comparison.comparisonProductVoList = feeProducts.concat(nonFeeProducts);
-        delete comparison.feeProducts;
+        })
         delete comparison.nonFeeProducts;
     }
 
     nextSubscribe(): void {
         this.reviewNextObservable = this.reviewService.nextObservable.subscribe(() => {
-            this.save(() => {
-                this.reviewService.nextStep();
-            });
+            this.reviewService.nextStep();
         });
     }
 
@@ -197,18 +216,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             this.toastRepository.showDanger('Main platform is required.');
             return true;
         }
-
-        if (comparison.nonFeeProducts.length == 0) {
-            this.toastRepository.showDanger('Non-fee platforms is required.');
-            return true;
-        }
-
         return false;
-    }
-
-
-    disableAnalyse(): boolean {
-        return !!this.reviewService.comparison.id;
     }
 
 
@@ -231,13 +239,15 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         })
     }
 
-    changeNonFee() {
-        this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
-    }
-
     changeOwner() {
         let user = this.supplierUsers.find(su => su.id == this.reviewService.comparison.userId);
         this.reviewService.comparison.userName = this.configService.fullName(user.firstName, user.lastName);
+        this.changeSave();
+    }
+
+    changeNonFee() {
+        this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
+        this.changeRelation();
     }
 
     changeMainPlatform() {
@@ -245,20 +255,27 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.reviewService.comparison.productName = mainPlatform?.name;
         this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.nonFeeProducts = this.reviewService.comparison.nonFeeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
-        this.changeNonFee();
+        this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
+        this.changeRelation();
     }
 
     changeCheckMain() {
-        this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : null
+        this.reviewService.comparison.mainPlatformId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainPlatformId : ''
+        this.reviewService.comparison.mainVersionId = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.mainVersionId : ''
         this.reviewService.comparison.productName = this.reviewService.comparison.mainPlatformCheck ? this.reviewService.comparison.productName : ''
+        if (!this.reviewService.comparison.mainPlatformCheck) {
+            this.changeRelation();
+        }
     }
 
-    changeAnalysis() {
-        let hasFee = this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
-        if (!hasFee) {
-            this.reviewService.comparison.feeProducts = [];
-            this.reviewService.comparison.feeProductName = '';
-        }
+    changeRelation(): void {
+        this.reviewRepository.checkUpToDate(this.reviewService.comparison.id).subscribe(res => {
+            if (!res.data) {
+                this.showChangeMainPlatformConfirm();
+            } else {
+                this.saveRelation();
+            }
+        });
     }
 
 
@@ -274,5 +291,12 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             cancelText: 'No, do nothing',
             confirmText: 'Yes, to change'
         }
+        modalRef.result.then(() => {
+            this.saveRelation();
+        }).catch(() => {
+            this.reviewRepository.getCompareDetail(this.reviewService.comparison.id).subscribe(res => {
+                this.reviewService.initComparison(res.data);
+            });
+        })
     }
 }

@@ -128,5 +128,13 @@ export class ReviewRepository {
     queryFeeReviewCharts(comparisonId: string): Observable<HttpResult<FeeReviewChart>> {
         return this.http.get<HttpResult<FeeReviewChart>>(environment.baseURL + `/compare/queryFeeReviewChart/${comparisonId}`);
     }
+
+    checkUpToDate(comparisonId: string) {
+        return this.http.get<HttpResult<boolean>>(environment.baseURL + `/compare/checkUpToDate/${comparisonId}`);
+    }
+
+    changeComparisonRelation(comparison: ComparisonVo) {
+        return this.http.put<HttpResult<ComparisonVo>>(environment.baseURL + `/compare/changeComparisonRelation`, comparison);
+    }
 }
 
