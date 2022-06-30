@@ -41,12 +41,20 @@
       display: flex;
       align-items: center;
       > .mark {
-        line-height: 19px;
-        padding: 0 8px;
+        position: relative;
+        width: 23px;
+        height: 19px;
         color: #25324B;
         background: #D6DDEB;
         border-radius: 2px;
         margin-right: 8px;
+        > span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          height: 16px;
+          transform: translate(-50%,-50%);
+        }
       }
     }
   }
