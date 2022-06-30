@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CreatePostModalComponent} from "../modal/create-post-modal/create-post-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../service/current-user.service";
+import {PostRepository} from "../../../../repository/post-repository";
+import {PostCondition} from "../../../../model/condition/post-condition";
 
 interface ConditionOptionsGroup {
   name: string,
@@ -14,6 +16,7 @@ interface ConditionOptionsGroup {
   styleUrls: ['./news-list.component.less']
 })
 export class NewsListComponent implements OnInit {
+  postCondition: PostCondition = new PostCondition(1,10);
   expandedList: Array<number> = []
   conditionOptions: Array<ConditionOptionsGroup> = [
     {
@@ -96,7 +99,8 @@ export class NewsListComponent implements OnInit {
   ]
 
   constructor(public ngbModal: NgbModal,
-              private currentUserService: CurrentUserService) { }
+              private currentUserService: CurrentUserService,
+              private postRepository: PostRepository) { }
 
   ngOnInit(): void {
   }
@@ -110,13 +114,24 @@ export class NewsListComponent implements OnInit {
     }
   }
 
-  searchList() {
+  searchList(): void {
 
   }
 
-  isAdminOrOwner(): boolean {
-    return this.currentUserService.isAdminUser() || (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().owner)
+  getPostPageList(): void {
+
   }
+
+  getUserType(): string {
+    if (this.currentUserService.isAdminUser()) {
+      return 'admin'
+    } else if (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().owner) {
+      return 'supplierOwner'
+    } else if (this.currentUserService.isSupplierUser() && !this.currentUserService.currentUser().owner) {
+      return 'supplier'
+    }
+  }
+
 
   showCreatePostModal(): void {
     const modalRef = this.ngbModal.open(CreatePostModalComponent, {
