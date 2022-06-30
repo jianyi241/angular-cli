@@ -204,11 +204,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
             return true;
         }
 
-        if (!comparison.id && this.showFeeProduct() && comparison.feeProducts.length == 0) {
-            this.toastRepository.showDanger('Fee platforms is required.');
-            return true;
-        }
-
         return false;
     }
 
@@ -241,10 +236,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
     }
 
-    changeFee() {
-        this.reviewService.comparison.feeProductName = this.products.filter(p => this.reviewService.comparison.feeProducts.includes(p.id)).map(p => p.name).join(', ');
-    }
-
     changeOwner() {
         let user = this.supplierUsers.find(su => su.id == this.reviewService.comparison.userId);
         this.reviewService.comparison.userName = this.configService.fullName(user.firstName, user.lastName);
@@ -255,7 +246,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.reviewService.comparison.productName = mainPlatform?.name;
         this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.nonFeeProducts = this.reviewService.comparison.nonFeeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
-        this.changeFee();
         this.changeNonFee();
     }
 
@@ -272,9 +262,6 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         }
     }
 
-    showFeeProduct(): boolean {
-        return this.analyses.some(a => a.name == AnalysisType.fee.value && a.checked);
-    }
 
     showChangeMainPlatformConfirm(): void {
         const modalRef = this.ngbModal.open(ConfirmModalComponent, {
