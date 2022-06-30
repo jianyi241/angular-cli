@@ -4,6 +4,7 @@ import {EChartsOption} from "echarts/types/dist/shared";
 import { FeeReviewChartsProduct, PlatformFeeChartsOptions} from "../../../../../model/vo/chartsVo";
 import {FeeReviewChart} from "../../../../../model/po/feeReviewChart";
 import {ReviewService} from "../../../../../service/review.service";
+import {dealThousands} from "../../../../../utils/amount-format";
 @Component({
   selector: 'app-platform-fee-charts',
   templateUrl: './platform-fee-charts.component.html',
@@ -59,7 +60,12 @@ export class PlatformFeeChartsComponent implements OnInit {
     },50)
   }
 
+  formatBalance(balance: number): string {
+    return (balance / 1000).toFixed(1)
+  }
+
   initCharts({xAxisValues, yAxisValues, min, max, seriesData, totalBalance}: PlatformFeeChartsOptions) {
+    const that = this
     this.yAxisData = yAxisValues
     if (this.platformCharts == null) {
       const chartDom:HTMLElement = document.getElementById(this.chartsId);
@@ -185,7 +191,7 @@ export class PlatformFeeChartsComponent implements OnInit {
             fontWeight: 400,
             show: true,
             formatter: function(e: any) {
-              return '$'+e.data[2].toFixed(1)
+              return `$${that.formatBalance(e.data[2])}`
             }
           },
           itemStyle: {
