@@ -52,14 +52,8 @@ export class EditSubGroupComponent implements OnInit {
         this.parent();
     }
 
-    readOnly() {
-        if (this.editType === 'add') {
-            return false
-        } else if (this.editType === 'update') {
-            return !this.configService.isEditable(this.version.type, this.subGroup.status,'configuration')
-        } else if (this.editType === 'view') {
-            return true
-        }
+    readOnly(): boolean {
+        return this.editType === 'view' || (this.editType === 'update' && !this.configService.isEditable(this.version.type, this.subGroup.status,'configuration'))
     }
 
     goBack(): void {

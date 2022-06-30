@@ -71,14 +71,8 @@ export class EditGroupComponent implements OnInit {
         }
     }
 
-    readOnly() {
-        if (this.editType === 'add') {
-            return false
-        } else if (this.editType === 'update') {
-            return !this.configService.isEditable(this.version.type, this.group.status, 'configuration')
-        } else if (this.editType === 'view') {
-            return true
-        }
+    readOnly(): boolean {
+        return this.editType === 'view' || (this.editType === 'update' && !this.configService.isEditable(this.version.type, this.group.status, 'configuration'))
     }
 
     parseRouteParam(): void {

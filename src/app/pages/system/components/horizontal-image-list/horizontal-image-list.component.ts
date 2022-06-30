@@ -87,7 +87,7 @@ export class HorizontalImageListComponent implements OnInit {
     });
   }
 
-  changeImages(type: string) {
+  changeImages(type: string): void {
     const imageContainerWidth = document.getElementById(this.domId).clientWidth
     if (type === 'prev') {
       this.imagesOffset += imageContainerWidth
@@ -96,7 +96,7 @@ export class HorizontalImageListComponent implements OnInit {
     }
   }
 
-  showNextImagesBtn() {
+  showNextImagesBtn(): boolean {
     const imageContainerWidth = document.getElementById(this.domId).clientWidth
     const imageListWidth = this.imageListWidth
     const offsetWidth = Math.abs(this.imagesOffset - imageContainerWidth)
@@ -109,7 +109,7 @@ export class HorizontalImageListComponent implements OnInit {
     }
   }
 
-  handleClickRemove($event: UIEvent, idx: number) {
+  handleClickRemove($event: UIEvent, idx: number): void {
     $event.stopPropagation()
     this.removeImageIndex.emit(idx)
   }

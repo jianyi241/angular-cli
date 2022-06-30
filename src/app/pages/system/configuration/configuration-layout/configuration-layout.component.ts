@@ -97,7 +97,7 @@ export class ConfigurationLayoutComponent implements OnInit {
         this.router.navigateByUrl(`/configuration/configuration-tab/${this.currentTab}/${this.version.id}`);
     }
 
-    showTip(type: string) {
+    showTip(type: string): boolean {
         if (type === 'history') {
             return this.version.type === 'History'
         }  else if (type === 'frozenParent') {
@@ -108,7 +108,7 @@ export class ConfigurationLayoutComponent implements OnInit {
         return false
     }
 
-    hiddenEditBtn(type: string) {
+    hiddenEditBtn(type: string): boolean {
         if (type === 'tipPublishBtn') {
             return !this.pushFlag
         } else if (type === 'publishBtn') {

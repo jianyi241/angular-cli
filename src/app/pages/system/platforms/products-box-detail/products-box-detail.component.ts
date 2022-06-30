@@ -134,14 +134,6 @@ export class ProductsBoxDetailComponent implements OnInit {
     }
 
     canEdit(): boolean {
-        if (this.currentUserService.isAdminUser()) {
-            return true;
-        }
-        if (this.currentUserService.isAdviceUser()) {
-            return false;
-        }
-        if (this.currentUserService.isSupplierUser()) {
-            return this.currentUserService.currentUser().companyId == this.product.companyId;
-        }
+        return this.currentUserService.isAdminUser() || (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().companyId == this.product.companyId)
     }
 }

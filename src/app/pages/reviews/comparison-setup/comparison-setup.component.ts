@@ -76,8 +76,7 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     isNormalUser(): boolean {
-        const roleInfo = this.currentUserService.authorities().find(a => a.type == RoleType.SupplierUser.value && a.roleName == RoleEnum.User.name);
-        return !!roleInfo;
+        return this.currentUserService.authorities().some(a => a.type == RoleType.SupplierUser.value && a.roleName == RoleEnum.User.name);
     }
 
     saveSubscribe(): void {

@@ -156,8 +156,6 @@ export class ReviewService {
     }
 
     isEdit(): boolean {
-        if (this.comparison.status === ComparisonStatus.Completed.value) return false
-        return true
+        return this.comparison.status === ComparisonStatus.Completed.value
     }
-
 }

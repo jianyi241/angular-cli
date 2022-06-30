@@ -7,11 +7,7 @@ export class Commons {
     public static checkFileType(file: File, types): boolean {
         const type = file ? file.type : undefined;
 
-        if (type && types.indexOf(type) > -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return type && types.indexOf(type) > -1
     }
 
     public static copy<T, U>(t: T, u?: U): T {

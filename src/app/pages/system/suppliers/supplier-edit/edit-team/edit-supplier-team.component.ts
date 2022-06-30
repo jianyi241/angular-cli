@@ -97,15 +97,7 @@ export class EditSupplierTeamComponent implements OnInit {
 
     showPermissions(): boolean {
         const role = this.supplierRoles.find(item => item.id === this.team.roleId)
-        if (role) {
-            if (role.roleName === this.configService.roles.administrator || role.roleName === this.configService.roles.premiumUser) {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
+        return role && role.roleName === this.configService.roles.administrator || role.roleName === this.configService.roles.premiumUser
     }
 
     getTeamDetail(): Observable<HttpResult<TeamInfo>> {

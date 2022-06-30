@@ -4,6 +4,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CurrentUserService} from "../../../../service/current-user.service";
 import {PostRepository} from "../../../../repository/post-repository";
 import {PostCondition} from "../../../../model/condition/post-condition";
+import {Page} from "../../../../model/vo/page";
+import PostInfo from "../../../../model/po/postInfo";
 
 interface ConditionOptionsGroup {
   name: string,
@@ -17,6 +19,7 @@ interface ConditionOptionsGroup {
 })
 export class NewsListComponent implements OnInit {
   postCondition: PostCondition = new PostCondition(1,10);
+  page: Page<PostInfo> = new Page<PostInfo>();
   expandedList: Array<number> = []
   conditionOptions: Array<ConditionOptionsGroup> = [
     {
