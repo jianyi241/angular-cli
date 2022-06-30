@@ -98,18 +98,12 @@ export class ReviewService {
             modalRef.componentInstance.btnCancelText = 'Clear and exit';
             modalRef.result.then(() => {
                 this.save(() => {
-                    this.cacheSaveData = [];
                     this.router.navigateByUrl('/supplier/comparisons-list');
-
                 });
             }).catch((flag) => {
-                if (flag) {
-                    this.cacheSaveData = [];
-                    this.router.navigateByUrl('/supplier/comparisons-list');
-                }
+                flag && this.router.navigateByUrl('/supplier/comparisons-list');
             })
         } else {
-            this.cacheSaveData = [];
             this.router.navigateByUrl('/supplier/comparisons-list');
         }
     }
@@ -162,6 +156,7 @@ export class ReviewService {
     }
 
     isEdit(): boolean {
-        return this.comparison.status === ComparisonStatus.Completed.value
+        return this.comparison.status !== ComparisonStatus.Completed.value
     }
+
 }

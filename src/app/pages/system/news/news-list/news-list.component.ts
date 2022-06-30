@@ -6,6 +6,7 @@ import {PostRepository} from "../../../../repository/post-repository";
 import {PostCondition} from "../../../../model/condition/post-condition";
 import {Page} from "../../../../model/vo/page";
 import PostInfo from "../../../../model/po/postInfo";
+import {ToastRepository} from "../../../../repository/toast-repository";
 
 interface ConditionOptionsGroup {
   name: string,
@@ -103,9 +104,11 @@ export class NewsListComponent implements OnInit {
 
   constructor(public ngbModal: NgbModal,
               private currentUserService: CurrentUserService,
+              private toastRepository: ToastRepository,
               private postRepository: PostRepository) { }
 
   ngOnInit(): void {
+    this.getPostPageList()
   }
 
   expandOptions(idx: number) {
@@ -122,7 +125,13 @@ export class NewsListComponent implements OnInit {
   }
 
   getPostPageList(): void {
-
+    this.postRepository.getPostPageList(this.postCondition).subscribe(res => {
+      if (res.statusCode != 200) {
+        this.toastRepository.showDanger(res.msg || 'get data list failed.')
+        return
+      }
+      console.log('getPostPageList ===> ', res.data)
+    })
   }
 
   getUserType(): string {

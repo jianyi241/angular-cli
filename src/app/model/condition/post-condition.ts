@@ -14,10 +14,10 @@ import {Condition} from "../condition";
 
 export class PostCondition extends Condition{
     companyId?: string;
-    groups?: Array<string>;
+    groups?: Array<string> = new Array<string>();
     keyword?: string;
-    platforms?: Array<string>;
-    status?: Array<string>;
-    types?: Array<string>;
+    platforms?: Array<string> = new Array<string>();
+    status?: Array<string> = new Array();
+    types?: Array<string> = new Array<string>();
 }
 
