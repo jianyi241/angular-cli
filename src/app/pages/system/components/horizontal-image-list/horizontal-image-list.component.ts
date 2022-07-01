@@ -94,22 +94,18 @@ export class HorizontalImageListComponent implements OnInit {
   changeImages(type: string): void {
     const imageContainerWidth = document.getElementById(this.domId).clientWidth
     if (type === 'prev') {
-      console.log('prev ', this.imagesOffset + imageContainerWidth)
       if (this.imagesOffset + imageContainerWidth > 0) {
         this.imagesOffset = 0
         return
       }
       this.imagesOffset += imageContainerWidth
-      console.log('prev ', this.imagesOffset, '------ ', this.imageListWidth)
     } else {
-      console.log('next ', Math.abs(this.imagesOffset - imageContainerWidth - imageContainerWidth))
       const start = Math.abs(this.imagesOffset - imageContainerWidth - imageContainerWidth) > this.imageListWidth
       if (start) {
         this.imagesOffset = -this.imageListWidth + imageContainerWidth
         return
       }
       this.imagesOffset -= imageContainerWidth
-      console.log('next ', this.imagesOffset, '------ ', this.imageListWidth)
     }
   }
 

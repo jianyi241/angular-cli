@@ -67,12 +67,12 @@ export class CreatePostModalComponent implements OnInit {
                 this.uploading = true;
                 this.fileRepository.uploadFile('img', file).then(res => {
                     this.uploading = false;
-                    if (res.statusCode == 200) {
-                        this.postInfo.attachments.push(...res.data)
-                        if (this.postInfo.attachments && this.postInfo.attachments.length) {
-                            this.imageScroll.loadImageList()
-                        }
+                    if (res.statusCode !== 200) {
+                        this.toastRepository.showDanger('upload image failed.')
+                        return
                     }
+                    this.postInfo.attachments.push(...res.data)
+                    this.imageScroll.loadImageList()
                 });
             });
         } else {
@@ -112,10 +112,12 @@ export class CreatePostModalComponent implements OnInit {
     }
 
     getSuitabilityHubProducts(): void {
-        this.productOptions=[{
-            id: '',
-            name: 'No Specific Products',
-        }]
+        this.productOptions = [
+            {
+                id: '',
+                name: 'No Specific Products',
+            }
+        ]
         this.product = this.productOptions[0]
     }
 
