@@ -181,6 +181,7 @@ export class ProfileComponent implements OnInit {
         this.userRepository.transOwnerShip(this.ownerId).subscribe(res => {
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg || 'operation failed')
+                return
             }
             this.currentUser.owner = false
             this.currentUserService.updatePrincipal(this.currentUser)

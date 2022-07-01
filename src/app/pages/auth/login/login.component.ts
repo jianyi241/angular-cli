@@ -73,11 +73,7 @@ export class LoginComponent {
                 }
                 this.storage.setItem(Constants.CURRENT_USER, userResult.data);
                 this.currentUserService.setAuthentication(userResult.data);
-                if (this.currentUserService.isAdminUser()) {
-                    this.router.navigateByUrl('/platform/product');
-                } else {
-                    this.router.navigateByUrl('/platform/product-box');
-                }
+                this.router.navigateByUrl('/post/news-list');
             });
         });
     }

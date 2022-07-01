@@ -19,6 +19,7 @@
         </div>
 
         <div class="menu" *ngIf="currentUserService.isAdviceUser()">
+            <a [routerLink]="['/post/news-list']" routerLinkActive="active">News & updates</a>
             <a [routerLink]="['/platform/product-box']" routerLinkActive="active">Platform profiles</a>
             <a [routerLink]="['/advice-review/review-list/list-view']" routerLinkActive="active">Suitability review</a>
         </div>

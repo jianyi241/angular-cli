@@ -21,7 +21,7 @@ export class PostRepository {
         return this.http.post<HttpResult<Page<PostInfo>>>(environment.baseURL + '/v1/post/pages', condition)
     }
 
-    updatePostStatus(id: string, archived: string, status: string): Observable<HttpResult<PostInfo>> {
+    updatePostStatus({id, archived, status}): Observable<HttpResult<PostInfo>> {
         return this.http.post<HttpResult<PostInfo>>(environment.baseURL + '/v1/post/changeStatus', {id, archived, status})
     }
 

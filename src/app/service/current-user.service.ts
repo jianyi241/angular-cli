@@ -23,7 +23,7 @@ export class CurrentUserService {
         },
         {
             type: RoleType.AdviceUser.value,
-            menus: ['/profile', '/platform', '/advice-practices/advice-tab', '/advice-practices/edit-team','/advice-review', '/due']
+            menus: ['/profile', '/platform', '/advice-practices/advice-tab', '/advice-practices/edit-team','/advice-review', '/due', '/post/news-list']
         }
     ];
 

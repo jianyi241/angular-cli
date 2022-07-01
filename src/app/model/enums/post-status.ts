@@ -4,6 +4,7 @@ export class PostStatus implements EnumIdentity {
     static readonly Rejected = new PostStatus('Rejected', "Rejected");
     static readonly Published = new PostStatus('Published', "Published");
     static readonly Pending = new PostStatus('Pending', "Pending");
+    static readonly Archive = new PostStatus('Archive', "Archive");
 
     private constructor(public readonly value: string, public readonly name: string) {
         PostStatus.AllValues.push(this);

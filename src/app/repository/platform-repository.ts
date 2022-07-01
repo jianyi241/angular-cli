@@ -121,7 +121,8 @@ export class PlatformRepository {
     }
 
     getPlatformOptions(companyId: string): Observable<HttpResult<Array<ProductInfo>>> {
-        return this.http.get<HttpResult<Array<ProductInfo>>>(environment.baseURL + `/product/platformOptions/${companyId}`);
+        const url = companyId ? `/product/platformOptions/${companyId}` : '/product/platformOptions'
+        return this.http.get<HttpResult<Array<ProductInfo>>>( `${environment.baseURL}${url}`);
     }
 
     getProductOptions(platformId: string): Observable<HttpResult<Array<ProductInfo>>> {

@@ -86,6 +86,7 @@ import {NewsListComponent} from "./post/news-list/news-list.component";
 import {HorizontalImageListComponent} from "./components/horizontal-image-list/horizontal-image-list.component";
 import {CreatePostModalComponent} from './post/modal/create-post-modal/create-post-modal.component';
 import {ListScrollDirective} from "../../directive/list-scroll/list-scroll.directive";
+import {DebounceInputDirective} from "../../directive/debounce-input/debounce-input.directive";
 
 @NgModule({
     declarations: [
@@ -162,7 +163,8 @@ import {ListScrollDirective} from "../../directive/list-scroll/list-scroll.direc
         NewsListComponent,
         HorizontalImageListComponent,
         CreatePostModalComponent,
-        ListScrollDirective
+        ListScrollDirective,
+        DebounceInputDirective
     ],
     imports: [
         CommonModule,

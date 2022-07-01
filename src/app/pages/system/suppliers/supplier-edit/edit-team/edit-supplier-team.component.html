@@ -136,7 +136,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="showTransferOwnerBtn()">
                     <button class="btn btn-outline-purple-light" (click)="transOwner()">Transfer account ownership</button>
                 </div>
             </div>

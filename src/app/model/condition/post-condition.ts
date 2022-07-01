@@ -12,7 +12,8 @@
 import {Condition} from "../condition";
 
 
-export class PostCondition extends Condition{
+export class PostCondition extends Condition {
+    archived?: boolean;
     companyId?: string;
     groups?: Array<string> = new Array<string>();
     keyword?: string;

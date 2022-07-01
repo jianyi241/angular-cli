@@ -45,7 +45,7 @@ export class EditSupplierTeamComponent implements OnInit {
                 public configService: ConfigService,
                 private teamRepository: TeamRepository,
                 private ngbModal: NgbModal,
-                private currentUser: CurrentUserService,
+                private currentUserService: CurrentUserService,
                 private userRepository: UserRepository) {
         this.team.companyType = 2;
     }
@@ -97,7 +97,10 @@ export class EditSupplierTeamComponent implements OnInit {
 
     showPermissions(): boolean {
         const role = this.supplierRoles.find(item => item.id === this.team.roleId)
-        return role && role.roleName === this.configService.roles.administrator || role.roleName === this.configService.roles.premiumUser
+        if (role) {
+            return role.roleName === this.configService.roles.administrator || role.roleName === this.configService.roles.premiumUser
+        }
+        return false
     }
 
     getTeamDetail(): Observable<HttpResult<TeamInfo>> {
@@ -223,17 +226,23 @@ export class EditSupplierTeamComponent implements OnInit {
         })
     }
 
+    showTransferOwnerBtn(): boolean {
+        return (this.currentUserService.isAdminUser() || (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().owner)) && !this.team.owner
+    }
+
     transOwner() {
-        console.log('teamid ', this.team.id, '---- ', this.currentUser.currentUser().id)
-        // this.userRepository.transOwnerShip(this.team.id).subscribe(res => {
-        //     if (res.statusCode != 200) {
-        //         this.toastRepository.showDanger(res.msg || 'operation failed')
-        //     }
-        //     this.team.owner = true
-        //     if (this.team.id === this.currentUser.currentUser().id) {
-        //         this.currentUser.updatePrincipal(this.currentUser)
-        //     }
-        //     this.toastRepository.showSuccess('Transfer successfully')
-        // },err => {})
+        this.userRepository.transOwnerShip(this.team.userId).subscribe(res => {
+            if (res.statusCode != 200) {
+                this.toastRepository.showDanger(res.msg || 'operation failed')
+                return
+            }
+            this.team.owner = true
+            if (this.currentUserService.isSupplierUser() && this.currentUserService.currentUser().owner) {
+                const user = Commons.deepCopy(this.currentUserService.currentUser())
+                user.owner = false
+                this.currentUserService.updatePrincipal(user)
+            }
+            this.toastRepository.showSuccess('Transfer successfully')
+        },err => {})
     }
 }

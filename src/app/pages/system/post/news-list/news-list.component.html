@@ -10,9 +10,9 @@
                 <div class="drop-item" *ngFor="let group of conditionOptions;let idx = index">
                     <div class="item-text" (click)="expandOptions(idx)">
                         <div class="item-name">{{group.name}}</div>
-                        <div class="item-down-icon" [ngClass]="{'active': expandedList.includes(idx)}"></div>
+                        <div class="item-down-icon" [ngClass]="{'active': dropdownExpandedList.includes(idx)}"></div>
                     </div>
-                    <div class="item-list" [style]="{'height': expandedList.includes(idx) ? (group.options.length * 42) + 20 +'px' : 0}">
+                    <div class="item-list" [style]="{'height': dropdownExpandedList.includes(idx) ? (group.options.length * 42) + 20 +'px' : 0}">
                         <div class="checkbox-option-item" *ngFor="let option of group.options">
                             <div class="check-box check-box-purple">
                                 <input type="checkbox" name="CommunicationPreferences" [id]="group.key +'_'+option.value" [(ngModel)]="option.checked" (change)="conditionOptionsChange()"/>
@@ -26,10 +26,10 @@
         <div class="news-list-wrapper">
             <div class="search-wrapper">
                 <div class="search-content w-310">
-                    <input type="text" [(ngModel)]="postCondition.keyword" (blur)="searchList()" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
+                    <input type="text" [(ngModel)]="postCondition.keyword" appDebounceInput (debounceInput)="searchList()" [debounceTime]="400" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
                     <span class="icon icon-search icon-16"  (click)="searchList()"></span>
                 </div>
-                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="showCreatePostModal()">Create post</button>
+                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="showCreatePostModal()" *ngIf="postService.allowEdit('','create')">Create post</button>
             </div>
             <div class="news-list scroll-style" appListScroll (bottomed)="nextPage()">
                 <div class="list-loading" *ngIf="pageLoading">
@@ -47,27 +47,31 @@
                 </div>
                 <div class="news-item" *ngFor="let post of page.records;let idx = index;">
                     <div class="item-logo">
-                        <img [src]="post.attachment?.visitUrl" *ngIf="post.attachment && post.attachment?.visitUrl">
+                        <img [src]="post.attachment?.visitUrl" *ngIf="post.attachment && post.attachment?.visitUrl && post.platformName != 'Suitability Hub'">
+                        <img src="./assets/img/logo-s.png" *ngIf="post.platformName == 'Suitability Hub'">
                     </div>
                     <div class="item-content">
                         <div class="item-content-top">
                             <div class="item-base-info">
                                 <div class="item-name">{{post.content.title}}</div>
-                                <div class="item-status">
+                                <div class="item-status" *ngIf="!post.archived">
                                     <div class="label label-blue" style="padding: 4px 12px;" *ngIf="postService.postStatus.pending === post.status">{{post.status}}</div>
                                     <div class="label label-green" style="padding: 4px 12px;" *ngIf="postService.postStatus.published === post.status">{{post.status}}</div>
                                     <div class="label label-red" style="padding: 4px 12px;" *ngIf="postService.postStatus.rejected === post.status">{{post.status}}</div>
                                 </div>
+                                <div class="item-status" *ngIf="post.archived">
+                                    <div class="label label-red" style="padding: 4px 12px;">Deleted</div>
+                                </div>
                             </div>
                             <div class="item-edit-group">
-                                <button class="btn btn-text-danger">Reject</button>
-                                <button class="btn btn-small btn-outline-purple-light" style="border: 1px solid #4640DE;padding: 10px 24px;">Accept</button>
-                                <div class="edit-group-line"></div>
-                                <button class="btn btn-text-danger">
+                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, 'reject') && postService.postStatus.pending == post.status" (click)="changeStatus(postService.postStatus.rejected,idx)">Reject</button>
+                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId,'publish') && postService.postStatus.pending == post.status" style="border: 1px solid #4640DE;padding: 10px 24px;" (click)="changeStatus(postService.postStatus.published,idx)">Accept</button>
+                                <div class="edit-group-line" *ngIf="postService.allowEdit(post.companyId) && post.status == postService.postStatus.pending"></div>
+                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, 'update')" (click)="showCreatePostModal(idx)">
                                     <span class="icon-block icon-14 icon-pen-red"></span>Edit
                                 </button>
-                                <button class="btn btn-small btn-outline-purple-light" style="color: #EB5757">
-                                    <span class="icon-block icon-14 icon-delete-red xs-mr-10"></span>Delete
+                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId,'archive')" [style]="{color: post.archived ? '#56CDAD' : '#EB5757'}" (click)="deleteConfirm(idx)">
+                                    <span class="icon-block icon-14 icon-delete-red xs-mr-10" [hidden]="post.archived"></span>{{post.archived ? 'Restore' : 'Delete'}}
                                 </button>
                             </div>
                         </div>
@@ -77,37 +81,35 @@
                                 <div class="separation-point"></div>
                                 <div class="item-product">{{post.productName}}</div>
                                 <div class="separation-point"></div>
-                                <div class="item-date">{{post.updateTime}}17 Feb 2022</div>
+                                <div class="item-date">{{post.updateTime | dateFormat : 'DD MMM YYYY'}}</div>
                             </div>
-                            <div class="item-images" *ngIf="post.attachments && post.attachments.length">
+                            <div class="item-images" *ngIf="post.attachments && post.attachments.length && post.type === postService.postType.generalPost ">
                                 <app-horizontal-image-list [domId]="'images_'+idx" [attachmentList]="post.attachments"></app-horizontal-image-list>
                             </div>
-                            <div class="item-txt" *ngIf="post.content">
-                                <div class="txt-content" [innerHTML]="post.content.post">
-                                </div>
-                                <div class="more-btn tx-purple tx-bold">Read more</div>
+                            <div class="item-text" *ngIf="post.content">
+                                <div class="text-content" [innerHTML]="post.content.post"></div>
+                                <div class="more-btn text-more-btn tx-purple tx-bold" (click)="showMoreText($event)">Read more</div>
                             </div>
-                            <div class="item-table" *ngIf="post.features && post.features.length && postService.postType.platformUpdates === post.type">
-                                <div class="table">
-                                    <div class="table-thead">
-                                        <div class="tr">
-                                            <div class="th">Group</div>
-                                            <div class="th">Subgroup</div>
-                                            <div class="th">Feature</div>
-                                        </div>
+                            <div class="item-table" *ngIf="post.features && post.features.length && post.type === postService.postType.platformUpdates">
+                                <div class="table" [ngClass]="{'more': featureExpandedList.includes(post.id)}">
+                                    <div class="tr tr-header">
+                                        <div class="th">Group</div>
+                                        <div class="th">Subgroup</div>
+                                        <div class="th">Feature</div>
                                     </div>
-                                    <div class="table-tbody" >
-                                        <div class="tr" *ngFor="let i of [1,2,3]">
-                                            <div class="td td-group">Client Access{{i}}</div>
-                                            <div class="td td-sub-group">Web Portal Functionality</div>
-                                            <div class="td td-feature">Client can set up own username</div>
-                                        </div>
+                                    <div class="tr tr-content" *ngFor="let feature of post.features">
+                                        <div class="td td-group">{{feature.group}}</div>
+                                        <div class="td td-sub-group">{{feature.subGroup}}</div>
+                                        <div class="td td-feature">{{feature.feature}}</div>
                                     </div>
                                 </div>
-                                <div class="more-btn tx-purple tx-bold">Read more</div>
+                                <div class="more-btn tx-purple tx-bold" *ngIf="post.features.length > 3" (click)="expandFeaturesTable(post.id)">{{ featureExpandedList.includes(idx) ? 'Shrink fold' : 'Read more'}}</div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="no-more-data" *ngIf="page.records.length && recordFinally">
+                    No more data.
                 </div>
             </div>
         </div>
