@@ -328,7 +328,7 @@ export class NewsListComponent implements OnInit,AfterViewInit {
         'max-height': '2000px',
         '-webkit-line-clamp': 'unset'
       })
-      $(event.target).text('Shrink fold')
+      $(event.target).text('Fold more')
     } else {
       $(event.target).prev().css({
         'max-height': '60px',
