@@ -96,7 +96,6 @@ export class SignupComponent implements OnInit {
 
     supplierSignup(): void {
         this.userRepository.supplierRequestEmail(this.supplierSend).subscribe(res => {
-            console.log('')
             if (res.statusCode != 200) {
                 this.toastRepository.showDanger(res.msg || 'operation failed')
             }

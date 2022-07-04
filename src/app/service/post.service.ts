@@ -33,6 +33,7 @@ export class PostService {
             return false
         }
         if (this.currentUserService.isSupplierUser()) {
+            if (editType === 'publish') return false
             if (editType === 'create') {
                 return this.currentUserService.currentUser().owner
             } else {
