@@ -62,7 +62,9 @@
                     <ng-template #popIntroduceContent>
                         <div class="comment-popover">
                             <div class="title">Edit</div>
-                            <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
+                            <div class="form-group">
+                                <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
+                            </div>
                             <div class="comment-footer" style="margin-top: 16px">
                                 <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                         (click)="pIntroduce.close()">Cancel
@@ -327,7 +329,9 @@
             <ng-template #popRemarkContent>
                 <div class="comment-popover">
                     <div class="title">Edit</div>
-                    <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
+                    <div class="form-group">
+                        <ckeditor [(ngModel)]="currentEditorText" [config]="config"></ckeditor>
+                    </div>
                     <div class="comment-footer" style="margin-top: 16px">
                         <button class="btn btn-block btn-outline-purple-light tx-16 xs-mr-8"
                                 (click)="pRemark.close()">Cancel

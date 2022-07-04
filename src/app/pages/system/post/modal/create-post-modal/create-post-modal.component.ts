@@ -53,9 +53,11 @@ export class CreatePostModalComponent implements OnInit {
     init(): void {
         this.getPlatformOptions()
     }
+
     close(): void {
         this.ngbActiveModal.close()
     }
+
     droppedFile(files: NgxFileDropEntry[]): void {
         if (files[0].fileEntry.isFile) {
             const fileEntry = files[0].fileEntry as FileSystemFileEntry;
@@ -135,7 +137,6 @@ export class CreatePostModalComponent implements OnInit {
     }
 
     removeImageByIndex(idx: number) {
-        console.log('event ', idx)
         this.postInfo.attachments.splice(idx, 1)
         this.imageScroll.loadImageList()
     }
