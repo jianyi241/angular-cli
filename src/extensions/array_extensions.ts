@@ -36,9 +36,23 @@ declare global {
          * */
         distinctBy<U>(by: (obj: T) => U): T[];
 
+        /**
+         * 获取对应下标的元素
+         * 默认为0
+         * 支持负数
+         * */
         at<T>(index?: number): T;
 
+        /**
+         * 数组求和
+         *
+         * Example: 求和某个字段
+         * let ageSum = arr.sum(a => a.age);
+         *
+         * 非number字段求和会NaN
+         * */
         sum(by?: (obj: T) => number): number;
+
     }
 }
 
@@ -75,16 +89,15 @@ if (!Array.prototype.distinctBy) {
 }
 
 if (!Array.prototype.at) {
-    Array.prototype.at = function <T>(this: T[], index?: number): T {
-        if (index === undefined) return this[0];
+    Array.prototype.at = function <T>(this: T[], index: number = 0): T {
         return index >= 0 ? this[index] : this[this.length + index];
     }
 }
 
 if (!Array.prototype.sum) {
-    Array.prototype.sum = function <T>(this: T[], by?: (obj: T) => number): number {
+    Array.prototype.sum = function <T>(this: T[], by: (obj: T) => number = (obj: T) => Number(obj)): number {
         return this.reduce((a, b) => {
-            return a + (by ? by(b) : Number(b));
+            return a + by(b);
         }, 0)
     };
 }
