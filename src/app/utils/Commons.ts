@@ -28,5 +28,9 @@ export class Commons {
     //         func(a)
     //     })
     // }
+
+    public static range(start: number, stop: number, step: number = 1): number[] {
+        return Array.from({length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+    }
 }
 
