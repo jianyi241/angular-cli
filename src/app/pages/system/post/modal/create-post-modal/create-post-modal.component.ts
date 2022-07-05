@@ -84,6 +84,7 @@ export class CreatePostModalComponent implements OnInit {
                     return
                 }
                 this.postInfo.attachments.push(...res.data)
+                console.log('attachments ', this.postInfo.attachments)
                 this.imageScroll.loadImageList()
             });
         });

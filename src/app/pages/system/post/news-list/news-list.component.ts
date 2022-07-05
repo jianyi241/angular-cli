@@ -163,15 +163,12 @@ export class NewsListComponent implements OnInit {
       }
       if (this.page.searchCount) {
         this.page.records.push(...res.data.records)
-        setTimeout(() => {
-          this.initTextEllipsis()
-        }, 1000)
-        return;
+      } else {
+        this.page = res.data
       }
-      this.page = res.data
       setTimeout(() => {
         this.initTextEllipsis()
-      }, 1000)
+      }, 500)
     })
   }
 
@@ -311,7 +308,6 @@ export class NewsListComponent implements OnInit {
     const textContentNodes: HTMLCollectionOf<Element> = document.getElementsByClassName('text-content')
     for (let i = 0; i < textContentNodes.length;i++) {
       const node = textContentNodes[i]
-      console.log(node.scrollHeight ,'  -----   ', node.clientHeight)
       if (node.scrollHeight > node.clientHeight) {
         $(node).next().css('display','block')
       } else {
