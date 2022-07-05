@@ -103,7 +103,7 @@
                                         <div class="td td-feature">{{feature.feature}}</div>
                                     </div>
                                 </div>
-                                <div class="more-btn tx-purple tx-bold" *ngIf="post.features.length > 3" (click)="expandFeaturesTable(post.id)">{{ featureExpandedList.includes(idx) ? 'Fold more' : 'Read more'}}</div>
+                                <div class="more-btn tx-purple tx-bold" *ngIf="post.features.length > 3" (click)="expandFeaturesTable(post.id)">{{ featureExpandedList.includes(post.id) ? 'Fold more' : 'Read more'}}</div>
                             </div>
                         </div>
                     </div>
