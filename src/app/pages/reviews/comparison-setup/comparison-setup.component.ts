@@ -292,6 +292,9 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeRelation(): void {
+        if (!this.reviewService.comparison.id) {
+            return;
+        }
         this.reviewRepository.checkUpToDate(this.reviewService.comparison.id).subscribe(res => {
             if (!res.data) {
                 this.showChangeMainPlatformConfirm();
