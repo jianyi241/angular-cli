@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {CreatePostModalComponent} from "../modal/create-post-modal/create-post-modal.component"
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap"
 import {CurrentUserService} from "../../../../service/current-user.service"
@@ -26,7 +26,7 @@ interface ConditionOptionsGroup {
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.less']
 })
-export class NewsListComponent implements OnInit,AfterViewInit {
+export class NewsListComponent implements OnInit {
   postCondition: PostCondition = new PostCondition(1,10)
   page: Page<PostInfo> = new Page<PostInfo>()
   pageLoading: boolean = false
@@ -122,12 +122,6 @@ export class NewsListComponent implements OnInit,AfterViewInit {
     this.init()
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.initTextEllipsis()
-    }, 1000)
-  }
-
   init(): void {
     // this.getPostPageList()
     this.conditionOptionsChange()
@@ -175,6 +169,9 @@ export class NewsListComponent implements OnInit,AfterViewInit {
         return;
       }
       this.page = res.data
+      setTimeout(() => {
+        this.initTextEllipsis()
+      }, 1000)
     })
   }
 
@@ -314,6 +311,7 @@ export class NewsListComponent implements OnInit,AfterViewInit {
     const textContentNodes: HTMLCollectionOf<Element> = document.getElementsByClassName('text-content')
     for (let i = 0; i < textContentNodes.length;i++) {
       const node = textContentNodes[i]
+      console.log(node.scrollHeight ,'  -----   ', node.clientHeight)
       if (node.scrollHeight > node.clientHeight) {
         $(node).next().css('display','block')
       } else {

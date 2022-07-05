@@ -59,27 +59,34 @@ export class CreatePostModalComponent implements OnInit {
     }
 
     droppedFile(files: NgxFileDropEntry[]): void {
-        if (files[0].fileEntry.isFile) {
-            const fileEntry = files[0].fileEntry as FileSystemFileEntry;
-            fileEntry.file((file: File) => {
-                if (!file.type.includes('image')) {
-                    this.toastRepository.showDanger('Unsupported file types');
-                    return;
-                }
-                this.uploading = true;
-                this.fileRepository.uploadFile('img', file).then(res => {
-                    this.uploading = false;
-                    if (res.statusCode !== 200) {
-                        this.toastRepository.showDanger('upload image failed.')
-                        return
-                    }
-                    this.postInfo.attachments.push(...res.data)
-                    this.imageScroll.loadImageList()
-                });
-            });
+        const isFile = files.every(s => s.fileEntry.isFile)
+        if (isFile) {
+            files.forEach(f => {
+                this.uploadFile(f)
+            })
         } else {
             this.toastRepository.showDanger('Unsupported file types');
         }
+    }
+
+    uploadFile(ngxFileDropEntry: NgxFileDropEntry): void {
+        const fileEntry = ngxFileDropEntry.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+            if (!file.type.includes('image')) {
+                this.toastRepository.showDanger('Unsupported file types');
+                return;
+            }
+            this.uploading = true;
+            this.fileRepository.uploadFile('img', file).then(res => {
+                this.uploading = false;
+                if (res.statusCode !== 200) {
+                    this.toastRepository.showDanger('upload image failed.')
+                    return
+                }
+                this.postInfo.attachments.push(...res.data)
+                this.imageScroll.loadImageList()
+            });
+        });
     }
 
     getPlatformOptions(): void {
@@ -130,8 +137,24 @@ export class CreatePostModalComponent implements OnInit {
                 return
             }
             if (res.data && res.data.length) {
-                this.productOptions = res.data
-                this.product = res.data[0]
+                this.productOptions = [...res.data,{
+                    id: '',
+                    name: 'No Specific Products',
+                }]
+                console.log('this.productOptions ', this.productOptions)
+                if (!this.postInfo.id) {
+                    this.product = res.data[0]
+                    return;
+                }
+                if (this.postInfo.productId) {
+                    const _product = this.productOptions.find(f => f.id === this.postInfo.subProductId)
+                    this.product = _product
+                } else {
+                    this.product = {
+                        id: '',
+                        name: 'No Specific Products'
+                    }
+                }
             }
         })
     }

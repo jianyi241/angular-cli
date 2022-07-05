@@ -61,7 +61,8 @@
                     <div class="upload-file">
                         <ngx-file-drop dropZoneLabel="Drop files here"
                                        (onFileDrop)="droppedFile($event)"
-                                       [multiple]="false" [directory]="false"
+                                       [multiple]="true"
+                                       [directory]="false"
                                        [accept]="'.png,.svg,.gif,.jpg'">
                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                                 <span class="icon-block icon-loading icon-32 upload-loading" *ngIf="uploading"></span>
