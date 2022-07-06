@@ -31,7 +31,8 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     config = {...Constants.EDITOR_CONFIG};
     analyses: Array<AnalyseTypeVo> = new Array<AnalyseTypeVo>();
     supplierUsers: Array<TeamInfo> = new Array<TeamInfo>();
-    products: Array<ProductInfo> = new Array<ProductInfo>();
+    ownerProducts: Array<ProductInfo> = new Array<ProductInfo>();
+    otherProducts: Array<ProductInfo> = new Array<ProductInfo>();
     initComparisonObservable: any;
     reviewNextObservable: any;
     reviewBackObservable: any;
@@ -258,7 +259,10 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
 
     getProducts() {
         this.platformRepository.getAllProduct().subscribe(res => {
-            this.products = res.data;
+            // this.products = res.data;
+            let companyId = this.currentUserService.currentUser().companyId;
+            this.ownerProducts = res.data.filter(p => p.companyId == companyId);
+            this.otherProducts = res.data.filter(p => p.companyId != companyId);
         })
     }
 
@@ -269,16 +273,13 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
     }
 
     changeNonFee() {
-        this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
+        this.reviewService.comparison.nonFeeProductName = this.otherProducts.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
         this.changeRelation();
     }
 
     changeMainPlatform() {
-        let mainPlatform = this.products.find(p => p.id == this.reviewService.comparison.mainPlatformId);
+        let mainPlatform = this.ownerProducts.find(p => p.id == this.reviewService.comparison.mainPlatformId);
         this.reviewService.comparison.productName = mainPlatform?.name;
-        this.reviewService.comparison.feeProducts = this.reviewService.comparison.feeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
-        this.reviewService.comparison.nonFeeProducts = this.reviewService.comparison.nonFeeProducts.filter(p => p != this.reviewService.comparison.mainPlatformId);
-        this.reviewService.comparison.nonFeeProductName = this.products.filter(p => this.reviewService.comparison.nonFeeProducts.includes(p.id)).map(p => p.name).join(', ');
         this.changeRelation();
     }
 
