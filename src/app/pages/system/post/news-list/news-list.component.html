@@ -53,7 +53,7 @@
                     <div class="item-content">
                         <div class="item-content-top">
                             <div class="item-base-info">
-                                <div class="item-name">{{post.content.title}}</div>
+                                <div class="item-name" [title]="post.content.title">{{post.content.title}}</div>
                                 <div class="item-status" *ngIf="!post.archived">
                                     <div class="label label-blue" style="padding: 4px 12px;" *ngIf="postService.postStatus.pending === post.status">{{post.status}}</div>
                                     <div class="label label-green" style="padding: 4px 12px;" *ngIf="postService.postStatus.published === post.status">{{post.status}}</div>
@@ -79,8 +79,8 @@
                             <div class="item-content-platform">
                                 <div class="item-platform">{{post.platformName}}</div>
                                 <div class="separation-point"></div>
-                                <div class="item-product">{{post.productName}}</div>
-                                <div class="separation-point"></div>
+                                <div class="item-product" [hidden]="!post.productName">{{post.productName}}</div>
+                                <div class="separation-point" [hidden]="!post.productName"></div>
                                 <div class="item-date">{{post.updateTime | dateFormat : 'DD MMM YYYY'}}</div>
                             </div>
                             <div class="item-images" *ngIf="post.attachments && post.attachments.length && post.type === postService.postType.generalPost ">
