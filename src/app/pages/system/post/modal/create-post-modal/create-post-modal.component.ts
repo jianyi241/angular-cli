@@ -139,28 +139,33 @@ export class CreatePostModalComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg || 'get platform options failed.')
                 return
             }
-            if (res.data && res.data.length) {
-                this.platformOptions = res.data
-                if (this.currentUserService.isAdminUser()) {
-                    this.platformOptions.push({
-                        id: '',
-                        platformName: 'Suitability Hub'
-                    })
+            if (!res.data || !res.data.length) {
+                this.platform = {
+                    id: '',
+                    name: ''
                 }
-                if (!this.postInfo.id) {
-                    this.platform = res.data[0]
-                    this.setInitProps('productId', res.data[0].id)
-                } else {
-                    if (this.postInfo.platformName === 'Suitability Hub') {
-                        this.platform = this.platformOptions[this.platformOptions.length - 1]
-                        this.getSuitabilityHubProducts()
-                        return;
-                    }
-                    const _platform = this.platformOptions.find(f => f.id === this.postInfo.productId)
-                    this.platform = _platform
-                }
-                this.getProductOptions()
+                return;
             }
+            this.platformOptions = res.data
+            if (this.currentUserService.isAdminUser()) {
+                this.platformOptions.push({
+                    id: '',
+                    platformName: 'Suitability Hub'
+                })
+            }
+            if (!this.postInfo.id) {
+                this.platform = res.data[0]
+                this.setInitProps('productId', res.data[0].id)
+            } else {
+                if (this.postInfo.platformName === 'Suitability Hub') {
+                    this.platform = this.platformOptions[this.platformOptions.length - 1]
+                    this.getSuitabilityHubProducts()
+                    return;
+                }
+                const _platform = this.platformOptions.find(f => f.id === this.postInfo.productId)
+                this.platform = _platform
+            }
+            this.getProductOptions()
         })
     }
 
@@ -181,25 +186,29 @@ export class CreatePostModalComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg || 'get platform options failed.')
                 return
             }
-            if (res.data && res.data.length) {
-                this.productOptions = [...res.data, {
+            if (!res.data || !res.data.length) {
+                this.product = {
                     id: '',
-                    name: 'No Specific Products',
-                }]
-                console.log('this.productOptions ', this.productOptions)
-                if (!this.postInfo.id) {
-                    this.product = res.data[0]
-                    this.setInitProps('subProductId', res.data[0].id)
-                    return;
+                    name: ''
                 }
-                if (this.postInfo.productId) {
-                    const _product = this.productOptions.find(f => f.id === this.postInfo.subProductId)
-                    this.product = _product
-                } else {
-                    this.product = {
-                        id: '',
-                        name: 'No Specific Products'
-                    }
+                return;
+            }
+            this.productOptions = [...res.data, {
+                id: '',
+                name: 'No Specific Products',
+            }]
+            if (!this.postInfo.id) {
+                this.product = res.data[0]
+                this.setInitProps('subProductId', res.data[0].id)
+                return;
+            }
+            if (this.postInfo.productId) {
+                const _product = this.productOptions.find(f => f.id === this.postInfo.subProductId)
+                this.product = _product
+            } else {
+                this.product = {
+                    id: '',
+                    name: 'No Specific Products'
                 }
             }
         })
@@ -248,5 +257,13 @@ export class CreatePostModalComponent implements OnInit {
                 this.toastRepository.showDanger(res.msg || 'operation failed.')
             }
         })
+    }
+
+    getSaveBtnText(): string {
+        if (this.postInfo.id) {
+            return 'Save Changes'
+        } else {
+            return this.currentUserService.isSupplierUser() ? 'Submit for review' : 'Create Post'
+        }
     }
 }
