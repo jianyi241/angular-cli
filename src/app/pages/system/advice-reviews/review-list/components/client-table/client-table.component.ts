@@ -67,12 +67,14 @@ export class ClientTableComponent implements OnInit {
         this.getPage();
     }
 
-    unarchive(client: ClientListVo) {
+    unarchive(event: any, client: ClientListVo) {
+        event.stopPropagation();
         client.archived = false;
         this.save(client);
     }
 
-    archive(client: ClientListVo) {
+    archive(event: any, client: ClientListVo) {
+        event.stopPropagation();
         client.archived = true
         this.save(client);
     }

@@ -65,10 +65,10 @@
           <td class="text-left edit">
             <div class="edit-btn-group">
               <button  class="btn btn-purple-border btn-tiny xs-ml-16" style="margin-left: 0 !important;" (click)="toDetail(client.id)">View</button>
-              <button *ngIf="!client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" (click)="archive(client)">
+              <button *ngIf="!client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 delete-btn" (click)="archive($event,client)">
                 <img src="./assets/img/icon/icon-delete-red.svg">
               </button>
-              <button *ngIf="client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn" (click)="unarchive(client)">
+              <button *ngIf="client.archived" class="btn btn-outline-purple-light btn-tiny xs-ml-16 refresh-btn" (click)="unarchive($event,client)">
                 <img src="./assets/img/icon/icon-refresh-blur.svg">
               </button>
             </div>
