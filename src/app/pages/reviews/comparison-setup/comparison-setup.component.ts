@@ -261,8 +261,11 @@ export class ComparisonSetupComponent implements OnInit, OnDestroy {
         this.platformRepository.getAllProduct().subscribe(res => {
             // this.products = res.data;
             let companyId = this.currentUserService.currentUser().companyId;
-            this.ownerProducts = res.data.filter(p => p.companyId == companyId);
-            this.otherProducts = res.data.filter(p => p.companyId != companyId);
+            let products = res.data;
+            if (products) {
+                this.ownerProducts = products.filter(p => p.companyId == companyId);
+                this.otherProducts = products.filter(p => p.companyId != companyId);
+            }
         })
     }
 
