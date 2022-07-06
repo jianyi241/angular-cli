@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Constants} from "../../../../../model/constants";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
 import {ToastRepository} from "../../../../../repository/toast-repository";
 import {FileRepository} from "../../../../../repository/file-repository";
@@ -13,8 +13,10 @@ import {PostType} from "../../../../../model/enums/post-type";
 import {Router} from "@angular/router";
 import {PostStatus} from "../../../../../model/enums/post-status";
 import {HorizontalImageListComponent} from "../../../components/horizontal-image-list/horizontal-image-list.component";
+import {ConfirmModalComponent} from "../../../modal/confirm-modal/confirm-modal.component";
 
 Constants.EDITOR_CONFIG.editorplaceholder = 'What do you want to post?'
+
 @Component({
     selector: 'app-create-post-modal',
     templateUrl: './create-post-modal.component.html',
@@ -24,6 +26,13 @@ export class CreatePostModalComponent implements OnInit {
 
     config = {...Constants.EDITOR_CONFIG};
     uploading: boolean = false
+    initProps: any = {
+        productId: '',
+        subProductId: '',
+        title: '',
+        post: '',
+        attachmentsStr: ''
+    }
     postInfo: PostInfo = new PostInfo();
     platformOptions: Array<ProductInfo> = new Array<ProductInfo>();
     platform: ProductInfo = new ProductInfo()
@@ -34,7 +43,8 @@ export class CreatePostModalComponent implements OnInit {
         post: true
     }
 
-    constructor(private router: Router,
+    constructor(public ngbModal: NgbModal,
+                private router: Router,
                 private ngbActiveModal: NgbActiveModal,
                 private toastRepository: ToastRepository,
                 private fileRepository: FileRepository,
@@ -55,7 +65,40 @@ export class CreatePostModalComponent implements OnInit {
     }
 
     close(): void {
-        this.ngbActiveModal.close()
+        const _attachmentsStr = this.postInfo.attachments.map(m => m.visitUrl).toString()
+        const changeFlag = this.postInfo.content.title != this.initProps.title
+            || this.postInfo.content.post != this.initProps.post
+            || _attachmentsStr != this.initProps.attachmentsStr
+            || this.platform.id != this.initProps.productId
+            || this.product.id != this.initProps.subProductId
+        if (changeFlag) {
+            this.closeConfirm()
+        } else {
+            this.ngbActiveModal.close()
+        }
+    }
+
+    closeConfirm(): void {
+        const modalRef = this.ngbModal.open(ConfirmModalComponent, {
+            size: 'w644',
+            windowClass: 'tip-popup-modal',
+            centered: true
+        })
+        modalRef.componentInstance.modal = {
+            title: 'Close your post?',
+            text: 'You are about to close your post. Are you sure about this action?',
+            cancelText: 'No, don’t close',
+            confirmText: 'Yes, close my post'
+        }
+        modalRef.result.then(res => {
+            this.ngbActiveModal.close()
+        }, err => {
+            console.log('cancel')
+        })
+    }
+
+    setInitProps(key: string, val: any): void {
+        this.initProps[key] = val
     }
 
     droppedFile(files: NgxFileDropEntry[]): void {
@@ -84,7 +127,6 @@ export class CreatePostModalComponent implements OnInit {
                     return
                 }
                 this.postInfo.attachments.push(...res.data)
-                console.log('attachments ', this.postInfo.attachments)
                 this.imageScroll.loadImageList()
             });
         });
@@ -107,6 +149,7 @@ export class CreatePostModalComponent implements OnInit {
                 }
                 if (!this.postInfo.id) {
                     this.platform = res.data[0]
+                    this.setInitProps('productId', res.data[0].id)
                 } else {
                     if (this.postInfo.platformName === 'Suitability Hub') {
                         this.platform = this.platformOptions[this.platformOptions.length - 1]
@@ -129,6 +172,7 @@ export class CreatePostModalComponent implements OnInit {
             }
         ]
         this.product = this.productOptions[0]
+        this.setInitProps('subProductId', '')
     }
 
     getProductOptions(): void {
@@ -138,13 +182,14 @@ export class CreatePostModalComponent implements OnInit {
                 return
             }
             if (res.data && res.data.length) {
-                this.productOptions = [...res.data,{
+                this.productOptions = [...res.data, {
                     id: '',
                     name: 'No Specific Products',
                 }]
                 console.log('this.productOptions ', this.productOptions)
                 if (!this.postInfo.id) {
                     this.product = res.data[0]
+                    this.setInitProps('subProductId', res.data[0].id)
                     return;
                 }
                 if (this.postInfo.productId) {
@@ -186,7 +231,7 @@ export class CreatePostModalComponent implements OnInit {
         } else {
             this.valid.post = true
         }
-        Object.assign(this.postInfo,{
+        Object.assign(this.postInfo, {
             attachment: this.platform.attachmentVo,
             platformName: this.platform.platformName,
             productId: this.platform.id,

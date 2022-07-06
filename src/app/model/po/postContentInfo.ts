@@ -1,7 +1,7 @@
 import {BaseModel} from "./baseModel";
 
 export default class PostContentInfo extends BaseModel{
-    post?: string;
+    post?: string = '';
     postId?: string;
-    title?: string;
+    title?: string = '';
 }

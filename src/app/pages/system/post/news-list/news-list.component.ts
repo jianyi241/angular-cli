@@ -268,6 +268,13 @@ export class NewsListComponent implements OnInit {
     if (idx != -1) {
       const post = Commons.deepCopy(this.page.records[idx])
       modalRef.componentInstance.postInfo = post
+      modalRef.componentInstance.initProps = {
+        productId: post.productId,
+        subProductId: post.subProductId,
+        title: post.content.title,
+        post: post.content.post,
+        attachmentsStr: post.attachments.map(i => i.visitUrl).toString()
+      }
     }
     modalRef.result.then((data: PostInfo) => {
       if (!data) return
