@@ -143,7 +143,7 @@
                                    (change)="changeMainPlatform()"
                                    placeholder="Enter name of product" dropdownPosition="bottom"
                                    [(ngModel)]="reviewService.comparison.mainPlatformId">
-                            <ng-option *ngFor="let product of products"
+                            <ng-option *ngFor="let product of ownerProducts"
                                        [value]="product.id">{{product.name}}</ng-option>
                         </ng-select>
                     </div>
@@ -169,10 +169,10 @@
                                    placeholder="Enter name of platform" dropdownPosition="bottom">
                             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                 <div class="ng-value ng-custom-value">
-                                    {{items.length}}/{{products.length}} selected
+                                    {{items.length}}/{{otherProducts.length}} selected
                                 </div>
                             </ng-template>
-                            <ng-option *ngFor="let product of products" [value]="product.id"
+                            <ng-option *ngFor="let product of otherProducts" [value]="product.id"
                                        [disabled]="(reviewService.comparison.mainPlatformId == product.id) || !reviewService.isEdit() || false">
                                 <div class="select-multiple-item"
                                      [ngClass]="{'main-platform': reviewService?.comparison.mainPlatformId == product.id}">
