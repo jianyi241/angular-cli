@@ -25,7 +25,7 @@ export class PostService {
     constructor(private currentUserService: CurrentUserService) {
     }
 
-    allowEdit(companyId: string, editType: EditType = ''): boolean {
+    allowEdit(companyId: string, status: string, editType: EditType = ''): boolean {
         if (this.currentUserService.isAdminUser()) {
             return true
         }
@@ -33,10 +33,13 @@ export class PostService {
             return false
         }
         if (this.currentUserService.isSupplierUser()) {
-            if (editType === 'publish') return false
+            if (editType === 'publish' || editType === 'reject') return false
             if (editType === 'create') {
                 return this.currentUserService.currentUser().owner
             } else {
+                if (editType === 'update') {
+                    return this.currentUserService.currentUser().owner && companyId === this.currentUserService.currentUser().companyId && status === PostStatus.Pending.value
+                }
                 return this.currentUserService.currentUser().owner && companyId === this.currentUserService.currentUser().companyId
             }
         }

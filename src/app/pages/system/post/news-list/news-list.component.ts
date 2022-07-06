@@ -213,6 +213,7 @@ export class NewsListComponent implements OnInit {
   }
 
   changeStatus(status: string, idx: number): void {
+    console.log('status ', status, 'index ',idx)
     const post = Commons.deepCopy(this.page.records[idx])
     const params = {
       id: post.id,
@@ -294,11 +295,18 @@ export class NewsListComponent implements OnInit {
   conditionOptionsChange(): void {
     const _conditionOptions = Commons.deepCopy(this.conditionOptions)
     _conditionOptions.map(m => {
-      if (m.key === 'status') this.postCondition.archived = m.options.find(f => f.value === PostStatus.Archive.value).checked
+      if (m.key === 'status') {
+        this.postCondition.archived = m.options.find(f => f.value === PostStatus.Archive.value).checked
+      }
       if (m.options.some(s => s.label === 'All' && s.checked)) m.options = []
       return m
     })
-    _conditionOptions.forEach(i => this.postCondition[i.key] = i.options.filter(f => f.checked).map(v => v.value))
+    _conditionOptions.forEach(i => {
+      this.postCondition[i.key] = i.options.filter(f => f.checked).map(v => v.value)
+      if (i.key === 'status') {
+        this.postCondition[i.key] = this.postCondition[i.key].filter(i => i !== PostStatus.Archive.value)
+      }
+    })
     this.searchList()
   }
 

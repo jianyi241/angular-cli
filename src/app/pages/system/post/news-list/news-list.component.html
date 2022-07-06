@@ -29,7 +29,7 @@
                     <input type="text" [(ngModel)]="postCondition.keyword" appDebounceInput (debounceInput)="searchList()" [debounceTime]="400" (keydown.enter)="searchList()" placeholder="Search..." class="form-control"/>
                     <span class="icon icon-search icon-16"  (click)="searchList()"></span>
                 </div>
-                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="showCreatePostModal()" *ngIf="postService.allowEdit('','create')">Create post</button>
+                <button class="btn btn-purple btn-with-icon xs-ml-24" (click)="showCreatePostModal()" *ngIf="postService.allowEdit('','','create')">Create post</button>
             </div>
             <div class="news-list scroll-style" appListScroll (bottomed)="nextPage()">
                 <div class="list-loading" *ngIf="pageLoading">
@@ -64,13 +64,13 @@
                                 </div>
                             </div>
                             <div class="item-edit-group">
-                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, 'reject') && postService.postStatus.pending == post.status" (click)="changeStatus(postService.postStatus.rejected,idx)">Reject</button>
-                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId,'publish') && postService.postStatus.pending == post.status" style="border: 1px solid #4640DE;padding: 10px 24px;" (click)="changeStatus(postService.postStatus.published,idx)">Accept</button>
-                                <div class="edit-group-line" *ngIf="postService.allowEdit(post.companyId) && post.status == postService.postStatus.pending"></div>
-                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, 'update')" (click)="showCreatePostModal(idx)">
+                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, post.status, 'reject') && postService.postStatus.pending == post.status" (click)="changeStatus(postService.postStatus.rejected,idx)">Reject</button>
+                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId, post.status,'publish') && postService.postStatus.pending == post.status" style="border: 1px solid #4640DE;padding: 10px 24px;" (click)="changeStatus(postService.postStatus.published,idx)">Accept</button>
+                                <div class="edit-group-line" *ngIf="postService.allowEdit(post.companyId, post.status) && post.status == postService.postStatus.pending"></div>
+                                <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, post.status, 'update')" (click)="showCreatePostModal(idx)">
                                     <span class="icon-block icon-14 icon-pen-red"></span>Edit
                                 </button>
-                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId,'archive')" [style]="{color: post.archived ? '#56CDAD' : '#EB5757'}" (click)="deleteConfirm(idx)">
+                                <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId, post.status,'archive')" [style]="{color: post.archived ? '#56CDAD' : '#EB5757'}" (click)="deleteConfirm(idx)">
                                     <span class="icon-block icon-14 icon-delete-red xs-mr-10" [hidden]="post.archived"></span>{{post.archived ? 'Restore' : 'Delete'}}
                                 </button>
                             </div>
