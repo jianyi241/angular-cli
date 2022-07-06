@@ -3,7 +3,7 @@
     <div class="item-image-list" [ngStyle]="{'left.px': imagesOffset}">
         <div class="item-image-wrapper" *ngFor="let img of imageInfoList;let idx = index" (click)="previewImage(img.attachment.visitUrl)">
             <i class="btn-img-remove" *ngIf="showDelete" (click)="handleClickRemove($event,idx)"></i>
-            <img [src]="img.attachment.visitUrl" [width]="img.width" [height]="img.height" >
+            <img [src]="img.attachment?.visitUrl" [width]="img.width" [height]="img.height" >
         </div>
     </div>
     <div class="change-btn next-btn" *ngIf="showNextImagesBtn()" (click)="changeImages('next')"></div>

@@ -66,7 +66,7 @@
                             <div class="item-edit-group">
                                 <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, post.status, 'reject') && postService.postStatus.pending == post.status" (click)="changeStatus(postService.postStatus.rejected,idx)">Reject</button>
                                 <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId, post.status,'publish') && postService.postStatus.pending == post.status" style="border: 1px solid #4640DE;padding: 10px 24px;" (click)="changeStatus(postService.postStatus.published,idx)">Accept</button>
-                                <div class="edit-group-line" *ngIf="postService.allowEdit(post.companyId, post.status) && post.status == postService.postStatus.pending"></div>
+                                <div class="edit-group-line" *ngIf="postService.allowEdit(post.companyId, post.status,'publish') && post.status == postService.postStatus.pending"></div>
                                 <button class="btn btn-text-danger" *ngIf="postService.allowEdit(post.companyId, post.status, 'update')" (click)="showCreatePostModal(idx)">
                                     <span class="icon-block icon-14 icon-pen-red"></span>Edit
                                 </button>

@@ -85,7 +85,7 @@ export class HorizontalImageListComponent implements OnInit {
         });
       };
       image.onerror = function () {
-        reject(new Error('error'));
+        console.log('image request 404')
       };
       image.src = url;
     });

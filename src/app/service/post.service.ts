@@ -38,7 +38,7 @@ export class PostService {
                 return this.currentUserService.currentUser().owner
             } else {
                 if (editType === 'update') {
-                    return this.currentUserService.currentUser().owner && companyId === this.currentUserService.currentUser().companyId && status === PostStatus.Pending.value
+                    return this.currentUserService.currentUser().owner && companyId === this.currentUserService.currentUser().companyId && status === PostStatus.Pending.value && status == PostStatus.Pending.value
                 }
                 return this.currentUserService.currentUser().owner && companyId === this.currentUserService.currentUser().companyId
             }
