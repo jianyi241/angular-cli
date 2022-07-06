@@ -247,10 +247,10 @@ export class NewsListComponent implements OnInit {
       centered: true
     })
     modalRef.componentInstance.modal = {
-      title: 'Delete supplier’s post?',
-      text: 'You are about to delete a supplier post. Are you sure about this action?',
+      title: 'Delete this post?',
+      text: 'You are about to delete a post. Are you sure about this action?',
       cancelText: 'No, don’t delete',
-      confirmText: 'Yes, delete my post'
+      confirmText: 'Yes, delete the post'
     }
     modalRef.result.then(res => {
       console.log('confirm')
