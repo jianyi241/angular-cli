@@ -71,7 +71,8 @@
                                     <span class="icon-block icon-14 icon-pen-red"></span>Edit
                                 </button>
                                 <button class="btn btn-small btn-outline-purple-light" *ngIf="postService.allowEdit(post.companyId, post.status,'archive')" [style]="{color: post.archived ? '#56CDAD' : '#EB5757'}" (click)="deleteConfirm(idx)">
-                                    <span class="icon-block icon-14 icon-delete-red xs-mr-10" [hidden]="post.archived"></span>{{post.archived ? 'Restore' : 'Delete'}}
+                                    <span class="icon-block icon-14 icon-delete-red xs-mr-10" [hidden]="post.archived"></span>
+                                    <span style="height: 10px;line-height: normal">{{post.archived ? 'Restore' : 'Delete'}}</span>
                                 </button>
                             </div>
                         </div>
