@@ -249,19 +249,18 @@ export class NewsListComponent implements OnInit {
     modalRef.componentInstance.modal = {
       title: 'Delete this post?',
       text: 'You are about to delete a post. Are you sure about this action?',
-      cancelText: 'No, don’t delete',
-      confirmText: 'Yes, delete the post'
+      cancelText: 'Yes, delete the post',
+      confirmText: 'No, don’t delete'
     }
-    modalRef.result.then(res => {
-      console.log('confirm')
+    modalRef.result.then(cancel => {
+    }, confirm => {
       this.changeStatus(PostStatus.Archive.value, idx)
-    }, err => {
-      console.log('cancel')
     })
   }
 
   showCreatePostModal(idx: number = -1): void {
     const modalRef = this.ngbModal.open(CreatePostModalComponent, {
+      backdrop: 'static',
       size: 'w644',
       windowClass: 'tip-popup-modal',
       centered: true
